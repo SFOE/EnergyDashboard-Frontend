@@ -1,0 +1,3 @@
+# https://github.com/prettier/prettier/blob/master/docs/options.md
+singleQuote: true
+trailingComma: none

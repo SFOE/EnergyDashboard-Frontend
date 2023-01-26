@@ -1,0 +1,85 @@
+<div class="dashboard">
+    <div class="dashboard__main">
+        <div class="dashboard__ampeln">
+            <bfe-status-ampel [context]="context.STROM"></bfe-status-ampel>
+            <bfe-status-ampel [context]="context.GAS"></bfe-status-ampel>
+        </div>
+
+        <div class="overview__card-grid">
+            <bfe-dashboard-kpi-x1
+                [context]="context.STROM"
+                sourceKey="uebersicht_strom.quelle"
+                link="/strom"
+            >
+                <div class="kpi-container strom-kpi-container">
+                    <bfe-dashboard-row
+                        *ngFor="let model of stromModels$ | async"
+                        [model]="model"
+                    ></bfe-dashboard-row>
+                </div>
+            </bfe-dashboard-kpi-x1>
+
+            <bfe-dashboard-kpi-x1
+                [context]="context.GAS"
+                sourceKey="uebersicht_gas.quelle"
+                link="/gas"
+            >
+                <div class="kpi-container">
+                    <bfe-dashboard-row
+                        *ngFor="let model of gasModels$ | async"
+                        [model]="model"
+                    ></bfe-dashboard-row>
+                </div>
+            </bfe-dashboard-kpi-x1>
+
+            <bfe-dashboard-kpi-x1
+                [context]="context.WETTER"
+                sourceKey="uebersicht_wetter.quelle"
+                link="/wetter"
+            >
+                <div class="kpi-container wetter-kpi-container">
+                    <bfe-dashboard-row
+                        *ngFor="
+                            let model of (wetterModels$ | async)?.slice(0, 1)
+                        "
+                        [model]="model"
+                    >
+                        <fa-icon icon="temperature-high" size="2x"></fa-icon>
+                    </bfe-dashboard-row>
+                    <bfe-dashboard-row
+                        *ngFor="let model of (wetterModels$ | async)?.slice(1)"
+                        [model]="model"
+                    >
+                    </bfe-dashboard-row>
+                </div>
+            </bfe-dashboard-kpi-x1>
+
+            <bfe-dashboard-kpi-x1
+                [context]="context.PREISE"
+                link="/preise"
+                sourceKey="uebersicht_preise.quelle"
+            >
+                <div class="kpi-container">
+                    <bfe-dashboard-price-row
+                        *ngFor="let model of priceModels$ | async"
+                        [model]="model"
+                    >
+                    </bfe-dashboard-price-row>
+                </div>
+            </bfe-dashboard-kpi-x1>
+
+            <bfe-dashboard-collapsible-card
+                [cardTitle]="'dynamic:aktuelle-lage.titel' | i18nextDynamic"
+                collapsedHeight="850px"
+            >
+                <div
+                    [innerHTML]="
+                        'dynamic:aktuelle-lage.langtext' | i18nextDynamic
+                    "
+                ></div>
+            </bfe-dashboard-collapsible-card>
+
+            <bfe-dashboard-spartipps-card></bfe-dashboard-spartipps-card>
+        </div>
+    </div>
+</div>

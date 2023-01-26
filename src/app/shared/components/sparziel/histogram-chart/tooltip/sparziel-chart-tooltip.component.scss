@@ -1,0 +1,79 @@
+@use 'mix';
+
+.tooltip-container {
+    @include mix.tooltip-container;
+
+    .date-section {
+        padding: 4px 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .tooltip-content {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        justify-items: flex-start;
+        align-items: center;
+        column-gap: 4px;
+        padding: 4px 8px;
+        row-gap: 4px;
+    }
+
+    .number-box {
+        width: 40px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .text {
+        font-weight: 400;
+    }
+
+    .text-muted {
+        color: #636363;
+        font-weight: 400;
+        font-size: 8px;
+    }
+    .celsius {
+        padding-left: 2px;
+    }
+
+    .divider-section {
+        grid-column: span 3;
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+        width: 100%;
+        padding-right: 4px;
+
+        hr {
+            height: 1px;
+            background-color: #ebebeb;
+            border: none;
+        }
+    }
+}
+
+.tooltip-container.hidden {
+    visibility: hidden;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dashed {
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dashed-transparent {
+    height: 2px;
+    width: 2px;
+    border-radius: 50%;
+    display: inline-block;
+}

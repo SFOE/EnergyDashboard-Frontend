@@ -1,0 +1,20 @@
+<section>
+    <span class="donut-flex">
+        <p>{{ regionKey | i18next }}</p>
+        <p>{{ speicherstandProzent }}%</p>
+    </span>
+    <bfe-semi-donut-chart
+        [color]="spaceColor"
+        unit="TWh"
+        [value]="speicherstandTwh | roundNumber"
+        [percentage]="speicherstandProzent"
+    ></bfe-semi-donut-chart>
+    <bfe-trend-indicator
+        class="trend-display"
+        [trend]="trend"
+        [rating]="rating"
+    ></bfe-trend-indicator>
+    <p class="trend-description">
+        {{ trendKey | i18next }}
+    </p>
+</section>

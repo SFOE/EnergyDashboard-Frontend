@@ -1,0 +1,55 @@
+<div>
+    <div
+        class="diagram-legend-container"
+        [ngClass]="horizontal ? 'horizontal' : 'vertical'"
+    >
+        <section class="legend-entry" *ngFor="let entry of entries">
+            <ng-container *ngIf="!entry.secondColor; else twoColors">
+                <span
+                    class="color-rectangle {{ entry.type }}"
+                    [style.borderColor]="entry.color"
+                ></span>
+            </ng-container>
+            <ng-template #twoColors>
+                <div class="two-colors">
+                    <span
+                        class="color-rectangle {{ entry.type }}"
+                        [style.borderColor]="entry.color"
+                    ></span>
+                    <span
+                        class="color-rectangle {{ entry.type }}"
+                        [style.borderColor]="entry.secondColor"
+                    ></span>
+                </div>
+            </ng-template>
+            <span class="label">{{
+                entry.labelKey | i18next: entry.labelKeyOptions
+            }}</span>
+        </section>
+    </div>
+    <div class="diagram-legend-container horizontal">
+        <section class="legend-entry" *ngFor="let entry of secondLineEntries">
+            <ng-container *ngIf="!entry.secondColor; else twoColors">
+                <span
+                    class="color-rectangle {{ entry.type }}"
+                    [style.borderColor]="entry.color"
+                ></span>
+            </ng-container>
+            <ng-template #twoColors>
+                <div class="two-colors">
+                    <span
+                        class="color-rectangle {{ entry.type }}"
+                        [style.borderColor]="entry.color"
+                    ></span>
+                    <span
+                        class="color-rectangle {{ entry.type }}"
+                        [style.borderColor]="entry.secondColor"
+                    ></span>
+                </div>
+            </ng-template>
+            <span class="label">{{
+                entry.labelKey | i18next: entry.labelKeyOptions
+            }}</span>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<section class="trend-section">
+    <section [class.align-right]="alignRight">
+        <bfe-large-number-unit
+            #number
+            [number]="model.bigNumber.value"
+            [unit]="model.bigNumber.postfix"
+            [color]="model.color"
+        ></bfe-large-number-unit>
+        <div #numberText>
+            <p *ngFor="let key of model.bigNumber.subTextKeys">
+                {{ key | i18next }}
+            </p>
+        </div>
+    </section>
+    <section>
+        <bfe-trend-indicator
+            [trend]="model.trend.value"
+            [rating]="model.trend.rating"
+        ></bfe-trend-indicator>
+        <p *ngFor="let key of model.trend.subTextKeys">
+            {{ key | i18next }}
+        </p>
+    </section>
+</section>

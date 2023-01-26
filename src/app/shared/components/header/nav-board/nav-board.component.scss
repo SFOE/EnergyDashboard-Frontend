@@ -1,0 +1,93 @@
+@use 'col';
+@use 'text';
+
+bfe-nav-board {
+    display: block;
+    background-color: var(--c-bg-header);
+    --client-height: 100vh;
+    height: calc(var(--client-height) - var(--d-header-height));
+    width: 100%;
+    position: relative;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .nav-board {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .nav-board__links {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 0;
+    }
+
+    .nav-board__link-wrapper {
+        position: relative;
+        border-bottom: 1px solid var(--c-divider-light);
+    }
+
+    .nav-board__item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        letter-spacing: 0.11px;
+        color: var(--c-fg-nav);
+        padding: 12px var(--d-page-side-gap);
+        text-align: left;
+
+        &:hover:active {
+            color: var(--c-fg-nav-hover);
+        }
+
+        span {
+            flex: 1 0 auto;
+        }
+
+        sc-svg {
+            height: 24px;
+            width: 24px;
+            margin: 0 var(--d-page-side-gap);
+        }
+    }
+
+    .nav-board__item--active {
+        color: var(--c-fg-nav-active);
+    }
+
+    .nav-board__sub-list {
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-left: 24px;
+        overflow: hidden;
+    }
+
+    .nav-board__lang-select {
+        align-self: center;
+        display: flex;
+        margin: var(--d-page-side-gap);
+    }
+
+    .nav-board__lang-link {
+        margin: 0 12px;
+        display: block;
+        width: 32px;
+        padding: 4px;
+        line-height: 24px;
+        color: var(--c-fg-nav);
+        letter-spacing: -0.5px;
+        text-align: center;
+
+        &:hover:active {
+            color: var(--c-fg-nav-hover);
+        }
+    }
+    .nav-board__lang-link--active {
+        background-color: var(--c-bg-lang-active);
+    }
+}

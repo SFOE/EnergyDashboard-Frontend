@@ -1,0 +1,78 @@
+<bfe-kpi-container
+    titleKeyDynamic="kpi-preise-5_strom.titel"
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-preise-5_strom.datenquelle',
+        langtextDynamicKey: 'kpi-preise-5_strom.langtext'
+    }"
+    [isLoading]="isLoadingBoerse"
+>
+    <bfe-kpi-container-row>
+        <section class="trend-section">
+            <section>
+                <bfe-context-title
+                    [context]="context"
+                    marginLeft="0px"
+                ></bfe-context-title>
+            </section>
+            <div class="trend-entries">
+                <section *ngIf="currentEntryBoerse">
+                    <bfe-large-number-unit
+                        [number]="currentEntryBoerse.values[0]"
+                        unit="MWh"
+                        subUnit="EUR"
+                        [color]="primaryColor"
+                    ></bfe-large-number-unit>
+                    <p class="right-align-text">
+                        {{
+                            'dashboard.preise.strom.spotpreis-boerse.subtitle'
+                                | i18next
+                        }}
+                    </p>
+                </section>
+                <section *ngIf="currentEntryEndverbrauch">
+                    <bfe-large-number-unit
+                        [number]="currentEntryEndverbrauch.values[0]"
+                        unit="%"
+                        [color]="primaryColor"
+                    ></bfe-large-number-unit>
+                    <p class="right-align-text">
+                        {{
+                            'dashboard.preise.strom.endverbrauch.subtitle'
+                                | i18next
+                        }}
+                    </p>
+                </section>
+            </div>
+        </section>
+        <section class="teaser-section">
+            <div
+                [innerHTML]="
+                    'dynamic:kpi-preise-5_strom.kurztext' | i18nextDynamic
+                "
+                class="teaser"
+            ></div>
+        </section>
+    </bfe-kpi-container-row>
+
+    <div class="diagram-container">
+        <bfe-preise-strom-boerse
+            *ngIf="chartDataBoerse"
+            [chartData]="chartDataBoerse"
+            [currentEntry]="currentEntryBoerse"
+        >
+        </bfe-preise-strom-boerse>
+    </div>
+
+    <div class="divider-section">
+        <hr />
+    </div>
+
+    <div class="diagram-container">
+        <bfe-preise-strom-endverbrauch
+            *ngIf="!isLoadingEndverbrauch"
+            [chartData]="chartDataEndverbrauch"
+            [currentEntry]="currentEntryEndverbrauch"
+        >
+        </bfe-preise-strom-endverbrauch>
+    </div>
+</bfe-kpi-container>

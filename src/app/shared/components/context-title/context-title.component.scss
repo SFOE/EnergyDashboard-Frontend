@@ -1,0 +1,56 @@
+@use 'col';
+
+.context-title {
+    display: flex;
+    align-items: center;
+
+    bfe-context-icon {
+        margin-right: 12px;
+    }
+
+    .gas {
+        color: col.$context-gas;
+    }
+
+    .strom {
+        color: col.$context-strom;
+    }
+
+    .wetter {
+        color: col.$context-weather;
+    }
+
+    .holz {
+        color: col.$context-holz;
+    }
+
+    .fernwaerme {
+        color: col.$context-fernwaerme;
+    }
+
+    .oel,
+    .diesel,
+    .benzin {
+        color: col.$context-oel;
+    }
+}
+
+.context-title.regular {
+    span {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 30px;
+        line-height: 36px;
+        text-transform: uppercase;
+    }
+}
+
+.context-title.small {
+    span {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 25px;
+        line-height: 30px;
+        text-transform: uppercase;
+    }
+}

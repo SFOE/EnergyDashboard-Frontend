@@ -1,0 +1,6 @@
+@use 'mix';
+
+bfe-overview-card-warning {
+    @include mix.warning;
+    margin-bottom: 16px;
+}

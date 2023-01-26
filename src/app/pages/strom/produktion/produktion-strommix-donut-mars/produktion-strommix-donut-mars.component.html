@@ -1,0 +1,95 @@
+<bfe-kpi-subtitle>
+    {{
+        'dynamic:kpi-strom-5_produktion_strommix-donut-mars.titel'
+            | i18nextDynamic
+    }}
+</bfe-kpi-subtitle>
+<bfe-kpi-date-info-subtext *ngIf="lastUpdated" [date]="lastUpdated">
+</bfe-kpi-date-info-subtext>
+<bfe-optional-dynamic-langtext
+    text="kpi-strom-5_produktion_strommix-donut-mars.langtext"
+></bfe-optional-dynamic-langtext>
+<bfe-kpi-container-row *ngIf="lastFiveProductionEntries; else loading">
+    <div class="current-chart-row" #currentChartSection>
+        <section class="current-chart">
+            <bfe-full-donut-chart
+                [data]="lastFiveProductionEntries[0]"
+                [dimension]="currentChartDimension"
+                postfix="TWh"
+                allDataKey="dashboard.strom.produktion.total-production"
+            ></bfe-full-donut-chart>
+            <p class="label">
+                {{
+                    'commons.year-to-date'
+                        | i18next: { date: lastUpdated | date }
+                }}
+            </p>
+        </section>
+        <section #legend class="d-flex">
+            <span class="legend-spacer"></span>
+            <bfe-diagram-legend
+                [horizontal]="false"
+                [entries]="[
+                    {
+                        color: ColorsStrom.KERNKRAFT,
+                        labelKey: 'dashboard.strom.produktion.type.kernkraft',
+                        type: 'area'
+                    },
+                    {
+                        color: ColorsStrom.WIND,
+                        labelKey: 'dashboard.strom.produktion.type.wind',
+                        type: 'area'
+                    },
+                    {
+                        color: ColorsStrom.FLUSSKRAFT,
+                        labelKey: 'dashboard.strom.produktion.type.flusskraft',
+                        type: 'area'
+                    },
+                    {
+                        color: ColorsStrom.THERMISCHE,
+                        labelKey: 'dashboard.strom.produktion.type.thermische',
+                        type: 'area'
+                    },
+                    {
+                        color: ColorsStrom.SPEICHERKRAFT,
+                        labelKey:
+                            'dashboard.strom.produktion.type.speicherkraft',
+                        type: 'area'
+                    },
+                    {
+                        color: ColorsStrom.PHOTOVOLTAIK,
+                        labelKey:
+                            'dashboard.strom.produktion.type.photovoltaik',
+                        type: 'area'
+                    }
+                ]"
+            ></bfe-diagram-legend>
+        </section>
+    </div>
+
+    <div class="historic-chart-section">
+        <section
+            *ngFor="
+                let year of lastFiveProductionEntries.slice(1);
+                let index = index
+            "
+            class="historic-chart"
+        >
+            <bfe-full-donut-chart
+                *ngIf="lastFiveProductionEntries"
+                [data]="year"
+                [dimension]="historicChartDimension"
+                postfix="TWh"
+                allDataKey="dashboard.strom.produktion.total-production"
+            ></bfe-full-donut-chart>
+            <!-- add one as index starts with 0 -->
+            <p>{{ currentYear - (index + 1) }}</p>
+        </section>
+    </div>
+</bfe-kpi-container-row>
+
+<ng-template #loading>
+    <div class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</ng-template>

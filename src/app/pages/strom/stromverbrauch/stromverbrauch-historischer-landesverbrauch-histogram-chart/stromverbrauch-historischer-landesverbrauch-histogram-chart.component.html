@@ -1,0 +1,43 @@
+<div class="stromverbrauch-historischer-landesverbrauch-histogram-chart">
+    <section>
+        <bfe-kpi-subtitle>
+            {{
+                'dynamic:kpi-strom-1_landesverbrauch_BFE-SG-ENTSOE.titel'
+                    | i18nextDynamic
+            }}
+        </bfe-kpi-subtitle>
+        <bfe-kpi-date-info-subtext
+            [date]="currentDate"
+            updateInterval="monthly"
+        >
+        </bfe-kpi-date-info-subtext>
+
+        <div *ngIf="(chartData.length ?? 0) > 0" class="diagram-container">
+            <bfe-optional-dynamic-langtext
+                text="kpi-strom-1_landesverbrauch_BFE-SG-ENTSOE.langtext"
+            ></bfe-optional-dynamic-langtext>
+            <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+            <bfe-histogram-line
+                (diagramLeave)="hideTooltip()"
+                (elFocus)="showLineChartTooltip($event)"
+                [bandColor]="bandColor"
+                [colors]="lineChartColors"
+                [data]="chartData"
+                [domainMin]="minYValue"
+                [strokeWidths]="[1, 2, 2, 2]"
+                [xLabelModifier]="labelModifier"
+                [yLabelFormatter]="yLabelFormatter"
+                [xSubLabelModifier]="subLabelModifier"
+            ></bfe-histogram-line>
+            <bfe-stromverbrauch-chart-tooltip
+                [event]="tooltipEvent"
+                [isMonthly]="true"
+                [lineEntries]="lineEntries"
+                [withSpaceBeforePostfixDifference]="false"
+                [withSpaceBeforePostfix]="true"
+                postfix="GWh"
+                postfixDifference="%"
+            ></bfe-stromverbrauch-chart-tooltip>
+        </div>
+    </section>
+</div>

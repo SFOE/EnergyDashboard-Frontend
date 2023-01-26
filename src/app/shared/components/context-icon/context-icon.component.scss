@@ -1,0 +1,31 @@
+@use 'col';
+
+.gas {
+    color: col.$context-gas;
+}
+
+.strom {
+    color: col.$context-strom;
+}
+
+.preise {
+    color: col.$context-preise;
+}
+
+.wetter {
+    color: col.$context-weather;
+}
+
+.holz {
+    color: col.$context-holz;
+}
+
+.fernwaerme {
+    color: col.$context-fernwaerme;
+}
+
+.oel,
+.benzin,
+.diesel {
+    color: col.$context-oel;
+}

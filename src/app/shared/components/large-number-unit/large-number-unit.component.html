@@ -1,0 +1,32 @@
+<div
+    [style.justifyContent]="alignTextRightSide ? 'flex-end' : 'center'"
+    class="number-unit-container"
+    [ngClass]="{ 'has-subunit': !!subUnit }"
+    *ngIf="number != null"
+>
+    <h4 class="num-big" [style.color]="color">
+        {{ number | thousandComma }}
+    </h4>
+
+    <ng-container *ngIf="!subUnit && !unitText">
+        <span class="unit" [style.color]="color">
+            {{ unit }}
+        </span>
+    </ng-container>
+
+    <ng-container *ngIf="subUnit && !unitText">
+        <span class="unit with-sub-unit" [style.color]="color">
+            <span class="sub-unit">{{ subUnit }} /</span>
+            {{ unit }}
+        </span>
+    </ng-container>
+
+    <ng-container *ngIf="unitText && !subUnit">
+        <span class="unit with-text" [style.color]="color">
+            {{ unit }}
+            <span class="label teaser">
+                {{ unitText }}
+            </span>
+        </span>
+    </ng-container>
+</div>

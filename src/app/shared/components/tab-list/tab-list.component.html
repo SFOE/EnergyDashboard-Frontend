@@ -1,0 +1,18 @@
+<nav class="tab-list">
+    <div class="tab-list__inner">
+        <ul class="tab-list__list">
+            <li *ngFor="let item of tabItems" class="tab-list__item">
+                <a
+                    class="tab-list__link"
+                    cdkMonitorElementFocus
+                    [routerLink]="item.routeArgs"
+                    routerLinkActive="tab-list__link--active"
+                >
+                    <ng-template
+                        [ngTemplateOutlet]="item.template"
+                    ></ng-template>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

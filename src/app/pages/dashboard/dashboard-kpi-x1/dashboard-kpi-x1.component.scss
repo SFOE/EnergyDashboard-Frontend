@@ -1,0 +1,28 @@
+@use 'col';
+
+.source {
+    font-size: 12px;
+    margin: 0;
+    text-align: center;
+    margin-top: 16px;
+    margin-top: auto;
+}
+
+bfe-overview-card {
+    transition: transform ease-out 0.3s;
+
+    .content {
+        margin-right: 2px; // add and remove margin to prevent content from jumping on scale
+    }
+}
+
+bfe-overview-card:hover {
+    border: 1px solid col.$dark;
+    transform: scale(1.02);
+    cursor: pointer;
+    box-shadow: 0 12px 16px rgba(13, 27, 41, 0.2);
+
+    .content {
+        margin-right: 0;
+    }
+}

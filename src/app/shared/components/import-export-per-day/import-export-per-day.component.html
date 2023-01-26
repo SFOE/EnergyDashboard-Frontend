@@ -1,0 +1,49 @@
+<div class="import-export-per-day-container">
+    <section>
+        <div class="import-export-chart">
+            <bfe-import-export-box
+                class="import-export-box-germany"
+                [country]="countries.GERMANY"
+                [import]="currentEntry.import.de"
+                [export]="currentEntry.export.de"
+                [orientation]="orientation.HORIZONTAL"
+                [context]="context"
+            ></bfe-import-export-box>
+
+            <bfe-import-export-box
+                class="import-export-box-france"
+                [country]="countries.FRANCE"
+                [import]="currentEntry.import.fr"
+                [export]="currentEntry.export.fr"
+                [orientation]="orientation.VERTICAL"
+                [context]="context"
+            ></bfe-import-export-box>
+
+            <div class="import-export-box-map">
+                <img
+                    class="image-switzerland"
+                    alt="Switzerland"
+                    src="assets/icon/switzerland.svg"
+                />
+            </div>
+
+            <bfe-import-export-box
+                class="import-export-box-austria"
+                [country]="countries.AUSTRIA"
+                [import]="currentEntry.import.at"
+                [export]="currentEntry.export.at"
+                [orientation]="orientation.VERTICAL"
+                [context]="context"
+            ></bfe-import-export-box>
+            <bfe-import-export-box
+                class="import-export-box-italy"
+                [country]="countries.ITALY"
+                [import]="currentEntry.import.it"
+                [export]="currentEntry.export.it"
+                [orientation]="orientation.HORIZONTAL"
+                [context]="context"
+                [inverse]="true"
+            ></bfe-import-export-box>
+        </div>
+    </section>
+</div>

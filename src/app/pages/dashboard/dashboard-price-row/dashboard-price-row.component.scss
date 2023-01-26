@@ -1,0 +1,30 @@
+.price-row-container {
+    margin: 24px 0;
+
+    .price-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: max-content;
+        margin-right: 8px;
+        margin-left: auto;
+
+        bfe-large-number-unit {
+            align-self: flex-end;
+        }
+
+        p {
+            margin-bottom: 0;
+            margin-left: 2px;
+            max-width: 20ch;
+            line-height: 14px;
+        }
+    }
+
+    .skeleton-price-section {
+        margin-top: 9px;
+        min-height: 70px;
+        animation: skeleton-loading 1s linear infinite alternate;
+        border-radius: 8px;
+    }
+}

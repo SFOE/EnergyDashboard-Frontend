@@ -1,0 +1,12 @@
+<span [style.backgroundColor]="dotColor" class="dot"></span>
+<span>{{ labelKey | i18next }}</span>
+<span class="first-value">
+    <ng-container *ngIf="firstRow">
+        {{ firstRow.value }}{{ firstRow.subfix }}
+    </ng-container>
+</span>
+<span class="second-value">
+    <ng-container *ngIf="secondRow">
+        {{ secondRow.value }}{{ secondRow.subfix }}
+    </ng-container>
+</span>

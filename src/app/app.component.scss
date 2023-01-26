@@ -1,0 +1,10 @@
+:host {
+    display: flex;
+    flex-direction: column;
+
+    .dashboard__main {
+        display: flex;
+        min-height: calc(100vh - var(--d-header-height));
+        flex-direction: column;
+    }
+}

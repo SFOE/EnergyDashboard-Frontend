@@ -1,0 +1,55 @@
+<div class="trend-display-container">
+    <svg
+        width="60"
+        height="60"
+        viewBox="0 0 60 60"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <rect width="60" height="60" vector-effect="non-scaling-stroke" />
+        <line x1="8.69546e-10" y1="29.5" x2="60" y2="29.5" stroke="#CCCCCC" />
+        <ng-container [ngSwitch]="trend">
+            <!-- up_strong-->
+            <path
+                *ngSwitchCase="trends.UP_STRONG"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M33.7975 12.718L23.3429 23.0597L28.2669 23.9279L25.3149 40.6696L32.2086 41.8852L35.1606 25.1434L40.0846 26.0117L33.7975 12.718Z"
+                [attr.fill]="arrowColor"
+            />
+            <!-- up_mild -->
+            <path
+                *ngSwitchCase="trends.UP_MILD"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M44.4211 20.8697L29.9531 18.2375L32.0662 22.7691L16.659 29.9536L19.6173 36.2978L35.0246 29.1132L37.1376 33.6448L44.4211 20.8697Z"
+                [attr.fill]="arrowColor"
+            />
+            <!-- neutral -->
+            <path
+                *ngSwitchCase="trends.NEUTRAL"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M45.7798 28.9977L33.7798 20.4977V25.4977H16.7798V32.4977H33.7798V37.4977L45.7798 28.9977Z"
+                [attr.fill]="arrowColor"
+            />
+            <!-- down_mild -->
+            <path
+                *ngSwitchCase="trends.DOWN_MILD"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M44.4211 37.1257L37.1377 24.3506L35.0246 28.8822L19.6174 21.6977L16.659 28.0418L32.0663 35.2263L29.9532 39.7579L44.4211 37.1257Z"
+                [attr.fill]="arrowColor"
+            />
+            <!-- down_strong -->
+            <path
+                *ngSwitchCase="trends.DOWN_STRONG"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M33.7975 45.2774L40.0846 31.9837L35.1605 32.852L32.2085 16.1102L25.3149 17.3258L28.2669 34.0675L23.3429 34.9358L33.7975 45.2774Z"
+                [attr.fill]="arrowColor"
+            />
+        </ng-container>
+    </svg>
+    <p class="label-medium" *ngIf="labelKey">{{ labelKey | i18next }}</p>
+</div>

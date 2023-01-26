@@ -1,0 +1,97 @@
+<ng-template #svgTpl>
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <polyline
+            points="5.75,8.75 12,14.65 18.25,8.75"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+        >
+            <animate
+                id="chevron-anim-down"
+                begin="indefinite"
+                fill="freeze"
+                attributeName="points"
+                dur="200ms"
+                to="5.75,8.75 12,14.65 18.25,8.75"
+            />
+            <animate
+                id="chevron-anim-up"
+                begin="indefinite"
+                fill="freeze"
+                attributeName="points"
+                dur="200ms"
+                to="5.75,14.65 12,8.75 18.25,14.65"
+            />
+        </polyline>
+    </svg>
+</ng-template>
+
+<div class="nav-board">
+    <nav>
+        <ul class="nav-board__links">
+            <li *ngFor="let link of links" class="nav-board__link-wrapper">
+                <ng-template #linkTpl>
+                    <a
+                        class="nav-board__item"
+                        cdkMonitorElementFocus
+                        [routerLink]="link.path"
+                        routerLinkActive="nav-board__item--active"
+                    >
+                        <span> {{ link.labelKey | i18next }}</span>
+                    </a>
+                </ng-template>
+                <ng-container *ngIf="link.children?.length; else linkTpl">
+                    <button
+                        class="nav-board__item"
+                        (click)="toggle(link)"
+                        [bfeSvgAnimate]="
+                            link.open
+                                ? { '#chevron-anim-up': true }
+                                : { '#chevron-anim-down': true }
+                        "
+                    >
+                        <span>
+                            {{ link.labelKey | i18next }}
+                        </span>
+                        <ng-template [ngTemplateOutlet]="svgTpl"></ng-template>
+                    </button>
+
+                    <ul class="nav-board__sub-list" [@subList]="!!link.open">
+                        <li *ngFor="let child of link.children">
+                            <!-- hack with ts in fragment to allow the same navigation again and still trigger route change -->
+                            <a
+                                class="nav-board__item"
+                                cdkMonitorElementFocus
+                                [routerLink]="child.path"
+                                [fragment]="RouteFragment.SHOW_DETAIL"
+                                routerLinkActive="nav-board__item--active"
+                                [innerHTML]="
+                                    'dynamic:' + child.labelKey | i18nextDynamic
+                                "
+                            >
+                            </a>
+                        </li>
+                    </ul>
+                </ng-container>
+            </li>
+        </ul>
+    </nav>
+
+    <ul class="nav-board__lang-select">
+        <li *ngFor="let language of languages">
+            <a
+                class="nav-board__lang-link"
+                [class.nav-board__lang-link--active]="
+                    language === currentLanguage
+                "
+                (click)="changeLanguage(language)"
+                >{{ language | uppercase }}</a
+            >
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,12 @@
+<select
+    [formControl]="regionSelectionControl"
+    aria-label="[todo]regionSelect"
+    bfe-select
+    name="regionFilter"
+>
+    <ng-container *ngFor="let option of regions">
+        <option [value]="option.value">
+            {{ option.key | i18next }}
+        </option>
+    </ng-container>
+</select>

@@ -1,0 +1,40 @@
+.current-chart-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .legend-spacer {
+        width: 10px;
+    }
+
+    .current-chart {
+        p {
+            text-align: center;
+        }
+    }
+}
+
+.historic-chart-section {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    row-gap: 16px;
+
+    .historic-chart {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        p {
+            text-align: center;
+        }
+    }
+}
+
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 300px;
+}

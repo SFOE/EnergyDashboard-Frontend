@@ -1,0 +1,22 @@
+@use 'col';
+
+.not-available-container {
+    display: flex;
+    padding: 12px 20px;
+    column-gap: 16px;
+    background-color: #ededed;
+    width: 100%;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        color: col.$dark;
+        font-weight: 300;
+        margin: 0;
+    }
+
+    fa-icon {
+        color: col.$dark;
+    }
+}

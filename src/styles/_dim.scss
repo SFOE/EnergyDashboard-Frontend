@@ -1,0 +1,16 @@
+// dimensions
+
+$detail-container: 1120px;
+
+$paragraph-max-length: 768px;
+$base-container: $detail-container;
+
+// also change in breakpoints.enum.ts
+$bp-max-sm: 640px;
+$bp-min-md: 641px;
+$bp-max-md: 1149px;
+$bp-min-lg: 1150px;
+
+$bp-footer: 880px;
+
+$bp-min-height-sticky: 600px;

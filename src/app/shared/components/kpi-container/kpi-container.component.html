@@ -1,0 +1,16 @@
+<div class="kpi-container">
+    <div *ngIf="isLoading" class="loading-overlay">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+    <h2
+        class="kpi-title"
+        [innerHTML]="'dynamic:' + titleKeyDynamic | i18nextDynamic"
+    ></h2>
+    <div class="kpi-content">
+        <ng-content></ng-content>
+        <bfe-kpi-footer
+            [sourceKey]="footerConfig.sourceDynamicKey"
+            [langtextKey]="footerConfig.langtextDynamicKey"
+        ></bfe-kpi-footer>
+    </div>
+</div>

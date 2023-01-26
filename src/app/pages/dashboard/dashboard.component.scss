@@ -1,0 +1,120 @@
+@use 'col';
+@use 'layout';
+@use 'dim';
+@use 'var';
+@use 'text';
+
+:host {
+    display: block;
+
+    .dashboard__hamburger-btn {
+        display: none;
+    }
+
+    .dashboard__main,
+    .dashboard__more {
+        & ::ng-deep {
+            @include layout.container();
+        }
+    }
+
+    .dashboard__main {
+        border-top: 1px solid var(--c-divider);
+        background-color: var(--c-bg-card-container);
+    }
+
+    .dashboard__ampeln {
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
+        margin: 24px 0;
+    }
+
+    .dashboard__more {
+        background: var.$content-gradient;
+        padding-bottom: 48px;
+    }
+
+    .dashboard__title {
+        @include text.h1;
+        margin: 36px 0 24px 0;
+        flex: 0 0 calc(100% - 24px);
+    }
+
+    .overview__card-grid {
+        --col-count: 3;
+        --col-width: calc(33% - 13px);
+
+        display: grid;
+        grid-template-columns: repeat(var(--col-count), var(--col-width));
+        grid-gap: var(--d-general-spacing-md);
+        margin: 16px 0 64px;
+        align-items: stretch;
+
+        .kpi-container {
+            display: flex;
+            flex-direction: column;
+
+            > :not(:last-child) {
+                border-bottom: 1px solid col.$divider;
+            }
+        }
+
+        .strom-kpi-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            * {
+                grid-column: span 2;
+            }
+
+            bfe-dashboard-row:nth-of-type(4),
+            bfe-dashboard-row:nth-of-type(5) {
+                grid-column: span 1;
+                padding-bottom: 12px;
+                ::ng-deep .dashboard-row-container {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 0px;
+                }
+            }
+
+            bfe-dashboard-row:nth-of-type(4) {
+                padding-right: 8px;
+                border-right: 1px solid col.$divider;
+                ::ng-deep .trend {
+                    margin-top: auto;
+                }
+            }
+
+            bfe-dashboard-row:nth-of-type(5) {
+                padding-left: 8px;
+                ::ng-deep .trend {
+                    margin-top: auto;
+                }
+            }
+        }
+
+        .wetter-kpi-container {
+            fa-icon {
+                padding-top: 4px;
+                padding-left: 18px;
+                padding-right: 18px;
+                color: col.$icon;
+            }
+        }
+
+        @media (max-width: #{dim.$bp-min-lg}) {
+            --col-count: 2;
+            --col-width: calc(
+                50% - var(--d-general-spacing-md) / var(--col-count)
+            );
+        }
+
+        @media (max-width: #{dim.$bp-min-md}) {
+            --col-count: 1;
+            --col-width: 100%;
+        }
+    }
+}

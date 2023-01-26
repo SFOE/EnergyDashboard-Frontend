@@ -1,0 +1,23 @@
+@use 'layout';
+@use 'text';
+@use 'dim';
+@use 'var';
+
+.stromverbrauch-aktueller-landesverbrauch-histogram-chart {
+    @media (max-width: #{dim.$bp-min-md}) {
+        .kpi-head {
+            grid-template-columns: 1fr;
+            row-gap: 24px;
+
+            h3 {
+                margin-bottom: 12px;
+            }
+        }
+
+        .diagram-container {
+            bfe-diagram-legend {
+                margin-left: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+<div class="stromverbrauch-aktueller-landesverbrauch-histogram-chart">
+    <section>
+        <bfe-kpi-subtitle>
+            {{
+                'dynamic:kpi-strom-1_landesverbrauch_SG.titel' | i18nextDynamic
+            }}
+        </bfe-kpi-subtitle>
+        <bfe-kpi-date-info-subtext [date]="currentDate">
+        </bfe-kpi-date-info-subtext>
+
+        <div *ngIf="(chartData.length ?? 0) > 0" class="diagram-container">
+            <bfe-optional-dynamic-langtext
+                text="kpi-strom-1_landesverbrauch_SG.langtext"
+            ></bfe-optional-dynamic-langtext>
+            <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+            <bfe-histogram-line
+                [domainMin]="minYValue"
+                [colors]="lineChartColors"
+                [data]="chartData"
+                [xLabelModifier]="labelModifier"
+                [yLabelFormatter]="yLabelFormatter"
+                [strokeWidths]="[1, 2, 2, 2]"
+                [dashedLines]="['0', '0', '0', '0 4']"
+                [bandColor]="bandColor"
+                (elFocus)="showLineChartTooltip($event)"
+                (diagramLeave)="hideTooltip()"
+            ></bfe-histogram-line>
+            <bfe-stromverbrauch-chart-tooltip
+                [event]="tooltipEvent"
+                [lineEntries]="lineEntries"
+                postfix="GWh"
+                postfixDifference="%"
+                [withSpaceBeforePostfix]="true"
+                [withSpaceBeforePostfixDifference]="false"
+            ></bfe-stromverbrauch-chart-tooltip>
+        </div>
+    </section>
+</div>

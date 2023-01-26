@@ -1,0 +1,35 @@
+@use 'col';
+
+.poi-legend {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    row-gap: 6px;
+
+    .poi-entry {
+        display: flex;
+        justify-content: flex-start;
+        align-items: baseline;
+        column-gap: 8px;
+        font-size: 10px;
+
+        .poi-entry-date {
+            color: col.$dark;
+            white-space: nowrap;
+        }
+
+        .point-of-interest-label {
+            padding: 3px 5px;
+            border-radius: 50%;
+            background-color: #d9d9d9;
+            line-height: 0.95;
+        }
+
+        .no-margin {
+            ::ng-deep p {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

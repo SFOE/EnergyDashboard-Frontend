@@ -1,0 +1,128 @@
+@use 'mix';
+@use 'sass:math';
+
+bfe-tab-list {
+    display: block;
+
+    $itemGap: 32px;
+
+    .tab-list {
+        display: grid;
+        margin: 0 calc(var(--d-page-side-gap) * -1);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .tab-list__inner {
+        margin: 0 var(--d-page-side-gap);
+        width: calc(100% - 2 * var(--d-page-side-gap));
+        overflow: hidden;
+    }
+
+    .tab-list__list {
+        display: flex;
+        margin: 0;
+        overflow-x: auto;
+        @include mix.hideScrollbar;
+    }
+
+    .tab-list__item {
+        padding: 0 math.div($itemGap, 2);
+
+        &:first-of-type {
+            padding-left: 0;
+        }
+
+        &:last-of-type a {
+            padding-left: 0;
+        }
+    }
+
+    .tab-list__link {
+        display: block;
+        position: relative;
+
+        transition: color 200ms ease-in-out;
+        color: var(--c-fg-nav);
+
+        line-height: 28px;
+        font-size: 18px;
+        letter-spacing: 0.1px;
+        padding: 18px 0;
+        height: 100%;
+
+        &,
+        * {
+            white-space: nowrap;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            display: block;
+            bottom: 0;
+            width: 100%;
+            transform: scaleX(0);
+            border-bottom: 2px solid var(--c-fg-nav-active);
+            transition: transform 200ms ease-in-out;
+        }
+
+        &:hover,
+        &.cdk-keyboard-focused,
+        &.cdk-program-focused {
+            color: var(--c-fg-nav-active);
+
+            &::after {
+                transform: scale(1);
+            }
+        }
+    }
+
+    .tab-list__link--active {
+        color: var(--c-fg-nav-active);
+
+        &::after {
+            transform: scaleX(1);
+        }
+    }
+
+    .tab-list__scroll-btn {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        bottom: 0;
+        width: 40px;
+
+        sc-svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--c-bg-page);
+        box-shadow: var(--bs-overlay);
+        cursor: pointer;
+        color: var(--c-fg-page);
+        pointer-events: none;
+        opacity: 0;
+        transition: all 200ms ease-in-out;
+
+        &.tab-list__scroll-btn--visible {
+            opacity: 1;
+            pointer-events: all;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    .tab-list__scroll-btn--left {
+        left: 0;
+        transform: translate3d(-25%, 0, 0);
+    }
+
+    .tab-list__scroll-btn--right {
+        right: 0;
+        transform: translate3d(25%, 0, 0);
+    }
+}

@@ -1,0 +1,23 @@
+.donut-trend {
+    width: max-content;
+}
+
+.donut-flex {
+    display: flex;
+    column-gap: 4px;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.trend-display {
+    display: flex;
+    justify-content: center;
+}
+
+.trend-description {
+    text-align: center;
+}
+
+.donut-flex p:first-of-type {
+    font-weight: 700;
+}

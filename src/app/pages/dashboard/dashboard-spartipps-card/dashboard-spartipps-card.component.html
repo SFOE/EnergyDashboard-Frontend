@@ -1,0 +1,53 @@
+<bfe-overview-card
+    *ngIf="spartipp$ | async; let spartipp"
+    titleKey="dashboard.uebersicht.spartipps.titel"
+    titleKeySecondLine="dashboard.uebersicht.spartipps.titel-second-line"
+>
+    <img
+        [src]="spartipp.imageUrl"
+        alt=""
+        class="spartipp-image"
+        role="presentation"
+    />
+
+    <div class="spartipp-outer">
+        <div>
+            <h3 class="uppercase">
+                {{
+                    'dashboard.uebersicht.spartipps.daily-title'
+                        | i18next
+                        | uppercase
+                }}
+            </h3>
+            <h4 class="spartipp-title">{{ spartipp.title }}</h4>
+            <p class="spartipp-text">{{ spartipp.text }}</p>
+            <div>
+                <div class="spartipp-more">
+                    <div>
+                        <fa-icon
+                            class="spartipp-icon"
+                            icon="external-link"
+                        ></fa-icon>
+                    </div>
+                    <a
+                        [attr.href]="
+                            'dashboard.uebersicht.spartipps.more.url' | i18next
+                        "
+                        class="g-default spartipp-more-link"
+                        rel="noopener"
+                        target="_blank"
+                        >{{
+                            'dashboard.uebersicht.spartipps.more' | i18next
+                        }}</a
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <img
+        alt="Logo Energieschweiz"
+        class="energieschweiz-logo"
+        src="/assets/images/energieschweiz.svg"
+    />
+</bfe-overview-card>

@@ -1,0 +1,140 @@
+<footer class="footer">
+    <div class="footer__main">
+        <div class="footer__info-grid">
+            <div class="footer__info-group">
+                <h2 class="footer__sub-title">
+                    {{ 'footer.title.info' | i18next }}
+                </h2>
+                <ul class="footer__nav">
+                    <li>
+                        <a
+                            [attr.href]="'footer.info.topic1.url' | i18next"
+                            class="footer__nav__link first-li-with-top-border g-default-icon"
+                            rel="noopener"
+                            target="_blank"
+                        >
+                            {{ 'footer.info.topic1' | i18next }}
+
+                            <div class="footer__nav__link__icon">
+                                <fa-icon icon="external-link"></fa-icon>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            [attr.href]="'footer.info.topic2.url' | i18next"
+                            class="footer__nav__link g-default-icon"
+                            rel="noopener"
+                            target="_blank"
+                        >
+                            {{ 'footer.info.topic2' | i18next }}
+
+                            <div class="footer__nav__link__icon">
+                                <fa-icon icon="external-link"></fa-icon>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            [attr.href]="'footer.info.topic3.url' | i18next"
+                            class="footer__nav__link g-default-icon"
+                            rel="noopener"
+                            target="_blank"
+                        >
+                            {{ 'footer.info.topic3' | i18next }}
+
+                            <div class="footer__nav__link__icon">
+                                <fa-icon icon="external-link"></fa-icon>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            [attr.href]="'footer.info.topic4.url' | i18next"
+                            class="footer__nav__link g-default-icon"
+                            rel="noopener"
+                            target="_blank"
+                        >
+                            {{ 'footer.info.topic4' | i18next }}
+
+                            <div class="footer__nav__link__icon">
+                                <fa-icon icon="external-link"></fa-icon>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer__info-group more-space-in-column-view">
+                <h2 class="footer__sub-title">
+                    {{ 'footer.title.data' | i18next }}
+                </h2>
+                <ul class="footer__nav">
+                    <li>
+                        <a
+                            [attr.href]="
+                                'footer.data.download.opendataswiss.url'
+                                    | i18next
+                            "
+                            class="footer__nav__link first-li-with-top-border g-default-icon"
+                            rel="noopener"
+                            target="_blank"
+                        >
+                            {{ 'footer.data.download.opendataswiss' | i18next }}
+                            <div class="footer__nav__link__icon">
+                                <fa-icon icon="external-link"></fa-icon>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        <a
+            [attr.href]="'bfe-url' | i18next"
+            class="footer__bottom__title"
+            rel="noopener"
+            target="_blank"
+            >{{ 'bfe-title' | i18next }}</a
+        >
+        <div class="footer__bottom__nav__list">
+            <a
+                [attr.href]="'./ax-statement'"
+                class="g-default footer__bottom__ax-statement footer__bottom__nav__list__link"
+                rel="noopener"
+                target="_blank"
+            >
+                {{ 'ax-statement' | i18next }}</a
+            >
+        </div>
+        <nav>
+            <ul class="footer__bottom__nav__list">
+                <li>
+                    <a
+                        [attr.href]="'footer.contact.url' | i18next"
+                        class="g-default footer__bottom__nav__list__link"
+                        rel="noopener"
+                        target="_blank"
+                    >
+                        <fa-icon
+                            [icon]="['far', 'envelope']"
+                            class="g-default-icon"
+                        ></fa-icon>
+                        {{ 'footer.contact' | i18next }}</a
+                    >
+                </li>
+                <li>
+                    <a
+                        [attr.href]="'footer.legal.url' | i18next"
+                        class="g-default footer__bottom__nav__list__link"
+                        rel="noopener"
+                        target="_blank"
+                    >
+                        <fa-icon icon="external-link"></fa-icon>
+                        {{ 'footer.legal' | i18next }}</a
+                    >
+                </li>
+            </ul>
+        </nav>
+    </div>
+</footer>

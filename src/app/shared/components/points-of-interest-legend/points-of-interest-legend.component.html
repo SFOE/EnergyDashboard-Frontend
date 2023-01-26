@@ -1,0 +1,10 @@
+<div class="poi-legend">
+    <div class="poi-entry" *ngFor="let entry of entries">
+        <span class="point-of-interest-label">{{ entry.pointNumber }}</span>
+        <span class="poi-entry-date">{{
+            (entry.overrideDateLabel ? entry.overrideDateLabel : entry.date)
+                | date
+        }}</span>
+        <span class="no-margin" [innerHTML]="entry.labelKey | i18next"></span>
+    </div>
+</div>

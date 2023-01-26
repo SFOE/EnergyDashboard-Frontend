@@ -1,0 +1,31 @@
+<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="currentColor" stroke-width="2">
+
+    <polyline points="13,15 29,15">
+      <animate id="anim-close"
+               begin="indefinite"
+               fill="freeze" attributeName="points" dur="150ms" to="13,21 29,21"/>
+      <animate begin="anim-close.begin + 200ms"
+               fill="freeze" attributeName="points" dur="150ms" to="13.7,13.7 28.3,28.3"/>
+
+      <animate id="anim-menu" begin="indefinite" fill="freeze" attributeName="points" dur="150ms" to="13,21 29,21"/>
+      <animate id="anim-menu" begin="anim-menu.begin + 150ms" fill="freeze" attributeName="points" dur="150ms" to="13,15 29,15"/>
+    </polyline>
+
+    <polyline points="13,21 29,21">
+      <animate begin="anim-close.begin + 150ms" fill="freeze" attributeName="points" dur="50ms" to="29,21 29,21"/>
+      <animate begin="anim-menu.begin + 150ms" fill="freeze" attributeName="points" dur="50ms" to="13,21 29,21"/>
+    </polyline>
+
+    <polyline points="13,27 29,27">
+      <animate begin="anim-close.begin + 0s"
+               fill="freeze" attributeName="points" dur="150ms" to="13,21 29,21"/>
+      <animate begin="anim-close.begin + 200ms"
+               fill="freeze" attributeName="points" dur="150ms" to="13.7,28.3 28.3,13.7"/>
+
+
+      <animate begin="anim-menu.begin + 0s" fill="freeze" attributeName="points" dur="150ms" to="13,21 29,21"/>
+      <animate begin="anim-menu.begin + 150ms" fill="freeze" attributeName="points" dur="150ms" to="13,27 29,27"/>
+    </polyline>
+  </g>
+</svg>

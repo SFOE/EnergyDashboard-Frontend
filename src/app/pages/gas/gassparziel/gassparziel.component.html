@@ -1,0 +1,46 @@
+<bfe-kpi-container
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-gas-3_gassparziel.datenquelle',
+        langtextDynamicKey: 'kpi-gas-3_gassparziel.langtext'
+    }"
+    [isLoading]="isLoadingTrend"
+    titleKeyDynamic="kpi-gas-3_gassparziel.titel"
+>
+    <bfe-kpi-container-row [indented]="true">
+        <bfe-sparziel-overview
+            *ngIf="!!sparzielZielData"
+            [model]="{
+                sparzielEntry: sparzielZielData,
+                trendLabelKey: 'commons.trend',
+                color: primaryColor
+            }"
+        >
+        </bfe-sparziel-overview>
+        <section class="teaser-section">
+            <div
+                [innerHTML]="
+                    'dynamic:kpi-gas-3_gassparziel.kurztext' | i18nextDynamic
+                "
+                class="info-subtext"
+            ></div>
+        </section>
+    </bfe-kpi-container-row>
+
+    <bfe-sparziel-histogram-chart
+        *ngIf="!!sparzielZielData"
+        [model]="{
+            lastUpdate: sparzielZielData.date,
+            data: sparzielPerMonth,
+            colors: {
+                bars: barColors,
+                lines: lineColors
+            },
+            legendEntries,
+            titleDynamicKey: 'kpi-gas-3_gassparziel_aktuelle_einsparung.titel',
+            langtextDynamicKey:
+                'kpi-gas-3_gassparziel_aktuelle_einsparung.langtext',
+            sparzielTarget: sparzielTarget
+        }"
+        [loading]="isLoadingPerMonth"
+    ></bfe-sparziel-histogram-chart>
+</bfe-kpi-container>

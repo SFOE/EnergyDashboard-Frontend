@@ -1,0 +1,30 @@
+bfe-d3-svg {
+    display: block;
+
+    .d3-svg {
+        position: relative;
+        width: 100%;
+        min-height: var(--d3-svg-min-h);
+        max-height: var(--d3-svg-max-h);
+        margin-bottom: var(--d3-svg-margin-bottom);
+        overflow: var(--d3-svg-overflow);
+
+        &:before {
+            content: '';
+            display: block;
+            padding-top: calc(
+                var(--d3-svg-ratio-h) / var(--d3-svg-ratio-w) * 100%
+            );
+        }
+
+        & > svg {
+            position: absolute;
+            display: block;
+            left: 0;
+            width: 100%;
+            top: 0;
+            height: 100%;
+            overflow: var(--d3-svg-overflow);
+        }
+    }
+}

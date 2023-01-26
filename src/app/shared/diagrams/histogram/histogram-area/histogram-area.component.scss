@@ -1,0 +1,7 @@
+bfe-histogram-area {
+    display: block;
+    .histogram-area {
+        width: calc(100% + 8px);
+        margin-right: -8px;
+    }
+}

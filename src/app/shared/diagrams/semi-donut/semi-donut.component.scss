@@ -1,0 +1,75 @@
+.semi-donut-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // center the element in the component because legend is 120% wide
+    padding: 0 10px;
+    margin-left: -5px;
+
+    .semi-donut {
+        --percentage: 0;
+        --fill: red;
+        --width: 92px;
+
+        width: var(--width);
+        height: calc(var(--width) / 2);
+        position: relative;
+        overflow: hidden;
+
+        color: #fff;
+
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        box-sizing: border-box;
+
+        .value-label {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 18px;
+            color: var(--fill);
+            padding-bottom: 6px;
+        }
+
+        &:after {
+            content: '';
+            width: var(--width);
+            height: var(--width);
+            border: 9px solid;
+            border-color: #d9d9d9 #d9d9d9 var(--fill) var(--fill);
+            position: absolute;
+            border-radius: 50%;
+            left: 0;
+            top: 0;
+            box-sizing: border-box;
+            transform: rotate(calc(1deg * (-45 + var(--percentage) * 1.8)));
+            animation: fillAnimation 1s linear;
+        }
+    }
+
+    .chart-legend {
+        display: flex;
+        justify-content: space-between;
+        width: 120%;
+
+        section:first-of-type {
+            padding-left: 1ch;
+        }
+
+        section:last-of-type {
+            margin-left: -1ch;
+        }
+
+        .value-label {
+            margin-top: -8px;
+        }
+    }
+}
+
+@keyframes fillAnimation {
+    0% {
+        transform: rotate(-45deg);
+    }
+}

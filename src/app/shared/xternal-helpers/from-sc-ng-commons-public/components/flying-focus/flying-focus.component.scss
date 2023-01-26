@@ -1,0 +1,37 @@
+:host {
+    $default-gap: -4px;
+    $default-border-radius: 0;
+    $default-box-shadow: 0 0 0 2px black;
+
+    position: absolute;
+    margin: 0;
+    background: transparent;
+    transition: {
+        property: left, top, width, height;
+        timing-function: cubic-bezier(0, 1, 0, 1);
+        duration: 250ms;
+    }
+
+    pointer-events: none;
+
+    z-index: 9999;
+    visibility: hidden;
+
+    &.--visible {
+        visibility: visible;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: var(--sc-flying-focus-gap, #{$default-gap});
+        left: var(--sc-flying-focus-gap, #{$default-gap});
+        bottom: var(--sc-flying-focus-gap, #{$default-gap});
+        right: var(--sc-flying-focus-gap, #{$default-gap});
+        box-shadow: var(--sc-flying-focus-box-shadow, #{$default-box-shadow});
+        border-radius: var(
+            --sc-flying-focus-border-radius,
+            #{$default-border-radius}
+        );
+    }
+}

@@ -1,0 +1,59 @@
+<bfe-kpi-container
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-strom-5_produktion.datenquelle',
+        langtextDynamicKey: 'kpi-strom-5_produktion.langtext'
+    }"
+    [isLoading]="isLoading"
+    titleKeyDynamic="kpi-strom-5_produktion.titel"
+>
+    <bfe-kpi-container-row>
+        <section>
+            <section
+                class="trend-section"
+                *ngIf="!isLoading && currentEntry; else loading"
+            >
+                <section>
+                    <bfe-large-number-unit
+                        [color]="spaceColor"
+                        [number]="currentEntry.eigenproduktion"
+                        unit="GWh"
+                    ></bfe-large-number-unit>
+                    <span class="label-thin label-medium">
+                        {{
+                            'dashboard.strom.produktion.eigenproduktion.yesterday'
+                                | i18next
+                        }}
+                    </span>
+                </section>
+                <section>
+                    <bfe-trend-indicator
+                        [trend]="currentEntry.trend"
+                        [rating]="currentEntry.trendRating"
+                    ></bfe-trend-indicator>
+                    <span class="label-thin label-medium">
+                        {{
+                            'dashboard.strom.produktion.rolling-trend' | i18next
+                        }}
+                    </span>
+                </section>
+            </section>
+            <ng-template #loading>
+                <div class="loading-container">
+                    <bfe-loading-spinner></bfe-loading-spinner>
+                </div>
+            </ng-template>
+        </section>
+        <section class="teaser-section">
+            <div
+                [innerHTML]="
+                    'dynamic:kpi-strom-5_produktion.kurztext' | i18nextDynamic
+                "
+                class="teaser"
+            ></div>
+        </section>
+    </bfe-kpi-container-row>
+
+    <bfe-produktion-verbrauch-histogram-chart></bfe-produktion-verbrauch-histogram-chart>
+
+    <bfe-produktion-strommix-donut-mars></bfe-produktion-strommix-donut-mars>
+</bfe-kpi-container>

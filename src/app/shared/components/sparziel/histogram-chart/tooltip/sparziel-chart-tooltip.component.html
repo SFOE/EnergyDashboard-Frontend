@@ -1,0 +1,102 @@
+<div #tooltip [class.hidden]="!event" class="tooltip-container">
+    <ng-container *ngIf="!!data">
+        <section class="date-section">
+            {{ data.date | date: 'MMMM yyyy' }}
+        </section>
+        <ng-container
+            *ngIf="data.barValues[0] || data.barValues[1] || data.barValues[2]"
+        >
+            <section class="tooltip-content">
+                <!-- aktuelle Abweichung von 5 Jahresdurchschnitt -->
+                <span
+                    [style.backgroundColor]="this.dataColors[0]"
+                    class="dot"
+                ></span>
+
+                <span class="text">{{
+                    'commons.sparziel.chart-legend.difference' | i18next
+                }}</span>
+                <span class="number-box">
+                    <span> {{ data.barValues[0] }}</span>
+                    <span class="text-muted">%</span>
+                </span>
+
+                <!-- relevant: aktuelle Abweichung von 5 Jahresdurchschnitt ab Oktober-->
+                <span
+                    [style.backgroundColor]="this.dataColors[1]"
+                    [style.opacity]="isProjectedEntry ? '0.5' : '1'"
+                    class="dot"
+                ></span>
+                <span class="text"
+                    >{{
+                        (isProjectedEntry
+                            ? 'commons.sparziel.chart-legend.relevant-difference-projected'
+                            : 'commons.sparziel.chart-legend.relevant-difference-meassured'
+                        ) | i18next
+                    }}
+                </span>
+                <span class="number-box">
+                    <span>
+                        {{
+                            isProjectedEntry
+                                ? data.barValues[2]
+                                : data.barValues[1]
+                        }}
+                    </span>
+                    <span class="text-muted">%</span>
+                </span>
+
+                <!-- Temperatur-->
+                <span>
+                    <span
+                        [style.backgroundColor]="this.colorTemperature"
+                        class="dashed"
+                    ></span>
+                    <span
+                        [style.backgroundColor]="
+                            this.colorTemperatureTransparent
+                        "
+                        class="dashed-transparent"
+                    ></span>
+                    <span
+                        [style.backgroundColor]="this.colorTemperature"
+                        class="dashed"
+                    ></span>
+                </span>
+                <span class="text"
+                    >{{
+                        'commons.sparziel.chart-tooltipp.temperature' | i18next
+                    }}
+                </span>
+                <span class="number-box">
+                    <span>{{ data.lineValues[2] }}</span>
+                    <span class="text-muted celsius">°C</span>
+                </span>
+
+                <!-- divider -->
+                <span class="divider-section"><hr width="100%" /></span>
+
+                <!-- Mittelwert Verbrauch / Durchschnitt letzte 5 Jahre -->
+                <span
+                    [style.backgroundColor]="this.colorAverageUse"
+                    class="dot"
+                ></span>
+                <span class="text">{{
+                    'commons.sparziel.chart-legend.five-year-average' | i18next
+                }}</span>
+                <span></span>
+
+                <!-- Sparziel -->
+                <span
+                    [style.backgroundColor]="colorSparziel"
+                    class="dot"
+                ></span>
+                <span class="text">{{
+                    'commons.sparziel.chart-legend.target'
+                        | i18next: { target: sparzielTarget }
+                }}</span>
+                <span></span>
+            </section>
+        </ng-container>
+    </ng-container>
+</div>

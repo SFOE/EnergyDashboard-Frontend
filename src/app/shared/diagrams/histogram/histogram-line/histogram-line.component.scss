@@ -1,0 +1,20 @@
+@use 'src/styles/text';
+@use 'src/styles/mix';
+
+bfe-histogram-line,
+bfe-histogram-line-ref,
+bfe-histogram-line-ref-re,
+bfe-histogram-line-ref-inz14d,
+bfe-histogram-line-virus-variants {
+    display: block;
+    position: relative;
+
+    .histogram-line__title {
+        @include text.meta;
+        color: var(--c-fg-meta);
+    }
+
+    .histogram-line__no-data-overlay {
+        @include mix.noDataChartOverlay;
+    }
+}

@@ -1,0 +1,41 @@
+<div class="import-export-historical-values-container diagram-container">
+    <section>
+        <bfe-kpi-subtitle>
+            {{
+                'dynamic:kpi-strom-9_import-export_hist.titel' | i18nextDynamic
+            }}
+        </bfe-kpi-subtitle>
+        <bfe-kpi-date-info-subtext
+            [date]="currentEntry.datum"
+            updateInterval="weekly"
+        >
+        </bfe-kpi-date-info-subtext>
+        <bfe-optional-dynamic-langtext
+            text="kpi-strom-9_import-export_hist.langtext"
+        ></bfe-optional-dynamic-langtext>
+        <div
+            *ngIf="(chartData.length ?? 0) > 0"
+            class="diagram-container-inner"
+        >
+            <bfe-diagram-legend [entries]="lengendEntries"></bfe-diagram-legend>
+            <bfe-histogram-line
+                [domainMin]="minYValue"
+                [colors]="lineChartColors"
+                [data]="chartData"
+                [xLabelModifier]="labelModifier"
+                [xSubLabelModifier]="subLabelModifier"
+                [yLabelFormatter]="yLabelFormatter"
+                [strokeWidths]="[1, 4]"
+                [bandColor]="bandColor"
+                (elFocus)="showLineChartTooltip($event)"
+                (diagramLeave)="hideTooltip()"
+            ></bfe-histogram-line>
+            <bfe-histogram-chart-tooltip
+                [event]="tooltipEvent"
+                [primaryColor]="primaryColor"
+                postfix="GWh"
+                [withSpaceBeforePostfix]="true"
+            ></bfe-histogram-chart-tooltip>
+        </div>
+    </section>
+</div>

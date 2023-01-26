@@ -1,0 +1,14 @@
+@use 'text';
+
+bfe-histogram-detail {
+    display: block;
+
+    .histogram-detail__title {
+        @include text.meta;
+        color: var(--c-fg-meta);
+    }
+    .histogram-detail {
+        width: calc(100% + 8px);
+        margin-right: -8px;
+    }
+}

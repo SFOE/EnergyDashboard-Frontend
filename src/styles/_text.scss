@@ -1,0 +1,274 @@
+@use 'var';
+@use 'col';
+
+@mixin giga {
+    font-size: var(--fz-giga);
+    line-height: var(--lh-giga);
+    letter-spacing: 0.1px;
+    font-weight: 200;
+}
+
+@mixin h1 {
+    font-size: var(--fz-h1);
+    line-height: 1.5;
+    letter-spacing: 0.1px;
+}
+
+@mixin h2 {
+    font-size: var(--fz-h2);
+    line-height: var(--lh-h2);
+    letter-spacing: 0.1px;
+}
+
+@mixin h3 {
+    font-size: var(--fz-h3);
+    line-height: var(--lh-h3);
+    letter-spacing: 0.1px;
+    font-weight: bold;
+}
+
+@mixin h4 {
+    font-size: var(--fz-h4);
+    line-height: var(--lh-h4);
+    letter-spacing: 0.1px;
+    font-weight: var.$font-weight-bold;
+}
+
+@mixin lead {
+    font-size: var(--fz-lead);
+    line-height: var(--lh-lead);
+    letter-spacing: 0.2px;
+}
+
+@mixin paragraph1 {
+    font-family: 'Frutiger LT Std' sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: var(--fz-paragraph1);
+    line-height: var(--lh-paragraph1);
+    letter-spacing: 0.1px;
+}
+
+@mixin paragraph2 {
+    font-size: var(--fz-paragraph2);
+    line-height: var(--lh-paragraph2);
+    letter-spacing: 0.1px;
+}
+
+@mixin meta {
+    font-size: var(--fz-meta);
+    line-height: var(--lh-meta);
+    letter-spacing: 0.1px;
+}
+
+@mixin button {
+    font-size: var(--fz-button);
+    line-height: var(--lh-button);
+    letter-spacing: 0.1px;
+}
+
+@mixin link-button {
+    font-size: var(--fz-link-button);
+    line-height: var(--lh-link-button);
+    letter-spacing: 0.1px;
+}
+
+@mixin boxTitle {
+    font-size: var(--fz-paragraph1);
+    line-height: var(--lh-paragraph1);
+    letter-spacing: 0.1px;
+    font-weight: var.$font-weight-bold;
+}
+
+@mixin tooltipDate {
+    @include tooltip;
+    color: var(--c-fg-meta);
+}
+
+@mixin tooltip {
+    font-size: var(--fz-tooltip);
+    line-height: var(--lh-tooltip);
+    letter-spacing: 0.1px;
+}
+
+@mixin overviewCardTitle {
+    font-size: var(--fz-overview-card-title);
+    line-height: var(--lh-overview-card-title);
+    letter-spacing: 0.1px;
+    font-weight: bold;
+}
+
+h2 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: col.$black;
+}
+
+h3 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: col.$black;
+}
+
+h4 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 20px;
+    color: col.$icon-text;
+}
+
+p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: col.$black;
+    margin-bottom: 8px;
+}
+
+a {
+    color: var(--c-fg-link);
+
+    &:hover {
+        color: var(--c-fg-link-hover);
+    }
+
+    &:active {
+        color: var(--c-fg-link-active);
+    }
+
+    &:disabled {
+        color: var(--c-fg-link-disabled);
+    }
+}
+
+.label,
+.label-medium,
+.label-big,
+.label-thin,
+.label-teaser {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 19px;
+    color: col.$black;
+    &.subtitle-overview {
+        font-size: 13px;
+    }
+}
+
+.label-small {
+    font-size: 8px;
+    line-height: 14px;
+}
+
+.label-medium {
+    font-size: 12px;
+}
+
+.label-big {
+    font-size: 14px;
+}
+
+.label-thin {
+    font-weight: 300;
+}
+
+.label-teaser {
+    color: col.$dark;
+    p {
+        color: col.$dark;
+    }
+}
+
+.teaser {
+    color: col.$dark;
+
+    p {
+        color: col.$dark;
+    }
+}
+
+.info-subtext {
+    font-size: 13px;
+    letter-spacing: 0.1px;
+    color: col.$dark;
+    font-weight: 300;
+    p {
+        font-size: 13px;
+        letter-spacing: 0.1px;
+        color: col.$dark;
+        font-weight: 300;
+    }
+}
+
+.quelle {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 14px;
+    color: col.$black;
+}
+
+.num-xtra-small,
+.num-small,
+.num-medium,
+.num-big {
+    font-style: normal;
+    font-weight: 700;
+    color: col.$black;
+}
+
+.num-xtra-small {
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.num-small {
+    font-size: 15px;
+    line-height: 18px;
+}
+
+.num-medium {
+    font-size: 30px;
+    line-height: 36px;
+}
+
+.num-big {
+    font-size: 40px;
+    line-height: 48px;
+}
+
+.info-text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 19px;
+    color: col.$dark;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.right-align-text {
+    text-align: right;
+}
+
+.nowarp {
+    white-space: nowrap;
+}
+
+.point-of-interest-label {
+    font-family: 'Courier';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: #000;
+}

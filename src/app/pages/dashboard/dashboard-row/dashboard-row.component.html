@@ -1,0 +1,40 @@
+<div class="dashboard-row-container">
+    <section class="title-section">
+        <h3>
+            {{ 'dynamic:' + model.titleDynamicKey | i18nextDynamic }}
+        </h3>
+        <div
+            *ngIf="model.subTitleDynamicKey"
+            class="label-thin teaser subtitle-overview"
+            [innerHTML]="'dynamic:' + model.subTitleDynamicKey | i18nextDynamic"
+        ></div>
+    </section>
+    <div *ngIf="model.loading" class="trend skeleton-trend skeleton"></div>
+    <section *ngIf="model.data; let data" class="trend">
+        <ng-content></ng-content>
+        <bfe-trend-indicator
+            *ngIf="data.trend && data.trendRating"
+            [trend]="data.trend"
+            [rating]="data.trendRating"
+        >
+        </bfe-trend-indicator>
+        <section>
+            <bfe-large-number-unit
+                [number]="data.value"
+                [color]="data.color"
+                [unit]="data.valuePostfix"
+                [unitText]="
+                    data.valuePostfixSubtextKey
+                        ? (data.valuePostfixSubtextKey | i18next)
+                        : undefined
+                "
+            ></bfe-large-number-unit>
+            <p class="label value-subtext">
+                {{ data.valueSubtextKey ?? '' | i18next }}
+            </p>
+        </section>
+    </section>
+    <bfe-dashboard-not-available
+        *ngIf="!model.loading && !model.data"
+    ></bfe-dashboard-not-available>
+</div>

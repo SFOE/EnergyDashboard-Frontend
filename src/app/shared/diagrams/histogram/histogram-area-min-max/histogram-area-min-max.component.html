@@ -1,0 +1,17 @@
+<ng-container *ngIf="consolidatedChartEntries">
+    <bfe-histogram-area-stack
+        [data]="consolidatedChartEntries"
+        [colors]="consolidatedColors"
+        [focusPointColors]="consolidatedFocusPointColors"
+        [domainMax]="domainMax"
+        [domainMin]="domainMin"
+        [showLines]="true"
+        [areaOpacities]="areaOpacities"
+        [xLabelModifier]="xLabelModifier"
+        [xSubLabelModifier]="xSubLabelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+        [margins]="margins"
+        (elFocus)="emitFocusEntry($event)"
+        (diagramLeave)="diagramLeave.emit()"
+    ></bfe-histogram-area-stack>
+</ng-container>

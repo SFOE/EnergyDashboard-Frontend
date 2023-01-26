@@ -1,0 +1,8 @@
+@use 'col';
+
+:host ::ng-deep .tippy-box {
+    background-color: #565656;
+    border-color: #565656;
+    color: col.$white;
+    padding: 0 12px;
+}

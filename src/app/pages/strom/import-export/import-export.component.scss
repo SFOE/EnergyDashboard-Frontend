@@ -1,0 +1,19 @@
+@use 'layout';
+@use 'text';
+
+.trend-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: baseline;
+        align-items: center;
+    }
+}
+
+.chart-wrapper {
+    min-width: 100%;
+}

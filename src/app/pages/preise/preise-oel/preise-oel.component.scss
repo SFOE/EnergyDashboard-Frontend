@@ -1,0 +1,36 @@
+@use 'var';
+@use 'dim';
+
+.trend-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+
+    @media (max-width: #{dim.$bp-max-md}) {
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .trend-entries {
+            margin-top: var(--d-page-side-gap);
+        }
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+    }
+
+    bfe-context-title {
+        margin-right: 4px;
+    }
+}
+
+.teaser-section {
+    margin-bottom: auto;
+}
+
+.chart-wrapper {
+    min-width: 100%;
+}

@@ -1,0 +1,15 @@
+<bfe-overview-card (click)="navigateToLink()" tabindex="0">
+    <bfe-context-title
+        [context]="context"
+        marginBottom="36px"
+        marginLeft="0"
+    ></bfe-context-title>
+    <section class="content">
+        <ng-content></ng-content>
+    </section>
+    <p
+        *ngIf="sourceKey"
+        class="source"
+        [innerHTML]="'dynamic:' + sourceKey | i18nextDynamic"
+    ></p>
+</bfe-overview-card>

@@ -1,0 +1,25 @@
+.content-container {
+    overflow-y: hidden;
+}
+
+.collapse-switch {
+    cursor: pointer;
+    border: 0;
+    padding-top: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.collapsed {
+        border-image: linear-gradient(
+                0deg,
+                rgb(255, 255, 255) 0%,
+                rgba(255, 255, 255, 0.6978992280505952) 90%,
+                rgba(255, 255, 255, 0) 100%
+            )
+            100;
+        border-top-width: 40px;
+        border-style: solid;
+        margin-top: -40px;
+    }
+}

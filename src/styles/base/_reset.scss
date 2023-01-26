@@ -1,0 +1,218 @@
+@mixin reset {
+    ////
+    /// A tiny little reset that you can use as the basis of your CSS projects.
+    /// @link https://hankchizljaw.com/wrote/a-modern-css-reset/
+    ////
+    /* stylelint-disable */
+
+    /* Box sizing rules */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    /* Remove default padding */
+    ul[class],
+    ol[class] {
+        padding: 0;
+        list-style: none;
+    }
+
+    /* Remove default margin */
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    figure,
+    blockquote,
+    dl,
+    dd {
+        margin: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: normal;
+    }
+
+    /* Set core root defaults */
+
+    a[class] {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    /* A elements that don't have a class get default styles */
+    a:not([class]) {
+        text-decoration-skip-ink: auto;
+    }
+
+    /* Make images easier to work with */
+    img {
+        max-width: 100%;
+        display: block;
+    }
+
+    /* Inherit fonts for inputs and buttons */
+    input,
+    button,
+    textarea,
+    select {
+        font: inherit;
+    }
+
+    /// Hide Chrome search-field decorations
+    input::-webkit-search-decoration,
+    input::-webkit-search-cancel-button,
+    input::-webkit-search-results-button,
+    input::-webkit-search-results-decoration {
+        display: none;
+    }
+
+    /// Remove Firefox special padding
+    input::-moz-focus-inner,
+    button::-moz-focus-inner {
+        border: 0;
+        padding: 0;
+    }
+
+    /// Reset `input` and other default styles
+    ///
+    input {
+        background: none;
+        color: inherit;
+        cursor: inherit;
+        line-height: normal;
+        overflow: visible;
+        padding: 0;
+        border: 0;
+        margin: 0;
+        -moz-appearance: none; /* Firefox mobile */
+        -webkit-appearance: none; /* iPad */
+    }
+
+    // reset button
+    button {
+        background-color: transparent;
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    // reset active/hover/focus states
+    :active,
+    :hover,
+    :focus {
+        outline: 0; // if this is activated then the black keyboard focus indicator is not visible instead it uses the <sc-flying-focus> from shiftcode
+        -webkit-tap-highlight-color: rgba(
+            255,
+            255,
+            255,
+            0
+        ); // this is something of firefox
+    }
+
+    /* Remove all animations and transitions for people that prefer not to see them */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+
+    // table border
+    table {
+        border-collapse: collapse;
+    }
+
+    // fix sup/sup so it doesnt change line-height
+    sub {
+        vertical-align: bottom;
+        font-size: 0.8em;
+        position: relative;
+        bottom: -0.2em;
+    }
+    sup {
+        vertical-align: top;
+        font-size: 0.8em;
+        position: relative;
+        top: -0.2em;
+    }
+
+    // range input cross-browser styling
+
+    [type='range'] {
+        -webkit-appearance: none;
+        background: transparent;
+        margin: 0;
+        height: 12px;
+        width: 100%;
+    }
+    [type='range']::-moz-focus-outer {
+        border: 0;
+    }
+    [type='range']:focus {
+        outline: 0;
+    }
+    [type='range']:focus::-webkit-slider-runnable-track {
+        background: transparent;
+    }
+
+    [type='range']::-webkit-slider-runnable-track {
+        @include _rangeSliderTrack;
+    }
+    [type='range']::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        margin-top: -14px;
+        @include _rangeSliderThumb;
+    }
+
+    [type='range']::-moz-range-track {
+        @include _rangeSliderTrack;
+    }
+    [type='range']::-moz-range-thumb {
+        @include _rangeSliderThumb;
+        border: none;
+    }
+
+    [type='range']:disabled::-webkit-slider-thumb,
+    [type='range']:disabled::-moz-range-thumb,
+    [type='range']:disabled::-webkit-slider-runnable-track {
+        cursor: not-allowed;
+    }
+}
+
+@mixin _rangeSliderThumb() {
+    box-shadow: 0 4px 6px 0 rgba(12, 31, 49, 0.3);
+    background-color: #333333;
+    border-radius: 40px;
+    //background-image: url('../assets/icon/ic_slide-horizontally.svg');
+    //background-image: url('/assets/icon/ic_slide-horizontally.svg'); shiftcode
+    background-repeat: no-repeat;
+    background-position: center;
+    box-sizing: border-box;
+    height: 40px;
+    width: 40px;
+    cursor: grab;
+    transition: transform 400ms cubic-bezier(0.26, 0.79, 0, 2.24);
+    &:active {
+        cursor: grabbing;
+        transform: scale(1.05, 0.9);
+    }
+}
+@mixin _rangeSliderTrack() {
+    cursor: pointer;
+    height: 12px;
+    transition: all 0.2s ease;
+    width: 100%;
+    background: transparent;
+}

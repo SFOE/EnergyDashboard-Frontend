@@ -1,0 +1,46 @@
+@use 'col';
+
+.full-donut-container {
+    position: relative;
+
+    .value-display-container {
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        pointer-events: none;
+
+        .value {
+            font-weight: 700;
+            font-size: 14%;
+            line-height: 1;
+            max-width: 5ch;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .postfix {
+            font-weight: 300;
+            font-size: 6%;
+            line-height: 1.2;
+            text-align: center;
+            margin-bottom: -4px;
+        }
+
+        .all-data-label {
+            line-height: 1;
+            font-size: 5.5%;
+            margin-top: -3%;
+            max-width: 12ch;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+}

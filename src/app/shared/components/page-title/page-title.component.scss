@@ -1,0 +1,40 @@
+@use 'layout';
+@use 'text';
+@use 'dim';
+
+:host {
+    display: flex;
+    flex-direction: column;
+
+    .dashboard__nav {
+        @include layout.container();
+        padding-top: 32px;
+        background-color: var(--c-bg-header);
+        border-bottom: 1px solid var(--c-divider);
+    }
+
+    .dashboard__title {
+        @include text.giga;
+        margin-bottom: 8px;
+    }
+
+    .dashboard__sub-title {
+        @include text.lead;
+        margin-bottom: 8px;
+    }
+
+    .dashboard__xs-sub-title {
+        @include text.paragraph2;
+        margin-bottom: 16px;
+    }
+
+    .dashboard__notification {
+        margin-bottom: 16px;
+    }
+
+    @media (max-width: #{dim.$bp-max-sm}) {
+        .dashboard__tabs {
+            display: none;
+        }
+    }
+}

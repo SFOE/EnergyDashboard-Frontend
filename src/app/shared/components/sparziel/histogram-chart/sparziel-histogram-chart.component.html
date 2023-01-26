@@ -1,0 +1,55 @@
+<div *ngIf="!loading; else loadingTemplate" class="diagram-container">
+    <bfe-kpi-subtitle>
+        {{ 'dynamic:' + model.titleDynamicKey | i18nextDynamic }}
+    </bfe-kpi-subtitle>
+    <bfe-kpi-date-info-subtext
+        *ngIf="model.lastUpdate"
+        [date]="model.lastUpdate"
+        [updateInterval]="'monthly'"
+    ></bfe-kpi-date-info-subtext>
+
+    <bfe-optional-dynamic-langtext
+        [text]="model.langtextDynamicKey"
+    ></bfe-optional-dynamic-langtext>
+
+    <bfe-diagram-legend [entries]="model.legendEntries"></bfe-diagram-legend>
+
+    <bfe-histogram-detail
+        (diagramLeave)="hideTooltip()"
+        (elFocus)="showLineChartTooltip($event)"
+        [barColors]="model.colors.bars"
+        [barchartWidth]="22"
+        [data]="model.data"
+        [domainMax]="domainMax"
+        [domainMin]="domainMin"
+        [lineColors]="model.colors.lines"
+        [lineThickness]="[2, 2, 1]"
+        [lineStyle]="['solid', 'solid', 'dashed']"
+        [margin]="{ top: 20, bottom: 40, left: 0, right: 12 }"
+        [pointsOfInterest]="pointsOfInterest"
+        [xLabelModifier]="xLabelModifier"
+        [xSubLabelModifier]="xSubLabelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+        [yTickCount]="4"
+    >
+    </bfe-histogram-detail>
+    <bfe-points-of-interest-legend
+        [entries]="pointsOfInterest"
+    ></bfe-points-of-interest-legend>
+    <bfe-sparziel-chart-tooltip
+        [colorAverageUse]="model.colors.lines[1]"
+        [colorSparziel]="model.colors.lines[0]"
+        [colorTemperature]="model.colors.lines[2]"
+        [dataColors]="model.colors.bars"
+        [event]="tooltipEvent"
+        [sparzielTarget]="model.sparzielTarget"
+        postfix="GWh"
+    >
+    </bfe-sparziel-chart-tooltip>
+</div>
+
+<ng-template #loadingTemplate>
+    <div class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</ng-template>

@@ -1,0 +1,173 @@
+<bfe-kpi-container
+    titleKeyDynamic="kpi-gas-7_fuellstand-gasspeicher.titel"
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-gas-7_fuellstand-gasspeicher.datenquelle',
+        langtextDynamicKey: 'kpi-gas-7_fuellstand-gasspeicher.langtext'
+    }"
+    [isLoading]="isLoading"
+>
+    <bfe-kpi-container-row>
+        <section class="align-subtitles">
+            <bfe-kpi-subtitle>
+                {{
+                    'dashboard.gas.fuellstand-gasspeicher.kpi-head.subtitle'
+                        | i18next
+                }}
+            </bfe-kpi-subtitle>
+            <bfe-kpi-date-info-subtext *ngIf="lastUpdated" [date]="lastUpdated">
+            </bfe-kpi-date-info-subtext>
+        </section>
+        <section class="teaser-section">
+            <div
+                [innerHTML]="
+                    'dynamic:kpi-gas-7_fuellstand-gasspeicher.kurztext'
+                        | i18nextDynamic
+                "
+                class="teaser"
+            ></div>
+        </section>
+    </bfe-kpi-container-row>
+
+    <section class="donut-trend-container" *ngIf="chartDataDonuts">
+        <bfe-gas-donut-trend
+            *ngIf="
+                chartDataDonuts.Germany.speicherstandTwh != null &&
+                chartDataDonuts.Germany.speicherstandProzent != null
+            "
+            [rating]="chartDataDonuts.Germany.trendRating"
+            [region]="FuellstandGasspeicherRegion.Germany"
+            [speicherstandProzent]="
+                chartDataDonuts.Germany.speicherstandProzent
+            "
+            [speicherstandTwh]="chartDataDonuts.Germany.speicherstandTwh"
+            [trend]="chartDataDonuts.Germany.trend"
+        ></bfe-gas-donut-trend>
+        <bfe-gas-donut-trend
+            *ngIf="
+                chartDataDonuts.France.speicherstandTwh != null &&
+                chartDataDonuts.France.speicherstandProzent != null
+            "
+            [rating]="chartDataDonuts.France.trendRating"
+            [region]="FuellstandGasspeicherRegion.France"
+            [speicherstandProzent]="chartDataDonuts.France.speicherstandProzent"
+            [speicherstandTwh]="chartDataDonuts.France.speicherstandTwh"
+            [trend]="chartDataDonuts.France.trend"
+        ></bfe-gas-donut-trend>
+        <bfe-gas-donut-trend
+            *ngIf="
+                chartDataDonuts.Italy.speicherstandTwh != null &&
+                chartDataDonuts.Italy.speicherstandProzent != null
+            "
+            [rating]="chartDataDonuts.Italy.trendRating"
+            [region]="FuellstandGasspeicherRegion.Italy"
+            [speicherstandProzent]="chartDataDonuts.Italy.speicherstandProzent"
+            [speicherstandTwh]="chartDataDonuts.Italy.speicherstandTwh"
+            [trend]="chartDataDonuts.Italy.trend"
+        ></bfe-gas-donut-trend>
+        <bfe-gas-donut-trend
+            *ngIf="
+                chartDataDonuts.Austria.speicherstandTwh != null &&
+                chartDataDonuts.Austria.speicherstandProzent != null
+            "
+            [rating]="chartDataDonuts.Austria.trendRating"
+            [region]="FuellstandGasspeicherRegion.Austria"
+            [speicherstandProzent]="
+                chartDataDonuts.Austria.speicherstandProzent
+            "
+            [speicherstandTwh]="chartDataDonuts.Austria.speicherstandTwh"
+            [trend]="chartDataDonuts.Austria.trend"
+        ></bfe-gas-donut-trend>
+        <div class="divider-vertical"></div>
+        <bfe-gas-donut-trend
+            *ngIf="
+                chartDataDonuts.EU.speicherstandTwh != null &&
+                chartDataDonuts.EU.speicherstandProzent != null
+            "
+            [rating]="chartDataDonuts.EU.trendRating"
+            [region]="FuellstandGasspeicherRegion.EU"
+            [speicherstandProzent]="chartDataDonuts.EU.speicherstandProzent"
+            [speicherstandTwh]="chartDataDonuts.EU.speicherstandTwh"
+            [trend]="chartDataDonuts.EU.trend"
+        ></bfe-gas-donut-trend>
+    </section>
+
+    <div *ngIf="(histogramChartData.length ?? 0) > 0" class="diagram-container">
+        <section class="title-selection-container">
+            <section>
+                <bfe-kpi-subtitle>
+                    {{
+                        'dynamic:kpi-gas-7_fuellstand-gasspeicher_viz.titel'
+                            | i18nextDynamic
+                    }}
+                </bfe-kpi-subtitle>
+                <bfe-kpi-date-info-subtext
+                    *ngIf="lastUpdated"
+                    [date]="lastUpdated"
+                >
+                </bfe-kpi-date-info-subtext>
+            </section>
+            <section>
+                <select
+                    [formControl]="regionSelectionControl"
+                    aria-label="[todo]regionSelect"
+                    bfe-select
+                    class="region-selection-section"
+                    name="regionFilter"
+                >
+                    <ng-container *ngFor="let option of regions">
+                        <option
+                            [value]="option.value"
+                            class="region-selection-section"
+                        >
+                            {{ option.key | i18next }}
+                        </option>
+                    </ng-container>
+                </select>
+            </section>
+        </section>
+        <bfe-optional-dynamic-langtext
+            text="kpi-gas-7_fuellstand-gasspeicher_viz.langtext"
+        ></bfe-optional-dynamic-langtext>
+        <bfe-diagram-legend
+            [entries]="[
+                {
+                    color: consts.COLOR_CHART_MIN_MAX_RANGE,
+                    labelKey:
+                        'dashboard.gas.fuellstand-gasspeicher.legend.five-year-min-max',
+                    type: 'area'
+                },
+                {
+                    color: consts.COLOR_CHART_SECONDARY,
+                    labelKey:
+                        'dashboard.gas.fuellstand-gasspeicher.legend.five-year-average',
+                    type: 'line'
+                },
+                {
+                    color: consts.COLOR_CHART_PRIMARY,
+                    labelKey: 'commons.legend.latest',
+                    type: 'line'
+                }
+            ]"
+        ></bfe-diagram-legend>
+        <bfe-histogram-line
+            (diagramLeave)="hideTooltip()"
+            (elFocus)="showLineChartTooltip($event)"
+            [bandColor]="consts.COLOR_CHART_PRIMARY"
+            [colors]="[
+                consts.COLOR_CHART_SECONDARY,
+                consts.COLOR_CHART_PRIMARY
+            ]"
+            [data]="histogramChartData"
+            [strokeWidths]="[1, 4]"
+            [xLabelModifier]="labelModifier"
+            [xSubLabelModifier]="subLabelModifier"
+            [yLabelFormatter]="yLabelFormatter"
+        ></bfe-histogram-line>
+        <bfe-histogram-chart-tooltip
+            [event]="tooltipEvent"
+            [primaryColor]="consts.COLOR_CHART_PRIMARY"
+            postfix="%"
+            postfixDifference="%P"
+        ></bfe-histogram-chart-tooltip>
+    </div>
+</bfe-kpi-container>

@@ -1,0 +1,68 @@
+image: node:latest
+
+stages:
+    #    - test
+    - build
+    - deploy
+    - invalidate-cdn
+
+cache:
+    untracked: true
+    policy: push
+    key: ${CI_COMMIT_SHORT_SHA}
+    paths:
+        - node_modules/
+
+.pull_cached_node_modules:
+    cache:
+        untracked: true
+        key: ${CI_COMMIT_SHORT_SHA}
+        policy: pull
+
+#test:
+#    stage: test
+#    extends: .pull_cached_node_modules
+#    script:
+#        - yarn install --immutable
+#        - yarn lint
+#        - yarn test --no-watch --no-progress --browsers=ChromeHeadless
+#
+build:
+    stage: build
+    script:
+        - yarn install --immutable
+        - yarn build:sls
+
+deploy:
+    stage: deploy
+    script:
+        - yarn install --immutable
+        - yarn build:sls
+        - yarn deploy
+    only:
+        - master
+
+deploy-prod:
+    stage: deploy
+    script:
+        - yarn install --immutable
+        - yarn build-prod:sls
+        - yarn deploy-prod
+    only:
+        - production
+
+invalidate-cdn:
+    stage: invalidate-cdn
+    image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+    script:
+        - aws cloudfront create-invalidation --distribution-id E2THVA6LSXZ35Q --paths "/*"
+    only:
+        - master
+
+invalidate-cdn-prod:
+    stage: invalidate-cdn
+    image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+    script:
+        - aws cloudfront create-invalidation --distribution-id E3E1M6F81HHESU --paths "/*"
+    only:
+        - production

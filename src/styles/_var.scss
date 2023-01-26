@@ -1,0 +1,30 @@
+// various
+$font-name: 'Frutiger LT Com';
+$font-weight-light: 200;
+$font-weight-normal: normal;
+$font-weight-bold: bold;
+
+$sticky-box-shadow: 0 16px 16px rgba(13, 27, 41, 0.08),
+    0 8px 8px rgba(13, 27, 41, 0.08);
+$content-gradient: #{linear-gradient(
+        180deg,
+        var(--c-bg-gradient-start) 0%,
+        var(--c-bg-gradient-end) 100%
+    )};
+
+$no-data-background: repeating-linear-gradient(
+    -45deg,
+    #c5c5c5,
+    #c5c5c5 1px,
+    #ffffff 1px,
+    #ffffff 4px
+);
+
+$kpi-container-max-width: 800px;
+$kpi-container-padding-horizontal: 44px;
+$kpi-container-padding-horizontal-mobile: 22px;
+$kpi-container-indentation: 22px;
+$kpi-container-column-width: 326px;
+$kpi-container-column-gap: 60px;
+$kpi-container-row-gap: 44px;
+$kpi-container-row-gap-mobile: 22px;

@@ -1,0 +1,35 @@
+$_font-path: '/assets/fonts';
+
+@mixin _font-face($font-name, $font-weight, $font-style, $font-file-path) {
+    @font-face {
+        font-family: $font-name;
+        font-weight: $font-weight;
+        font-style: $font-style;
+        font-display: swap;
+        src: local('#{$font-name}'),
+            url('#{$font-file-path}.woff2') format('woff2'),
+            url('#{$font-file-path}.woff') format('woff');
+    }
+}
+
+@mixin frutiger-neue($font-name) {
+    $file-name: 'FrutigerNeueW02';
+    @include _font-face(
+        $font-name,
+        200,
+        normal,
+        '#{$_font-path}/#{$file-name}-Light'
+    );
+    @include _font-face(
+        $font-name,
+        normal,
+        normal,
+        '#{$_font-path}/#{$file-name}-Regular'
+    );
+    @include _font-face(
+        $font-name,
+        bold,
+        normal,
+        '#{$_font-path}/#{$file-name}-Bd'
+    );
+}

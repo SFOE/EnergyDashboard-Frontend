@@ -1,0 +1,35 @@
+<div *ngIf="!!chartData" class="diagram-container">
+    <section class="title-selection-container">
+        <bfe-kpi-subtitle>
+            {{
+                'dynamic:kpi-preise-1_treibstoff_diesel.titel' | i18nextDynamic
+            }}
+        </bfe-kpi-subtitle>
+        <bfe-kpi-date-info-subtext
+            [date]="currentEntry.date"
+            updateInterval="monthly"
+        >
+        </bfe-kpi-date-info-subtext>
+    </section>
+    <bfe-optional-dynamic-langtext
+        text="kpi-preise-1_treibstoff_diesel.langtext"
+    ></bfe-optional-dynamic-langtext>
+    <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+    <bfe-histogram-line
+        (diagramLeave)="hideTooltip()"
+        (elFocus)="showLineChartTooltip($event)"
+        [colors]="[primaryColor]"
+        [data]="chartData"
+        [strokeWidths]="[2]"
+        [xLabelModifier]="labelModifier"
+        [xSubLabelModifier]="subLabelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+    ></bfe-histogram-line>
+    <bfe-preise-tooltip
+        [isMonthly]="true"
+        [event]="tooltipEvent"
+        [lineEntries]="legendEntries"
+        postfix="%"
+        [withSpaceBeforePostfix]="false"
+    ></bfe-preise-tooltip>
+</div>

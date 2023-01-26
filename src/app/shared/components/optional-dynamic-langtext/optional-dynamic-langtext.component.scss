@@ -1,0 +1,20 @@
+@use 'col';
+@use 'var';
+@use 'dim';
+
+.optional-diagram-langtext {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 19px;
+    color: col.$dark;
+    margin-top: 20px;
+    margin-bottom: 16px;
+    margin-left: var.$kpi-container-indentation;
+}
+
+@media (max-width: #{dim.$bp-min-md}) {
+    .optional-diagram-langtext {
+        margin-left: 0;
+    }
+}

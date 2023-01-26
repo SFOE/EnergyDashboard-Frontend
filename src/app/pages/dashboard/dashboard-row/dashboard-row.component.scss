@@ -1,0 +1,36 @@
+@use 'col';
+
+.dashboard-row-container {
+    margin: 15px 0;
+    max-width: 100%;
+
+    .title-section {
+        margin-bottom: 16px;
+
+        .label-thin {
+            line-height: 1.25;
+            padding-top: 4px;
+            margin: 0;
+        }
+    }
+
+    .trend {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: flex-start;
+        justify-items: flex-start;
+        column-gap: 5%;
+
+        .value-subtext {
+            margin-left: 2px;
+            min-height: 19px;
+        }
+    }
+
+    .skeleton-trend {
+        min-height: 60px;
+        max-width: 100%;
+        animation: skeleton-loading 1s linear infinite alternate;
+        border-radius: 8px;
+    }
+}

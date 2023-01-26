@@ -1,0 +1,27 @@
+@use 'col';
+@use 'var';
+@use 'dim';
+
+select[bfe-select] {
+    display: block;
+    &.bfe-native-select {
+        $height: 48px;
+        height: $height;
+        border-radius: var(--br-form-control);
+        box-shadow: var(--bs-form-control);
+        border: 1px solid var(--c-border-form-control);
+        color: var(--c-fg-form-control);
+        background-color: var(--c-bg-form-control);
+        padding-left: 12px;
+        padding-right: 36px;
+        appearance: none;
+        background-image: url('/assets/icon/ic_chevron_down.svg');
+        background-repeat: no-repeat;
+        background-position: right 5px center;
+        font-size: 16px;
+        line-height: 1.5;
+        @media (max-width: #{dim.$bp-max-sm}) {
+            width: 100%;
+        }
+    }
+}

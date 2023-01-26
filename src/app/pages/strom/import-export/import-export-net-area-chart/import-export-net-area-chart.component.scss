@@ -1,0 +1,54 @@
+@use 'layout';
+@use 'text';
+@use 'var';
+@use 'dim';
+
+.import-export-net-container {
+    display: flex;
+    flex-direction: column;
+
+    .diagram-container {
+        display: flex;
+        flex-direction: column;
+
+        .legend {
+            display: grid;
+            grid-template-columns: max-content auto;
+            grid-template-rows: max-content max-content;
+            column-gap: 8px;
+            justify-content: flex-start;
+            align-items: flex-start;
+            margin-left: var.$kpi-container-indentation;
+        }
+
+        select {
+            width: fit-content;
+            align-self: flex-end;
+            height: 32px;
+        }
+
+        .diagram {
+            position: relative;
+
+            .y-axis-label {
+                font-style: normal;
+                font-weight: 400;
+                font-size: 10px;
+                line-height: 12px;
+                text-align: right;
+                color: #636363;
+                position: absolute;
+                width: 40px;
+                top: 0;
+                left: 0;
+                background-color: white;
+                padding: 1px;
+                z-index: 1;
+            }
+        }
+
+        @media (max-width: #{dim.$bp-max-md}) {
+            row-gap: 11px;
+        }
+    }
+}

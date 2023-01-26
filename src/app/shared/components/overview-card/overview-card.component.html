@@ -1,0 +1,32 @@
+<div [class.loading]="isLoading" class="card">
+    <div *ngIf="isLoading" class="card__loading-overlay">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+    <div *ngIf="titleKey" class="card__header">
+        <div>
+            <h3 class="card__title">{{ titleKey | i18next }}</h3>
+            <h3 *ngIf="titleKeySecondLine" class="card__title">
+                {{ titleKeySecondLine | i18next }}
+            </h3>
+        </div>
+        <button
+            (click)="toggleInfo()"
+            *ngIf="hasToggledInfos || hasToggledWarnings"
+            [class.card__header-btn--open]="showInfo$ | async"
+            [class.card__header-btn--warning]="hasToggledWarnings"
+            class="card__header-btn"
+        >
+            <ng-container *ngIf="showInfo$ | async">
+                <span class="cdk-visually-hidden">{{
+                    'OverviewCard.InfoButtonLabel.Hide' | i18next
+                }}</span>
+            </ng-container>
+            <ng-container *ngIf="!(showInfo$ | async)">
+                <span class="cdk-visually-hidden">{{
+                    'OverviewCard.InfoButtonLabel.Show' | i18next
+                }}</span>
+            </ng-container>
+        </button>
+    </div>
+    <ng-content></ng-content>
+</div>

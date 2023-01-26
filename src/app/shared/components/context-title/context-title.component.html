@@ -1,0 +1,12 @@
+<section
+    *ngIf="!!context"
+    class="context-title"
+    [style.marginBottom]="marginBottom ?? 0"
+    [style.marginLeft]="marginLeft ?? '32px'"
+    [ngClass]="size"
+>
+    <bfe-context-icon [context]="context" [size]="iconSize"></bfe-context-icon>
+    <span [ngClass]="context.toLocaleLowerCase()">{{
+        'dashboard.' + context.toLocaleLowerCase() + '.context-name' | i18next
+    }}</span>
+</section>

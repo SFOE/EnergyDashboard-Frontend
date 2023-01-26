@@ -1,0 +1,22 @@
+.trend-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    column-gap: 40px;
+
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: baseline;
+        align-items: center;
+    }
+
+    .align-right {
+        align-items: flex-end;
+    }
+
+    bfe-large-number-unit {
+        margin-top: 12px;
+        margin-bottom: 8px;
+    }
+}

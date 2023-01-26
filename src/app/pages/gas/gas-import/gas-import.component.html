@@ -1,0 +1,60 @@
+<bfe-kpi-container
+    titleKeyDynamic="kpi-gas-5_import.titel"
+    [isLoading]="isLoading"
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-gas-5_import.datenquelle',
+        langtextDynamicKey: 'kpi-gas-5_import.langtext'
+    }"
+>
+    <bfe-kpi-container-row>
+        <bfe-trend-and-number
+            *ngIf="!!currentEntry"
+            [model]="{
+                color: primaryColor,
+                bigNumber: {
+                    value: currentEntry.nettoImportCH,
+                    postfix: 'GWh',
+                    subTextKeys: [
+                        'dashboard.gas.import.daily-net-import.per-day'
+                    ]
+                },
+                trend: {
+                    value: currentEntry.trend,
+                    rating: currentEntry.trendRating,
+                    subTextKeys: ['dashboard.gas.import.daily-net-import.trend']
+                }
+            }"
+        ></bfe-trend-and-number>
+        <section class="teaser-section">
+            <div
+                class="info-subtext"
+                [innerHTML]="
+                    'dynamic:kpi-gas-5_import.kurztext' | i18nextDynamic
+                "
+            ></div>
+        </section>
+    </bfe-kpi-container-row>
+
+    <div class="chart-wrapper" *ngIf="!isLoading">
+        <bfe-kpi-subtitle>
+            {{ 'dynamic:kpi-gas-5_import_karte.titel' | i18nextDynamic }}
+        </bfe-kpi-subtitle>
+        <bfe-kpi-date-info-subtext [date]="currentEntry.datum">
+        </bfe-kpi-date-info-subtext>
+        <bfe-optional-dynamic-langtext
+            text="kpi-gas-5_import_karte.langtext"
+        ></bfe-optional-dynamic-langtext>
+        <bfe-import-export-per-day
+            [currentEntry]="currentEntry"
+            [context]="context"
+        ></bfe-import-export-per-day>
+    </div>
+
+    <div class="chart-wrapper" *ngIf="!isLoadingHistoricalValues">
+        <bfe-gas-import-historical-values-histogram-chart
+            [chartData]="historicalValuesChartEntries"
+            [currentEntry]="currentEntry"
+        >
+        </bfe-gas-import-historical-values-histogram-chart>
+    </div>
+</bfe-kpi-container>

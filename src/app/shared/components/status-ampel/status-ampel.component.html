@@ -1,0 +1,118 @@
+<ng-container *ngIf="ampelEntry$ | async; let entry">
+    <div *ngIf="entry.isValidNow" class="ampel-container">
+        <div class="level-grid">
+            <span [class.selected]="entry.level === 1" class="level-1"></span>
+            <span [class.selected]="entry.level === 2" class="level-2"></span>
+            <span [class.selected]="entry.level === 3" class="level-3"></span>
+            <span [class.selected]="entry.level === 4" class="level-4"></span>
+            <span [class.selected]="entry.level === 5" class="level-5"></span>
+        </div>
+        <div class="ampel-content" [ngClass]="'level-' + entry.level">
+            <section
+                class="header-section"
+                [class.text-hidden]="textHidden"
+                (click)="toggleText()"
+                (keydown.enter)="toggleText()"
+                (keydown.space)="toggleTextSpace($event)"
+            >
+                <fa-icon
+                    *ngIf="getWarnIcon(entry.level); let icon"
+                    [icon]="icon"
+                    [size]="iconSize"
+                    class="exclamation-icon"
+                    [ngClass]="'level-' + entry.level"
+                ></fa-icon>
+                <bfe-context-icon
+                    [context]="context"
+                    [size]="iconSize"
+                ></bfe-context-icon>
+                <p class="title">
+                    {{
+                        dynamicTextPrefix + entry.level + '.titel'
+                            | i18nextDynamic
+                    }}
+                </p>
+                <fa-icon
+                    [icon]="textHidden ? 'info-circle' : 'xmark'"
+                    size="sm"
+                    class="info-icon"
+                    tabindex="0"
+                    [ngClass]="'level-' + entry.level"
+                ></fa-icon>
+            </section>
+            <section class="info-section">
+                <ng-container *ngIf="!textHidden">
+                    <section class="text-section">
+                        <p class="shorttext teaser">
+                            {{
+                                dynamicTextPrefix + entry.level + '.kurztext'
+                                    | i18nextDynamic
+                            }}
+                        </p>
+                        <p
+                            class="teaser"
+                            [innerHTML]="
+                                dynamicTextPrefix + entry.level + '.langtext'
+                                    | i18nextDynamic
+                            "
+                        ></p>
+                    </section>
+                    <section
+                        class="mobile-footer"
+                        [ngClass]="'level-' + entry.level"
+                    >
+                        <p class="label">
+                            {{
+                                'dynamic:ampel-disclaimer.langtext'
+                                    | i18nextDynamic
+                            }}
+                        </p>
+                        <hr />
+                        <p class="label">
+                            {{ 'ampel.tooltip.link-teaser' | i18next }}
+                        </p>
+                        <span>
+                            <a
+                                href="https://www.bwl.admin.ch/bwl/de/home/themen/energie/energie-aktuelle-lage.html"
+                                rel="noopener"
+                                target="_blank"
+                            >
+                                <fa-icon
+                                    icon="arrow-up-right-from-square"
+                                ></fa-icon>
+                                bwl.admin.ch
+                            </a>
+                        </span>
+                    </section>
+                </ng-container>
+                <bfe-icon-tooltip
+                    [icon]="'info-circle'"
+                    size="xl"
+                    [iconColor]="getInfoIconColor(entry.level)"
+                >
+                    <p class="label">
+                        {{
+                            'dynamic:ampel-disclaimer.langtext' | i18nextDynamic
+                        }}
+                    </p>
+                    <hr />
+                    <p class="label">
+                        {{ 'ampel.tooltip.link-teaser' | i18next }}
+                    </p>
+                    <span>
+                        <a
+                            href="https://www.bwl.admin.ch/bwl/de/home/themen/energie/energie-aktuelle-lage.html"
+                            rel="noopener"
+                            target="_blank"
+                        >
+                            <fa-icon
+                                icon="arrow-up-right-from-square"
+                            ></fa-icon>
+                            bwl.admin.ch
+                        </a>
+                    </span>
+                </bfe-icon-tooltip>
+            </section>
+        </div>
+    </div>
+</ng-container>

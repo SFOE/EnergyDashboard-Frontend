@@ -1,0 +1,36 @@
+@use 'mix';
+
+.tooltip-container {
+    @include mix.tooltip-container;
+
+    .date-section {
+        padding: 4px 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .values-section {
+        display: flex;
+        flex-direction: column;
+        row-gap: 6px;
+        margin: 6px 8px;
+    }
+
+    .divider-section {
+        grid-column: span 3;
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+        width: calc(100% + 16px);
+        margin: -4px -8px;
+
+        hr {
+            height: 1px;
+            background-color: #ebebeb;
+            border: none;
+        }
+    }
+}
+
+.tooltip-container.hidden {
+    visibility: hidden;
+}

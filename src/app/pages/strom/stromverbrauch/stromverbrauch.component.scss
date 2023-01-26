@@ -1,0 +1,25 @@
+.trend-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: baseline;
+        align-items: center;
+    }
+}
+
+.trend-display-section bfe-trend-display {
+    margin-top: -20px;
+}
+
+.teaser-section {
+    margin-bottom: auto;
+}
+
+.chart-wrapper {
+    min-width: 100%;
+}

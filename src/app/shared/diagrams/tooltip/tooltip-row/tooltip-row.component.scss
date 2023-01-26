@@ -1,0 +1,25 @@
+:host {
+    width: 100%;
+    display: grid;
+    grid-template-columns: max-content 1fr 20% 20%;
+    justify-items: flex-start;
+    align-items: center;
+    padding: 4px 0;
+
+    .first-value {
+        margin-left: 12px;
+    }
+
+    .second-value {
+        padding-right: 8px;
+    }
+
+    .dot {
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+        margin-left: 8px;
+    }
+}

@@ -1,0 +1,74 @@
+<div class="master-detail">
+    <div class="master-detail__container">
+        <bfe-context-title
+            class="context-title"
+            [context]="context"
+            [marginBottom]="contextMargin"
+        ></bfe-context-title>
+        <div
+            #menuWrapperElRef
+            [style.--row-span]="(items.length || 0) + 1"
+            class="master-detail__menu"
+        >
+            <div #menuScrollContainerElRef class="master-detail__menu-inner">
+                <ng-container *ngFor="let item of items; let ix = index">
+                    <a
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        [routerLink]="item.pathArgs"
+                        [style.order]="ix"
+                        class="master-detail__menu-item"
+                        queryParamsHandling="preserve"
+                        routerLinkActive="master-detail__menu-item--active"
+                    >
+                        <div class="master-detail__menu-item-inner">
+                            <p
+                                [innerHTML]="
+                                    'dynamic:' + item.title | i18nextDynamic
+                                "
+                                class="master-detail__menu-item-title"
+                            ></p>
+                        </div>
+                    </a>
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="master-detail__menu-mobile">
+            <bfe-context-icon
+                *ngIf="context"
+                [context]="context"
+                size="lg"
+            ></bfe-context-icon>
+            <select
+                bfe-select
+                id="master-detail__menu-mobile-select"
+                (change)="changeRoute($event)"
+            >
+                <option
+                    *ngFor="let item of items; let ix = index"
+                    [style.order]="ix"
+                    [selected]="isActiveRoute(item)"
+                    [value]="item.pathArgs"
+                    [innerHTML]="'dynamic:' + item.title | i18nextDynamic"
+                ></option>
+            </select>
+        </div>
+
+        <div
+            [style.--order]="(activeMenuItemIndex | async) || 0"
+            [style.--row-span]="(items.length || 0) + 1"
+            class="master-detail__content"
+        >
+            <div
+                *ngIf="alertTemplate"
+                class="master-detail__alert-container"
+                (resized)="onDetailContainerResized($event)"
+            >
+                <ng-container [ngTemplateOutlet]="alertTemplate"></ng-container>
+            </div>
+            <div class="master-detail__content-card">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

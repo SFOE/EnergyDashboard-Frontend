@@ -1,0 +1,29 @@
+<div class="price-row-container">
+    <section class="title-section">
+        <bfe-context-title
+            [context]="model.context"
+            marginLeft="0"
+            size="small"
+        ></bfe-context-title>
+        <div
+            *ngIf="model.subTitleDynamicKey"
+            class="label-thin subtitle-overview teaser"
+            [innerHTML]="'dynamic:' + model.subTitleDynamicKey | i18nextDynamic"
+        ></div>
+    </section>
+    <section *ngIf="model.loading" class="skeleton-price-section"></section>
+    <section *ngIf="model.data; let data" class="price-section">
+        <p *ngIf="data.valueTopTextKey" class="label">
+            {{ data.valueTopTextKey | i18next }}
+        </p>
+        <bfe-large-number-unit
+            [number]="data.price"
+            [color]="getContextColor(model.context)"
+            [unit]="data.valuePostfix"
+            [subUnit]="data.currency"
+        ></bfe-large-number-unit>
+        <p *ngIf="data.valueBottomTextKey" class="label teaser">
+            {{ data.valueBottomTextKey | i18next }}
+        </p>
+    </section>
+</div>

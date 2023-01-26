@@ -1,0 +1,43 @@
+<div class="kpi-footer-container">
+    <div
+        class="langtext"
+        [innerHTML]="'dynamic:' + langtextKey | i18nextDynamic"
+    ></div>
+    <bfe-kpi-container-row>
+        <div class="data-source-container">
+            <section class="icon-title-section">
+                <img
+                    src="/assets/icon/database.svg"
+                    alt="{{ 'commons.kpi-footer.database-icon.alt' | i18next }}"
+                />
+                <h4>{{ 'commons.source-data-info.title' | i18next }}</h4>
+            </section>
+            <section class="dynamic-content-section">
+                <div
+                    class="info-text"
+                    [innerHTML]="'dynamic:' + sourceKey | i18nextDynamic"
+                ></div>
+            </section>
+        </div>
+        <!--        <section class="actions-section">-->
+        <!--            <span class="action" (click)="notImplemented()">-->
+        <!--                <img-->
+        <!--                    src="/assets/icon/arrow-up-right-from-square.svg"-->
+        <!--                    alt="{{ 'commons.kpi-footer.link-icon.alt' | i18next }}"-->
+        <!--                />-->
+        <!--                <p class="teaser">-->
+        <!--                    {{ 'commons.kpi-footer.download-data' | i18next }}-->
+        <!--                </p>-->
+        <!--            </span>-->
+        <!--            <span class="action" (click)="notImplemented()">-->
+        <!--                <img-->
+        <!--                    src="/assets/icon/share.svg"-->
+        <!--                    alt="{{ 'commons.kpi-footer.share-icon.alt' | i18next }}"-->
+        <!--                />-->
+        <!--                <p class="teaser">-->
+        <!--                    {{ 'commons.kpi-footer.share' | i18next }}-->
+        <!--                </p>-->
+        <!--            </span>-->
+        <!--        </section>-->
+    </bfe-kpi-container-row>
+</div>

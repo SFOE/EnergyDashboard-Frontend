@@ -1,0 +1,5 @@
+@use 'layout';
+
+h3 {
+    @include layout.kpi-subtitle;
+}

@@ -1,0 +1,104 @@
+<bfe-kpi-container
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-strom-11_fuellstand-speicherseen.datenquelle',
+        langtextDynamicKey: 'kpi-strom-11_fuellstand-speicherseen.langtext'
+    }"
+    [isLoading]="isLoading"
+    titleKeyDynamic="kpi-strom-11_fuellstand-speicherseen.titel"
+>
+    <bfe-kpi-container-row>
+        <section>
+            <bfe-kpi-subtitle>
+                {{
+                    'dashboard.strom.fuellstaende-speicherseen.kpi-head.subtitle'
+                        | i18next
+                }}
+            </bfe-kpi-subtitle>
+
+            <div class="mobile-only region-select">
+                <bfe-speicherseen-region-select
+                    (selectedRegion)="changeRegion($event)"
+                ></bfe-speicherseen-region-select>
+            </div>
+
+            <bfe-trend-and-number
+                *ngIf="!!latestEntry"
+                [model]="{
+                    color: colorSpeicherseen,
+                    bigNumber: {
+                        value: latestEntry.speicherstandProzent,
+                        postfix: '%',
+                        subTextKeys: [
+                            'dashboard.gas.import.daily-net-import.per-day'
+                        ]
+                    },
+                    trend: {
+                        value: latestEntry.trend,
+                        rating: latestEntry.trendRating,
+                        subTextKeys: [
+                            'dashboard.gas.import.daily-net-import.trend'
+                        ]
+                    }
+                }"
+            ></bfe-trend-and-number>
+        </section>
+        <section class="region-selection-section">
+            <div class="desktop-only">
+                <bfe-speicherseen-region-select
+                    (selectedRegion)="changeRegion($event)"
+                ></bfe-speicherseen-region-select>
+            </div>
+            <div
+                [innerHTML]="
+                    'dynamic:kpi-strom-11_fuellstand-speicherseen.kurztext'
+                        | i18nextDynamic
+                "
+                class="teaser"
+            ></div>
+        </section>
+    </bfe-kpi-container-row>
+
+    <div *ngIf="(chartData.length ?? 0) > 0" class="diagram-container">
+        <bfe-kpi-subtitle>
+            {{
+                'dynamic:kpi-strom-11_fuellstand-speicherseen_ch-gesamt.titel'
+                    | i18nextDynamic
+            }}
+        </bfe-kpi-subtitle>
+        <bfe-kpi-date-info-subtext
+            *ngIf="latestEntry"
+            [date]="latestEntry.date"
+            updateInterval="weekly"
+        >
+        </bfe-kpi-date-info-subtext>
+        <bfe-optional-dynamic-langtext
+            text="strom-11_fuellstand-speicherseen_ch-gesamt.langtext"
+        ></bfe-optional-dynamic-langtext>
+        <bfe-diagram-legend
+            [entries]="legendEntries"
+            [secondLineEntries]="additionalEntries"
+        ></bfe-diagram-legend>
+        <bfe-histogram-line
+            (diagramLeave)="hideTooltip()"
+            (elFocus)="showLineChartTooltip($event)"
+            [colors]="[
+                consts.COLOR_CHART_SECONDARY,
+                consts.COLOR_CHART_PRIMARY,
+                consts.COLOR_CHART_MINIMUM_WITH_RESERVES,
+                consts.COLOR_CHART_HISTORICAL_MINIMUM
+            ]"
+            [data]="chartData"
+            [strokeWidths]="[1, 4, 1, 1]"
+            [yLabelFormatter]="yLabelFormatter"
+            [xLabelModifier]="labelModifier"
+            [xSubLabelModifier]="subLabelModifier"
+        ></bfe-histogram-line>
+        <bfe-fuellstaende-speicherseen-chart-tooltip
+            [event]="tooltipEvent"
+            [primaryColor]="consts.COLOR_CHART_PRIMARY"
+            postfix="%"
+            postfixDifference="%P"
+            [isRegionTotalCH]="isSelectedRegionCH"
+        ></bfe-fuellstaende-speicherseen-chart-tooltip>
+    </div>
+</bfe-kpi-container>

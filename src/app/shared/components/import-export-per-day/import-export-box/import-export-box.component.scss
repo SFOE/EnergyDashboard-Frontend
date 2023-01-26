@@ -1,0 +1,244 @@
+@use 'col';
+@use 'dim';
+@use 'text';
+
+.import-export-box-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 1rem;
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
+
+    &.import-export-box-context-strom {
+        .import-export-box-import {
+            color: col.$context-strom;
+        }
+    }
+
+    &.import-export-box-context-gas {
+        .import-export-box-import {
+            color: col.$context-gas;
+        }
+    }
+
+    @media (max-width: #{dim.$bp-max-md}) {
+        padding: 1rem 0;
+    }
+
+    &:has(.import-export-box-vertical) {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .import-export-box {
+        background: #f9f9f9;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        border-radius: 12px;
+    }
+
+    .import-export-box-horizontal {
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    .import-export-box-vertical {
+        max-height: 100%;
+        min-height: 100%;
+        min-width: 100%;
+        max-width: 100%;
+
+        @media (min-width: #{dim.$bp-min-lg}) {
+            .import-export-box-content {
+                padding: 0 2rem 1rem;
+                height: 100%;
+                flex-direction: column;
+                align-content: space-around;
+            }
+        }
+    }
+
+    .import-export-box-header,
+    .import-export-box-header-inverse,
+    .import-export-box-header-mobile {
+        text-align: center;
+        width: 100%;
+        border-radius: 10px 10px 0 0;
+        padding: 4px 0;
+        @include text.h4();
+
+        &.import-export-box-country-germany {
+            background-color: col.$color-germany;
+        }
+
+        &.import-export-box-country-austria {
+            background-color: col.$color-austria;
+        }
+
+        &.import-export-box-country-france {
+            background-color: col.$color-france;
+        }
+
+        &.import-export-box-country-italy {
+            background-color: col.$color-italy;
+        }
+    }
+
+    .import-export-box-header-hide {
+        display: none;
+        @media (max-width: #{dim.$bp-max-md}) {
+            display: block;
+        }
+    }
+
+    .import-export-box-header-inverse {
+        border-radius: 0 0 10px 10px;
+        display: none;
+    }
+
+    .import-export-box-header-inverse-show {
+        display: block;
+        @media (max-width: #{dim.$bp-max-md}) {
+            display: none;
+        }
+    }
+
+    .import-export-box-header-mobile {
+        display: none;
+        background-color: col.$color-switzerland;
+        border-radius: 0 0 10px 10px;
+
+        @media (max-width: #{dim.$bp-max-md}) {
+            display: block;
+        }
+    }
+
+    .import-export-box-content {
+        display: flex;
+        justify-content: space-around;
+        align-content: space-around;
+        padding: 0.5rem;
+    }
+
+    .import-export-box-import {
+        color: col.$context-strom;
+        @media (max-width: #{dim.$bp-max-md}) {
+            flex: 100 1 0px;
+        }
+    }
+
+    .import-export-box-export {
+        color: col.$dark;
+        @media (max-width: #{dim.$bp-max-md}) {
+            flex: 100 1 0px;
+        }
+    }
+
+    .import-export-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 2.75rem;
+        text-align: right;
+
+        @media (max-width: #{dim.$bp-max-md}) {
+            text-align: center;
+        }
+    }
+
+    .import-export-postfix {
+        font-size: 1rem;
+        text-align: right;
+
+        @media (max-width: #{dim.$bp-max-md}) {
+            text-align: center;
+        }
+    }
+
+    .import-export-box-arrows {
+        @media (max-width: #{dim.$bp-max-md}) {
+            flex: 1 1 0px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            min-width: 2rem;
+            position: relative;
+        }
+    }
+
+    .arrow-export,
+    .arrow-import {
+        position: absolute;
+        max-width: none;
+        @media (max-width: #{dim.$bp-max-md}) {
+            position: absolute;
+            width: 200%;
+        }
+    }
+
+    @media (max-width: #{dim.$bp-max-md}) {
+        .arrow-import {
+            transform: rotate(90deg);
+            margin-right: 10px;
+        }
+
+        .arrow-export {
+            transform: rotate(270deg);
+            margin-left: 10px;
+        }
+    }
+
+    @media (min-width: #{dim.$bp-min-lg}) {
+        .arrow-import {
+            &.import-export-box-country-germany {
+                transform: rotate(90deg);
+                top: 100%;
+                right: 36%;
+            }
+
+            &.import-export-box-country-austria {
+                transform: rotate(180deg);
+                right: 75%;
+                top: 49%;
+            }
+
+            &.import-export-box-country-france {
+                transform: rotate(0deg);
+                left: 75%;
+                top: 49%;
+            }
+
+            &.import-export-box-country-italy {
+                transform: rotate(270deg);
+                bottom: 100%;
+                right: 36%;
+            }
+        }
+
+        .arrow-export {
+            &.import-export-box-country-germany {
+                transform: rotate(270deg);
+                top: 100%;
+                right: 29%;
+            }
+
+            &.import-export-box-country-austria {
+                transform: rotate(0deg);
+                right: 75%;
+                top: 56%;
+            }
+
+            &.import-export-box-country-france {
+                transform: rotate(180deg);
+                left: 75%;
+                top: 56%;
+            }
+
+            &.import-export-box-country-italy {
+                transform: rotate(90deg);
+                bottom: 100%;
+                right: 29%;
+            }
+        }
+    }
+}

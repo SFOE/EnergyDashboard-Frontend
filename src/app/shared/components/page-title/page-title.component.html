@@ -1,0 +1,11 @@
+<div class="dashboard__nav">
+    <h1 class="dashboard__title">{{ 'page.title' | i18next }}</h1>
+
+    <bfe-tab-list class="dashboard__tabs">
+        <ng-container *ngFor="let link of links">
+            <ng-template [tabItem]="['/', link.path]">{{
+                link.labelKey | i18next
+            }}</ng-template>
+        </ng-container>
+    </bfe-tab-list>
+</div>

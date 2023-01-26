@@ -1,0 +1,72 @@
+@use 'mix';
+
+.tooltip-container {
+    @include mix.tooltip-container;
+
+    .date-section {
+        padding: 4px 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .percent-section,
+    .percent-section-no-current {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        justify-items: flex-start;
+        align-items: center;
+        column-gap: 4px;
+        padding: 4px 8px;
+        row-gap: 4px;
+    }
+
+    .percent-section-no-current {
+        grid-template-columns: auto auto auto;
+    }
+
+    .column-margin {
+        margin-right: 12px;
+    }
+
+    .divider-section {
+        grid-column: span 3;
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+        width: 100%;
+        margin-left: -8px;
+        padding-right: 4px;
+
+        hr {
+            height: 1px;
+            background-color: #ebebeb;
+            border: none;
+        }
+    }
+
+    .sum-icon {
+        display: flex;
+        align-items: flex-end;
+        justify-self: center;
+    }
+}
+
+.tooltip-container.hidden {
+    visibility: hidden;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.text-muted {
+    color: #636363;
+    font-weight: 400;
+    font-size: 8px;
+}
+
+.justify-right {
+    justify-self: right;
+}

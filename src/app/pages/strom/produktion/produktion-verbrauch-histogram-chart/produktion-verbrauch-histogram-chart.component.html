@@ -1,0 +1,79 @@
+<bfe-kpi-subtitle>
+    {{
+        'dynamic:kpi-strom-5_produktion_import-verbrauch-mars.titel'
+            | i18nextDynamic
+    }}
+</bfe-kpi-subtitle>
+<bfe-kpi-date-info-subtext *ngIf="lastUpdate" [date]="lastUpdate">
+</bfe-kpi-date-info-subtext>
+<bfe-optional-dynamic-langtext
+    text="kpi-strom-5_produktion_import-verbrauch-mars.langtext"
+></bfe-optional-dynamic-langtext>
+<div class="diagram-container" *ngIf="!isLoading; else loading">
+    <bfe-diagram-legend
+        [entries]="[
+            {
+                color: 'black',
+                labelKey: 'dashboard.strom.produktion.verbrauch',
+                type: 'line'
+            },
+            {
+                color: chartColors[chartIndex.NETTOIMPORTE],
+                labelKey: 'dashboard.strom.produktion.type.nettoimporte',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.THERMISCHE],
+                labelKey: 'dashboard.strom.produktion.type.thermische',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.SPEICHERKRAFT],
+                labelKey: 'dashboard.strom.produktion.type.speicherkraft',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.WIND],
+                labelKey: 'dashboard.strom.produktion.type.wind',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.PHOTOVOLTAIK],
+                labelKey: 'dashboard.strom.produktion.type.photovoltaik',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.KERNKRAFT],
+                labelKey: 'dashboard.strom.produktion.type.kernkraft',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.FLUSSKRAFT],
+                labelKey: 'dashboard.strom.produktion.type.flusskraft',
+                type: 'area'
+            }
+        ]"
+    ></bfe-diagram-legend>
+    <bfe-histogram-area-stack
+        *ngIf="chartData"
+        [data]="chartData.areaEntries"
+        [lines]="chartData.lineEntries"
+        [colors]="chartColors"
+        [focusPointColors]="chartColors"
+        [focusPointBorder]="true"
+        [xLabelModifier]="labelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+        (diagramLeave)="hideTooltip()"
+        (elFocus)="showLineChartTooltip($event)"
+    >
+    </bfe-histogram-area-stack>
+    <bfe-produktion-verbrauch-historgram-chart-tooltip
+        [event]="tooltipEvent"
+    ></bfe-produktion-verbrauch-historgram-chart-tooltip>
+</div>
+
+<ng-template #loading>
+    <div class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</ng-template>

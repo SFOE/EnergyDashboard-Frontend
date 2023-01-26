@@ -1,0 +1,75 @@
+<bfe-kpi-container
+    titleKeyDynamic="kpi-preise-6_brennholz.titel"
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-preise-6_brennholz.datenquelle',
+        langtextDynamicKey: 'kpi-preise-6_brennholz.langtext'
+    }"
+    [isLoading]="isLoading"
+>
+    <bfe-kpi-container-row>
+        <section class="trend-section">
+            <bfe-context-title
+                [context]="context"
+                marginLeft="0px"
+            ></bfe-context-title>
+            <section *ngIf="currentEntry" class="trend-entries">
+                <bfe-large-number-unit
+                    [number]="currentEntry.values[0]"
+                    unit="%"
+                    [color]="primaryColor"
+                ></bfe-large-number-unit>
+                <p class="center-text">
+                    {{
+                        'dashboard.preise.holz.spotpreis-boerse.subtitle'
+                            | i18next
+                    }}
+                </p>
+            </section>
+        </section>
+        <section class="teaser-section">
+            <div
+                [innerHTML]="
+                    'dynamic:kpi-preise-6_brennholz.kurztext' | i18nextDynamic
+                "
+                class="teaser"
+            ></div>
+        </section>
+    </bfe-kpi-container-row>
+
+    <div *ngIf="!!chartData" class="diagram-container">
+        <section class="title-selection-container">
+            <bfe-kpi-subtitle>
+                {{
+                    'dynamic:kpi-preise-6_brennholz_endverbrauch.titel'
+                        | i18nextDynamic
+                }}
+            </bfe-kpi-subtitle>
+            <bfe-kpi-date-info-subtext
+                [date]="currentEntry.date"
+                updateInterval="monthly"
+            >
+            </bfe-kpi-date-info-subtext>
+        </section>
+        <bfe-optional-dynamic-langtext
+            text="kpi-preise-6_brennholz_endverbrauch.langtext"
+        ></bfe-optional-dynamic-langtext>
+        <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+        <bfe-histogram-line
+            (diagramLeave)="hideTooltip()"
+            (elFocus)="showLineChartTooltip($event)"
+            [colors]="[primaryColor]"
+            [data]="chartData"
+            [strokeWidths]="[2]"
+            [xLabelModifier]="labelModifier"
+            [xSubLabelModifier]="subLabelModifier"
+            [yLabelFormatter]="yLabelFormatter"
+        ></bfe-histogram-line>
+        <bfe-preise-tooltip
+            [isMonthly]="true"
+            [event]="tooltipEvent"
+            [lineEntries]="legendEntries"
+            postfix="%"
+            [withSpaceBeforePostfix]="false"
+        ></bfe-preise-tooltip>
+    </div>
+</bfe-kpi-container>

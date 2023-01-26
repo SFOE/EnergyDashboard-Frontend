@@ -1,0 +1,20 @@
+<div
+    class="full-donut-container"
+    [style.width]="dimension + 'px'"
+    [style.height]="dimension + 'px'"
+>
+    <figure [id]="'donut' + chartid"></figure>
+    <section
+        *ngIf="selectedData; let data"
+        class="value-display-container"
+        [style.color]="data.color"
+        [style.fontSize]="dimension + 'px'"
+    >
+        <!--Use font size as a hack to get responsive value text -->
+        <span class="all-data-label label">{{
+            data.labelKey ?? '' | i18next
+        }}</span>
+        <span class="value">{{ data.value }}</span>
+        <span class="postfix">{{ postfix }}</span>
+    </section>
+</div>

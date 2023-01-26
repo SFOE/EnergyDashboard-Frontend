@@ -1,0 +1,168 @@
+@use 'col';
+@use 'var';
+@use 'text';
+@use 'dim';
+@use 'mix';
+
+bfe-overview-card {
+    display: block;
+    height: 100%;
+    border-radius: var(--br-card);
+    border: var(--border-card);
+    box-shadow: var(--bs-card);
+    background-color: var(--c-bg-card);
+    overflow: hidden;
+
+    .card {
+        padding: var(--card-padding);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .card.loading {
+        cursor: progress;
+        pointer-events: none;
+    }
+
+    .card__header {
+        display: grid;
+        grid-template-columns: auto min-content;
+        margin-bottom: var(--card-padding);
+    }
+
+    .card__loading-overlay {
+        width: 100%;
+        height: 100%;
+        background-color: #dddddd;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 100;
+        opacity: 0.6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card__title {
+        @include text.overviewCardTitle;
+        margin: 0;
+        word-break: break-word;
+    }
+
+    .card__subtitle {
+        grid-row: 2;
+    }
+
+    .card__subtitle,
+    .card__hint {
+        @include text.meta;
+        color: var(--c-fg-meta);
+        word-break: break-word;
+        white-space: pre-line;
+    }
+
+    .card__intro {
+        @include text.meta;
+        color: var(--c-fg-meta);
+        margin-bottom: 1.2em;
+    }
+
+    .card__header-btn {
+        grid-area: 1 / 2 / span 2;
+        align-self: flex-start;
+        justify-self: center;
+        outline: none;
+        width: 24px;
+        height: 24px;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        border-radius: 50%;
+        background-color: var(--c-bg-button);
+        color: var(--c-fg-button);
+        // needs overflow:visible (default) for the warning svg stroke
+    }
+    .card__header-btn--warning {
+        &:not(.card__header-btn--open) {
+            color: col.$warning-fg;
+            background: transparent;
+            border-radius: 0;
+            sc-svg {
+                transform: scale(1.455) translateY(1.25px);
+                transform-origin: bottom left;
+                .base {
+                    fill: col.$warning-bg;
+                }
+            }
+        }
+    }
+
+    .card__legend {
+        margin-bottom: 8px;
+        align-self: flex-end;
+    }
+
+    .card__chart-title {
+        @include text.meta;
+        color: var(--c-fg-meta);
+    }
+
+    .card__cta {
+        @include text.link-button;
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        margin: -8px;
+        align-self: flex-start;
+
+        &.card__cta--spaced {
+            padding: 8px 8px 16px 8px;
+        }
+
+        sc-svg {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    bfe-key-value-list {
+        flex: 1 1 0;
+    }
+
+    bfe-histogram-preview:not(:last-child),
+    bfe-histogram-preview-re:not(:last-child),
+    bfe-histogram-preview-lines:not(:last-child),
+    bfe-histogram-preview-area:not(:last-child),
+    .card__hint:not(:last-child) {
+        margin-bottom: 16px;
+    }
+
+    @media (max-width: #{dim.$bp-max-sm}) {
+        .card {
+            padding: 16px;
+        }
+    }
+
+    @media (min-width: #{dim.$bp-min-lg}) {
+        .card__title {
+            margin: 0 0 3px 0;
+        }
+    }
+
+    // facet
+    &.--print {
+        border: 0;
+        box-shadow: none;
+
+        .card__hint,
+        .card__header-btn,
+        .card__cta {
+            display: none;
+        }
+    }
+}

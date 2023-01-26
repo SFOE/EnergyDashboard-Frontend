@@ -1,0 +1,43 @@
+@use 'col';
+
+.number-unit-container {
+    display: flex;
+    align-items: baseline;
+    column-gap: 4px;
+    flex-wrap: wrap;
+
+    .num-big {
+        line-height: 1;
+    }
+
+    .unit {
+        font-weight: 300;
+        font-size: 15px;
+        line-height: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .unit.with-text {
+        align-self: center;
+        margin-left: 4px;
+
+        .label {
+            line-height: 1;
+            margin-left: 0.5px;
+        }
+    }
+
+    .with-sub-unit {
+        font-size: 16px;
+        margin-left: 4px;
+
+        .sub-unit {
+            color: col.$black;
+        }
+    }
+
+    &.has-subunit {
+        align-items: center;
+    }
+}

@@ -1,0 +1,68 @@
+<div class="dashboard">
+    <div class="dashboard__main">
+        <h2 class="ax-title-page">{{ 'ax-statement' | i18next }}</h2>
+        <div class="master-detail__content-card">
+            <section class="ax-statement">
+                <div class="ax-infobox">
+                    <fa-icon icon="universal-access" size="4x"></fa-icon>
+                    <p>
+                        {{ 'ax-statement.part1.disclaimer' | i18next }}
+                    </p>
+                </div>
+
+                <div class="ax-content">
+                    <div class="ax-content-inner">
+                        <p class="ax-title">
+                            {{ 'ax-statement.part2.title' | i18next }}
+                        </p>
+                        <ul>
+                            <li>
+                                <p>
+                                    {{
+                                        'ax-statement.part2.content-a' | i18next
+                                    }}
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    {{
+                                        'ax-statement.part2.content-b' | i18next
+                                    }}
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="ax-content-inner">
+                        <p class="ax-title">
+                            {{ 'ax-statement.part3.title' | i18next }}
+                        </p>
+                        <ol type="a">
+                            <li>
+                                <p>
+                                    {{
+                                        'ax-statement.part3.content-a' | i18next
+                                    }}
+                                </p>
+                            </li>
+                            <li>
+                                <div
+                                    [innerHTML]="
+                                        'ax-statement.part3.content-b-innerHTML'
+                                            | i18next
+                                    "
+                                    class="ax-content"
+                                ></div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <p>{{ 'ax-statement.part4' | i18next }}</p>
+                <div
+                    [innerHTML]="'ax-statement.part5-innerHTML' | i18next"
+                    class="ax-content"
+                ></div>
+            </section>
+        </div>
+    </div>
+</div>

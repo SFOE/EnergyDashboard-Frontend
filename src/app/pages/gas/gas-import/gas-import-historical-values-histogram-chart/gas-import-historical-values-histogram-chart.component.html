@@ -1,0 +1,40 @@
+<div class="import-historical-values-container diagram-container">
+    <section>
+        <bfe-kpi-subtitle>
+            {{
+                'dynamic:kpi-gas-5_import_netto-monat-vsg.title'
+                    | i18nextDynamic
+            }}
+        </bfe-kpi-subtitle>
+        <bfe-kpi-date-info-subtext
+            *ngIf="currentEntry"
+            [date]="currentEntry.datum"
+            updateInterval="monthly"
+        >
+        </bfe-kpi-date-info-subtext>
+        <bfe-optional-dynamic-langtext
+            text="kpi-gas-5_import_netto-monat-vsg.langtext"
+        ></bfe-optional-dynamic-langtext>
+        <div *ngIf="(chartData.length ?? 0) > 0" class="diagram-container">
+            <bfe-diagram-legend [entries]="lengendEntries"></bfe-diagram-legend>
+            <bfe-histogram-line
+                (diagramLeave)="hideTooltip()"
+                (elFocus)="showLineChartTooltip($event)"
+                [bandColor]="primaryColor"
+                [colors]="lineChartColors"
+                [data]="chartData"
+                [strokeWidths]="[1, 2]"
+                [xLabelModifier]="labelModifier"
+                [xSubLabelModifier]="subLabelModifier"
+                [yLabelFormatter]="yLabelFormatter"
+            ></bfe-histogram-line>
+            <bfe-histogram-chart-tooltip
+                [event]="tooltipEvent"
+                [primaryColor]="primaryColor"
+                [withSpaceBeforePostfix]="true"
+                [withWeekly]="true"
+                postfix="GWh"
+            ></bfe-histogram-chart-tooltip>
+        </div>
+    </section>
+</div>

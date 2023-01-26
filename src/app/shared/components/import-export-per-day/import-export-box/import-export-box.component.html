@@ -1,0 +1,47 @@
+<div class="import-export-box-wrapper" [ngClass]="contextClass">
+    <div class="import-export-box" [ngClass]="orientationClass">
+        <div
+            class="import-export-box-header {{ countryClass }}"
+            [ngClass]="{ 'import-export-box-header-hide': inverse }"
+        >
+            {{ countryKey | i18next }}
+        </div>
+        <div class="import-export-box-content">
+            <div class="import-export-box-import">
+                <div class="import-export-value">
+                    {{ import | roundNumber }}
+                </div>
+                <div class="import-export-postfix">GWh</div>
+            </div>
+            <div class="import-export-box-arrows">
+                <img
+                    class="arrow-import"
+                    [ngClass]="countryClass"
+                    alt="Arrow import"
+                    [src]="arrowAsset"
+                />
+                <img
+                    class="arrow-export"
+                    [ngClass]="countryClass"
+                    alt="Arrow import"
+                    src="assets/icon/arrow_gray.svg"
+                />
+            </div>
+            <div class="import-export-box-export">
+                <div class="import-export-value">
+                    {{ export | roundNumber }}
+                </div>
+                <div class="import-export-postfix">GWh</div>
+            </div>
+        </div>
+        <div
+            class="import-export-box-header-inverse {{ countryClass }}"
+            [ngClass]="{ 'import-export-box-header-inverse-show': inverse }"
+        >
+            {{ countryKey | i18next }}
+        </div>
+        <div class="import-export-box-header-mobile">
+            {{ 'commons.country.switzerland' | i18next }}
+        </div>
+    </div>
+</div>

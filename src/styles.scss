@@ -1,0 +1,342 @@
+@use '@angular/cdk';
+@use 'base/reset';
+@use 'base/font-face';
+@use 'text';
+@use 'base/a11y-helper';
+@use 'dim';
+@use 'var';
+@use 'col';
+@import 'tippy.js/dist/tippy.css';
+
+// DIMENSION custom props | SM | MD | LG
+// --d-page-side-gap        16   24   32
+// --d-general-spacing-sm   16   16   24
+// --d-general-spacing-md   16   24   24
+// --d-general-spacing      24   32   48
+
+// <MD and general custom properties
+:root {
+    --sc-flying-focus-gap: -4px;
+    --sc-flying-focus-box-shadow: 0 0 0 2px black;
+    --sc-flying-focus-border-radius: 6px;
+
+    --d-header-height: 56px;
+    --d-sticky-detail-filter-base-height: 65px;
+    --d-sticky-detail-filter-reset-addon: 24px;
+    --d-general-spacing-sm: 16px;
+    --d-static-box-max-width: 100%;
+
+    --card-padding: 16px;
+    --card-padding-neg: -16px;
+
+    --d--md-menu-width: 256px;
+
+    --d-page-side-gap: 16px;
+    --d-general-spacing-md: 16px;
+    --d-general-spacing: 24px;
+
+    --br-card: 16px;
+    --br-box-inside: 6px;
+    --br-form-control: 6px;
+    --br-overlay: 12px;
+    --br-tooltip: 6px;
+
+    --fz-giga: 24px;
+    --lh-giga: 36px;
+
+    --fz-h1: 24px;
+
+    --fz-h2: 18px;
+    --lh-h2: 28px;
+
+    --fz-h3: 16px;
+    --lh-h3: 24px;
+
+    --fz-overview-card-title: 16px;
+    --lh-overview-card-title: 24px;
+
+    --fz-h4: 14px;
+    --lh-h4: 22px;
+
+    --fz-lead: 14px;
+    --lh-lead: 22px;
+
+    --fz-paragraph1: 12px;
+    --lh-paragraph1: 19px;
+
+    --fz-paragraph2: 12px;
+    --lh-paragraph2: 18px;
+
+    --fz-meta: 10px;
+    --lh-meta: 16px;
+
+    --fz-button: 14px;
+    --lh-button: 24px;
+
+    --fz-link-button: 16px;
+    --lh-link-button: 24px;
+
+    --fz-tooltip-title: 14px;
+    --lh-tooltip-title: 22px;
+    --fz-tooltip: 12px;
+    --lh-tooltip: 18px;
+
+    --c-divider: #ccc;
+    --c-divider-medium: #dddddd;
+    --c-divider-light: #e5e5e5;
+
+    --c-border-card: #fff;
+    --border-card: none;
+    --c-border-overlay: #e5e5e5;
+    --c-bg-card: #fff;
+    --c-bg-geo-regions-gradient-start: rgba(245, 246, 247, 0.5);
+    --c-bg-tooltip: #fff;
+    --c-border-tooltip: #ccc; // used with filter:dropShadow
+    --c-fg-tooltip-value: #333;
+    --c-fg-tooltip-header: #757575;
+    --c-bg-header: #fff;
+    --c-bg-page: #fff;
+    --c-bg-overlay: #fff;
+    --c-fg-page: #000;
+    --c-fg-meta: #757575;
+    --c-fg-intro: #333;
+    --c-fg-no-content: #333;
+    --c-bg-detail: #f9fafb;
+    --c-bg-gradient-start: #f5f6f7;
+    --c-bg-gradient-end: #fff;
+    --c-bg-card-container: #ededed;
+    --c-bg-footer: #f5f6f7;
+    --c-fg-footer: #333;
+    --c-fg-footer-low: #454545;
+    --c-bg-form-control: #fff;
+    --c-bg-form-control-o0: rgba(255, 255, 255, 0);
+    --c-bg-form-control-addon-btn: #f5f5f5;
+    --c-fg-form-control-addon-btn: #757575;
+    --c-fg-form-control: #454545;
+    --c-fg-form-control-readonly: #333;
+    --c-fg-form-control-icon: #454545;
+    --c-border-form-control: #ccc;
+
+    --c-bg-no-data-overlay: rgba(255, 255, 255, 0.67);
+
+    --c-fg-link: #006699;
+    --c-fg-link-hover: #004b70;
+    --c-fg-link-active: #00334d;
+    --c-fg-link-disabled: #599bbc;
+
+    --c-bg-button: #006699;
+    --c-fg-button: #fff;
+
+    --c-fg-nav: #454545;
+    --c-fg-nav-hover: #006699;
+    --c-fg-nav-active: #dc0018;
+    --c-bg-lang-active: #e5e5e5;
+
+    --c-bg-menu-default: #f2f7fa;
+    --c-fg-menu-default: #006699;
+    --c-bg-menu-vacc: #f0f6ee;
+    --c-fg-menu-vacc: #3c763d;
+
+    --c-bg-box-default: #f1f7fa;
+    --c-fg-box-default: #333;
+    --c-fg-box-default-low: #757575;
+    --c-fg-box-default-meta: #454545;
+    --c-bg-box-vacc: #f0f6ee;
+    --c-bg-zebra-1: #d9e7f6;
+    --c-bg-zebra-2: #ecf3fa;
+
+    --c-fg-keyvalue: #454545;
+
+    --c-bg-toggle: #f5f5f5;
+    --c-fg-toggle: #454545;
+    --c-bg-toggle-selected: #fff;
+    --c-fg-toggle-selected: #006699;
+    --c-bg-toggle-hover: #e5e5e5;
+    --c-bg-toggle-active: #ddd;
+
+    --c-bg-gradient-option-group-1: #f9fafb;
+    --c-bg-gradient-option-group-2: #ffffff;
+    --c-fg-option-group: #757575;
+    --c-fg-option: #333;
+    --c-bg-option-hover: #f2f7fa;
+    --c-bg-option-active: #d8e8ef;
+
+    --c-fg-legend: #454545;
+
+    --bs-card: 0 8px 16px rgba(13, 27, 41, 0.08),
+        0 2px 8px rgba(13, 27, 41, 0.04);
+    --bs-overlay: 0 16px 16px rgba(13, 27, 41, 0.08),
+        0 8px 8px rgba(13, 27, 41, 0.08);
+    --bs-form-control: none;
+
+    // different value set on documentElement from `SelectTitleComponent`
+    --sticky-detail-filter-reset-enabled: 0;
+}
+
+// MD+ custom properties
+@media (min-width: #{dim.$bp-footer}) {
+    :root {
+        --fz-paragraph2: 14px;
+    }
+}
+@media (min-width: #{dim.$bp-min-md}) {
+    :root {
+        --d-header-height: 96px;
+        --d-sticky-detail-filter-base-height: 81px;
+        --d-page-side-gap: 24px;
+        --d-general-spacing-md: 24px;
+        --d-general-spacing: 32px;
+        --d-static-box-max-width: 512px;
+
+        --card-padding: 24px;
+        --card-padding-neg: -24px;
+
+        --fz-giga: 32px;
+        --lh-giga: 48px;
+
+        --fz-h1: 28px;
+
+        --fz-h2: 24px;
+        --lh-h2: 36px;
+
+        --fz-h3: 18px;
+        --lh-h3: 28px;
+
+        --fz-overview-card-title: 18px;
+        --lh-overview-card-title: 28px;
+
+        --fz-lead: 18px;
+        --lh-lead: 28px;
+
+        --fz-paragraph1: 16px;
+        --lh-paragraph1: 24px;
+
+        --lh-paragraph2: 22px;
+
+        --fz-meta: 12px;
+        --lh-meta: 18px;
+
+        --fz-button: 16px;
+    }
+}
+
+// LG+ custom properties
+@media (min-width: #{dim.$bp-min-lg}) {
+    :root {
+        --d-sticky-detail-filter-base-height: 97px;
+        --d--md-menu-width: 320px;
+
+        --fz-overview-card-title: 20px;
+        --lh-overview-card-title: 24px;
+
+        --card-padding: 32px;
+        --card-padding-neg: -32px;
+
+        --d-general-spacing-sm: 24px;
+        --d-general-spacing: 48px;
+        --d-page-side-gap: 32px;
+
+        --fz-h1: 32px;
+        --fz-giga: 48px;
+        --lh-giga: 72px;
+
+        --fz-lead: 24px;
+        --lh-lead: 36px;
+    }
+}
+
+@include a11y-helper.ensureAccessibility;
+@include reset.reset;
+@include cdk.a11y-visually-hidden;
+@include font-face.frutiger-neue(var.$font-name);
+@include cdk.overlay;
+
+.bfe-nav-board-panel {
+    margin-top: var(--d-header-height);
+}
+
+.cdk-overlay-backdrop.bfe-nav-board-backdrop {
+    top: var(--d-header-height);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: '#{var.$font-name}', 'Roboto', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    text-rendering: optimizeSpeed;
+    color: var(--c-fg-page);
+}
+
+// always prefix global styles with g-
+a.g-default {
+    @include text.button;
+    color: var(--c-fg-link);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.g-content {
+    a {
+        color: var(--c-fg-link);
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+a.g-default-icon,
+button.g-default-icon {
+    color: var(--c-fg-link);
+
+    &:hover {
+        color: var(--c-fg-link-hover);
+
+        &:active {
+            color: var(--c-fg-link-active);
+        }
+    }
+}
+
+@page {
+    size: A4;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.desktop-only {
+    display: block;
+}
+
+.mobile-only {
+    display: none;
+}
+
+@media (max-width: #{dim.$bp-max-md}) {
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-only {
+        display: block;
+    }
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: #ededed;
+    }
+    100% {
+        background-color: #ccc;
+    }
+}

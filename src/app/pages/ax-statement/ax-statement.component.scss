@@ -1,0 +1,73 @@
+@use 'col';
+@use 'layout';
+@use 'var';
+
+:host {
+    display: block;
+
+    .dashboard__main,
+    .dashboard__more {
+        & ::ng-deep {
+            @include layout.container();
+        }
+    }
+
+    .dashboard__main {
+        border-top: 1px solid var(--c-divider);
+        background-color: var(--c-bg-card-container);
+        min-height: calc(100vh - var(--d-header-height));
+    }
+}
+
+.master-detail__content-card {
+    box-shadow: var(--bs-card);
+    background-color: var(--c-bg-card);
+    min-height: calc(100vh - var(--d-header-height));
+}
+
+.ax-title-page {
+    padding-top: 44px;
+    padding-bottom: 12px;
+    font-weight: 700;
+    size: 20px;
+    line-height: 24px;
+    color: col.$dark;
+}
+
+.ax-title {
+    font-weight: 700;
+}
+
+.ax-infobox {
+    align-items: center;
+    display: flex;
+    padding-bottom: 44px;
+
+    fa-icon {
+        color: col.$icon;
+    }
+
+    p {
+        padding-left: 33px;
+        font-weight: 700;
+    }
+}
+
+.ax-statement {
+    padding: 44px;
+}
+
+.ax-content {
+    display: flex;
+    flex-direction: row;
+    gap: 44px;
+
+    @media (max-width: 940px) {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+.ax-content-inner {
+    min-width: 330px;
+}

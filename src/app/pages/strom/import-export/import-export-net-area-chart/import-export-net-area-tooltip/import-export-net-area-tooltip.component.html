@@ -1,0 +1,69 @@
+<div #tooltip class="tooltip-container" [class.hidden]="!event">
+    <ng-container *ngIf="!!data">
+        <section class="date-section">{{ data.date | date }}</section>
+        <section class="values-section">
+            <!-- import values -->
+            <bfe-import-export-net-area-tooltip-row
+                *ngIf="displayedCountries?.includes(countryIndex.FR)"
+                [color]="consts.export.FR"
+                textKey="dashboard.strom.import-export.net-import-exports.chart.tooltip.import-fr"
+                [data]="data.positiveEntries[countryIndex.FR]"
+            >
+            </bfe-import-export-net-area-tooltip-row>
+            <bfe-import-export-net-area-tooltip-row
+                *ngIf="displayedCountries?.includes(countryIndex.IT)"
+                [color]="consts.export.IT"
+                textKey="dashboard.strom.import-export.net-import-exports.chart.tooltip.import-it"
+                [data]="data.positiveEntries[countryIndex.IT]"
+            >
+            </bfe-import-export-net-area-tooltip-row>
+            <bfe-import-export-net-area-tooltip-row
+                *ngIf="displayedCountries?.includes(countryIndex.AT)"
+                [color]="consts.export.AT"
+                textKey="dashboard.strom.import-export.net-import-exports.chart.tooltip.import-at"
+                [data]="data.positiveEntries[countryIndex.AT]"
+            >
+            </bfe-import-export-net-area-tooltip-row>
+            <bfe-import-export-net-area-tooltip-row
+                *ngIf="displayedCountries?.includes(countryIndex.DE)"
+                [color]="consts.export.DE"
+                textKey="dashboard.strom.import-export.net-import-exports.chart.tooltip.import-de"
+                [data]="data.positiveEntries[countryIndex.DE]"
+            >
+            </bfe-import-export-net-area-tooltip-row>
+
+            <!-- divider -->
+            <span class="divider-section"><hr width="100%" /></span>
+
+            <!-- export values -->
+            <bfe-import-export-net-area-tooltip-row
+                *ngIf="displayedCountries?.includes(countryIndex.DE)"
+                [color]="consts.export.DE"
+                textKey="dashboard.strom.import-export.net-import-exports.chart.tooltip.export-de"
+                [data]="data.negativeEntries[countryIndex.DE] | absoluteNumber"
+            >
+            </bfe-import-export-net-area-tooltip-row>
+            <bfe-import-export-net-area-tooltip-row
+                *ngIf="displayedCountries?.includes(countryIndex.AT)"
+                [color]="consts.export.AT"
+                textKey="dashboard.strom.import-export.net-import-exports.chart.tooltip.export-at"
+                [data]="data.negativeEntries[countryIndex.AT] | absoluteNumber"
+            >
+            </bfe-import-export-net-area-tooltip-row>
+            <bfe-import-export-net-area-tooltip-row
+                *ngIf="displayedCountries?.includes(countryIndex.IT)"
+                [color]="consts.export.IT"
+                textKey="dashboard.strom.import-export.net-import-exports.chart.tooltip.export-it"
+                [data]="data.negativeEntries[countryIndex.IT] | absoluteNumber"
+            >
+            </bfe-import-export-net-area-tooltip-row>
+            <bfe-import-export-net-area-tooltip-row
+                *ngIf="displayedCountries?.includes(countryIndex.FR)"
+                [color]="consts.export.FR"
+                textKey="dashboard.strom.import-export.net-import-exports.chart.tooltip.export-fr"
+                [data]="data.negativeEntries[countryIndex.FR] | absoluteNumber"
+            >
+            </bfe-import-export-net-area-tooltip-row>
+        </section>
+    </ng-container>
+</div>

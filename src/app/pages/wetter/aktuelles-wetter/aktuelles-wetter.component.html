@@ -1,0 +1,69 @@
+<bfe-kpi-container
+    titleKeyDynamic="kpi-wetter-1_meteoswiss.titel"
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-wetter-1_meteoswiss.datenquelle',
+        langtextDynamicKey: 'kpi-wetter-1_meteoswiss.langtext'
+    }"
+    [isLoading]="isLoading"
+>
+    <bfe-kpi-container-row>
+        <section>
+            <section
+                class="trend-section"
+                *ngIf="!isLoading && trend; else loading"
+            >
+                <section>
+                    <bfe-large-number-unit
+                        [number]="currentTrend.lufttemperaturTagesmittel"
+                        unit="°C"
+                        [color]="primaryColor"
+                    ></bfe-large-number-unit>
+                    <p>
+                        {{
+                            'dashboard.wetter.aktuelles-wetter.aktuelle-temperatur'
+                                | i18next
+                        }}
+                    </p>
+                </section>
+                <section>
+                    <bfe-trend-indicator
+                        [trend]="trend.trend"
+                        [rating]="trend.trendRating"
+                    ></bfe-trend-indicator>
+                    <p>
+                        {{
+                            'dashboard.wetter.aktuelles-wetter.trend' | i18next
+                        }}
+                    </p>
+                </section>
+            </section>
+            <ng-template #loading>
+                <div class="loading-container">
+                    <bfe-loading-spinner></bfe-loading-spinner>
+                </div>
+            </ng-template>
+        </section>
+        <section class="region-selection-section">
+            <bfe-aktuelles-wetter-region-select
+                (selectedRegion)="changeRegion($event)"
+            ></bfe-aktuelles-wetter-region-select>
+            <div
+                [innerHTML]="
+                    'dynamic:kpi-wetter-1_meteoswiss.kurztext' | i18nextDynamic
+                "
+                class="teaser"
+            ></div>
+        </section>
+    </bfe-kpi-container-row>
+
+    <bfe-aktuelles-wetter-aktuelle-temperatur-histogram-chart
+        [currentRegion]="currentRegion"
+        [currentTrend]="currentTrend"
+    >
+    </bfe-aktuelles-wetter-aktuelle-temperatur-histogram-chart>
+    <bfe-aktuelles-wetter-prognose-histogram-chart
+        [currentRegion]="currentRegion"
+        [currentTrend]="currentTrend"
+    >
+    </bfe-aktuelles-wetter-prognose-histogram-chart>
+</bfe-kpi-container>

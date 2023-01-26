@@ -1,0 +1,66 @@
+<div
+    class="sparziel-chart-container"
+    style="
+        --achievedPercentage: {{ calculatedAchievedPercentage }}; 
+        --projectedPercentage: {{ calculatedProjectedPercentage }}; 
+        --achievedColor: {{ achievedColor }};
+    "
+>
+    <section class="labels-left">
+        <div class="goal-label">
+            <p class="label-medium nowarp">
+                {{ 'commons.sparziel' | i18next }}
+            </p>
+        </div>
+        <div
+            class="to-go-space"
+            [style.height]="spaceToGoSizeLeft + 'px'"
+        ></div>
+        <div class="projected-label">
+            <p class="label-medium">
+                {{ 'commons.sparziel.projected-label' | i18next }}
+                ({{ projectedPercentage }}%)
+            </p>
+        </div>
+        <div class="achieved-label">
+            <p class="label-medium">
+                {{ 'commons.sparziel.meassured-label' | i18next }}
+                ({{ achievedPercentage }}%)
+            </p>
+        </div>
+    </section>
+    <section
+        class="stacked-bars"
+        [class.overachieved]="overarchievedPercentage > 0"
+    >
+        <span
+            *ngIf="overarchievedPercentage > 0"
+            class="overachieved-bar"
+            [style.height]="overarchievedPercentage + 'px'"
+        >
+            <p class="num-xtra-small">{{ overarchievedPercentage }}%</p>
+        </span>
+        <span class="projected-bar">
+            <div class="background"></div>
+        </span>
+        <span class="achieved-bar"></span>
+    </section>
+    <section class="labels-right">
+        <div class="goal-label">
+            <p class="label-medium">
+                <span *ngIf="sparzielLabelSubfix" class="sparziel-subfix">
+                    {{ sparzielLabelSubfix }}
+                </span>
+            </p>
+        </div>
+        <div class="to-go-space" [style.height]="percentageToGo + 'px'"></div>
+        <div class="achieved-label">
+            <p class="label-medium nowarp">
+                {{ 'commons.already-saved' | i18next }}
+            </p>
+            <p class="label-medium">
+                ({{ projectedPercentage + achievedPercentage }}%)
+            </p>
+        </div>
+    </section>
+</div>

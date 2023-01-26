@@ -1,0 +1,52 @@
+@use 'dim';
+@use 'layout';
+@use 'text';
+
+.import-export-per-day-container {
+    .import-export-chart {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+
+        @media (max-width: #{dim.$bp-max-md}) {
+            display: block;
+        }
+
+        .import-export-box-germany {
+            grid-row-start: 1;
+            grid-column-start: 2;
+            grid-column-end: 4;
+        }
+
+        .import-export-box-france {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 1;
+        }
+
+        .import-export-box-map {
+            display: flex;
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 2;
+            grid-column-end: 4;
+            width: 100%;
+
+            @media (max-width: #{dim.$bp-max-md}) {
+                display: none;
+            }
+        }
+
+        .import-export-box-austria {
+            grid-row-start: 2;
+            grid-row-end: 4;
+            grid-column-start: 4;
+        }
+
+        .import-export-box-italy {
+            grid-row-start: 4;
+            grid-column-start: 2;
+            grid-column-end: 4;
+        }
+    }
+}

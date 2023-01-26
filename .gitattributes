@@ -1,0 +1,12 @@
+# https://github.com/prettier/prettier/blob/main/docs/options.md
+# Add * text=auto eol=lf to the repo’s .gitattributes file.
+ # You may need to ask Windows users to re-clone your repo after this change to ensure git has not converted LF to CRLF on checkout.
+
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# JS and TS files must always use LF for tools to work
+*.js eol=lf
+*.ts eol=lf
+*.html eol=lf
+*.scss eol=lf

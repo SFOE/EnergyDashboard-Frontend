@@ -1,0 +1,15 @@
+<bfe-overview-card [titleKey]="cardTitle">
+    <div class="content-container" [style.height]="contentHeight">
+        <ng-content></ng-content>
+    </div>
+    <div
+        class="collapse-switch"
+        [class.collapsed]="collapsed"
+        tabindex="0"
+        (click)="toggleCollapse()"
+        (keydown.enter)="toggleCollapse()"
+        (keydown.space)="toggleCollapseSpace($event)"
+    >
+        <p>{{ (collapsed ? expandKey : collapseKey) | i18next }}</p>
+    </div>
+</bfe-overview-card>

@@ -1,0 +1,17 @@
+<ng-container [ngSwitch]="updateInterval">
+    <p class="info-subtext" *ngSwitchCase="'weekly'">
+        {{ 'page.subtitle.date-info-week' | i18next: { date: (date | date) } }}
+    </p>
+    <p class="info-subtext" *ngSwitchCase="'monthly'">
+        {{
+            'page.subtitle.date-info-month'
+                | i18next: { date: (date | date: 'MMMM YYYY') }
+        }}
+    </p>
+    <p class="info-subtext" *ngSwitchCase="'endOfMonth'">
+        {{ 'page.subtitle.date-info-month-end' | i18next }}
+    </p>
+    <p class="info-subtext" *ngSwitchDefault>
+        {{ 'page.subtitle.date-info' | i18next: { date: (date | date) } }}
+    </p>
+</ng-container>

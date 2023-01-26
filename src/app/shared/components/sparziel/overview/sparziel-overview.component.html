@@ -1,0 +1,50 @@
+<section *ngIf="!loading; else loadingTemplate" class="container-sparziel">
+    <div class="number-and-trend">
+        <section class="number-section">
+            <bfe-large-number-unit
+                [alignTextRightSide]="true"
+                [color]="model.color"
+                [number]="
+                    model.sparzielEntry.kumulierteMonatlicheEinsparungGWh
+                        | roundNumber
+                "
+                unit="GWh"
+            ></bfe-large-number-unit>
+            <p class="label-medium right-align-text nowarp">
+                {{ 'commons.sparziel.saved-label' | i18next }}
+            </p>
+            <p class="label-medium right-align-text">
+                {{
+                    'commons.to'
+                        | i18next
+                            : { date: model.sparzielEntry.date | date: 'dd.MM' }
+                }}
+            </p>
+        </section>
+
+        <bfe-trend-indicator
+            [trend]="model.sparzielEntry.trend"
+            [rating]="model.sparzielEntry.trendRating"
+            [labelKey]="model.trendLabelKey"
+        ></bfe-trend-indicator>
+    </div>
+
+    <bfe-sparziel-chart
+        [achievedPercentage]="
+            (model.sparzielEntry.standSparzielProzent | roundNumber) ?? 0
+        "
+        [achievedColor]="model.color"
+        [projectedPercentage]="
+            (model.sparzielEntry.standSparzielGeschaetztProzent
+                | roundNumber) ?? 0
+        "
+        [sparzielLabelSubfix]="model.sparzielEntry.sparzielGWh + ' GWh'"
+    >
+    </bfe-sparziel-chart>
+</section>
+
+<ng-template #loadingTemplate>
+    <div class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</ng-template>

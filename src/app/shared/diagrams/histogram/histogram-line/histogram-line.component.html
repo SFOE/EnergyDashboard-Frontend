@@ -1,0 +1,10 @@
+<bfe-d3-svg
+    class="histogram-line"
+    [minHeight]="svgMinHeight"
+    [maxHeight]="svgMaxHeight"
+    [ratio]="svgRatio"
+></bfe-d3-svg>
+
+<div *ngIf="showNoData" class="histogram-line__no-data-overlay">
+    {{ showNoDataKey | i18next }}
+</div>

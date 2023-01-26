@@ -1,0 +1,30 @@
+@use 'dim';
+
+.container-sparziel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .number-and-trend {
+        min-width: 300px;
+        display: flex;
+        justify-content: flex-start;
+        column-gap: 44px;
+        margin-bottom: 22px;
+    }
+
+    .number-section {
+        bfe-large-number-unit {
+            margin-bottom: 4px;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+}
+
+.loading-container {
+    width: 100%;
+    height: 130px;
+}
