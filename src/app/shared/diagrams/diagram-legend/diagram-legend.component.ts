@@ -5,7 +5,7 @@ export interface DiagramLegendEntry {
     secondColor?: string;
     labelKey: string;
     labelKeyOptions?: object;
-    type: 'area' | 'line' | 'dashed-line';
+    type: 'area' | 'line' | 'dashed-line' | 'diagonal';
 }
 
 @Component({

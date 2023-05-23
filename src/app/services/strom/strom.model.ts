@@ -1,5 +1,10 @@
+import { DateModel } from '../../core/models/base/date.model';
+import { FiveYearStatisticsModel } from '../../core/models/base/statisics.model';
 import { HistogramAreaChartEntry } from '../../core/models/charts';
 import { Trend, TrendRating } from '../../core/models/trend.enum';
+import { Block } from '../../shared/diagrams/histogram/base-histogram.model';
+import { HistogramDetailEntry } from '../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
+import { HistogramLineEntry } from '../../shared/diagrams/histogram/histogram-line/histogram-line.component';
 
 export interface StromProductionYearDto {
     kumuliertEigenproduktion: number;
@@ -30,8 +35,7 @@ export interface StromProductionData {
     lastUpdate?: Date;
 }
 
-export interface StromProductionImportVerbrauchEntry {
-    datum: Date;
+export interface StromProductionImportVerbrauchEntry extends DateModel {
     stromverbrauch: number;
     kernkraft?: number;
     thermische?: number;
@@ -43,8 +47,7 @@ export interface StromProductionImportVerbrauchEntry {
     nettoimporte?: number;
 }
 
-export interface StromProductionImportVerbrauchTrend {
-    datum: Date;
+export interface StromProductionImportVerbrauchTrend extends DateModel {
     eigenproduktion: number;
     trend: Trend;
     trendRating: TrendRating;
@@ -59,4 +62,66 @@ export interface StromProductionImportVerbrauchData {
     trend: StromProductionImportVerbrauchTrend;
     chartAreaEntries: HistogramAreaChartEntry[];
     chartLineEntries: HistogramAreaChartEntry[];
+}
+
+export interface StromKkwAusfallDto {
+    productionPlant: string;
+    startDate: string;
+    endDate: string;
+    wasPlanned: boolean;
+}
+
+export interface StromKkwAusfall extends Block {
+    productionPlant?: string;
+    count?: number;
+    wasPlanned: boolean;
+}
+
+export interface StromKkwProductionEntryDto extends FiveYearStatisticsModel {
+    date: string;
+    currentProduction: number;
+}
+
+export interface StromKkwProductionDataDto {
+    entries: StromKkwProductionEntryDto[];
+    ausfaelle: StromKkwAusfallDto[];
+}
+
+export interface StromKkwProductionEntry extends HistogramLineEntry {
+    ausfaelle?: StromKkwAusfall[];
+}
+
+export interface StromKkwProductionData {
+    entries: StromKkwProductionEntry[];
+    ausfaelle: StromKkwAusfall[];
+}
+
+export interface StromKkwVerfuegbarkeitData {
+    entries: StromKkwVerfuegbarkeitEntry[];
+    ausfaelle: StromKkwVerfuegbarkeitAusfall[];
+}
+
+export interface StromKkwVerfuegbarkeitEntry {
+    date: Date;
+    kkwInstallierteLeistung: number;
+    ungeplanterAusfallMittelwert: number;
+    geplanterAusfallMittelwert: number;
+    kkwVerfuegbareLeistung: number;
+}
+
+export interface StromKkwVerfuegbarkeitAusfall {
+    productionPlant: string;
+    endDate: Date;
+    startDate: Date;
+    wasPlanned: boolean;
+}
+
+export interface StromKkwVerfuegbarkeitHistogramDetailEntry
+    extends HistogramDetailEntry {
+    outages: StromKkwVerfuegbarkeitAusfallHistogramDetailEntry[];
+}
+
+export interface StromKkwVerfuegbarkeitAusfallHistogramDetailEntry {
+    productionPlant: string;
+    wasPlanned: boolean;
 }

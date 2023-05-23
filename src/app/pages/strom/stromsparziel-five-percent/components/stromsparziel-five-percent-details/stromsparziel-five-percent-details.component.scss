@@ -1,0 +1,115 @@
+.diagram-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+}
+
+.trend-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.trend-section-diagram {
+    margin-right: 22px;
+    margin-left: 22px;
+    position: relative;
+}
+
+.einsparungen-diagram {
+    .savings-reached p {
+        margin-bottom: 0;
+        color: white;
+    }
+
+    .row {
+        display: flex;
+    }
+
+    .row div {
+        height: 100%;
+    }
+
+    .row div:nth-of-type(1) {
+        width: 120px;
+    }
+
+    .row div:nth-of-type(2) {
+        width: 44px;
+    }
+
+    .row div:nth-of-type(3) {
+        width: 120px;
+    }
+
+    .row:nth-of-type(2) .col:nth-of-type(1) {
+        border-bottom: 2px solid #D9D9D9;
+        display: flex;
+    }
+
+    .row:nth-of-type(2) .col:nth-of-type(2) {
+        border: 2px solid #D9D9D9;
+    }
+
+    .row:nth-of-type(2) .col:nth-of-type(3) {
+        border-bottom: 2px solid #D9D9D9;
+        display: flex;
+        justify-content: flex-end;
+        align-items: end;
+    }
+
+    .row:nth-of-type(3) .col:nth-of-type(1),
+    .row:nth-of-type(4) .col:nth-of-type(3),
+    .row:nth-of-type(5) .col:nth-of-type(1) {
+        display: flex;
+        align-items: flex-end;
+        border-bottom: 2px solid;
+    }
+
+    .row:nth-of-type(1) .col:nth-of-type(3) {
+        display: flex;
+        align-items: flex-start;
+        justify-content: end;
+    }
+
+    .row .col:nth-of-type(2) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .row:nth-of-type(4) .col:nth-of-type(3) {
+        justify-content: flex-end;
+    }
+}
+
+.diagram-item-title {
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1000px) {
+    .diagram-item {
+        flex-basis: 100%;
+    }
+
+    .diagram-item:nth-of-type(1) {
+        margin-bottom: 40px;
+    }
+}
+
+.trend-section-diagram {
+    &:hover {
+        .tooltip {
+            visibility: visible;
+        }
+    }
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 10;
+    top: 50px;
+    left: 200px;
+    visibility: hidden;
+    pointer-events: none;
+}

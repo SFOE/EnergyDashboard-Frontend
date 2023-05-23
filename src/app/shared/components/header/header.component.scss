@@ -22,6 +22,11 @@ bfe-header {
         flex: 1 1 0;
     }
 
+    .header__title-text {
+        @include text.h1;
+        flex: 0 0 calc(100% - 24px);
+    }
+
     .header__home {
     }
 

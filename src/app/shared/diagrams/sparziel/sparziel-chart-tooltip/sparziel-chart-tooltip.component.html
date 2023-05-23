@@ -1,0 +1,77 @@
+<div class="tooltip-container">
+    <ng-container *ngIf="titleKey">
+        <section class="date-section">
+            {{ titleKey | i18next }}
+        </section>
+
+        <ng-container>
+            <section class="percent-section">
+                <div>
+                    <span class="dot"></span>
+
+                    <span class="text">{{ 'commons.sparziel' | i18next }}</span>
+                </div>
+
+                <span class="text-value">
+                    <span> {{ target }}</span>
+                </span>
+            </section>
+
+            <section class="percent-section">
+                <div>
+                    <span class="dot dot-projected"></span>
+
+                    <span class="text">{{
+                        'commons.sparziel.projected-label' | i18next
+                        }}</span>
+                </div>
+
+                <span class="text-value">
+                    <span> {{ projectedPercentage | number: '1.1-1' }}%</span>
+                </span>
+            </section>
+
+            <section class="percent-section">
+                <div>
+                    <span class="dot dot-achieved"></span>
+
+                    <span class="text">{{
+                        'commons.sparziel.meassured-label' | i18next
+                        }}</span>
+                </div>
+
+                <span class="text-value">
+                    <span> {{ achievedPercentage | number: '1.1-1' }}%</span>
+                </span>
+            </section>
+
+            <section class="percent-section">
+                <div>
+                    <span class="dot"></span>
+
+                    <span class="text">{{
+                        'commons.already-saved' | i18next
+                        }}</span>
+                </div>
+
+                <span class="text-value">
+                    <span> {{ alreadySaved }}%</span>
+                </span>
+            </section>
+
+            <section class="percent-section">
+                <div>
+                    <span class="dot"></span>
+
+                    <span class="text">{{
+                        'commons.sparziel.temperature-corrected' | i18next
+                        }}</span>
+                </div>
+
+                <span class="text-value">
+                    <span> {{ weatherAdjustedPercent }}%</span>
+                </span>
+            </section>
+        </ng-container>
+    </ng-container>
+</div>

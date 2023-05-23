@@ -8,7 +8,7 @@
         </bfe-kpi-subtitle>
         <bfe-kpi-date-info-subtext
             *ngIf="currentEntry"
-            [date]="currentEntry.datum"
+            [date]="currentEntry.date"
             updateInterval="monthly"
         >
         </bfe-kpi-date-info-subtext>
@@ -20,7 +20,7 @@
             <bfe-histogram-line
                 (diagramLeave)="hideTooltip()"
                 (elFocus)="showLineChartTooltip($event)"
-                [bandColor]="primaryColor"
+                [bandColor]="bandColor"
                 [colors]="lineChartColors"
                 [data]="chartData"
                 [strokeWidths]="[1, 2]"

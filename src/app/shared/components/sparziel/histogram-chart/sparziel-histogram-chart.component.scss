@@ -12,8 +12,3 @@ bfe-points-of-interest-legend {
     margin-left: var.$kpi-container-indentation;
     display: block;
 }
-
-// set opacity to 0.5 for projected values
-::ng-deep bfe-sparziel-histogram-chart .data g > rect:last-child {
-    opacity: 0.5;
-}

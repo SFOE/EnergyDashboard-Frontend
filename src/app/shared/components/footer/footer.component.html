@@ -95,20 +95,30 @@
             class="footer__bottom__title"
             rel="noopener"
             target="_blank"
-            >{{ 'bfe-title' | i18next }}</a
+        >{{ 'bfe-title' | i18next }}</a
         >
-        <div class="footer__bottom__nav__list">
-            <a
-                [attr.href]="'./ax-statement'"
-                class="g-default footer__bottom__ax-statement footer__bottom__nav__list__link"
-                rel="noopener"
-                target="_blank"
-            >
-                {{ 'ax-statement' | i18next }}</a
-            >
-        </div>
         <nav>
             <ul class="footer__bottom__nav__list">
+                <li>
+                    <a
+                        [attr.href]="'./integration-guide'"
+                        class="g-default footer__bottom__ax-statement footer__bottom__nav__list__link"
+                        rel="noopener"
+                        target="_blank"
+                    >
+                        {{ 'footer.integration-guide' | i18next }}</a
+                    >
+                </li>
+                <li>
+                    <a
+                        [attr.href]="'./ax-statement'"
+                        class="g-default footer__bottom__ax-statement footer__bottom__nav__list__link"
+                        rel="noopener"
+                        target="_blank"
+                    >
+                        {{ 'footer.ax-statement' | i18next }}</a
+                    >
+                </li>
                 <li>
                     <a
                         [attr.href]="'footer.contact.url' | i18next"

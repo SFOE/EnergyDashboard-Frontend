@@ -3,10 +3,10 @@ import { TranslationService } from '../../../../core/i18n/translation.service';
 import { HistogramAreaChartEntry } from '../../../../core/models/charts';
 import { StromService } from '../../../../services/strom/strom.service';
 import {
-    COLORS_STROM,
-    COLOR_STROM
+    COLOR_STROM,
+    COLORS_STROM
 } from '../../../../shared/commons/colors.const';
-import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.component';
+import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.model';
 import { HistogramElFocusEvent } from '../../../../shared/diagrams/histogram/interactive-histogram.component';
 import {
     LabelFilters,
@@ -62,7 +62,7 @@ export class ProduktionVerbrauchHistogramChartComponent implements OnInit {
         this.stromService
             .getStromProductionImportVerbrauch()
             .subscribe((data) => {
-                this.lastUpdate = data.trend.datum;
+                this.lastUpdate = data.trend.date;
                 this.chartData = {
                     areaEntries: filterHistogramAreaEntryByDate(
                         data.chartAreaEntries,

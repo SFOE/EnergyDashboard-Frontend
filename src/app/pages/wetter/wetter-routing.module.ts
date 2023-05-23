@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { RoutePaths } from '../../core/navigation/route-paths.enum';
 import { AktuellesWetterComponent } from './aktuelles-wetter/aktuelles-wetter.component';
 import { WetterComponent } from './wetter.component';
+import { NiederschlagComponent } from './niederschlag/niederschlag.component';
+import { SchneereservenComponent } from './schneereserven/schneereserven.component';
 
 const routes: Routes = [
     {
@@ -12,6 +14,14 @@ const routes: Routes = [
             {
                 path: RoutePaths.DASHBOARD_WETTER_AKTUELL,
                 component: AktuellesWetterComponent
+            },
+            {
+                path: RoutePaths.DASHBOARD_WETTER_NIEDERSCHLAG,
+                component: NiederschlagComponent
+            },
+            {
+                path: RoutePaths.DASHBOARD_WETTER_SCHNEERESERVEN,
+                component: SchneereservenComponent
             },
             {
                 path: '**',

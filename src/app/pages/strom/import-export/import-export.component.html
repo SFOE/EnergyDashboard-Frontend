@@ -14,7 +14,7 @@
                     color: stromColor,
                     bigNumber: {
                         value: currentEntry.nettoImportCH,
-                        postfix: '%',
+                        postfix: 'GWh',
                         subTextKeys: [
                             'dashboard.gas.import.daily-net-import.per-day'
                         ]
@@ -46,7 +46,7 @@
                 'dynamic:kpi-strom-9_import-export_karte.titel' | i18nextDynamic
             }}
         </bfe-kpi-subtitle>
-        <bfe-kpi-date-info-subtext [date]="currentEntry.datum">
+        <bfe-kpi-date-info-subtext [date]="currentEntry.date">
         </bfe-kpi-date-info-subtext>
         <bfe-optional-dynamic-langtext
             text="kpi-strom-9_import-export_karte.langtext"

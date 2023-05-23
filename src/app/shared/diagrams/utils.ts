@@ -9,15 +9,15 @@ import {
     takeUntil
 } from 'rxjs/operators';
 import { D3SvgComponent } from '../components/d3-svg/d3-svg.component';
+import { middleOfDay } from '../static-utils/date-utils';
 import { filterEventTarget } from '../static-utils/filter-event-target.operator';
 import { isDefined } from '../xternal-helpers/from-c19-commons/utils/is-defined.function';
 import { tapLast } from '../xternal-helpers/from-sc-ng-commons-public/core/static-utils/rxjs/tap-last.operator';
 import { tapPrevious } from '../xternal-helpers/from-sc-ng-commons-public/core/static-utils/rxjs/tap-previous.operator';
 import {
     HistogramBandEntry,
-    HistogramEntry,
-    middleOfDay
-} from './histogram/base-histogram.component';
+    HistogramEntry
+} from './histogram/base-histogram.model';
 import { HistogramAreaEntry } from './histogram/histogram-area/histogram-area.component';
 
 export const checkIntersectLeft = (

@@ -1,0 +1,69 @@
+<div class="diagram-container">
+    <bfe-kpi-subtitle>
+        {{
+        'dynamic:kpi-wetter-4_schneereserven-aktuell.titel' | i18nextDynamic
+        }}
+    </bfe-kpi-subtitle>
+
+    <bfe-kpi-date-info-subtext
+        [updateInterval]="'weekly'"
+        [date]="dateOfLastUpdate"
+    ></bfe-kpi-date-info-subtext>
+
+    <bfe-optional-dynamic-langtext
+        text="kpi-wetter-4_schneereserven-aktuell.langtext"
+    ></bfe-optional-dynamic-langtext>
+
+    <div class="diagram-container" *ngIf="!isLoading; else loadingTemplate">
+        <bfe-diagram-legend
+            [entries]="[
+                {
+                    color: consts.COLOR_CHART_SECONDARY,
+                    labelKey: 'commons.legend.average',
+                    type: 'line'
+                },
+                {
+                    color: consts.COLOR_CHART_PRIMARY + '80',
+                    labelKey: 'commons.legend.min-max',
+                    type: 'area'
+                },
+                {
+                    color: consts.COLOR_CHART_PRIMARY,
+                    labelKey: 'commons.legend.latest',
+                    type: 'line'
+                }
+            ]"
+        ></bfe-diagram-legend>
+
+        <bfe-histogram-line
+            (diagramLeave)="hideTooltip()"
+            (elFocus)="showLineChartTooltip($event)"
+            [bandColor]="consts.COLOR_CHART_MIN_MAX_RANGE"
+            [colors]="[
+                consts.COLOR_CHART_SECONDARY,
+                consts.COLOR_CHART_PRIMARY
+            ]"
+            [data]="histogramChartData"
+            [strokeWidths]="[1, 3]"
+            [xLabelModifier]="labelModifier"
+            [yLabelFormatter]="yLabelFormatter"
+        ></bfe-histogram-line>
+
+        <bfe-schneereserven-aktuelles-jahr-chart-tooltip
+            [event]="tooltipEvent"
+            [colors]="[
+                consts.COLOR_CHART_SECONDARY,
+                consts.COLOR_CHART_PRIMARY + '80',
+                consts.COLOR_CHART_PRIMARY,
+                consts.COLOR_CHART_LATEST
+            ]"
+            postfix="%"
+        ></bfe-schneereserven-aktuelles-jahr-chart-tooltip>
+    </div>
+
+    <ng-template #loadingTemplate>
+        <div class="loading-container">
+            <bfe-loading-spinner></bfe-loading-spinner>
+        </div>
+    </ng-template>
+</div>

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ThousandCommaPipe } from 'src/app/shared/commons/thousand-comma.pipe';
+import { ThousandCommaPipe } from './thousand-comma.pipe';
 import { AbsoluteNumberPipe } from './absolute-number.pipe';
 import { AdminNumPipe } from './admin-num.pipe';
 import { FmtDatePipe } from './fmt-date.pipe';

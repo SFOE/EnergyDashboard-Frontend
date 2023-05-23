@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Context } from '../../../core/models/context.enum';
 import { PreiseService } from '../../../services/preise/preise.service';
 import { COLOR_STROM } from '../../../shared/commons/colors.const';
 import { HistogramLineEntry } from '../../../shared/diagrams/histogram/histogram-line/histogram-line.component';
+import { StromFuturesColors } from '../preise.consts';
 
 @Component({
     selector: 'bfe-preise-strom',
@@ -20,6 +22,16 @@ export class PreiseStromComponent implements OnInit {
     currentEntryEndverbrauch: HistogramLineEntry;
     chartDataEndverbrauch: HistogramLineEntry[];
     isLoadingEndverbrauch = true;
+
+    chartDataFutures: Observable<HistogramLineEntry[]>;
+    colorsFutures = [
+        StromFuturesColors.MonthPlusOne,
+        StromFuturesColors.MonthPlusTwo,
+        StromFuturesColors.QuaterPlusOne,
+        StromFuturesColors.QuaterPlusTwo,
+        StromFuturesColors.YearPlusOne,
+        StromFuturesColors.YearPlusTwo
+    ];
 
     constructor(private preiseService: PreiseService) {}
 
@@ -49,5 +61,7 @@ export class PreiseStromComponent implements OnInit {
                 this.isLoadingEndverbrauch = false;
             }
         });
+
+        this.chartDataFutures = this.preiseService.getPreiseStromFutures();
     }
 }

@@ -5,7 +5,7 @@ import { HistogramAreaChartEntry } from '../../core/models/charts';
 import { FuellstandGasspeicherRegionWithChartEntries } from '../../core/models/gas-fuellstand-gasspeicher';
 import { ImportExportEntry } from '../../core/models/import-export';
 import {
-    SparzielAktuelleEinsparungEntryV2V3,
+    SparzielAktuelleEinsparungEntryV4,
     SparzielEntry
 } from '../../core/models/sparziel';
 import { convertToDate } from '../../shared/static-utils/date-utils';
@@ -22,7 +22,7 @@ export class GasService {
     private cachedFuellstandGasspeicherRegionWithChartEntries: Observable<FuellstandGasspeicherRegionWithChartEntries>;
     private cachedSparzielZiel: Observable<SparzielEntry>;
     private cachedSparzielAktuelleEinsparung: Observable<
-        SparzielAktuelleEinsparungEntryV2V3[]
+        SparzielAktuelleEinsparungEntryV4[]
     >;
 
     constructor(private dataService: DataService) {}
@@ -67,7 +67,7 @@ export class GasService {
                 .pipe(
                     map((data) => ({
                         ...data,
-                        date: convertToDate(data.date)
+                        date: convertToDate(data.date.toString())
                     })),
                     shareReplay(1)
                 );
@@ -76,7 +76,7 @@ export class GasService {
     }
 
     getSparzielAktuelleEinsparung(): Observable<
-        SparzielAktuelleEinsparungEntryV2V3[]
+        SparzielAktuelleEinsparungEntryV4[]
     > {
         if (!this.cachedSparzielAktuelleEinsparung) {
             this.cachedSparzielAktuelleEinsparung = this.dataService

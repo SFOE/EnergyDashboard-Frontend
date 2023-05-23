@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
 import { TranslationService } from '../../../../core/i18n/translation.service';
 import { ImportExportEntry } from '../../../../core/models/import-export';
 import { StromImportExportNettoEntry } from '../../../../core/models/strom-import-export.netto';
-import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.component';
+import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.model';
 import { AreaMinMaxFocusEntry } from '../../../../shared/diagrams/histogram/histogram-area-min-max/histogram-area-min-max.component';
 import { HistogramAreaEntry } from '../../../../shared/diagrams/histogram/histogram-area/histogram-area.component';
 import { HistogramElFocusEvent } from '../../../../shared/diagrams/histogram/interactive-histogram.component';
@@ -132,11 +132,11 @@ export class ImportExportNetAreaChartComponent implements OnChanges, OnInit {
         };
         data.forEach((current) => {
             splitedData.stromImports.push({
-                date: new Date(current.datum),
+                date: new Date(current.date),
                 values: Object.values(current.import)
             });
             splitedData.stromExports.push({
-                date: new Date(current.datum),
+                date: new Date(current.date),
                 values: this.negateValues(Object.values(current.export))
             });
         });

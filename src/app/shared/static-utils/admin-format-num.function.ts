@@ -1,5 +1,5 @@
 // import { isDefined } from '@c19/commons'
-import { isDefined } from '../xternal-helpers/from-c19-commons/utils/is-defined.function';
+import {isDefined} from '../xternal-helpers/from-c19-commons/utils/is-defined.function';
 
 // the actual minus sign (− which is longer) than the normal hyphen
 export const MINUS_SIGN = '−';
@@ -34,6 +34,7 @@ export function adminFormatNum(
         const r = int.length % 3;
         const intParts = int.slice(r, int.length).match(/.{3}/g) || [];
         if (r) {
+            // @ts-ignore
             intParts.unshift(int.slice(0, r));
         }
         p0 = intParts.join(' ');

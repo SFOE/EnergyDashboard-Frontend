@@ -1,3 +1,18 @@
-bfe-sparziel-histogram-chart {
+bfe-sparziel-histogram-chart,
+bfe-stromsparziel-nach-bereich-pro-monat-histogram-chart,
+bfe-stromsparziel-nach-bereich-aktueller-monat-histogram-chart,
+bfe-stromsparziel-aktueller-monat-details,
+bfe-histogram-detail {
     width: 100%;
+}
+
+.divider-section {
+    width: 100%;
+
+    hr {
+        height: 1px;
+        background-color: #ebebeb;
+        border: none;
+        width: 100%;
+    }
 }

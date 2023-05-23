@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SparzielEntry } from '../../../core/models/sparziel';
 import { StromService } from '../../../services/strom/strom.service';
 import {
-    COLOR_CHART_DETAIL_SECONDARY,
+    COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA,
     COLOR_CHART_STROM_ADDITIONAL_LINE,
     COLOR_POSITIVE
 } from '../../../shared/commons/colors.const';
@@ -11,8 +11,9 @@ import { DiagramLegendEntry } from '../../../shared/diagrams/diagram-legend/diag
 import { HistogramDetailEntry } from '../../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
 import { HistogramElFocusEvent } from '../../../shared/diagrams/histogram/interactive-histogram.component';
 import { COLOR_CONTEXT } from '../strom.consts';
+import { Block } from '../../../shared/diagrams/histogram/base-histogram.model';
+import { SparzielService } from '../../../services/sparziel/sparziel.service';
 
-const CUTOFF_DATE = new Date(2022, 9, 1);
 const SPARZIEL_PERCENTAGE = 10;
 
 @Component({
@@ -23,22 +24,13 @@ const SPARZIEL_PERCENTAGE = 10;
 export class StromsparzielComponent implements OnInit {
     readonly primaryColor = COLOR_CONTEXT;
     readonly sparzielTarget = SPARZIEL_PERCENTAGE;
-    readonly barColors = [
-        COLOR_CHART_DETAIL_SECONDARY,
-        COLOR_CONTEXT,
-        COLOR_CONTEXT
-    ];
+    readonly barColors = [COLOR_CONTEXT, COLOR_CONTEXT];
     readonly lineColors = [
         COLOR_POSITIVE,
         '#000000',
         COLOR_CHART_STROM_ADDITIONAL_LINE
     ];
     readonly legendEntries: DiagramLegendEntry[] = [
-        {
-            color: COLOR_CHART_DETAIL_SECONDARY,
-            labelKey: 'commons.sparziel.chart-legend.difference',
-            type: 'area'
-        },
         {
             color: COLOR_CONTEXT,
             labelKey:
@@ -66,6 +58,11 @@ export class StromsparzielComponent implements OnInit {
             color: this.lineColors[2],
             labelKey: 'commons.sparziel.chart-legend.temperature',
             type: 'dashed-line'
+        },
+        {
+            color: COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA,
+            labelKey: 'commons.sparziel.chart-legend.relevant-difference',
+            type: 'area'
         }
     ];
 
@@ -73,10 +70,17 @@ export class StromsparzielComponent implements OnInit {
     isLoadingPerMonth: boolean = true;
     sparzielPerMonth: HistogramDetailEntry[] = [];
     sparzielZielData?: SparzielEntry;
+    sparzielDataBlocks: Block[];
 
     tooltipEvent?: HistogramElFocusEvent<HistogramDetailEntry>;
 
-    constructor(private stromService: StromService) {}
+    constructor(
+        private stromService: StromService,
+        private sparzielService: SparzielService
+    ) {
+        this.sparzielDataBlocks =
+            this.sparzielService.getRelevantMonthsForSparziel();
+    }
 
     ngOnInit(): void {
         this.stromService.getSparziel().subscribe({
@@ -91,8 +95,7 @@ export class StromsparzielComponent implements OnInit {
                 this.sparzielPerMonth =
                     mapAktuelleEinsparungEntryToHistogramEntry(
                         data,
-                        SPARZIEL_PERCENTAGE,
-                        CUTOFF_DATE
+                        SPARZIEL_PERCENTAGE
                     );
             },
             complete: () => (this.isLoadingPerMonth = false)

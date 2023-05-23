@@ -10,8 +10,9 @@ import { isDefined } from '../../../xternal-helpers/from-c19-commons/utils/is-de
 
 import { Line, Selection } from 'd3';
 import { COLORS_HISTOGRAM_LINE } from '../../../commons/colors.const';
+import { middleOfDay } from '../../../static-utils/date-utils';
 import { createRangePathArea } from '../../utils';
-import { Band, HistogramEntry, middleOfDay } from '../base-histogram.component';
+import { Band, HistogramEntry } from '../base-histogram.model';
 import { InteractiveHistogramComponent } from '../interactive-histogram.component';
 
 export interface HistogramLineEntry extends HistogramEntry {
@@ -154,7 +155,6 @@ export class HistogramLineComponent<T extends HistogramLineEntry>
             .attr('class', 'range')
             .append('path')
             .attr('fill', this.bandColor)
-            .attr('opacity', 0.15)
             .lower();
 
         this.focusGuideGroup = this.svg.svg

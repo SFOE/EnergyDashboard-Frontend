@@ -1,0 +1,28 @@
+<div *ngIf="!!chartData" class="diagram-container">
+    <section class="title-selection-container">
+        <bfe-kpi-subtitle>
+            {{ 'dynamic:kpi-preise-3_gas_dayahead.titel' | i18nextDynamic }}
+        </bfe-kpi-subtitle>
+        <bfe-kpi-date-info-subtext [date]="currentEntry.date">
+        </bfe-kpi-date-info-subtext>
+    </section>
+    <bfe-optional-dynamic-langtext
+        text="kpi-preise-3_gas_dayahead.langtext"
+    ></bfe-optional-dynamic-langtext>
+    <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+    <bfe-histogram-line
+        (diagramLeave)="hideTooltip()"
+        (elFocus)="showLineChartTooltip($event)"
+        [colors]="[primaryColor]"
+        [data]="chartData"
+        [strokeWidths]="[2]"
+        [xLabelModifier]="labelModifier"
+        [xSubLabelModifier]="subLabelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+    ></bfe-histogram-line>
+    <bfe-preise-tooltip
+        [event]="tooltipEvent"
+        [lineEntries]="legendEntries"
+        postfix="EUR"
+    ></bfe-preise-tooltip>
+</div>

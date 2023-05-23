@@ -1,8 +1,5 @@
 import { isInLastWeekOfTheYear } from '../static-utils/date-utils';
-import {
-    HistogramEntry,
-    LabelFilter
-} from './histogram/base-histogram.component';
+import { HistogramEntry, LabelFilter } from './histogram/base-histogram.model';
 
 const isFirstOrLastIndex = (data: HistogramEntry[], date: Date): boolean => {
     const labelIndex = data.findIndex((entry) => entry.date === date);
@@ -15,6 +12,18 @@ const firstLastAndJanuaryFormatter =
     (data: HistogramEntry[], language: string) => (date: Date) => {
         const isJanuary = date.getMonth() === 0;
         if (isJanuary || isFirstOrLastIndex(data, date)) {
+            return date.toLocaleString(language, {
+                year: 'numeric'
+            });
+        }
+        return '   ';
+    };
+
+const firstLastJanuaryAndDecemberFormatter =
+    (data: HistogramEntry[], language: string) => (date: Date) => {
+        const isJanuary = date.getMonth() === 0;
+        const isDecember = date.getMonth() === 11;
+        if (isJanuary || isDecember || isFirstOrLastIndex(data, date)) {
             return date.toLocaleString(language, {
                 year: 'numeric'
             });
@@ -75,10 +84,19 @@ const monthAndDayFormatter = (language: string) => (date: Date) => {
     });
 };
 
+const dayFormatter = () => (date: Date) => {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // add 1 to month since it's zero-based
+    const year = date.getFullYear().toString();
+
+    return `${day}.${month}.${year}`;
+};
+
 const emptyFormatter = (date: Date) => '';
 
 export const LabelFormatters = {
     firstLastAndJanuary: firstLastAndJanuaryFormatter,
+    firstLastJanuaryAndDecember: firstLastJanuaryAndDecemberFormatter,
     firstOfMonthOnly: firstOfMonthOnlyFormatter,
     firstWeekOfMonthOnly: firstWeekOfMonthOnlyFormatter,
     monthShort: monthShortFormatter,
@@ -86,7 +104,8 @@ export const LabelFormatters = {
     dailyFormatter: dailyFormatter,
     dateShort: dateShortFormatter,
     monthAndDay: monthAndDayFormatter,
-    empty: emptyFormatter
+    empty: emptyFormatter,
+    day: dayFormatter
 };
 
 // ***** Filters ******

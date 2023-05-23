@@ -16,6 +16,7 @@ export const COLOR_CHART_RANGE_4 = '#b01715';
 export const COLOR_CHART_NO_DATA = '#e5e5e5';
 export const COLOR_CHART_SPEICHERSEEN_PRIMARY = '#002df3';
 export const COLOR_CHART_STROM_PRIMARY = '#eb9f46';
+export const COLOR_CHART_STROM_BAND_COLOR = '#eb9f4626';
 export const COLOR_CHART_STROM_PRIMARY_AREA = '#eb9f4626';
 export const COLOR_CHART_STROM_ADDITIONAL_LINE = '#dc0018';
 export const COLOR_CHART_HISTOGRAM_AREA_SECONDARY = '#a6a6a6';

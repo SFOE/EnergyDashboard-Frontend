@@ -1,0 +1,40 @@
+<div class="month-switch-container">
+    <div class="prev">
+        <span>
+            <fa-icon
+                (click)="previous()"
+                [icon]="'chevron-left'"
+                [style.color]="'#989898'"
+            ></fa-icon>
+        </span>
+    </div>
+
+    <div class="carousel-outer">
+        <div
+            class="carousel"
+            [style.transform]="
+                'translateX(' + -cardWidth * currentIndex + 'px)'
+            "
+        >
+            <section
+                *ngFor="let month of availableMonths"
+                class="card"
+                [class.selected]="selectedMonth === month"
+                (click)="changeSelectedMonth(month)"
+            >
+                <span class="month-label">{{ month | date: 'MMMM' }}</span>
+                <span class="year-label">{{ month | date: 'YYYY' }}</span>
+            </section>
+        </div>
+    </div>
+
+    <div class="next">
+        <span>
+            <fa-icon
+                (click)="next()"
+                [icon]="'chevron-right'"
+                [style.color]="'#989898'"
+            ></fa-icon>
+        </span>
+    </div>
+</div>

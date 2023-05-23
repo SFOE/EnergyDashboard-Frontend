@@ -1,4 +1,4 @@
-import { Component, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, Injector, Input, ViewEncapsulation } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -15,6 +15,7 @@ import { NavBoardService } from './nav-board/nav-board.service';
     encapsulation: ViewEncapsulation.None
 })
 export class HeaderComponent {
+    @Input() embedMode: boolean = false;
     readonly languages: string[] = Object.values(Language);
     currentLanguage: string = this.translationService.language;
     readonly toggleNavBoard = throttleFn(this._toggleNavBoard.bind(this), 250);

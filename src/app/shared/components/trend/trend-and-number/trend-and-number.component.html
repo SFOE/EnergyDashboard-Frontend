@@ -1,5 +1,14 @@
 <section class="trend-section">
     <section [class.align-right]="alignRight">
+        <div *ngIf="model.bigNumber.topTextKeys">
+            <p
+                *ngFor="let key of model.bigNumber.topTextKeys"
+                class="label-medium"
+            >
+                {{ key | i18next }}
+            </p>
+        </div>
+
         <bfe-large-number-unit
             #number
             [number]="model.bigNumber.value"
@@ -7,17 +16,20 @@
             [color]="model.color"
         ></bfe-large-number-unit>
         <div #numberText>
-            <p *ngFor="let key of model.bigNumber.subTextKeys">
+            <p
+                *ngFor="let key of model.bigNumber.subTextKeys"
+                class="label-medium"
+            >
                 {{ key | i18next }}
             </p>
         </div>
     </section>
-    <section>
+    <section *ngIf="model.trend">
         <bfe-trend-indicator
             [trend]="model.trend.value"
             [rating]="model.trend.rating"
         ></bfe-trend-indicator>
-        <p *ngFor="let key of model.trend.subTextKeys">
+        <p *ngFor="let key of model.trend.subTextKeys" class="label-medium">
             {{ key | i18next }}
         </p>
     </section>

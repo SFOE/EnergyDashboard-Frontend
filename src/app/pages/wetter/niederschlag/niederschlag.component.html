@@ -1,0 +1,80 @@
+<bfe-kpi-container
+    titleKeyDynamic="kpi-wetter-3_niederschlag.titel"
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-wetter-3_niederschlag.datenquelle',
+        langtextDynamicKey: 'kpi-wetter-3_niederschlag.langtext'
+    }"
+    [isLoading]="isLoading"
+>
+    <bfe-kpi-container-row>
+        <section>
+            <section
+                class="trend-section"
+                *ngIf="!isLoading && trend; else loading"
+            >
+                <section class="trend-section-large-number">
+                    <span class="label-medium">
+                        {{
+                        'dashboard.wetter.niederschlag.currentmonth'
+                            | i18next
+                        }}
+                    </span>
+                    <bfe-large-number-unit
+                        [color]="primaryColor"
+                        [number]="trend.differenzZuNormProzent"
+                        unit="%"
+                    ></bfe-large-number-unit>
+                    <span class="label-medium">
+                        {{
+                        'commons.wetter.niederschlag.incomparison' | i18next
+                        }}
+                    </span>
+                </section>
+                <section>
+                    <bfe-trend-indicator
+                        [trend]="trend.trend"
+                        [rating]="trend.trendRating"
+                    ></bfe-trend-indicator>
+                    <span class="label-medium">
+                        {{ 'commons.trend' | i18next }}
+                    </span>
+                </section>
+            </section>
+            <ng-template #loading>
+                <div class="loading-container">
+                    <bfe-loading-spinner></bfe-loading-spinner>
+                </div>
+            </ng-template>
+        </section>
+
+        <section class="teaser-section">
+            <div>
+                <p
+                    [innerHTML]="
+                        'dynamic:kpi-wetter-3_niederschlag.kurztext'
+                            | i18nextDynamic
+                    "
+                    class="teaser"
+                ></p>
+            </div>
+        </section>
+    </bfe-kpi-container-row>
+
+    <bfe-niederschlag-karten
+        *ngIf="!isLoading"
+        [loading]="isLoading"
+    ></bfe-niederschlag-karten>
+
+    <div class="divider-section">
+        <hr/>
+    </div>
+
+    <bfe-niederschlag-aktuell-histogram-chart
+        *ngIf="!isLoading"
+        [loading]="isLoading"
+    ></bfe-niederschlag-aktuell-histogram-chart>
+
+    <div class="divider-section">
+        <hr/>
+    </div>
+</bfe-kpi-container>

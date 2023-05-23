@@ -1,0 +1,110 @@
+<div *ngIf="!isLoading; else loadingTemplate" class="sparziel-five-percent-details-chart-container">
+    <bfe-kpi-subtitle>
+        {{
+        'dynamic:kpi-strom-3_sparziel_aktueller-monat-details.titel'
+            | i18nextDynamic
+        }}
+    </bfe-kpi-subtitle>
+
+    <bfe-kpi-date-info-subtext
+        *ngIf="lastUpdated"
+        [date]="lastUpdated"
+    ></bfe-kpi-date-info-subtext>
+
+    <div class="diagram-container">
+        <div class="diagram-item">
+            <!--
+            This is the Einsparungen Diagram. It consists of 3 rows with 3 columns each.
+            The left column containing the labels "Private", "KMU" and "Industrie".
+            The middle column has the icons and the colored bars.
+            The right column only has a single lable with the GWh Value on top.
+            The height of each row are variable and are defined by the values that are received from the API
+            -->
+
+            <!-- TODO: Check for the height values and do not show the icon if the value is too small -->
+            <div class="einsparungen-diagram">
+                <div class="row" [style.height]="getPrivateHeight()">
+                    <div class="col" [style.border-color]="privateColor">
+                        <span class="label-medium">
+                            {{ 'commons.sparziel.sectors.private' | i18next }} ({{ getPrivatePercent() }}%)
+                        </span>
+                    </div>
+                    <div class="col" [style.backgroundColor]="privateColor">
+                        <span>
+                            <fa-icon
+                                [icon]="'house'"
+                                [style.color]="'white'"
+                            ></fa-icon>
+                        </span>
+                    </div>
+                    <div class="col">
+                        <span class="label-medium">
+                            {{ data.nationalSavingsGWh }} GWh
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row" [style.height]="getKmuHeight()">
+                    <div class="col"></div>
+                    <div class="col" [style.backgroundColor]="kmuColor">
+                        <span>
+                            <fa-icon
+                                [icon]="'buildings'"
+                                [style.color]="'white'"
+                            ></fa-icon>
+                        </span>
+                    </div>
+                    <div class="col" [style.border-color]="kmuColor">
+                        <span class="label-medium">
+                            {{ 'commons.sparziel.sectors.kmu' | i18next }} ({{ getKmuPercent() }}%)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row" [style.height]="getIndustryHeight()">
+                    <div class="col" [style.border-color]="industryColor">
+                        <span class="label-medium">
+                            {{ 'commons.sparziel.sectors.industry' | i18next }} ({{ getIndustryPercent() }}%)
+                        </span>
+                    </div>
+                    <div class="col" [style.backgroundColor]="industryColor">
+                        <span>
+                            <fa-icon
+                                [icon]="'industry-windows'"
+                                [style.color]="'white'"
+                            ></fa-icon>
+                        </span>
+                    </div>
+                    <div class="col"></div>
+                </div>
+
+                <section class="tooltip">
+                    <bfe-stromsparziel-aktueller-monat-details-tooltip
+                        [data]="data"
+                        [industryColor]="industryColor"
+                        [kmuColor]="kmuColor"
+                        [privateColor]="privateColor"
+                    ></bfe-stromsparziel-aktueller-monat-details-tooltip>
+                </section>
+            </div>
+        </div>
+
+        <div class="diagram-item">
+            <section class="teaser-section">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-strom-3_sparziel_aktueller-monat-details.langtext'
+                            | i18nextDynamic
+                    "
+                    class="info-subtext"
+                ></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingTemplate>
+    <div class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</ng-template>

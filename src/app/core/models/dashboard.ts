@@ -1,47 +1,36 @@
 import { Trend, TrendRating } from './trend.enum';
 
-export interface DashboardKpiDto {
-    value?: number;
-    trend?: string;
-    trendRating?: string;
+export interface DashboardEntryApi {
+    value: number;
+    trend: Trend;
+    trendRating: TrendRating;
     date: string;
 }
 
-export interface DashboardStromDto {
-    aktuellerVerbrauch: DashboardKpiDto;
-    speicherfuellstand: DashboardKpiDto;
-    gesamtProduktion: DashboardKpiDto;
-    nettoImport: DashboardKpiDto;
-    nettoExport: DashboardKpiDto;
+export interface DashboardEntryWithoutDateApi {
+    value: number;
+    trend: Trend;
+    trendRating: TrendRating;
 }
 
-export interface DashboardKpiData {
-    value?: number;
-    trend?: string;
-    trendRating?: string;
-    date: Date;
+export interface DashboardEntryWithoutTrendApi {
+    date: string;
+    value: number;
 }
 
-export interface DashboardStromData {
-    aktuellerVerbrauch: DashboardKpiDto;
-    speicherfuellstand: DashboardKpiDto;
-    gesamtProduktion: DashboardKpiData;
-    nettoImport: DashboardKpiDto;
-    nettoExport: DashboardKpiDto;
+export interface DashboardStrom {
+    aktuellerVerbrauch: DashboardEntryApi;
+    speicherfuellstand: DashboardEntryApi;
+    gesamtProduktion: DashboardEntryApi;
+    nettoImport: DashboardEntryApi;
+    nettoExport: DashboardEntryApi;
 }
 
-export interface DashboardGasDto {
-    aktuellerVerbrauch: DashboardKpiDto;
-    fuellstandNachbarlaender: DashboardKpiDto;
-    nettoImport: DashboardKpiDto;
-    aktuelleGesamteinsparung: DashboardKpiDto;
-}
-
-export interface DashboardGasData {
-    aktuellerVerbrauch: DashboardKpiDto;
-    fuellstandNachbarlaender: DashboardKpiDto;
-    nettoImport: DashboardKpiDto;
-    aktuelleGesamteinsparung: DashboardKpiDto;
+export interface DashboardGas {
+    aktuellerVerbrauch: DashboardEntryApi;
+    fuellstandNachbarlaender: DashboardEntryApi;
+    nettoImport: DashboardEntryApi;
+    aktuelleGesamteinsparung: DashboardEntryApi;
 }
 
 type SortOrder = {
@@ -55,19 +44,14 @@ export const sortOrderDashboardGasData: SortOrder = {
     aktuelleGesamteinsparung: 4
 };
 
-export interface PriceDto {
-    date: string;
-    value: number;
-}
-
 export interface DashboardPriceDto {
-    stromBoerse: PriceDto;
-    gasBoerse: PriceDto;
-    heizoelEntwicklung: PriceDto;
-    treibstoffBenzin: PriceDto;
-    treibstoffDiesel: PriceDto;
-    brennholzEndverbrauch: PriceDto;
-    fernwaermeEndverbrauch: PriceDto;
+    stromBoerse: DashboardEntryWithoutTrendApi;
+    gasBoerse: DashboardEntryWithoutTrendApi;
+    heizoelEntwicklung: DashboardEntryWithoutTrendApi;
+    treibstoffBenzin: DashboardEntryWithoutTrendApi;
+    treibstoffDiesel: DashboardEntryWithoutTrendApi;
+    brennholzEndverbrauch: DashboardEntryWithoutTrendApi;
+    fernwaermeEndverbrauch: DashboardEntryWithoutTrendApi;
 }
 
 export interface DashboardSpartipp {
@@ -89,17 +73,8 @@ export interface DashboardSpartippDisplay extends DashboardSpartippLangData {
 }
 
 export interface DashboardWetterDto {
-    aktuelleTemperatur: DashboardWetterTemperaturEntry;
-    prognoseTemperatur: DashboardWetterTemperaturEntry;
-    trend: DashboardWetterTrend;
-}
-
-export interface DashboardWetterTemperaturEntry {
-    value: number;
-    date: string;
-}
-
-export interface DashboardWetterTrend {
-    trend: Trend;
-    trendRating: TrendRating;
+    aktuelleTemperatur: DashboardEntryWithoutTrendApi;
+    prognoseTemperatur: DashboardEntryWithoutDateApi;
+    niederschlaege: DashboardEntryApi;
+    schneereserven: DashboardEntryApi;
 }

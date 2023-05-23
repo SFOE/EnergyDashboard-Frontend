@@ -1,6 +1,12 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { I18NextModule } from 'angular-i18next';
+import { AppModule } from '../../app.module';
+import { CommonsModule } from '../../shared/commons/commons.module';
+import { SharedComponentsModule } from '../../shared/components/shared-components.module';
 
 import { DashboardComponent } from './dashboard.component';
+import { DashboardModule } from './dashboard.module';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -8,6 +14,14 @@ describe('DashboardComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            imports: [
+                I18NextModule.forRoot(),
+                HttpClientTestingModule,
+                DashboardModule,
+                CommonsModule,
+                SharedComponentsModule,
+                AppModule
+            ],
             declarations: [DashboardComponent]
         }).compileComponents();
 

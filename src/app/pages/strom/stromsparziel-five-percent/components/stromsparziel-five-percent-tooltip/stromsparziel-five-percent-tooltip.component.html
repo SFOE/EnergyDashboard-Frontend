@@ -1,0 +1,76 @@
+<div class="tooltip-container">
+    <section class="date-section">
+        {{ weekdayKey | i18next }} ({{ data.hour | number: '2.' }}-{{
+        data.hour + 1 | number: '2.'
+        }})
+    </section>
+
+    <section class="percent-section">
+        <span>
+            <span [class]="dotClass"></span>
+            <span class="text-label">{{ valueLabel | i18next }}</span>
+        </span>
+
+        <span>
+            {{ data.savedPercent }}
+            <span class="label-small teaser">%</span>
+        </span>
+    </section>
+
+    <section class="percent-section">
+        <span>
+            <span class="dot">
+                <fa-icon
+                    [icon]="'house'"
+                    [style.color]="getIconColor(data.anteilPrivate)"
+                ></fa-icon>
+            </span>
+            <span class="text-label">{{
+                'commons.sparziel.sectors.private' | i18next
+                }}</span>
+        </span>
+
+        <span>
+            {{ data.anteilPrivate }}
+            <span class="label-small teaser">%</span>
+        </span>
+    </section>
+
+    <section class="percent-section">
+        <span>
+            <span class="dot">
+                <fa-icon
+                    [icon]="'buildings'"
+                    [style.color]="getIconColor(data.anteilKMU)"
+                ></fa-icon>
+            </span>
+            <span class="text-label">{{
+                'commons.sparziel.sectors.kmu' | i18next
+                }}</span>
+        </span>
+
+        <span>
+            {{ data.anteilKMU }}
+            <span class="label-small teaser">%</span>
+        </span>
+    </section>
+
+    <section class="percent-section">
+        <span>
+            <span class="dot">
+                <fa-icon
+                    [icon]="'industry-windows'"
+                    [style.color]="getIconColor(data.anteilIndustrie)"
+                ></fa-icon>
+            </span>
+            <span class="text-label">{{
+                'commons.sparziel.sectors.industry' | i18next
+                }}</span>
+        </span>
+
+        <span>
+            {{ data.anteilIndustrie }}
+            <span class="label-small teaser">%</span>
+        </span>
+    </section>
+</div>

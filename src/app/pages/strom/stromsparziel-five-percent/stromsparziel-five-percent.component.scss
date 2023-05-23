@@ -1,0 +1,87 @@
+.diagram-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+}
+
+.trend-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.trend-section-diagram {
+    margin-right: 22px;
+    margin-left: 22px;
+}
+
+.einsparungen-diagram {
+    .row {
+        display: flex;
+    }
+
+    .row div {
+        height: 100%;
+    }
+
+    .row:nth-of-type(1) {
+        height: 20px;
+    }
+
+    .row:nth-of-type(2) {
+        height: 70px;
+    }
+
+    .row:nth-of-type(3) {
+        height: 40px;
+    }
+
+    .row div:nth-of-type(1) {
+        width: 90px;
+    }
+
+    .row div:nth-of-type(2) {
+        width: 44px;
+    }
+
+    .row div:nth-of-type(3) {
+        width: 90px;
+    }
+
+    .row:nth-of-type(1) .col:nth-of-type(2),
+    .row:nth-of-type(1) .col:nth-of-type(3) {
+        border-top: 2px solid #989898;
+    }
+
+    .row .col:nth-of-type(1) {
+        display: flex;
+        align-items: flex-end;
+        border-bottom: 2px solid;
+    }
+
+    .row:nth-of-type(1) .col:nth-of-type(3) {
+        display: flex;
+        align-items: flex-start;
+        justify-content: end;
+    }
+
+    .row .col:nth-of-type(2) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.diagram-item-title {
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1000px) {
+    .diagram-item {
+        flex-basis: 100%;
+    }
+
+    .diagram-item:nth-of-type(1) {
+        margin-bottom: 40px;
+    }
+}

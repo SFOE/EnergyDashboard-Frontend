@@ -58,6 +58,7 @@ bfe-footer {
         border-bottom: 1px solid var(--c-divider-medium);
         padding: 0px 8px;
         height: 44px;
+
         &:hover {
             background-color: #ededed;
         }
@@ -80,10 +81,6 @@ bfe-footer {
             justify-content: space-between;
         }
 
-        nav {
-            width: var(--max-row-width);
-        }
-
         .footer__bottom__title {
             width: var(--max-row-width);
             font-weight: 700;
@@ -93,27 +90,24 @@ bfe-footer {
 
     .footer__bottom__nav__list {
         padding-left: 8px;
-        margin-top: 0px;
+        margin-top: 0;
+
+        li {
+            padding: 0 20px 0 8px;
+            line-height: 44px;
+        }
+
         @media (max-width: #{dim.$bp-footer}) {
             .footer__bottom__ax-statement {
                 padding: 10px 20px 10px 8px;
                 margin: -10px -20px -10px -8px;
                 line-height: 44px;
             }
-            li:nth-of-type(1) {
-                .footer__bottom__nav__list__link {
-                    padding: 10px 20px 10px 8px;
-                    margin: -10px -20px -10px -8px;
-                    line-height: 44px;
-                }
-            }
 
-            li:nth-of-type(2) {
-                .footer__bottom__nav__list__link {
-                    padding: 10px 20px 10px 8px;
-                    margin: -10px -20px -10px -8px;
-                    line-height: 44px;
-                }
+            .footer__bottom__nav__list__link {
+                padding: 10px 20px 10px 8px;
+                margin: -10px -20px -10px -8px;
+                line-height: 44px;
             }
         }
         @media (min-width: #{dim.$bp-footer}) {

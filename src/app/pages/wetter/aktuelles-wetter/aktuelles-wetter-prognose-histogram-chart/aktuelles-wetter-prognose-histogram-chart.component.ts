@@ -14,7 +14,7 @@ import {
 import { WetterTemperaturTrendEntry } from '../../../../core/models/wetter-temperatur-trend';
 import { WetterService } from '../../../../services/wetter/wetter.service';
 import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
-import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.component';
+import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.model';
 import { HistogramLineEntry } from '../../../../shared/diagrams/histogram/histogram-line/histogram-line.component';
 import { HistogramElFocusEvent } from '../../../../shared/diagrams/histogram/interactive-histogram.component';
 import {

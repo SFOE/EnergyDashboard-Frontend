@@ -8,7 +8,20 @@ const findLastIndex = <T>(array: T[], predicate: (element: T) => boolean) => {
     return Math.abs(maxIndex - reversedIndex);
 };
 
+const range = (start: number, end: number) => {
+    const length = end - start;
+    return Array.from({ length }, (_, i) => start + i);
+};
+
+const sumUp = (arr: Array<number | null | undefined>): number =>
+    arr.reduce((accumulator: number, current) => {
+        const valueToAdd: number = current ?? 0;
+        return accumulator + valueToAdd;
+    }, 0);
+
 export const ArrayUtils = {
     filterByIndex,
-    findLastIndex
+    findLastIndex,
+    range,
+    sumUp
 };

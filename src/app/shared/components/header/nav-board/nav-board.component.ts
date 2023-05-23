@@ -12,7 +12,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { RouteFragment } from 'src/app/core/navigation/route-fragment.enum';
+import { RouteFragment } from '../../../../core/navigation/route-fragment.enum';
 import { Language } from '../../../../core/i18n/language.enum';
 import { TranslationService } from '../../../../core/i18n/translation.service';
 import {

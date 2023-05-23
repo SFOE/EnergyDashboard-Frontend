@@ -4,6 +4,7 @@ export interface Environment {
     stage: Stage;
     production: boolean;
     baseUrl: string;
+    rootUrl: string;
     gaTrackingId?: string;
 }
 

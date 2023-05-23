@@ -26,11 +26,26 @@ Initial Release of Energy-Dashboard. Includes the basic setup and all functional
 - Improved accessibility
 
 ## v1.1.1 - 04.01.2022
+
 - Fixed chart axis labels on Strom - Füllstand Speicherseen and Wetter - Temperatur
 
 ## v1.2.0 - 26.01.2022
+
 - Added KPI Strom Sparziel
 - Added KPI Preise Brennholz
 - Added KPI Preise Fernwärme
 - Improved Chart of Sparziel
+
+## v2.0.0 - 26.01.2023
+
+Feature Release for the following KPIs
+
+- Strom Produktion KKW CH / FR
+- Strom Sparziel 10%
+- Strom Sparziel 5%
+- Wetter Niederschläge
+- Wetter Schneereserven
+- Improvements to Prices
+- Improvements to Gas Sparziel
+
 

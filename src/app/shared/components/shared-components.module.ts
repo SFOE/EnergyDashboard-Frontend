@@ -17,7 +17,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faFireFlame } from '@fortawesome/pro-solid-svg-icons';
 import { I18NextModule } from 'angular-i18next';
-import { AngularResizeEventModule } from 'angular-resize-event';
 import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { CommonsModule } from '../commons/commons.module';
 import { HistogramChartTooltipComponent } from '../diagrams/tooltip/histogram-chart-tooltip/histogram-chart-tooltip.component';
@@ -50,6 +49,8 @@ import { PointsOfInterestLegendComponent } from './points-of-interest-legend/poi
 import { StatusAmpelComponent } from './status-ampel/status-ampel.component';
 import { TabItemDirective } from './tab-list/tab-item.directive';
 import { TabListComponent } from './tab-list/tab-list.component';
+import { NgxResize } from 'ngx-resize';
+import { InfoPageComponent } from './info-page/info-page.component';
 
 @NgModule({
     declarations: [
@@ -82,7 +83,8 @@ import { TabListComponent } from './tab-list/tab-list.component';
         OptionalDynamicLangtextComponent,
         KpiDateInfoSubtextComponent,
         ContextTitleComponent,
-        PointsOfInterestLegendComponent
+        PointsOfInterestLegendComponent,
+        InfoPageComponent
     ],
     imports: [
         CommonModule,
@@ -92,7 +94,7 @@ import { TabListComponent } from './tab-list/tab-list.component';
         RouterModule,
         FontAwesomeModule,
         NgxTippyModule,
-        AngularResizeEventModule
+        NgxResize
     ],
     exports: [
         HeaderComponent,
@@ -124,7 +126,8 @@ import { TabListComponent } from './tab-list/tab-list.component';
         OptionalDynamicLangtextComponent,
         KpiDateInfoSubtextComponent,
         ContextTitleComponent,
-        PointsOfInterestLegendComponent
+        PointsOfInterestLegendComponent,
+        InfoPageComponent
     ]
 })
 export class SharedComponentsModule {

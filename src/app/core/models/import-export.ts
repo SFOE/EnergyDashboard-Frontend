@@ -1,7 +1,7 @@
+import { DateModel } from './base/date.model';
 import { Trend, TrendRating } from './trend.enum';
 
-export interface ImportExportEntry {
-    datum: Date;
+export interface ImportExportEntry extends DateModel {
     import: ImportExportCountries;
     export: ImportExportCountries;
     nettoImportCH: number;

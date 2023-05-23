@@ -9,8 +9,6 @@ import { GoogleAnalyticsService } from './services/google-analytics.service';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-    title = 'energy-dashboard-web';
-
     constructor(
         @Inject(DOCUMENT) private document: Document,
         @Inject(I18NEXT_SERVICE) private i18NextService: ITranslationService,

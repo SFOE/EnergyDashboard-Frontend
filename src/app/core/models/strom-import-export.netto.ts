@@ -1,3 +1,4 @@
+import { DateModel } from './base/date.model';
 import { ImportExportEntry } from './import-export';
 
 export interface StromImportExportNetto {
@@ -5,8 +6,7 @@ export interface StromImportExportNetto {
     entries: StromImportExportNettoEntry[];
 }
 
-export interface StromImportExportNettoEntry {
-    datum: Date;
+export interface StromImportExportNettoEntry extends DateModel {
     import: StromImportExportCountries;
     export: StromImportExportCountries;
 }

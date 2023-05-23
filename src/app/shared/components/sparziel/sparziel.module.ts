@@ -27,6 +27,10 @@ import { SparzielOverviewComponent } from './overview/sparziel-overview.componen
         DiagramLegendModule,
         TrendModule
     ],
-    exports: [SparzielOverviewComponent, SparzielHistogramChartComponent]
+    exports: [
+        SparzielOverviewComponent,
+        SparzielHistogramChartComponent,
+        SparzielChartTooltipComponent
+    ]
 })
 export class SparzielModule {}

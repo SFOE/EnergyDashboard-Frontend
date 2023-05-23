@@ -5,11 +5,12 @@ import {
     COLOR_CHART_HISTOGRAM_AREA_SECONDARY,
     COLOR_CHART_SPEICHERSEEN_PRIMARY,
     COLOR_CHART_STROM_ADDITIONAL_LINE,
+    COLOR_CHART_STROM_BAND_COLOR,
     COLOR_CHART_STROM_PRIMARY,
     COLOR_CHART_STROM_PRIMARY_AREA
 } from '../../../../shared/commons/colors.const';
 import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
-import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.component';
+import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.model';
 import { HistogramElFocusEvent } from '../../../../shared/diagrams/histogram/interactive-histogram.component';
 import {
     LabelFilters,
@@ -35,7 +36,7 @@ export class StromverbrauchHistorischerLandesverbrauchHistogramChartComponent
     readonly subLabelModifier: LabelModifier;
 
     readonly primaryColor = COLOR_CHART_STROM_PRIMARY;
-    readonly bandColor = COLOR_CHART_STROM_PRIMARY;
+    readonly bandColor = COLOR_CHART_STROM_BAND_COLOR;
     readonly lineChartColors = [
         COLOR_CHART_HISTOGRAM_AREA_SECONDARY,
         this.primaryColor,

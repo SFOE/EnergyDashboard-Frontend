@@ -13,8 +13,9 @@ export interface TrendAndNumberModel {
         value: number;
         postfix: string;
         subTextKeys: string[];
+        topTextKeys?: string[];
     };
-    trend: {
+    trend?: {
         value: Trend;
         rating: TrendRating;
         subTextKeys: string[];
@@ -27,7 +28,6 @@ export interface TrendAndNumberModel {
     styleUrls: ['./trend-and-number.component.scss']
 })
 export class TrendAndNumberComponent implements AfterViewInit {
-    @Input() isLoading: boolean = false;
     @Input() model: TrendAndNumberModel;
 
     @ViewChild('number', { read: ElementRef }) numberRef?: ElementRef;

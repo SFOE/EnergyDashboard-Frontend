@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { map, Observable, startWith } from 'rxjs';
 import { Context } from '../../core/models/context.enum';
 import {
-    DashboardGasData,
-    DashboardStromData,
+    DashboardGas,
+    DashboardStrom,
     sortOrderDashboardGasData
 } from '../../core/models/dashboard';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
@@ -18,6 +18,7 @@ import { gasTextMap, stromTextMap, TextMapEntry } from './dashboard.rows.model';
     styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+    @Input() embedMode: boolean = false;
     context = Context;
     stromModels$: Observable<DashboardRowModel[]>;
     gasModels$: Observable<DashboardRowModel[]>;
@@ -43,7 +44,7 @@ export class DashboardComponent implements OnInit {
         this.priceModels$ = this.dashboardService.getPriceData();
     }
 
-    private mapStromDataToRow(data: DashboardStromData): DashboardRowModel[] {
+    private mapStromDataToRow(data: DashboardStrom): DashboardRowModel[] {
         const color = COLOR_STROM;
         return Object.entries(data).map(([key, entry]) => ({
             titleDynamicKey: stromTextMap[key].titleDynamicKey,
@@ -57,7 +58,7 @@ export class DashboardComponent implements OnInit {
         }));
     }
 
-    private mapGasDataToRow(data: DashboardGasData): DashboardRowModel[] {
+    private mapGasDataToRow(data: DashboardGas): DashboardRowModel[] {
         const color = COLOR_GAS;
         return Object.entries(data)
             .sort(

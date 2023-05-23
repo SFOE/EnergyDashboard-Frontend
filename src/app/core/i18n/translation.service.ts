@@ -35,6 +35,7 @@ export class TranslationService {
     }
 
     public returnTranslation(key: string): string {
+        // @ts-ignore
         return this.i18NextService.t(key);
     }
 

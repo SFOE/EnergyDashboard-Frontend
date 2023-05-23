@@ -7,21 +7,7 @@
             *ngIf="data.barValues[0] || data.barValues[1] || data.barValues[2]"
         >
             <section class="tooltip-content">
-                <!-- aktuelle Abweichung von 5 Jahresdurchschnitt -->
-                <span
-                    [style.backgroundColor]="this.dataColors[0]"
-                    class="dot"
-                ></span>
-
-                <span class="text">{{
-                    'commons.sparziel.chart-legend.difference' | i18next
-                }}</span>
-                <span class="number-box">
-                    <span> {{ data.barValues[0] }}</span>
-                    <span class="text-muted">%</span>
-                </span>
-
-                <!-- relevant: aktuelle Abweichung von 5 Jahresdurchschnitt ab Oktober-->
+                <!-- aktuelle Abweichung von 5 Jahresdurchschnitt-->
                 <span
                     [style.backgroundColor]="this.dataColors[1]"
                     [style.opacity]="isProjectedEntry ? '0.5' : '1'"
@@ -38,9 +24,9 @@
                 <span class="number-box">
                     <span>
                         {{
-                            isProjectedEntry
-                                ? data.barValues[2]
-                                : data.barValues[1]
+                        isProjectedEntry
+                            ? data.barValues[1]
+                            : data.barValues[0]
                         }}
                     </span>
                     <span class="text-muted">%</span>
@@ -64,8 +50,8 @@
                     ></span>
                 </span>
                 <span class="text"
-                    >{{
-                        'commons.sparziel.chart-tooltipp.temperature' | i18next
+                >{{
+                    'commons.sparziel.chart-tooltipp.temperature' | i18next
                     }}
                 </span>
                 <span class="number-box">
@@ -73,8 +59,18 @@
                     <span class="text-muted celsius">°C</span>
                 </span>
 
+                <!-- Witterungsbereigter Wert-->
+                <span> </span>
+                <span class="text"
+                >{{ 'commons.sparziel.temperature-corrected' | i18next }}
+                </span>
+                <span class="number-box">
+                    <span> {{ data.hiddenValues[0] }}</span>
+                    <span class="text-muted">%</span>
+                </span>
+
                 <!-- divider -->
-                <span class="divider-section"><hr width="100%" /></span>
+                <span class="divider-section"><hr width="100%"/></span>
 
                 <!-- Mittelwert Verbrauch / Durchschnitt letzte 5 Jahre -->
                 <span

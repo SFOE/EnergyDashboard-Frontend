@@ -7,8 +7,9 @@ import {
 } from '@angular/core';
 import { Area, Line, Selection } from 'd3';
 import { COLORS_HISTOGRAM_LINE } from '../../../commons/colors.const';
+import { middleOfDay } from '../../../static-utils/date-utils';
 import { isDefined } from '../../../xternal-helpers/from-c19-commons/utils/is-defined.function';
-import { HistogramEntry, middleOfDay } from '../base-histogram.component';
+import { HistogramEntry } from '../base-histogram.model';
 import { InteractiveHistogramComponent } from '../interactive-histogram.component';
 
 export interface HistogramAreaEntry extends HistogramEntry {

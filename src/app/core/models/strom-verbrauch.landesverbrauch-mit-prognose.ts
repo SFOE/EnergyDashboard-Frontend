@@ -1,3 +1,5 @@
+import { DateModel } from './base/date.model';
+import { FiveYearWithDiffStatisticsModel } from './base/statisics.model';
 import { Trend, TrendRating } from './trend.enum';
 
 export interface StromVerbrauchLandesverbrauchMitPrognoseApi {
@@ -13,15 +15,10 @@ export interface StromVerbrauchLandesverbrauchMitPrognoseCurrentEntryApi {
     trendRating: TrendRating;
 }
 
-export interface StromVerbrauchLandesverbrauchMitPrognoseEntryApi {
+export interface StromVerbrauchLandesverbrauchMitPrognoseEntryApi
+    extends DateModel,
+        FiveYearWithDiffStatisticsModel {
     landesverbrauch: number | null;
     landesverbrauchGeschaetzt: number | null;
     landesverbrauchPrognose: number | null;
-    fiveYearMin: number;
-    fiveYearMax: number;
-    fiveYearMittelwert: number;
-    date: string;
-    differenzMittelwert: number | null;
-    differenzMin: number | null;
-    differenzMax: number | null;
 }

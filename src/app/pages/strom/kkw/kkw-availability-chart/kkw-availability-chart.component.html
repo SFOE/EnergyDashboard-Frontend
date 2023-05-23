@@ -1,0 +1,38 @@
+<div class="kkw-availability-chart-container diagram-container">
+    <bfe-kpi-subtitle>
+        {{ 'dynamic:' + model.titleDynamicKey | i18nextDynamic }}
+    </bfe-kpi-subtitle>
+    <bfe-kpi-date-info-subtext [date]="lastUpdated">
+    </bfe-kpi-date-info-subtext>
+    <bfe-optional-dynamic-langtext
+        [text]="model.kurztextDynamicKey"
+    ></bfe-optional-dynamic-langtext>
+    <ng-container *ngIf="chartData">
+        <ng-container>
+            <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+            <bfe-histogram-detail
+                [data]="chartData"
+                [lineThickness]="[2]"
+                [barColors]="[kkwColors.COLOR_KKW_PRIMARY]"
+                [lineColors]="[kkwColors.COLOR_KKW_INSTALLED_POWER]"
+                [margin]="{ top: 20, bottom: 40, left: 0, right: 12 }"
+                [domainMax]="getDomainMax()"
+                [barWidth]="2"
+                [blocks]="blocks"
+                [xLabelModifier]="xLabelModifier"
+                [xSubLabelModifier]="xSubLabelModifier"
+                [yLabelFormatter]="yLabelFormatter"
+                (elFocus)="showTooltip($event)"
+                (diagramLeave)="hideTooltip()"
+            ></bfe-histogram-detail>
+            <bfe-kkw-availability-chart-tooltip
+                [event]="tooltipEvent"
+                [showNumberOfOutages]="showNumberOfOutages"
+            >
+            </bfe-kkw-availability-chart-tooltip>
+        </ng-container>
+    </ng-container>
+    <div *ngIf="isLoading" class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</div>

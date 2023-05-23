@@ -26,11 +26,11 @@ export class ImportExportBoxComponent implements OnInit {
     ngOnInit(): void {}
 
     get orientationClass() {
-        return `import-export-box-${this.orientation.toLowerCase()}`;
+        return `import-export-box-${this.orientation?.toLowerCase()}`;
     }
 
     get contextClass() {
-        return `import-export-box-context-${this.context.toLowerCase()}`;
+        return `import-export-box-context-${this.context?.toLowerCase()}`;
     }
 
     get arrowAsset() {
@@ -41,10 +41,10 @@ export class ImportExportBoxComponent implements OnInit {
     }
 
     get countryClass() {
-        return `import-export-box-country-${this.country.toLowerCase()}`;
+        return `import-export-box-country-${this.country?.toLowerCase()}`;
     }
 
     get countryKey() {
-        return `commons.country.${this.country.toLowerCase()}`;
+        return `commons.country.${this.country?.toLowerCase()}`;
     }
 }

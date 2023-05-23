@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslationService } from '../../../core/i18n/translation.service';
+import { HistogramAreaChartEntry } from '../../../core/models/charts';
 import { Context } from '../../../core/models/context.enum';
+import { PreiseService } from '../../../services/preise/preise.service';
+import { COLOR_HOLZ } from '../../../shared/commons/colors.const';
 import { DiagramLegendEntry } from '../../../shared/diagrams/diagram-legend/diagram-legend.component';
-import { LabelModifier } from '../../../shared/diagrams/histogram/base-histogram.component';
+import { LabelModifier } from '../../../shared/diagrams/histogram/base-histogram.model';
 import { HistogramLineEntry } from '../../../shared/diagrams/histogram/histogram-line/histogram-line.component';
 import { HistogramElFocusEvent } from '../../../shared/diagrams/histogram/interactive-histogram.component';
-import { PreiseService } from '../../../services/preise/preise.service';
-import { TranslationService } from '../../../core/i18n/translation.service';
 import {
     LabelFilters,
     LabelFormatters
 } from '../../../shared/diagrams/label.utils';
-import { HistogramAreaChartEntry } from '../../../core/models/charts';
-import { COLOR_HOLZ } from '../../../shared/commons/colors.const';
 
 @Component({
     selector: 'bfe-preise-brennholz',

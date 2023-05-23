@@ -1,0 +1,162 @@
+<div *ngIf="!loading; else loadingTemplate" class="diagram-container">
+    <bfe-kpi-subtitle>
+        {{
+        'dynamic:kpi-wetter-3_niederschlag-karten.currentmonth.titel'
+            | i18nextDynamic
+        }}
+    </bfe-kpi-subtitle>
+    <bfe-kpi-date-info-subtext
+        [updateInterval]="'daily'"
+        [date]="dateOfLastUpdate"
+    ></bfe-kpi-date-info-subtext>
+    <bfe-optional-dynamic-langtext
+        text="kpi-wetter-3_niederschlag-karten.currentmonth.langtext"
+    ></bfe-optional-dynamic-langtext>
+
+    <div [ngStyle]="{ display: mapIndexToShow == -1 ? 'block' : 'none' }">
+        <div class="map-container">
+            <div class="map" (click)="showMap(0)">
+                <p class="info-subtext">
+                    {{
+                    'dashboard.wetter.niederschlag.currentmonth' | i18next
+                    }}:
+                    <b>{{
+                        'dashboard.wetter.niederschlag.total-precipitation-in-mm'
+                            | i18next
+                        }}</b>
+                </p>
+                <img
+                    [src]="imageRelativeLinks[0]"
+                    alt="karte-aktuellermonat-absolut"
+                />
+            </div>
+            <div class="map" (click)="showMap(1)">
+                <p class="info-subtext">
+                    {{
+                    'dashboard.wetter.niederschlag.currentmonth' | i18next
+                    }}:
+                    <b>{{
+                        'dashboard.wetter.niederschlag.anomaly-to-norm'
+                            | i18next
+                        }}</b>
+                </p>
+                <img
+                    [src]="imageRelativeLinks[1]"
+                    alt="karte-aktuellermonat-anomalie"
+                />
+            </div>
+        </div>
+
+        <bfe-kpi-subtitle>
+            {{
+            'dynamic:kpi-wetter-3_niederschlag-karten.lastmonth.titel'
+                | i18nextDynamic
+            }}
+        </bfe-kpi-subtitle>
+        <bfe-kpi-date-info-subtext
+            [updateInterval]="'daily'"
+            [date]="dateOfLastUpdate"
+        ></bfe-kpi-date-info-subtext>
+        <bfe-optional-dynamic-langtext
+            text="kpi-wetter-3_niederschlag-karten.lastmonth.langtext"
+        ></bfe-optional-dynamic-langtext>
+
+        <div class="map-container">
+            <div class="map" (click)="showMap(2)">
+                <p class="info-subtext">
+                    {{ 'dashboard.wetter.niederschlag.lastmonth' | i18next }}:
+                    <b>{{
+                        'dashboard.wetter.niederschlag.total-precipitation-in-mm'
+                            | i18next
+                        }}</b>
+                </p>
+                <img
+                    [src]="imageRelativeLinks[2]"
+                    alt="karte-letztermonat-absolut"
+                />
+            </div>
+            <div class="map" (click)="showMap(3)">
+                <p class="info-subtext">
+                    {{ 'dashboard.wetter.niederschlag.lastmonth' | i18next }}:
+                    <b>{{
+                        'dashboard.wetter.niederschlag.anomaly-to-norm'
+                            | i18next
+                        }}</b>
+                </p>
+                <img
+                    [src]="imageRelativeLinks[3]"
+                    alt="karte-letztermonat-anomalie"
+                />
+            </div>
+        </div>
+    </div>
+
+    <div [ngStyle]="{ display: mapIndexToShow >= 0 ? 'block' : 'none' }">
+        <div class="map-highlighted-container">
+            <div class="backdrop" (click)="closeMap()"></div>
+
+            <div class="map-highlighted">
+                <div class="map-highlighted-title">
+                    <p class="info-subtext" *ngIf="mapIndexToShow == 0">
+                        {{
+                        'dashboard.wetter.niederschlag.currentmonth'
+                            | i18next
+                        }}:
+                        <b>{{
+                            'dashboard.wetter.niederschlag.total-precipitation-in-mm'
+                                | i18next
+                            }}</b>
+                    </p>
+                    <p class="info-subtext" *ngIf="mapIndexToShow == 1">
+                        {{
+                        'dashboard.wetter.niederschlag.currentmonth'
+                            | i18next
+                        }}:
+                        <b>{{
+                            'dashboard.wetter.niederschlag.anomaly-to-norm'
+                                | i18next
+                            }}</b>
+                    </p>
+                    <p class="info-subtext" *ngIf="mapIndexToShow == 2">
+                        {{
+                        'dashboard.wetter.niederschlag.lastmonth' | i18next
+                        }}:
+                        <b>{{
+                            'dashboard.wetter.niederschlag.total-precipitation-in-mm'
+                                | i18next
+                            }}</b>
+                    </p>
+                    <p class="info-subtext" *ngIf="mapIndexToShow == 3">
+                        {{
+                        'dashboard.wetter.niederschlag.lastmonth' | i18next
+                        }}:
+                        <b>{{
+                            'dashboard.wetter.niederschlag.anomaly-to-norm'
+                                | i18next
+                            }}</b>
+                    </p>
+
+                    <span>
+                        <fa-icon
+                            icon="xmark"
+                            size="lg"
+                            (click)="closeMap()"
+                        ></fa-icon>
+                    </span>
+                </div>
+
+                <img
+                    [src]="imageRelativeLinks[mapIndexToShow]"
+                    alt="Karte"
+                    height="445"
+                />
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingTemplate>
+    <div class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</ng-template>

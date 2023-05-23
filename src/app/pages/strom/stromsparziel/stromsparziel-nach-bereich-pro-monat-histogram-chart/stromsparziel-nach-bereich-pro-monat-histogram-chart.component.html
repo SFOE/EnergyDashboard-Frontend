@@ -1,0 +1,56 @@
+<div *ngIf="!isLoading; else loadingTemplate" class="diagram-container">
+    <bfe-kpi-subtitle>
+        {{
+        'dynamic:kpi-strom-3_sparziel_nach_bereich_pro_monat.titel'
+            | i18nextDynamic
+        }}
+    </bfe-kpi-subtitle>
+
+    <div>
+        <bfe-kpi-date-info-subtext
+            *ngIf="lastUpdate"
+            [date]="lastUpdate"
+            [updateInterval]="'monthly'"
+        ></bfe-kpi-date-info-subtext>
+
+        <bfe-optional-dynamic-langtext
+            text="kpi-strom-3_sparziel_nach_bereich_pro_monat.langtext"
+        ></bfe-optional-dynamic-langtext>
+    </div>
+
+    <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+
+    <bfe-histogram-detail
+        (diagramLeave)="hideTooltip()"
+        (elFocus)="showLineChartTooltip($event)"
+        [data]="entries"
+        [blocks]="blocks"
+        [barWidth]="22"
+        [barColors]="barColors"
+        [lineColors]="lineColors"
+        [barLineColor]="barLineColor"
+        [lineThickness]="[2, 2, 1]"
+        [lineStyle]="['solid', 'solid']"
+        [barLineStyle]="'dashed'"
+        [xLabelModifier]="xLabelModifier"
+        [xSubLabelModifier]="xSubLabelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+        [domainMax]="domainMax"
+        [domainMin]="domainMin"
+        [steppedLine]="true"
+    ></bfe-histogram-detail>
+
+    <bfe-stromsparziel-nach-bereich-pro-monat-histogram-chart-tooltip
+        [event]="tooltipEvent"
+        [barColors]="barColors"
+        [lineColors]="lineColors"
+        [barLineColor]="barLineColor"
+    >
+    </bfe-stromsparziel-nach-bereich-pro-monat-histogram-chart-tooltip>
+</div>
+
+<ng-template #loadingTemplate>
+    <div class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</ng-template>

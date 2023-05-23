@@ -8,6 +8,16 @@ import { StromVerbrauchEndverbrauch } from '../../core/models/strom-verbrauch.en
 import { StromVerbrauchLandesverbrauchMitPrognoseEntryApi } from '../../core/models/strom-verbrauch.landesverbrauch-mit-prognose';
 import { StromVerbrauchLandesverbrauchVergleich } from '../../core/models/strom-verbrauch.landesverbrauch-vergleich';
 import {
+    aggregateAusfaelleToHistogramEntry,
+    findKkwAusfallToHistogramEntry,
+    getAusfallColor
+} from '../../pages/strom/kkw/kkw.utils';
+import { dateWithoutTime } from '../../shared/static-utils/date-utils';
+import {
+    StromKkwAusfall,
+    StromKkwAusfallDto,
+    StromKkwProductionEntry,
+    StromKkwProductionEntryDto,
     StromProductionData,
     StromProductionDto,
     StromProductionEntry,
@@ -167,7 +177,7 @@ export const mapStromProductionImportVerbrauchDto = (
         chartAreaEntries: dto.entries.map(
             (entry) =>
                 <HistogramAreaChartEntry>{
-                    date: new Date(entry.datum),
+                    date: new Date(entry.date),
                     values: [
                         entry.flusskraft,
                         entry.kernkraft,
@@ -182,8 +192,45 @@ export const mapStromProductionImportVerbrauchDto = (
         chartLineEntries: dto.entries.map(
             (entry) =>
                 <HistogramAreaChartEntry>{
-                    date: new Date(entry.datum),
+                    date: new Date(entry.date),
                     values: [entry.stromverbrauch]
                 }
         )
     };
+
+export const mapStromKkwProductionDtoToEntry = (
+    dto: StromKkwProductionEntryDto,
+    ausfaelle: StromKkwAusfall[] = [],
+    aggregateAusfaelle: boolean = false
+): StromKkwProductionEntry => {
+    const date = new Date(dto.date);
+    return {
+        date,
+        values: [dto.fiveYearMittelwert, dto.currentProduction], // add mittelwert first to draw current production line above the average line
+        band: { lower: dto.fiveYearMin, upper: dto.fiveYearMax },
+        ausfaelle: aggregateAusfaelle
+            ? aggregateAusfaelleToHistogramEntry({ date }, ausfaelle)
+            : findKkwAusfallToHistogramEntry({ date }, ausfaelle)
+    };
+};
+
+export const mapStromKkwAusfaelle = (
+    dtos: StromKkwAusfallDto[]
+): StromKkwAusfall[] =>
+    dtos.map((dto) => {
+        const startDate = dateWithoutTime(dto.startDate);
+        const endDate = dateWithoutTime(dto.endDate);
+        /* add one day if start- and endDate or the same day,
+        otherwise the ausfall is not displayed in the chart */
+        if (startDate.getTime() === endDate.getTime()) {
+            endDate.setDate(endDate.getDate() + 1);
+        }
+
+        return {
+            startDate,
+            endDate,
+            productionPlant: dto.productionPlant,
+            wasPlanned: dto.wasPlanned,
+            color: getAusfallColor(dto.wasPlanned)
+        };
+    });

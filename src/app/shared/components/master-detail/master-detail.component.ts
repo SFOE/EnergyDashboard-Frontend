@@ -1,23 +1,18 @@
 import {
-    AfterContentChecked,
-    AfterContentInit,
-    AfterViewInit,
     Component,
-    DoCheck,
-    ElementRef,
     Inject,
     TemplateRef,
-    ViewChild,
     ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ResizedEvent } from 'angular-resize-event';
+
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Context } from '../../../core/models/context.enum';
 import { Breakpoints } from '../../static-utils/breakpoints.enum';
 import { MasterDetailMenuItem } from './master-detail-configuration.model';
 import { MASTER_DETAIL_DATA } from './master-detail-data.token';
 import { MasterDetailData } from './master-detail-data.type';
+import { NgxResizeResult } from 'ngx-resize';
 
 @Component({
     selector: 'bfe-master-detail',
@@ -49,7 +44,6 @@ export class MasterDetailComponent {
 
     changeRoute(event: Event) {
         const value = (event.target as HTMLSelectElement).value;
-
         this.router.navigate([value], { relativeTo: this.route });
     }
 
@@ -57,7 +51,6 @@ export class MasterDetailComponent {
         if (!item) {
             return false;
         }
-
         let matchesRoute = false;
         item.pathArgs.forEach((arg) => {
             matchesRoute = matchesRoute || this.router.url.includes(arg);
@@ -66,9 +59,9 @@ export class MasterDetailComponent {
         return matchesRoute;
     }
 
-    onDetailContainerResized(event: ResizedEvent): void {
+    onResize(event: NgxResizeResult): void {
         if (window.innerWidth > Breakpoints.MIN_MD) {
-            this.contextMargin = `${event.newRect.height}px`;
+            this.contextMargin = `${event.height}px`;
         }
     }
 }

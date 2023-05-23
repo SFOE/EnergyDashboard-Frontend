@@ -1,0 +1,15 @@
+.number-section {
+    max-width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    p {
+        margin-bottom: -6px;
+    }
+}
+
+.loading-container {
+    height: 100px;
+    width: 100%;
+}

@@ -1,0 +1,17 @@
+<div class="stromsparziel-five-percent-chart-container">
+    <div class="legend">
+        <section class="header">
+            <fa-icon icon="clock" size="sm"></fa-icon>
+        </section>
+        <span *ngFor="let hour of hours">{{ hour | number: '2.' }}</span>
+    </div>
+    <bfe-stromsparziel-five-percent-chart-row
+        *ngFor="let entry of processedEntries; let first = first; let i = index"
+        [entries]="entry"
+        [maxPercentage]="maxPercentage"
+        [weekday]="i"
+        [displayScale]="first"
+        [numberOfElementsInHeight]="hours.length"
+    >
+    </bfe-stromsparziel-five-percent-chart-row>
+</div>

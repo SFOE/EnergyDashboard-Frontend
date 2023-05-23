@@ -18,10 +18,10 @@
                         [number]="currentEntry.eigenproduktion"
                         unit="GWh"
                     ></bfe-large-number-unit>
-                    <span class="label-thin label-medium">
+                    <span class="label-medium">
                         {{
-                            'dashboard.strom.produktion.eigenproduktion.yesterday'
-                                | i18next
+                        'dashboard.strom.produktion.eigenproduktion.yesterday'
+                            | i18next
                         }}
                     </span>
                 </section>
@@ -30,9 +30,9 @@
                         [trend]="currentEntry.trend"
                         [rating]="currentEntry.trendRating"
                     ></bfe-trend-indicator>
-                    <span class="label-thin label-medium">
+                    <span class="label-medium">
                         {{
-                            'dashboard.strom.produktion.rolling-trend' | i18next
+                        'dashboard.strom.produktion.rolling-trend' | i18next
                         }}
                     </span>
                 </section>

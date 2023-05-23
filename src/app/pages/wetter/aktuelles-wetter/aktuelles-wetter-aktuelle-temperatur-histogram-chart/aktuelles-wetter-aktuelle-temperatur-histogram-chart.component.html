@@ -5,7 +5,7 @@
                 | i18nextDynamic
         }}
     </bfe-kpi-subtitle>
-    <bfe-kpi-date-info-subtext *ngIf="currentTrend" [date]="currentTrend.datum">
+    <bfe-kpi-date-info-subtext *ngIf="currentTrend" [date]="currentTrend.date">
     </bfe-kpi-date-info-subtext>
     <bfe-optional-dynamic-langtext
         text="kpi-wetter-1_meteoswiss_temp_aktuell.langtext"
@@ -16,7 +16,7 @@
             (diagramLeave)="hideTooltip()"
             (elFocus)="showLineChartTooltip($event)"
             [colors]="[consts.COLOR_CHART_SECONDARY, primaryColor]"
-            [bandColor]="primaryColor"
+            [bandColor]="consts.COLOR_CHART_MIN_MAX_RANGE"
             [data]="chartDataAktuelleTemperatur"
             [strokeWidths]="[1, 2]"
             [domainMin]="yDomainMin"

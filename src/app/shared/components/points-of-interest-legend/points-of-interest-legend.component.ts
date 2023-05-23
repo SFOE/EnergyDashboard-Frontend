@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { DateModel } from '../../../core/models/base/date.model';
 
-export interface PointOfInterestLegendEntry {
-    date: Date;
+export interface PointOfInterestLegendEntry extends DateModel {
     pointNumber: number;
     labelKey: string;
     overrideDateLabel?: Date;

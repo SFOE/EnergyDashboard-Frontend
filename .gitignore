@@ -44,9 +44,14 @@ Thumbs.db
 
 .yarn
 .yarn/*
-!.yarn/releases/yarn-3.2.4.cjs
+!.yarn/releases/*
 
 .serverless
 
 # environment variables
 .envrc
+
+# cypress test results
+/cypress/videos/*
+/cypress/screenshots/*
+/cypress/fixtures/*

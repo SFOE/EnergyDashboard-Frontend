@@ -1,9 +1,10 @@
+import { DateModel } from './base/date.model';
+
 export interface WetterTemperaturAktuell {
     [station: string]: WetterTemperaturAktuellEntry[];
 }
 
-export interface WetterTemperaturAktuellEntry {
-    datum: string;
+export interface WetterTemperaturAktuellEntry extends DateModel {
     lufttemperaturTagesmittel: number | null;
     lufttemperaturTagesmittelNorm: number;
     fiveYearMin: number;

@@ -1,11 +1,9 @@
 import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
 import { Selection } from 'd3';
+import { middleOfDay } from '../../static-utils/date-utils';
 import { binarySearch, initMouseListenerOnValueDomain } from '../utils';
-import {
-    BaseHistogramComponent,
-    HistogramEntry,
-    middleOfDay
-} from './base-histogram.component';
+import { BaseHistogramComponent } from './base-histogram.component';
+import { HistogramEntry } from './base-histogram.model';
 
 export interface HistogramElFocusEvent<
     T extends HistogramEntry = HistogramEntry

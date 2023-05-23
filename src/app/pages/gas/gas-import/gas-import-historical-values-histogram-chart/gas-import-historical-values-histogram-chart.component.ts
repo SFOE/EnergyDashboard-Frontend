@@ -3,7 +3,7 @@ import { TranslationService } from '../../../../core/i18n/translation.service';
 import { HistogramAreaChartEntry } from '../../../../core/models/charts';
 import { ImportExportEntry } from '../../../../core/models/import-export';
 import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
-import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.component';
+import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.model';
 import { HistogramElFocusEvent } from '../../../../shared/diagrams/histogram/interactive-histogram.component';
 import {
     LabelFilters,

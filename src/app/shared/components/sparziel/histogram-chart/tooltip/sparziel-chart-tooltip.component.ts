@@ -16,6 +16,6 @@ export class SparzielChartTooltipComponent extends BaseTooltipComponent<Histogra
     @Input() sparzielTarget: number;
 
     get isProjectedEntry(): boolean {
-        return this.data?.barValues[2] !== 0 ?? false;
+        return this.data?.barValues[1] !== 0 ?? false;
     }
 }

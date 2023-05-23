@@ -1,17 +1,59 @@
 <ng-container [ngSwitch]="updateInterval">
     <p class="info-subtext" *ngSwitchCase="'weekly'">
-        {{ 'page.subtitle.date-info-week' | i18next: { date: (date | date) } }}
+        <span>
+            {{
+            'page.subtitle.date-info-week'
+                | i18next: {date: (date | date)}
+            }}
+        </span>
+        <span *ngIf="date">
+            -
+            {{
+            'page.subtitle.date-info-status'
+                | i18next: {date: (date | date)}
+            }}
+        </span>
     </p>
     <p class="info-subtext" *ngSwitchCase="'monthly'">
-        {{
+        <span>
+            {{
             'page.subtitle.date-info-month'
-                | i18next: { date: (date | date: 'MMMM YYYY') }
-        }}
+                | i18next: {date: (date | date: 'MMMM YYYY')}
+            }}
+        </span>
+        <span *ngIf="date">
+            -
+            {{
+            'page.subtitle.date-info-status'
+                | i18next: {date: (date | date)}
+            }}
+        </span>
     </p>
-    <p class="info-subtext" *ngSwitchCase="'endOfMonth'">
-        {{ 'page.subtitle.date-info-month-end' | i18next }}
+    <p class="info-subtext" *ngSwitchCase="'semi-monthly'">
+        <span>
+            {{
+            'page.subtitle.date-info-semi-month'
+                | i18next: {date: (date | date: 'MMMM YYYY')}
+            }}
+        </span>
+        <span *ngIf="date">
+            -
+            {{
+            'page.subtitle.date-info-status'
+                | i18next: {date: (date | date)}
+            }}
+        </span>
     </p>
     <p class="info-subtext" *ngSwitchDefault>
-        {{ 'page.subtitle.date-info' | i18next: { date: (date | date) } }}
+        <span>
+            {{ 'page.subtitle.date-info' | i18next: {date: (date | date)} }}
+        </span>
+        <span *ngIf="date">
+            -
+            {{
+            'page.subtitle.date-info-status'
+                | i18next: {date: (date | date)}
+            }}
+        </span>
     </p>
 </ng-container>

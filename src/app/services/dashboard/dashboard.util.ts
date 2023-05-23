@@ -1,37 +1,13 @@
 import { Context } from '../../core/models/context.enum';
 import {
-    DashboardGasData,
-    DashboardGasDto,
     DashboardPriceDto,
     DashboardSpartipp,
     DashboardSpartippDisplay,
-    DashboardStromData,
-    DashboardStromDto,
     DashboardWetterDto
 } from '../../core/models/dashboard';
 import { DashboardPriceRowModel } from '../../pages/dashboard/dashboard-price-row/dashboard-price-row.component';
 import { DashboardRowModel } from '../../pages/dashboard/dashboard-row/dashboard-row.component';
 import { COLOR_WETTER } from '../../shared/commons/colors.const';
-
-export const mapStromDtoToData = (dto: DashboardStromDto): DashboardStromData =>
-    Object.fromEntries(
-        Object.entries(dto).map(([key, value]) => {
-            const dataValue = value
-                ? { ...value, date: new Date(value.date) }
-                : null;
-            return [key, dataValue];
-        })
-    ) as DashboardStromData;
-
-export const mapGasDtoToData = (dto: DashboardGasDto): DashboardGasData =>
-    Object.fromEntries(
-        Object.entries(dto).map(([key, value]) => {
-            const dataValue = value
-                ? { ...value, date: new Date(value.date) }
-                : null;
-            return [key, dataValue];
-        })
-    ) as DashboardGasData;
 
 export const mapWetterDtoToRowModels = (
     dto?: DashboardWetterDto
@@ -57,15 +33,38 @@ export const mapWetterDtoToRowModels = (
                       color: COLOR_WETTER,
                       value: dto.prognoseTemperatur.value,
                       valuePostfix: '°C',
-                      trend: dto.trend.trend,
-                      trendRating: dto.trend.trendRating
+                      trend: dto.prognoseTemperatur.trend,
+                      trendRating: dto.prognoseTemperatur.trendRating
                   }
                 : undefined,
             loading: false
         },
         {
-            titleDynamicKey: 'uebersicht_wetter_heizgradtage.titel',
-            subTitleDynamicKey: 'uebersicht_wetter_heizgradtage.subtitel',
+            titleDynamicKey: 'uebersicht_wetter_niederschlaege.titel',
+            subTitleDynamicKey: 'uebersicht_wetter_niederschlaege.subtitel',
+            data: dto
+                ? {
+                      color: COLOR_WETTER,
+                      value: dto.niederschlaege.value,
+                      valuePostfix: '%',
+                      trend: dto.niederschlaege.trend,
+                      trendRating: dto.niederschlaege.trendRating
+                  }
+                : undefined,
+            loading: false
+        },
+        {
+            titleDynamicKey: 'uebersicht_wetter_schneereserven.titel',
+            subTitleDynamicKey: 'uebersicht_wetter_schneereserven.subtitel',
+            data: dto
+                ? {
+                      color: COLOR_WETTER,
+                      value: dto.schneereserven.value,
+                      valuePostfix: 'mm',
+                      trend: dto.schneereserven.trend,
+                      trendRating: dto.schneereserven.trendRating
+                  }
+                : undefined,
             loading: false
         }
     ];
@@ -92,7 +91,8 @@ export const mapPriceDtoToDataArray = (
             subTitleDynamicKey: 'uebersicht_preise_gas.subtitel',
             data: {
                 price: dto.gasBoerse.value,
-                valuePostfix: '%',
+                valuePostfix: 'MWh',
+                currency: 'EUR',
                 valueTopTextKey: 'dashboard.uebersicht.gas.preise.price-info',
                 valueBottomTextKey: 'commons.updated-daily'
             },

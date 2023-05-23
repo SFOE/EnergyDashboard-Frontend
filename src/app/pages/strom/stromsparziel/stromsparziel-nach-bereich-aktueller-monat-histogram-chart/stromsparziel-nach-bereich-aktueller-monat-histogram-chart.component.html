@@ -1,0 +1,34 @@
+<div *ngIf="!isLoading; else loadingTemplate" class="diagram-container">
+    <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+
+    <bfe-histogram-detail
+        (diagramLeave)="hideTooltip()"
+        (elFocus)="showLineChartTooltip($event)"
+        [data]="entries"
+        [barWidth]="20"
+        [barColors]="barColors"
+        [barLineColor]="barLineColor"
+        [lineColors]="[]"
+        [lineThickness]="[1]"
+        [lineStyle]="['solid']"
+        [barLineStyle]="'dashed'"
+        [xLabelModifier]="xLabelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+        [domainMax]="domainMax"
+        [domainMin]="domainMin"
+        [steppedLine]="true"
+    ></bfe-histogram-detail>
+
+    <bfe-stromsparziel-nach-bereich-aktueller-monat-histogram-chart-tooltip
+        [event]="tooltipEvent"
+        [barColors]="barColors"
+        [barLineColor]="barLineColor"
+    >
+    </bfe-stromsparziel-nach-bereich-aktueller-monat-histogram-chart-tooltip>
+</div>
+
+<ng-template #loadingTemplate>
+    <div class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</ng-template>

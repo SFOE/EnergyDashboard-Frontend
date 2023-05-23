@@ -1,10 +1,8 @@
-export interface StromImportExportHistoricalValue {
-    date: string;
+import { DateModel } from './base/date.model';
+import { FiveYearWithDiffStatisticsModel } from './base/statisics.model';
+
+export interface StromImportExportHistoricalValue
+    extends DateModel,
+        FiveYearWithDiffStatisticsModel {
     nettoimport: number | null;
-    fiveYearMin: number;
-    fiveYearMax: number;
-    fiveYearMittelwert: number;
-    differenzMittelwert: number | null;
-    differenzMin: number | null;
-    differenzMax: number | null;
 }

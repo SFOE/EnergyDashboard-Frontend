@@ -6,15 +6,15 @@ import {
     Output,
     SimpleChanges
 } from '@angular/core';
+import { DateModel } from '../../../../core/models/base/date.model';
 import { HistogramAreaChartEntry } from '../../../../core/models/charts';
 import { LabelFilters, LabelFormatters } from '../../label.utils';
-import { LabelModifier } from '../base-histogram.component';
+import { LabelModifier } from '../base-histogram.model';
 import { HistogramElFocusEvent } from '../interactive-histogram.component';
 
 const DOMAIN_MIN_MAX_PADDING = 20;
 
-export interface AreaMinMaxFocusEntry {
-    date: Date;
+export interface AreaMinMaxFocusEntry extends DateModel {
     positiveEntries: (number | null)[];
     negativeEntries: (number | null)[];
 }

@@ -1,0 +1,33 @@
+<div class="kkw-production-chart-container diagram-container">
+    <bfe-kpi-subtitle>
+        {{ 'dynamic:' + model.titleDynamicKey | i18nextDynamic }}
+    </bfe-kpi-subtitle>
+    <bfe-kpi-date-info-subtext [date]="lastUpdate ?? ''">
+    </bfe-kpi-date-info-subtext>
+    <bfe-optional-dynamic-langtext
+        [text]="model.kurztextDynamicKey"
+    ></bfe-optional-dynamic-langtext>
+    <ng-container *ngIf="chartData$ | async; let chartData">
+        <ng-container *ngIf="chartData.entries.length > 0">
+            <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+            <bfe-histogram-line
+                [data]="chartData.entries"
+                [colors]="lineColors"
+                [strokeWidths]="[2, 2]"
+                [bandColor]="kkwColors.COLOR_KKW_PRODUCTION_MINMAX"
+                [blocks]="displayAusfaelle ? chartData.ausfaelle : []"
+                [xLabelModifier]="xLabelModifier"
+                [xSubLabelModifier]="xSubLabelModifier"
+                [yLabelFormatter]="yLabelFormatter"
+                (elFocus)="showTooltip($event)"
+                (diagramLeave)="hideTooltip()"
+            ></bfe-histogram-line>
+            <bfe-kkw-production-chart-tooltip
+                [event]="tooltipEvent"
+            ></bfe-kkw-production-chart-tooltip>
+        </ng-container>
+    </ng-container>
+    <div *ngIf="isLoading" class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</div>

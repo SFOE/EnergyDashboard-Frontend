@@ -2,6 +2,8 @@ import { APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { I18NEXT_SERVICE, ITranslationService } from 'angular-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+declare var require: any;
+
 export function appInit(i18next: ITranslationService) {
     return () => {
         i18next.use<any>(LanguageDetector).init({
@@ -20,7 +22,7 @@ export function appInit(i18next: ITranslationService) {
             // lang detection plugin options
             detection: {
                 // order and from where user language should be detected
-                order: ['cookie'],
+                order: ['cookie', 'navigator'],
 
                 // keys or params to lookup language from
                 lookupCookie: 'lang',

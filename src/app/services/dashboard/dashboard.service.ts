@@ -4,17 +4,15 @@ import { DataService } from '../../core/data/data.service';
 import { TranslationService } from '../../core/i18n/translation.service';
 import { Context } from '../../core/models/context.enum';
 import {
-    DashboardGasData,
+    DashboardGas,
     DashboardSpartippDisplay,
-    DashboardStromData
+    DashboardStrom
 } from '../../core/models/dashboard';
 import { DashboardPriceRowModel } from '../../pages/dashboard/dashboard-price-row/dashboard-price-row.component';
 import { DashboardRowModel } from '../../pages/dashboard/dashboard-row/dashboard-row.component';
 import {
     getRandomSpartipp,
-    mapGasDtoToData,
     mapPriceDtoToDataArray,
-    mapStromDtoToData,
     mapWetterDtoToRowModels
 } from './dashboard.util';
 
@@ -22,8 +20,8 @@ import {
     providedIn: 'root'
 })
 export class DashboardService {
-    private cachedStromData$: Observable<DashboardStromData>;
-    private cachedGasData$: Observable<DashboardGasData>;
+    private cachedStromData$: Observable<DashboardStrom>;
+    private cachedGasData$: Observable<DashboardGas>;
     private cachedWetterModels$: Observable<DashboardRowModel[]>;
     private cachedPriceData$: Observable<DashboardPriceRowModel[]>;
     private cachedSpartipps$: Observable<DashboardSpartippDisplay | undefined>;
@@ -33,20 +31,20 @@ export class DashboardService {
         private translateService: TranslationService
     ) {}
 
-    getStromData(): Observable<DashboardStromData> {
+    getStromData(): Observable<DashboardStrom> {
         if (!this.cachedStromData$) {
             this.cachedStromData$ = this.dataService
                 .getDashboardStrom()
-                .pipe(map(mapStromDtoToData), shareReplay(1));
+                .pipe(shareReplay(1));
         }
         return this.cachedStromData$;
     }
 
-    getGasData(): Observable<DashboardGasData> {
+    getGasData(): Observable<DashboardGas> {
         if (!this.cachedGasData$) {
             this.cachedGasData$ = this.dataService
                 .getDashboardGas()
-                .pipe(map(mapGasDtoToData), shareReplay(1));
+                .pipe(shareReplay(1));
         }
         return this.cachedGasData$;
     }
@@ -54,7 +52,7 @@ export class DashboardService {
     getWetterModels(): Observable<DashboardRowModel[]> {
         if (!this.cachedWetterModels$) {
             this.cachedWetterModels$ = this.dataService
-                .getDashboardWetter()
+                .getDashboardWetterV2()
                 .pipe(
                     map(mapWetterDtoToRowModels),
                     shareReplay(1),

@@ -1,8 +1,8 @@
 <div
     class="sparziel-chart-container"
     style="
-        --achievedPercentage: {{ calculatedAchievedPercentage }}; 
-        --projectedPercentage: {{ calculatedProjectedPercentage }}; 
+        --achievedPercentage: {{ calculatedAchievedPercentage }};
+        --projectedPercentage: {{ calculatedProjectedPercentage }};
         --achievedColor: {{ achievedColor }};
     "
 >
@@ -13,11 +13,16 @@
             </p>
         </div>
         <div
-            class="to-go-space"
             [style.height]="spaceToGoSizeLeft + 'px'"
+            class="to-go-space"
         ></div>
         <div class="projected-label">
-            <p class="label-medium">
+            <p
+                [ngClass]="{
+                    'label-medium': true,
+                    'p-grey': projectedPercentage === 0
+                }"
+            >
                 {{ 'commons.sparziel.projected-label' | i18next }}
                 ({{ projectedPercentage }}%)
             </p>
@@ -30,13 +35,13 @@
         </div>
     </section>
     <section
-        class="stacked-bars"
         [class.overachieved]="overarchievedPercentage > 0"
+        class="stacked-bars"
     >
         <span
             *ngIf="overarchievedPercentage > 0"
-            class="overachieved-bar"
             [style.height]="overarchievedPercentage + 'px'"
+            class="overachieved-bar"
         >
             <p class="num-xtra-small">{{ overarchievedPercentage }}%</p>
         </span>
@@ -53,7 +58,7 @@
                 </span>
             </p>
         </div>
-        <div class="to-go-space" [style.height]="percentageToGo + 'px'"></div>
+        <div [style.height]="percentageToGo + 'px'" class="to-go-space"></div>
         <div class="achieved-label">
             <p class="label-medium nowarp">
                 {{ 'commons.already-saved' | i18next }}
@@ -62,5 +67,16 @@
                 ({{ projectedPercentage + achievedPercentage }}%)
             </p>
         </div>
+    </section>
+
+    <section class="tooltip">
+        <bfe-sparziel-chart-tooltip
+            [achievedPercentage]="achievedPercentage"
+            [alreadySaved]="projectedPercentage + achievedPercentage"
+            [projectedPercentage]="projectedPercentage"
+            [target]="sparzielLabelSubfix"
+            [weatherAdjustedPercent]="weatherAdjustedPercent"
+            [titleKey]="'commons.sparziel'"
+        ></bfe-sparziel-chart-tooltip>
     </section>
 </div>

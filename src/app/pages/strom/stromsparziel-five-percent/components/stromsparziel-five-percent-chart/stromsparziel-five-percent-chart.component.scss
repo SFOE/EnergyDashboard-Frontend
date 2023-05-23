@@ -1,0 +1,38 @@
+@use 'col';
+
+:host {
+    width: 100%;
+}
+
+.stromsparziel-five-percent-chart-container {
+    --header-bottom-margin: 20px;
+    --bar-padding-y: 4px;
+    --bar-height: calc(28px + (2 * var(--bar-padding-y)));
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50px repeat(5, 1fr);
+
+    .legend {
+        .header {
+            padding-bottom: var(--header-bottom-margin);
+            color: col.$medium;
+        }
+
+        span {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 24px;
+        }
+    }
+
+    .legend {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: min-content;
+        grid-auto-rows: var(--bar-height);
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+}

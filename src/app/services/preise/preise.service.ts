@@ -3,6 +3,7 @@ import { map, Observable, shareReplay } from 'rxjs';
 import { DataService } from '../../core/data/data.service';
 import { HistogramLineEntry } from '../../shared/diagrams/histogram/histogram-line/histogram-line.component';
 import {
+    mapPreiseFuturesDtoToLineEntries,
     mapPreiseIndexiertToLineEntries,
     mapPreiseStromBoerseToLineEntries
 } from './preise.util';
@@ -13,8 +14,10 @@ import {
 export class PreiseService {
     private cachedPreiseStromBoerse: Observable<HistogramLineEntry[]>;
     private cachedPreiseStromEndverbrauch: Observable<HistogramLineEntry[]>;
-    private cachedPreiseGasBoerse: Observable<HistogramLineEntry[]>;
+    private cachedPreiseStromFutures: Observable<HistogramLineEntry[]>;
     private cachedPreiseGasEndverbrauch: Observable<HistogramLineEntry[]>;
+    private cachedPreiseGasDayahead: Observable<HistogramLineEntry[]>;
+    private cachedPreiseGasFutures: Observable<HistogramLineEntry[]>;
     private cachedPreiseHeizoelEntwicklung: Observable<HistogramLineEntry[]>;
     private cachedPreiseTreibstoffBenzin: Observable<HistogramLineEntry[]>;
     private cachedPreiseTreibstoffDiesel: Observable<HistogramLineEntry[]>;
@@ -49,16 +52,28 @@ export class PreiseService {
         return this.cachedPreiseStromEndverbrauch;
     }
 
-    getPreiseGasBoerse() {
-        if (!this.cachedPreiseGasBoerse) {
-            this.cachedPreiseGasBoerse = this.dataService
-                .getPreiseGasBoerse()
+    getPreiseStromFutures() {
+        if (!this.cachedPreiseStromFutures) {
+            this.cachedPreiseStromFutures = this.dataService
+                .getPreiseStromFutures()
+                .pipe(
+                    map((entries) => mapPreiseFuturesDtoToLineEntries(entries))
+                )
+                .pipe(shareReplay(1));
+        }
+        return this.cachedPreiseStromFutures;
+    }
+
+    getPreiseGasDayahead() {
+        if (!this.cachedPreiseGasDayahead) {
+            this.cachedPreiseGasDayahead = this.dataService
+                .getPreiseGasDayahead()
                 .pipe(
                     map((entries) => mapPreiseIndexiertToLineEntries(entries))
                 )
                 .pipe(shareReplay(1));
         }
-        return this.cachedPreiseGasBoerse;
+        return this.cachedPreiseGasDayahead;
     }
 
     getPreiseGasEndverbrauch() {
@@ -71,6 +86,18 @@ export class PreiseService {
                 .pipe(shareReplay(1));
         }
         return this.cachedPreiseGasEndverbrauch;
+    }
+
+    getPreiseGasFutures() {
+        if (!this.cachedPreiseGasFutures) {
+            this.cachedPreiseGasFutures = this.dataService
+                .getPreiseGasFutures()
+                .pipe(
+                    map((entries) => mapPreiseFuturesDtoToLineEntries(entries))
+                )
+                .pipe(shareReplay(1));
+        }
+        return this.cachedPreiseGasFutures;
     }
 
     getPreiseHeizoelEntwicklung() {

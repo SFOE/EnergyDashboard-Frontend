@@ -31,6 +31,7 @@
         [model]="{
             lastUpdate: sparzielZielData?.date,
             data: sparzielPerMonth,
+            blocks: sparzielDataBlocks,
             colors: {
                 bars: barColors,
                 lines: lineColors
@@ -43,4 +44,17 @@
         }"
         [loading]="isLoadingPerMonth"
     ></bfe-sparziel-histogram-chart>
+
+    <div class="divider-section">
+        <hr/>
+    </div>
+
+    <bfe-stromsparziel-nach-bereich-pro-monat-histogram-chart>
+    </bfe-stromsparziel-nach-bereich-pro-monat-histogram-chart>
+
+    <bfe-stromsparziel-aktueller-monat-details>
+    </bfe-stromsparziel-aktueller-monat-details>
+
+    <bfe-stromsparziel-nach-bereich-aktueller-monat-histogram-chart>
+    </bfe-stromsparziel-nach-bereich-aktueller-monat-histogram-chart>
 </bfe-kpi-container>

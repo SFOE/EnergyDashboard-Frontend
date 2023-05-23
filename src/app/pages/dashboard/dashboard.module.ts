@@ -31,6 +31,7 @@ import { DashboardComponent } from './dashboard.component';
         DashboardNotAvailableComponent,
         DashboardCollapsibleCardComponent
     ],
+    exports: [DashboardComponent],
     imports: [
         CommonModule,
         DashboardRoutingModule,

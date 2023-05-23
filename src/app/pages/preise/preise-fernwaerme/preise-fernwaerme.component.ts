@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslationService } from '../../../core/i18n/translation.service';
+import { HistogramAreaChartEntry } from '../../../core/models/charts';
 import { Context } from '../../../core/models/context.enum';
+import { PreiseService } from '../../../services/preise/preise.service';
 import { COLOR_FERNWAERME } from '../../../shared/commons/colors.const';
 import { DiagramLegendEntry } from '../../../shared/diagrams/diagram-legend/diagram-legend.component';
-import { PreiseService } from '../../../services/preise/preise.service';
-import { TranslationService } from '../../../core/i18n/translation.service';
+import { LabelModifier } from '../../../shared/diagrams/histogram/base-histogram.model';
+import { HistogramLineEntry } from '../../../shared/diagrams/histogram/histogram-line/histogram-line.component';
+import { HistogramElFocusEvent } from '../../../shared/diagrams/histogram/interactive-histogram.component';
 import {
     LabelFilters,
     LabelFormatters
 } from '../../../shared/diagrams/label.utils';
-import { HistogramElFocusEvent } from '../../../shared/diagrams/histogram/interactive-histogram.component';
-import { HistogramAreaChartEntry } from '../../../core/models/charts';
-import { HistogramLineEntry } from '../../../shared/diagrams/histogram/histogram-line/histogram-line.component';
-import { LabelModifier } from '../../../shared/diagrams/histogram/base-histogram.component';
 
 @Component({
     selector: 'bfe-preise-fernwaerme',

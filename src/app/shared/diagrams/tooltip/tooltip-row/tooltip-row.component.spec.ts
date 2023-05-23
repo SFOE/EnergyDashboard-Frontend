@@ -1,5 +1,6 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { I18NextModule } from 'angular-i18next';
 
 import { TooltipRowComponent } from './tooltip-row.component';
 
@@ -7,11 +8,12 @@ describe('TooltipRowComponent', () => {
     let component: TooltipRowComponent;
     let fixture: ComponentFixture<TooltipRowComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [I18NextModule.forRoot()],
             declarations: [TooltipRowComponent]
         }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TooltipRowComponent);

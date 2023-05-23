@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Trend, TrendRating } from 'src/app/core/models/trend.enum';
+import { Trend, TrendRating } from '../../../../core/models/trend.enum';
 
 const trendRatingColorMap = {
     positiv: '#69AD00',

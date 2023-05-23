@@ -1,0 +1,6 @@
+@use 'var';
+
+.integration-guide__content,
+.integration-guide__code {
+    padding-bottom: var.$kpi-container-row-gap;
+}

@@ -3,7 +3,6 @@
     "extends": "./tsconfig.app.json",
     "compilerOptions": {
         "outDir": "./out-tsc/serverless",
-        "target": "es2019",
         "types": [
             "node"
         ]

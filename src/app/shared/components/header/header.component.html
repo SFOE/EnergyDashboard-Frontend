@@ -48,17 +48,22 @@
         </a>
 
         <div class="header__title">
+            <h1 class="header__title-text" *ngIf="embedMode">
+                {{ 'page.title' | i18next }}
+            </h1>
+
             <a
+                *ngIf="!embedMode"
                 class="header__title-link"
                 [attr.href]="'bfe-url' | i18next"
                 target="_blank"
                 rel="noopener"
-                >{{ 'bfe-title' | i18next }}</a
+            >{{ 'bfe-title' | i18next }}</a
             >
         </div>
     </div>
 
-    <div class="header__hamburger">
+    <div class="header__hamburger" *ngIf="!embedMode">
         <button
             (click)="toggleNavBoard()"
             cdkMonitorElementFocus
@@ -78,7 +83,7 @@
         </button>
     </div>
 
-    <ul class="header__lang-select">
+    <ul class="header__lang-select" *ngIf="!embedMode">
         <li *ngFor="let language of languages">
             <a
                 class="header__lang-link"
@@ -88,7 +93,7 @@
                 (click)="changeLanguage(language)"
                 (keydown.enter)="changeLanguage(language)"
                 (keydown.space)="changeLanguageSpace(language, $event)"
-                >{{ language | uppercase }}</a
+            >{{ language | uppercase }}</a
             >
         </li>
         <li *ngIf="!isProduction">

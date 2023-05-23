@@ -1,0 +1,15 @@
+<bfe-info-page title="integration-guide.title">
+    <div class="integration-guide__content">
+        {{ 'integration-guide.content' | i18next }}
+    </div>
+    <div class="integration-guide__code">
+        <snippet-highlight
+            theme="dark"
+            language="html"
+            content="<iframe src=&#34;{{
+                integrationUrl
+            }}&#34; width=&#34;1200px&#34; height=&#34;700px&#34;></iframe>"
+        ></snippet-highlight>
+    </div>
+    <div [innerHTML]="'integration-guide.questions' | i18next"></div>
+</bfe-info-page>

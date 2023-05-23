@@ -39,6 +39,9 @@
                 | roundNumber) ?? 0
         "
         [sparzielLabelSubfix]="model.sparzielEntry.sparzielGWh + ' GWh'"
+        [weatherAdjustedPercent]="
+            model.sparzielEntry.standSparzielGemessenWitterungsbereinigtProzent
+        "
     >
     </bfe-sparziel-chart>
 </section>

@@ -10,5 +10,5 @@ export interface WetterTemperaturTrend {
 
 export interface WetterTemperaturTrendEntry {
     lufttemperaturTagesmittel: number;
-    datum: string;
+    date: string;
 }

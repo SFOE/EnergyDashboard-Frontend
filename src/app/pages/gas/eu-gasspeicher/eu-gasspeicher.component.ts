@@ -9,7 +9,7 @@ import {
     FuellstandGasspeicherRegionCurrentEntry
 } from '../../../core/models/gas-fuellstand-gasspeicher';
 import { GasService } from '../../../services/gas/gas.service';
-import { LabelModifier } from '../../../shared/diagrams/histogram/base-histogram.component';
+import { LabelModifier } from '../../../shared/diagrams/histogram/base-histogram.model';
 import { HistogramElFocusEvent } from '../../../shared/diagrams/histogram/interactive-histogram.component';
 import {
     LabelFilters,
@@ -113,7 +113,6 @@ export class EuGasspeicherComponent implements OnInit {
             values: [
                 entry.fiveYearMittelwert,
                 entry.speicherstandProzent,
-
                 entry.fiveYearMax,
                 entry.fiveYearMin
             ],

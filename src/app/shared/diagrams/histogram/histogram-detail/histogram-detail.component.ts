@@ -5,25 +5,26 @@ import {
     SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
-import { Line, Selection } from 'd3';
+import { CurveFactory, curveLinear, curveStepAfter, Line, Selection } from 'd3';
 import { isSameDay } from 'date-fns';
 import {
-    COLORS_HISTOGRAM_DEFAULT,
-    COLOR_CHART_NO_DATA
+    COLOR_CHART_NO_DATA,
+    COLORS_HISTOGRAM_DEFAULT
 } from '../../../commons/colors.const';
+import { ArrayUtils } from '../../../static-utils/array-utils';
+import { middleOfDay } from '../../../static-utils/date-utils';
 import { isDefined } from '../../../xternal-helpers/from-c19-commons/utils/is-defined.function';
 import { hexToRgb, rgbToHex } from '../../utils';
-import {
-    dateKeyFn,
-    HistogramEntry,
-    middleOfDay,
-    NoDataBlock
-} from '../base-histogram.component';
+import { dateKeyFn } from '../base-histogram.component';
+import { HistogramEntry, NoDataBlock } from '../base-histogram.model';
 import { InteractiveHistogramComponent } from '../interactive-histogram.component';
 
 export interface HistogramDetailEntry extends HistogramEntry {
     barValues: Array<number | null>;
+    barLineValue: number | null;
     lineValues: Array<number | null>;
+    barLineStyle?: LineStyle;
+    hiddenValues: Array<number | null>; // Can be used to store values but not show them. For example to display them in a toolip.
     exists?: boolean;
 }
 
@@ -34,24 +35,17 @@ const sum = (u: number, i: number | null | undefined): number => u + (i || 0);
 @Component({
     selector: 'bfe-histogram-detail',
     templateUrl: './histogram-detail.component.html',
-    styleUrls: ['./histogram-detail.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class HistogramDetailComponent<T extends HistogramDetailEntry>
     extends InteractiveHistogramComponent<T>
     implements OnChanges
 {
-    @Input() titleKey?: string;
-
     @Input()
     override set data(data: T[]) {
         super.data = data;
         // create d3-lineFunction per line so we can iterate over them in the d3 `.data(...)` style
-        this.lineFunctions = new Array(
-            this.data.reduce((u, i) => Math.max(u, i.lineValues.length), 0)
-        )
-            .fill(0)
-            .map((_, ix) => [ix, this.createLine((v) => v.lineValues[ix])]);
+        this.lineFunctions = this.createLineFunctions();
         this.yMaxValue =
             Math.max(
                 ...data.reduce(
@@ -103,8 +97,16 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
     lineStyle: LineStyle[];
 
     @Input()
-    override barchartAlignHoverOfBar: number = 0;
-    // this is needed so that the hoover is in the middle of the bar and not at the start
+    barLineColor: string;
+
+    @Input()
+    barLineStyle?: string;
+
+    @Input()
+    set steppedLine(stepLine: boolean) {
+        this.lineCurveFactory = stepLine ? curveStepAfter : curveLinear;
+        this.lineFunctions = this.createLineFunctions();
+    }
 
     @Input()
     skipNoDataBlocksBefore: Date | null;
@@ -120,6 +122,9 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
 
     @Input()
     maxHeight?: number | null;
+
+    @Input()
+    barWidth: number = 10;
 
     get svgMaxHeight(): string | null {
         return this.maxHeight ? `${this.maxHeight}px` : null;
@@ -137,11 +142,12 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
     protected yMaxValue: number;
 
     @Input()
-    override margin = { top: 20, bottom: 20, left: 0, right: 8 };
+    override margin = { top: 20, right: 0, bottom: 20, left: 0 };
 
     protected linesGroup: Selection<SVGGElement, void, null, void>;
     protected valueDomainRect: Selection<SVGRectElement, void, null, undefined>;
     protected lineFunctions: Array<[number, Line<T>]>;
+    protected lineCurveFactory: CurveFactory;
 
     private notExistingBlocks: NoDataBlock<T>[];
     private _barColors: string[] = COLORS_HISTOGRAM_DEFAULT;
@@ -178,11 +184,7 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
             .append('g')
             .attr('fill', 'none')
             .attr('stroke-linecap', 'round')
-            .attr('stroke-linejoin', 'round')
-            .attr(
-                'transform',
-                `translate(${this.barchartAlignHoverOfBar} , 0)`
-            );
+            .attr('stroke-linejoin', 'round');
 
         this.valueDomainRect = this.svg.svg
             .append('rect')
@@ -211,71 +213,101 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
         this.drawStackedBars((t: T) => t.barValues, this._barColors);
         this.updateBarColors();
         this.drawLines();
+        this.drawBarLines((t: T) => t.barLineValue);
         this.drawFullYAxis();
         this.drawFullXAxis();
         this.updateValueDomain(this.valueDomainRect);
     }
 
-    protected override drawStackedBars(
+    // Draws a line on top of each bar
+    protected drawBarLines(value: (v: T) => number | null | undefined) {
+        this.dataGrp
+            .selectAll('line')
+            .data(
+                this.data
+                    .map((d) => ({ ...d, value: value(d) }))
+                    .filter((d) => d.value !== null && d.value !== undefined),
+                <any>dateKeyFn
+            )
+            .join('line')
+            .attr('x1', ({ date }) => {
+                const offsetToCenter =
+                    this.scaleBandX.bandwidth() / 2 - this.barWidth / 2;
+                return (
+                    <number>this.scaleBandX(middleOfDay(date)) + offsetToCenter
+                );
+            })
+            .attr('x2', ({ date }) => {
+                const offsetToCenter =
+                    this.scaleBandX.bandwidth() / 2 - this.barWidth / 2;
+                return (
+                    <number>this.scaleBandX(middleOfDay(date)) +
+                    offsetToCenter +
+                    this.barWidth
+                );
+            })
+            .attr('y1', ({ value }) => <number>this.scaleLinearY(value ?? 0))
+            .attr('y2', ({ value }) => <number>this.scaleLinearY(value ?? 0))
+            .attr('stroke', this.barLineColor ?? 'black')
+            .attr('stroke-dasharray', (ix) =>
+                !!this.barLineStyle && this.barLineStyle === 'dashed'
+                    ? '2 2'
+                    : '0 0'
+            )
+            .attr('stroke-width', 2);
+    }
+
+    protected drawStackedBars(
         barValuesFn: (v: T) => Array<number | null | undefined>,
         colors: readonly string[]
     ) {
-        const cleanedColors = colors.map((c) =>
-            c.startsWith('url') ? c.replace(')', `${this.svg.instanceNum})`) : c
-        );
-        this.dataGrp.attr(
-            'fill',
-            cleanedColors[0].startsWith('url') && cleanedColors.length > 1
-                ? cleanedColors[1]
-                : cleanedColors[0]
-        );
+        this.dataGrp.attr('fill', (_, index) => colors[index]);
 
         const preCalcStackStart = (
             val: number | null | undefined,
-            ix: number,
-            arr: Array<number | null | undefined>
-        ) => ({
-            val,
-            start: Math.max(0, val ?? 0)
-        });
+            index: number,
+            allValues: Array<number | null | undefined>
+        ) => {
+            const positiveSum = ArrayUtils.sumUp(
+                allValues.slice(0, index).filter((v) => v !== null && v! >= 0)
+            );
+            const negativeSum = ArrayUtils.sumUp(
+                allValues.slice(0, index).filter((v) => v !== null && v! < 0)
+            );
 
-        const translateOffset = this.bandOffsetX + this.barchartAlignHoverOfBar;
-        const width = this.bandWithX * this.barchartWidth;
+            const start = val! >= 0 ? positiveSum : negativeSum;
+            return {
+                val,
+                start: start ?? 0
+            };
+        };
 
-        let isFirst = true;
         this.dataGrp
             .selectAll('g')
             .data(this.data, <any>dateKeyFn)
             .join('g')
-            .attr('transform', ({ date }, ix) => {
-                const additionalOffset = ix === 0 ? 0 : width / 2;
+            .attr('transform', ({ date }) => {
+                const offsetToCenter =
+                    this.scaleBandX.bandwidth() / 2 - this.barWidth / 2;
                 return `translate(${
-                    <number>this.scaleBandX(middleOfDay(date)) +
-                    translateOffset -
-                    additionalOffset
+                    <number>this.scaleBandX(middleOfDay(date)) + offsetToCenter
                 }, 0)`;
             })
             .selectAll('rect')
             .data((v: T) => barValuesFn(v).map(preCalcStackStart))
             .join('rect')
             .attr('width', () => {
-                if (isFirst) {
-                    isFirst = false;
-                    return width / 2;
-                }
-                return width;
+                return this.barWidth;
             })
-            .attr('y', ({ start }) => <number>this.scaleLinearY(start))
+            .attr('y', ({ start, val }) => {
+                return val !== undefined && (val ?? 0) < 0
+                    ? <number>this.scaleLinearY(start)
+                    : <number>this.scaleLinearY(start + (val ?? 0));
+            })
             .attr('height', ({ val }) =>
                 Math.abs(this.scaleLinearY(val ?? 0) - this.scaleLinearY(0))
             )
-            .attr('fill', (_, ix) =>
-                ix === 0
-                    ? cleanedColors[ix].startsWith('url')
-                        ? cleanedColors[ix]
-                        : null
-                    : cleanedColors[ix]
-            );
+            .attr('fill', (_, index) => colors[index]);
     }
 
     protected drawLines() {
@@ -289,7 +321,7 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
             .attr('stroke-dasharray', ([ix]) =>
                 !!this.lineStyle && this.lineStyle[ix] === 'dashed'
                     ? '2 2'
-                    : '0 0 '
+                    : '0 0'
             );
     }
 
@@ -314,6 +346,7 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
     protected override setElIntoFocus([source, data]: [DOMPoint, T]) {
         super.setElIntoFocus([source, data]);
         const g = this.findBarGroup(data);
+
         g.selectAll('rect').attr('fill', (_, ix) =>
             this._barColors[ix].startsWith('url')
                 ? this._barColors[0].replace(')', `${this.svg.instanceNum})`)
@@ -342,5 +375,16 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
                 ? this._barColors[0].replace(')', `${this.svg.instanceNum})`)
                 : this._barColors[0]
         );
+    }
+
+    protected createLineFunctions(): Array<[number, Line<T>]> {
+        return new Array(
+            this.data.reduce((u, i) => Math.max(u, i.lineValues.length), 0)
+        )
+            .fill(0)
+            .map((_, ix) => [
+                ix,
+                this.createLine((v) => v.lineValues[ix], this.lineCurveFactory)
+            ]);
     }
 }

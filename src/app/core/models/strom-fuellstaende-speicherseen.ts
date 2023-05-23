@@ -1,3 +1,5 @@
+import { DateModel } from './base/date.model';
+import { FiveYearWithDiffStatisticsModel } from './base/statisics.model';
 import { HistogramAreaChartEntry } from './charts';
 import { Trend, TrendRating } from './trend.enum';
 
@@ -8,19 +10,14 @@ export interface StromFuellstaendeSpeicherseenCurrentEntry {
     date: string;
 }
 
-export interface StromFuellstaendeSpeicherseenEntry {
-    date: string;
+export interface StromFuellstaendeSpeicherseenEntry
+    extends DateModel,
+        FiveYearWithDiffStatisticsModel {
     speicherstandProzent: number;
     speicherstandGWh: number;
     speicherstandBei100ProzentInGWh: number;
-    fiveYearMax: number;
-    fiveYearMin: number;
-    fiveYearMittelwert: number;
     historicalMin: number | null;
     historicalMinWithReserves: number | null;
-    differenzMittelwert: number;
-    differenzMin: number;
-    differenzMax: number;
 }
 
 export interface StromFuellstaendeSpeicherseen {

@@ -17,8 +17,11 @@
             <div class="trend-entries">
                 <section *ngIf="currentEntryBoerse">
                     <bfe-large-number-unit
-                        [number]="currentEntryBoerse.values[0]"
-                        unit="%"
+                        [number]="
+                            currentEntryBoerse.values[0] ?? 0 | roundNumber
+                        "
+                        unit="MWh"
+                        subUnit="EUR"
                         [color]="primaryColor"
                     ></bfe-large-number-unit>
                     <p class="right-align-text">
@@ -54,16 +57,26 @@
     </bfe-kpi-container-row>
 
     <div class="diagram-container">
-        <bfe-preise-gas-boerse
-            *ngIf="chartDataBoerse"
-            [chartData]="chartDataBoerse"
+        <bfe-preise-gas-dayahead
+            *ngIf="chartDataDayahead"
+            [chartData]="chartDataDayahead"
             [currentEntry]="currentEntryBoerse"
         >
-        </bfe-preise-gas-boerse>
+        </bfe-preise-gas-dayahead>
     </div>
 
     <div class="divider-section">
-        <hr />
+        <hr/>
+    </div>
+
+    <div class="diagram-container">
+        <bfe-preise-futures-chart
+            [chartData]="chartDataFutures"
+            [colors]="colorsFutures"
+            titleKey="kpi-preise-3_gas_futures.titel"
+            langtextKey="kpi-preise-3_gas_futures.langtext"
+        >
+        </bfe-preise-futures-chart>
     </div>
 
     <div class="diagram-container">

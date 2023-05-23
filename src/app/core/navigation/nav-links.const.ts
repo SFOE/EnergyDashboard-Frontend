@@ -19,6 +19,14 @@ export const detailLinksStrom = [
         path: RoutePaths.DASHBOARD_STROM_PRODUKTION
     },
     {
+        labelKey: 'kpi-strom-6_kkw-ch.titel',
+        path: RoutePaths.DASHBOARD_STROM_KKW_CH
+    },
+    {
+        labelKey: 'kpi-strom-6_kkw-fr.titel',
+        path: RoutePaths.DASHBOARD_STROM_KKW_FR
+    },
+    {
         labelKey: 'kpi-strom-11_fuellstand-speicherseen.titel',
         path: RoutePaths.DASHBOARD_STROM_FUELLSTAENDE_SPEICHERSEEN
     },
@@ -29,6 +37,10 @@ export const detailLinksStrom = [
     {
         labelKey: 'kpi-strom-3_sparziel.titel',
         path: RoutePaths.DASHBOARD_STROM_SPARZIEL
+    },
+    {
+        labelKey: 'kpi-strom-3_sparziel-five-percent.titel',
+        path: RoutePaths.DASHBOARD_STROM_SPARZIEL_FIVE_PERCENT
     }
 ];
 
@@ -78,6 +90,14 @@ export const detailLinksWetter = [
     {
         labelKey: 'kpi-wetter-1_meteoswiss.titel',
         path: RoutePaths.DASHBOARD_WETTER_AKTUELL
+    },
+    {
+        labelKey: 'kpi-wetter-3_niederschlag.titel',
+        path: RoutePaths.DASHBOARD_WETTER_NIEDERSCHLAG
+    },
+    {
+        labelKey: 'kpi-wetter-4_schneereserven.titel',
+        path: RoutePaths.DASHBOARD_WETTER_SCHNEERESERVEN
     }
 ];
 

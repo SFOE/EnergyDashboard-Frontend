@@ -3,25 +3,31 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
+    StromKkwProductionDataDto,
+    StromKkwVerfuegbarkeitData,
     StromProductionDto,
     StromProductionImportVerbrauchDto
 } from '../../services/strom/strom.model';
 import {
-    DashboardGasDto,
+    DashboardGas,
     DashboardPriceDto,
     DashboardSpartipp,
-    DashboardStromDto,
+    DashboardStrom,
     DashboardWetterDto
 } from '../models/dashboard';
 import { DynamicTranslations } from '../models/dynamic-translations';
 import { FuellstandGasspeicherRegionWithChartEntries } from '../models/gas-fuellstand-gasspeicher';
 import { GasImportHistoricalValues } from '../models/gas-import.historical-values';
 import { ImportExportEntry } from '../models/import-export';
+import { PreiseFuturesDto } from '../models/preise-futures.model';
 import { PreiseIndexiert } from '../models/preise-indexiert.model';
 import { PreiseStromBoerse } from '../models/preise-strom-boerse.model';
 import {
-    SparzielAktuelleEinsparungDtoV2V3,
-    SparzielZielDto
+    SparzielAktuelleEinsparungDtoV4,
+    SparzielNachBereichAktuellerMonat,
+    SparzielNachBereichProMonat,
+    SparzielZielDtoV4,
+    SparzielZielNachBereichAktuellerMonat
 } from '../models/sparziel';
 import { StromFuellstaendeSpeicherseen } from '../models/strom-fuellstaende-speicherseen';
 import { StromImportExportHistoricalValue } from '../models/strom-import-export.historical-values';
@@ -32,6 +38,14 @@ import { StromVerbrauchLandesverbrauchVergleich } from '../models/strom-verbrauc
 import { WetterTemperaturAktuell } from '../models/wetter-temperatur-aktuell';
 import { WetterTemperaturPrognose } from '../models/wetter-temperatur-prognose';
 import { WetterTemperaturTrend } from '../models/wetter-temperatur-trend';
+import { WetterNiederschlagTrend } from '../models/wetter-niederschlag-trend';
+import { WetterNiederschlagAktuellEntry } from '../models/wetter-niederschlag-aktuell';
+import { WetterSchneereservenAktuellEntry } from '../models/wetter-schneereserven-aktuell';
+import { WetterSchneereservenTrend } from '../models/wetter-schneereserven-trend';
+import {
+    StromsparzielFivePercentEinsparungen,
+    StromsparzielFivePercentPeakHoursModel
+} from '../models/strom-sparziel-five-percent.model';
 
 @Injectable({
     providedIn: 'root'
@@ -43,7 +57,8 @@ export class DataService {
     readonly dashboardGasUrl = `${this.baseUrl}/dashboard/gas`;
     readonly dashboardPriceUrl = `${this.baseUrl}/dashboard/preise`;
     readonly dashboardWetterUrl = `${this.baseUrl}/dashboard/wetter`;
-    readonly dashboardSpartippsUrl = `${this.baseUrl}/dashboard/v2/spartipps`;
+    readonly dashboardWetterV2Url = `${this.baseUrl}/v2/dashboard/wetter`;
+    readonly dashboardSpartippsUrl = `${this.baseUrl}/v2/dashboard/spartipps`;
 
     readonly dynamicTranslationsUrl = `${this.baseUrl}/dynamic-translations`;
 
@@ -55,19 +70,31 @@ export class DataService {
     readonly stromVerbrauchLandesverbrauchVergleichUrl = `${this.baseUrl}/v2/strom-verbrauch/landesverbrauch-vergleich`;
     readonly stromProductionUrl = `${this.baseUrl}/strom-produktionsmix`;
     readonly stromProductionImportVerbrauchUrl = `${this.baseUrl}/strom-produktion-import-verbrauch`;
-    readonly stromSparzielUrl = `${this.baseUrl}/strom-sparziel/ziel`;
-    readonly stromSparzielAktuelleEinsparungUrl = `${this.baseUrl}/v2/strom-sparziel/aktuelle-einsparung`;
+    readonly stromSparzielUrl = `${this.baseUrl}/v4/strom-sparziel/ziel`;
+    readonly stromSparzielAktuelleEinsparungUrl = `${this.baseUrl}/v4/strom-sparziel/aktuelle-einsparung`;
+    readonly stromSparzielNachBereichProMonat = `${this.baseUrl}/strom-sparziel/einsparung-pro-monat-kundengruppe`;
+    readonly stromSparzielZielNachBereichAktuellerMonat = `${this.baseUrl}/strom-sparziel/ziel-aktueller-monat-kundengruppe`;
+    readonly stromSparzielNachBereichAktuellerMonat = `${this.baseUrl}/strom-sparziel/einsparung-aktueller-monat-kundengruppe`;
+    readonly stromSparziel5PercentPeakHours = `${this.baseUrl}/strom-sparziel/5-percent-peak-h`;
+    readonly stromSparziel5PercentEinsparungen = `${this.baseUrl}/strom-sparziel/5-percent-einsparungen`;
+    readonly stromStromKkwProductionChUrl = `${this.baseUrl}/strom-kkw/produktion-ch`;
+    readonly stromStromKkwProductionFrUrl = `${this.baseUrl}/strom-kkw/produktion-fr`;
+    readonly stromStromKkwVerfuegbarkeitChUrl = `${this.baseUrl}/strom-kkw/verfuegbarkeit-ch`;
+    readonly stromStromKkwVerfuegbarkeitFrUrl = `${this.baseUrl}/strom-kkw/verfuegbarkeit-fr`;
 
     readonly gasFuellstandGasspeicherUrl = `${this.baseUrl}/v2/fuellstand-gasspeicher`;
     readonly gasImportKarteUrl = `${this.baseUrl}/gas-import/karte`;
     readonly gasImportHistoricalValuesUrl = `${this.baseUrl}/v2/gas-import/historical-values`;
-    readonly gasSparzielZielUrl = `${this.baseUrl}/v2/gas-sparziel/ziel`;
-    readonly gasSparzielAktuelleEinsparungUrl = `${this.baseUrl}/v3/gas-sparziel/aktuelle-einsparung`;
+    readonly gasSparzielZielUrl = `${this.baseUrl}/v4/gas-sparziel/ziel`;
+    readonly gasSparzielAktuelleEinsparungUrl = `${this.baseUrl}/v4/gas-sparziel/aktuelle-einsparung`;
 
     readonly preiseStromBoerseUrl = `${this.baseUrl}/preise/strom-boerse`;
     readonly preiseStromEndverbrauchUrl = `${this.baseUrl}/preise/strom-endverbrauch`;
+    readonly preiseStromFuturesUrl = `${this.baseUrl}/preise/strom-futures`;
     readonly preiseGasBoerseUrl = `${this.baseUrl}/preise/gas-boerse`;
+    readonly preiseGasDayaheadUrl = `${this.baseUrl}/preise/gas-dayahead`;
     readonly preiseGasEndverbrauchUrl = `${this.baseUrl}/preise/gas-endverbrauch`;
+    readonly preiseGasFuturesUrl = `${this.baseUrl}/preise/gas-futures`;
     readonly preiseHeizoelEntwicklungUrl = `${this.baseUrl}/preise/heizoel-entwicklung`;
     readonly preiseTreibstoffBenzinUrl = `${this.baseUrl}/preise/treibstoff-bleifrei`;
     readonly preiseTreibstoffDieselUrl = `${this.baseUrl}/preise/treibstoff-diesel`;
@@ -77,15 +104,19 @@ export class DataService {
     readonly wetterTemperaturTrend = `${this.baseUrl}/wetter/temperatur-trend`;
     readonly wetterTemperaturAktuell = `${this.baseUrl}/wetter/temperatur-aktuell`;
     readonly wetterTemperaturPrognose = `${this.baseUrl}/wetter/temperatur-prognose`;
+    readonly wetterNiederschlag = `${this.baseUrl}/wetter/niederschlag`;
+    readonly wetterNiederschlagTrend = `${this.baseUrl}/wetter/niederschlag-trend`;
+    readonly wetterSchneereservenTrend = `${this.baseUrl}/wetter/schneereserven-trend`;
+    readonly wetterSchneereservenAktuell = `${this.baseUrl}/wetter/schneereserven`;
 
     constructor(private readonly httpClient: HttpClient) {}
 
-    public getDashboardStrom(): Observable<DashboardStromDto> {
-        return this.httpClient.get<DashboardStromDto>(this.dashboardStromUrl);
+    public getDashboardStrom(): Observable<DashboardStrom> {
+        return this.httpClient.get<DashboardStrom>(this.dashboardStromUrl);
     }
 
-    public getDashboardGas(): Observable<DashboardGasDto> {
-        return this.httpClient.get<DashboardGasDto>(this.dashboardGasUrl);
+    public getDashboardGas(): Observable<DashboardGas> {
+        return this.httpClient.get<DashboardGas>(this.dashboardGasUrl);
     }
 
     public getDashboardPrice(): Observable<DashboardPriceDto> {
@@ -94,6 +125,12 @@ export class DataService {
 
     public getDashboardWetter(): Observable<DashboardWetterDto> {
         return this.httpClient.get<DashboardWetterDto>(this.dashboardWetterUrl);
+    }
+
+    public getDashboardWetterV2(): Observable<DashboardWetterDto> {
+        return this.httpClient.get<DashboardWetterDto>(
+            this.dashboardWetterV2Url
+        );
     }
 
     public getDashboardSpartipps(): Observable<DashboardSpartipp[]> {
@@ -160,15 +197,75 @@ export class DataService {
         );
     }
 
-    public getStromSparziel(): Observable<SparzielZielDto> {
-        return this.httpClient.get<SparzielZielDto>(this.stromSparzielUrl);
+    public getStromSparziel(): Observable<SparzielZielDtoV4> {
+        return this.httpClient.get<SparzielZielDtoV4>(this.stromSparzielUrl);
     }
 
     public getStromSparzielAktuelleEinsparung(): Observable<
-        SparzielAktuelleEinsparungDtoV2V3[]
+        SparzielAktuelleEinsparungDtoV4[]
     > {
-        return this.httpClient.get<SparzielAktuelleEinsparungDtoV2V3[]>(
+        return this.httpClient.get<SparzielAktuelleEinsparungDtoV4[]>(
             this.stromSparzielAktuelleEinsparungUrl
+        );
+    }
+
+    public getStromSparziel5PercentPeakHours(): Observable<
+        StromsparzielFivePercentPeakHoursModel[]
+    > {
+        return this.httpClient.get<StromsparzielFivePercentPeakHoursModel[]>(
+            this.stromSparziel5PercentPeakHours
+        );
+    }
+
+    public getStromSparziel5PercentEinsparungen(): Observable<StromsparzielFivePercentEinsparungen> {
+        return this.httpClient.get<StromsparzielFivePercentEinsparungen>(
+            this.stromSparziel5PercentEinsparungen
+        );
+    }
+
+    public getStromNachBereichProMonat(): Observable<
+        SparzielNachBereichProMonat[]
+    > {
+        return this.httpClient.get<SparzielNachBereichProMonat[]>(
+            this.stromSparzielNachBereichProMonat
+        );
+    }
+
+    public getSparzielZielNachBereichAktuellerMonat(): Observable<SparzielZielNachBereichAktuellerMonat> {
+        return this.httpClient.get<SparzielZielNachBereichAktuellerMonat>(
+            this.stromSparzielZielNachBereichAktuellerMonat
+        );
+    }
+
+    public getStromNachBereichAktuellerMonat(): Observable<
+        SparzielNachBereichAktuellerMonat[]
+    > {
+        return this.httpClient.get<SparzielNachBereichAktuellerMonat[]>(
+            this.stromSparzielNachBereichAktuellerMonat
+        );
+    }
+
+    public getStromKkwProduktionCh(): Observable<StromKkwProductionDataDto> {
+        return this.httpClient.get<StromKkwProductionDataDto>(
+            this.stromStromKkwProductionChUrl
+        );
+    }
+
+    public getStromKkwProduktionFr(): Observable<StromKkwProductionDataDto> {
+        return this.httpClient.get<StromKkwProductionDataDto>(
+            this.stromStromKkwProductionFrUrl
+        );
+    }
+
+    public getStromKkwVerfuegbarkeitCh(): Observable<StromKkwVerfuegbarkeitData> {
+        return this.httpClient.get<StromKkwVerfuegbarkeitData>(
+            this.stromStromKkwVerfuegbarkeitChUrl
+        );
+    }
+
+    public getStromKkwVerfuegbarkeitFr(): Observable<StromKkwVerfuegbarkeitData> {
+        return this.httpClient.get<StromKkwVerfuegbarkeitData>(
+            this.stromStromKkwVerfuegbarkeitFrUrl
         );
     }
 
@@ -190,14 +287,14 @@ export class DataService {
         );
     }
 
-    public getGasSparzielZiel(): Observable<SparzielZielDto> {
-        return this.httpClient.get<SparzielZielDto>(this.gasSparzielZielUrl);
+    public getGasSparzielZiel(): Observable<SparzielZielDtoV4> {
+        return this.httpClient.get<SparzielZielDtoV4>(this.gasSparzielZielUrl);
     }
 
     public getGasSparzielAktuelleEinsparung(): Observable<
-        SparzielAktuelleEinsparungDtoV2V3[]
+        SparzielAktuelleEinsparungDtoV4[]
     > {
-        return this.httpClient.get<SparzielAktuelleEinsparungDtoV2V3[]>(
+        return this.httpClient.get<SparzielAktuelleEinsparungDtoV4[]>(
             this.gasSparzielAktuelleEinsparungUrl
         );
     }
@@ -214,13 +311,31 @@ export class DataService {
         );
     }
 
+    public getPreiseStromFutures() {
+        return this.httpClient.get<PreiseFuturesDto[]>(
+            this.preiseStromFuturesUrl
+        );
+    }
+
     public getPreiseGasBoerse() {
         return this.httpClient.get<PreiseIndexiert[]>(this.preiseGasBoerseUrl);
+    }
+
+    public getPreiseGasDayahead() {
+        return this.httpClient.get<PreiseIndexiert[]>(
+            this.preiseGasDayaheadUrl
+        );
     }
 
     public getPreiseGasEndverbrauch() {
         return this.httpClient.get<PreiseIndexiert[]>(
             this.preiseGasEndverbrauchUrl
+        );
+    }
+
+    public getPreiseGasFutures() {
+        return this.httpClient.get<PreiseFuturesDto[]>(
+            this.preiseGasFuturesUrl
         );
     }
 
@@ -260,6 +375,20 @@ export class DataService {
         );
     }
 
+    public getNiederschlagTrend() {
+        return this.httpClient.get<WetterNiederschlagTrend>(
+            this.wetterNiederschlagTrend
+        );
+    }
+
+    public getNiederschlagAktuell(): Observable<
+        WetterNiederschlagAktuellEntry[]
+    > {
+        return this.httpClient.get<WetterNiederschlagAktuellEntry[]>(
+            this.wetterNiederschlag
+        );
+    }
+
     public getWetterPrognose() {
         return this.httpClient.get<WetterTemperaturPrognose>(
             this.wetterTemperaturPrognose
@@ -269,6 +398,18 @@ export class DataService {
     public getWetterAktuell() {
         return this.httpClient.get<WetterTemperaturAktuell>(
             this.wetterTemperaturAktuell
+        );
+    }
+
+    public getSchneereservenTrend() {
+        return this.httpClient.get<WetterSchneereservenTrend>(
+            this.wetterSchneereservenTrend
+        );
+    }
+
+    public getSchneereservenAktuell() {
+        return this.httpClient.get<WetterSchneereservenAktuellEntry[]>(
+            this.wetterSchneereservenAktuell
         );
     }
 }

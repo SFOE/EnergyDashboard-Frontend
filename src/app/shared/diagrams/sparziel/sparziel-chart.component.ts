@@ -8,6 +8,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 export class SparzielChartComponent implements OnChanges {
     @Input() achievedPercentage: number;
     @Input() projectedPercentage: number;
+    @Input() weatherAdjustedPercent: number;
     @Input() sparzielLabelSubfix: string;
     @Input() achievedColor: string = 'blue';
 

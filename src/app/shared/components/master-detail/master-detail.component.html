@@ -1,9 +1,9 @@
 <div class="master-detail">
     <div class="master-detail__container">
         <bfe-context-title
-            class="context-title"
             [context]="context"
             [marginBottom]="contextMargin"
+            class="context-title"
         ></bfe-context-title>
         <div
             #menuWrapperElRef
@@ -40,16 +40,16 @@
                 size="lg"
             ></bfe-context-icon>
             <select
+                (change)="changeRoute($event)"
                 bfe-select
                 id="master-detail__menu-mobile-select"
-                (change)="changeRoute($event)"
             >
                 <option
                     *ngFor="let item of items; let ix = index"
-                    [style.order]="ix"
-                    [selected]="isActiveRoute(item)"
-                    [value]="item.pathArgs"
                     [innerHTML]="'dynamic:' + item.title | i18nextDynamic"
+                    [selected]="isActiveRoute(item)"
+                    [style.order]="ix"
+                    [value]="item.pathArgs"
                 ></option>
             </select>
         </div>
@@ -60,13 +60,13 @@
             class="master-detail__content"
         >
             <div
+                (ngxResize)="onResize($event)"
                 *ngIf="alertTemplate"
                 class="master-detail__alert-container"
-                (resized)="onDetailContainerResized($event)"
             >
                 <ng-container [ngTemplateOutlet]="alertTemplate"></ng-container>
             </div>
-            <div class="master-detail__content-card">
+            <div class="info-page__content-card">
                 <router-outlet></router-outlet>
             </div>
         </div>

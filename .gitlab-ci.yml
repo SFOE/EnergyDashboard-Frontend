@@ -5,19 +5,22 @@ stages:
     - build
     - deploy
     - invalidate-cdn
+    - e2e-cypress-test-dev
 
-cache:
-    untracked: true
-    policy: push
-    key: ${CI_COMMIT_SHORT_SHA}
-    paths:
-        - node_modules/
+#cache:
+#    untracked: true
+#    policy: push
+#    key: ${CI_COMMIT_SHORT_SHA}
+#    paths:
+#        - node_modules/
+#        - cache/yarn/
+#        - cache/Cypress/
 
-.pull_cached_node_modules:
-    cache:
-        untracked: true
-        key: ${CI_COMMIT_SHORT_SHA}
-        policy: pull
+#.pull_cached_node_modules:
+#    cache:
+#        untracked: true
+#        key: ${CI_COMMIT_SHORT_SHA}
+#        policy: pull
 
 #test:
 #    stage: test
@@ -27,6 +30,18 @@ cache:
 #        - yarn lint
 #        - yarn test --no-watch --no-progress --browsers=ChromeHeadless
 #
+
+e2e-cypress-test-chrome-dev:
+    stage: e2e-cypress-test-dev
+    #    extends: .pull_cached_node_modules
+    image: cypress/browsers:node-18.14.1-chrome-110.0.5481.96-1-ff-109.0-edge-110.0.1587.41-1
+    script:
+        - npm config fix
+        - yarn install --immutable
+        - yarn run e2e-dev --browser chrome --headless
+    only:
+        - master
+
 build:
     stage: build
     script:

@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-export type UpdateInterval = 'weekly' | 'monthly' | 'endOfMonth';
+export type UpdateInterval =
+    | 'daily'
+    | 'weekly'
+    | 'semi-monthly'
+    | 'monthly'
+    | 'endOfMonth';
 
 @Component({
     selector: 'bfe-kpi-date-info-subtext',

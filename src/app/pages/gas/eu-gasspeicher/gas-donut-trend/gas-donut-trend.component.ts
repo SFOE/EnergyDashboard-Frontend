@@ -19,10 +19,10 @@ export class GasDonutTrendComponent {
     spaceColor = COLOR_CONTEXT; //violett gas
 
     get regionKey() {
-        return `commons.country.${this.region.toLowerCase()}.short`;
+        return `commons.country.${this.region?.toLowerCase()}.short`;
     }
 
     get trendKey() {
-        return `commons.trend.${this.trend.toLowerCase()}`;
+        return `commons.trend.${this.trend?.toLowerCase()}`;
     }
 }

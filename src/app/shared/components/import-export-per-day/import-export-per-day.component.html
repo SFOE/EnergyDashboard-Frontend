@@ -1,6 +1,6 @@
 <div class="import-export-per-day-container">
     <section>
-        <div class="import-export-chart">
+        <div class="import-export-chart" *ngIf="currentEntry">
             <bfe-import-export-box
                 class="import-export-box-germany"
                 [country]="countries.GERMANY"

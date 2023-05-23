@@ -1,3 +1,5 @@
+import { DateModel } from './base/date.model';
+import { FiveYearWithDiffStatisticsModel } from './base/statisics.model';
 import { Trend, TrendRating } from './trend.enum';
 
 export type FuellstandGasspeicherRegionCurrentEntry = {
@@ -21,16 +23,11 @@ export interface FuellstandGasspeicherChartEntriesByRegion {
     [region: string]: FuellstandGasspeicher[];
 }
 
-export interface FuellstandGasspeicher {
+export interface FuellstandGasspeicher
+    extends DateModel,
+        FiveYearWithDiffStatisticsModel {
     speicherstandProzent: number | null;
     speicherstandTWh: number | null;
-    fiveYearMin: number;
-    fiveYearMax: number;
-    fiveYearMittelwert: number;
-    date: Date;
-    differenzMittelwert: number | null;
-    differenzMin: number | null;
-    differenzMax: number | null;
 }
 
 export enum FuellstandGasspeicherRegion {

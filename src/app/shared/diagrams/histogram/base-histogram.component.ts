@@ -12,7 +12,10 @@ import {
 } from '@angular/core';
 import {
     area,
+    CurveFactory,
+    curveLinear,
     EnterElement,
+    Line,
     line,
     scaleBand,
     ScaleBand,
@@ -22,7 +25,6 @@ import {
     ScaleTime,
     Selection
 } from 'd3';
-import { addDays, differenceInDays, setHours, startOfDay } from 'date-fns';
 import { Subject } from 'rxjs';
 import { isDefined } from '../../xternal-helpers/from-c19-commons/utils/is-defined.function';
 
@@ -33,51 +35,18 @@ import {
 
 import { D3SvgComponent } from '../../components/d3-svg/d3-svg.component';
 import { adminFormatNum } from '../../static-utils/admin-format-num.function';
+import { middleOfDay } from '../../static-utils/date-utils';
 import { LabelFilters, LabelFormatters } from '../label.utils';
 import { calcDomainEnd, checkIntersectLeft } from '../utils';
-
-export interface HistogramEntry {
-    date: Date;
-}
-
-export interface NoDataBlock<T> {
-    from: number;
-    to: number;
-    items: T[];
-}
-
-export interface Band {
-    upper: number;
-    lower: number;
-}
-
-export interface HistogramBandEntry extends HistogramEntry {
-    band?: Band | null;
-}
+import {
+    Block,
+    HistogramEntry,
+    LabelModifier,
+    NoDataBlock,
+    PointOfInterest
+} from './base-histogram.model';
 
 export const dateKeyFn = (v: HistogramEntry) => v.date.getTime();
-
-export function middleOfDay(date: Date) {
-    return setHours(startOfDay(date), 12);
-}
-
-export type LabelFilter = <T extends HistogramEntry>(
-    value: T,
-    index: number,
-    arrayLength: number
-) => boolean;
-
-export type LabelFormatter = (d: Date) => string;
-
-export interface LabelModifier {
-    formatter: LabelFormatter;
-    filter: LabelFilter;
-}
-
-export interface PointOfInterest {
-    date: Date;
-    pointNumber: number;
-}
 
 @Component({ template: '' })
 export abstract class BaseHistogramComponent<T extends HistogramEntry>
@@ -92,13 +61,6 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
     @Input()
     xSubLabelModifier?: LabelModifier;
 
-    @Input()
-    barchartAlignHoverOfBar: number = 0;
-    // this is needed so that the hoover is in the middle of the bar and not at the start
-
-    @Input()
-    barchartWidth: number = 1;
-
     protected static instanceCounter = 0;
     protected readonly instanceId = ++BaseHistogramComponent.instanceCounter;
 
@@ -112,7 +74,6 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
         this._data = data;
         this.firstDate = data[0].date;
         this.lastDate = data[data.length - 1].date;
-        this.xCount = differenceInDays(this.lastDate, this.firstDate) + 1;
     }
 
     get data() {
@@ -136,6 +97,9 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
 
     @Input()
     pointsOfInterest: PointOfInterest[] = [];
+
+    @Input()
+    blocks: Block[] = [];
 
     @ViewChild(D3SvgComponent)
     svg: D3SvgComponent;
@@ -164,8 +128,8 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
         null,
         undefined
     >;
+    protected blocksGroup: Selection<SVGGElement, void, null, undefined>;
     protected noDataBlocks: NoDataBlock<T>[];
-    protected xCount: number;
 
     protected initialized = false;
     protected readonly onDestroy = new Subject<void>();
@@ -208,6 +172,7 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
         // repaint$ completes on destroy, no need for takeUntil
         this.svg.repaint$.subscribe(() => {
             this.createScales();
+            this.drawBlocks();
             this.paint();
             this.drawPointsOfInterest();
         });
@@ -222,6 +187,7 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
     protected abstract paint(): void;
 
     protected setupChart(fontSize = 12) {
+        this.blocksGroup = this.svg.svg.append('g').attr('class', 'blocks');
         this.yAxisGrp = this.svg.svg
             .append('g')
             .attr('class', 'y-axis')
@@ -247,61 +213,6 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
     protected createScales() {
         this.createScalesX();
         this.createScaleLinearY();
-    }
-
-    protected drawStackedBars(
-        barValuesFn: (v: T) => Array<number | null | undefined>,
-        colors: readonly string[]
-    ) {
-        const cleanedColors = colors.map((c) =>
-            c.startsWith('url') ? c.replace(')', `${this.svg.instanceNum})`) : c
-        );
-        this.dataGrp.attr(
-            'fill',
-            cleanedColors[0].startsWith('url') && cleanedColors.length > 1
-                ? cleanedColors[1]
-                : cleanedColors[0]
-        );
-
-        const preCalcStackStart = (
-            val: number | null | undefined,
-            ix: number,
-            arr: Array<number | null | undefined>
-        ) => ({
-            val,
-            start: Math.max(0, val ?? 0)
-        });
-
-        const translateOffset = this.bandOffsetX + this.barchartAlignHoverOfBar;
-        const width = this.bandWithX * this.barchartWidth;
-
-        this.dataGrp
-            .selectAll('g')
-            .data(this.data, <any>dateKeyFn)
-            .join('g')
-            .attr(
-                'transform',
-                ({ date }, ix) =>
-                    `translate(${
-                        <number>this.scaleBandX(middleOfDay(date)) +
-                        translateOffset
-                    }, 0)`
-            )
-            .selectAll('rect')
-            .data((v: T) => barValuesFn(v).map(preCalcStackStart))
-            .join('rect')
-            .attr('width', (_, ix) => (ix === 0 ? width / 2 : width))
-            .attr('y', ({ start }) => <number>this.scaleLinearY(start))
-            .attr('height', ({ val }) =>
-                Math.abs(this.scaleLinearY(val ?? 0) - this.scaleLinearY(0))
-            )
-            .attr('fill', (_, ix) =>
-                ix === 0
-                    ? cleanedColors[ix].startsWith('url')
-                        ? cleanedColors[ix]
-                        : null
-                    : cleanedColors[ix]
-            );
     }
 
     protected drawNoDataBlocks(
@@ -478,17 +389,10 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
     protected updateFullYAxisTick = (
         g: Selection<SVGGElement, number, SVGGElement, void>
     ) => {
-        g.attr(
-            'transform',
-            (v) =>
-                `translate(${this.barchartAlignHoverOfBar}, ${this.scaleLinearY(
-                    v
-                )})`
-        );
+        g.attr('transform', (v) => `translate(0, ${this.scaleLinearY(v)})`);
         g.select('line')
             .attr('x1', this.margin.left - 2)
             .attr('x2', this.svg.width - this.margin.right);
-        // .attr('opacity', (_, ix) => (ix === 0 ? '0' : null))
 
         g.select('text')
             .attr('dx', this.margin.left - 4)
@@ -506,7 +410,7 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
 
     protected updateXAxisBaseLine() {
         this.xAxisLine
-            .attr('x1', this.margin.left + this.barchartAlignHoverOfBar)
+            .attr('x1', this.margin.left)
             .attr('x2', this.svg.width - this.margin.right)
             .attr(
                 'transform',
@@ -529,11 +433,22 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
             );
     }
 
-    protected createLine(valueFn: (v: T) => number | null | undefined) {
+    /**
+     * Creates a line to be drawn on the svg
+     * @param valueFn function returning the value to be drawn
+     * @param curveFactory define the shape of the line, the default value is linear.
+     * See https://github.com/d3/d3-shape#curves for a complete list of options
+     * @returns line to be drawn by d3
+     */
+    protected createLine(
+        valueFn: (v: T) => number | null | undefined,
+        curveFactory: CurveFactory = curveLinear
+    ): Line<T> {
         return line<T>()
             .x(({ date }) => <number>this.scaleTimeX(middleOfDay(date)))
             .y((entry) => <number>this.scaleLinearY(valueFn(entry) || 0))
-            .defined((entry) => isDefined(valueFn(entry)));
+            .defined((entry) => isDefined(valueFn(entry)))
+            .curve(curveFactory);
     }
 
     protected createArea(
@@ -582,14 +497,8 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
     private createScalesX() {
         const width = this.svg.width - this.margin.right;
 
-        const d0 = this.firstDate;
-
         this.scaleBandX = scaleBand<Date>()
-            .domain(
-                new Array(this.xCount)
-                    .fill(0)
-                    .map((_, ix) => middleOfDay(addDays(d0, ix)))
-            )
+            .domain(this.data.map((entry) => middleOfDay(entry.date)))
             .range([this.margin.left, width]);
 
         const bandwidth = this.scaleBandX.bandwidth();
@@ -618,13 +527,11 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
         const domainMax = this.domainMax
             ? this.domainMax
             : calcDomainEnd(this.yMaxValue, this.yTickCount + 1);
-        return scaleLinear().domain([this.domainMin, domainMax]); // .nice(this.yTickCount)
+        return scaleLinear().domain([this.domainMin, domainMax]);
     }
 
     protected getYAxisTicks(yScale: ScaleLinear<number, number>): number[] {
         return yScale.ticks(this.yTickCount);
-        // const tickRange = yScale.domain()[1] / (this.yTickCount + 1)
-        // return new Array(this.yTickCount + 1).fill(0).map((_, ix) => (ix + 1) * tickRange)
     }
 
     protected drawPointsOfInterest(): void {
@@ -661,6 +568,27 @@ export abstract class BaseHistogramComponent<T extends HistogramEntry>
                 .style('stroke', 'black')
                 .style('fill', 'none')
                 .style('opacity', 0.5);
+        });
+    }
+
+    protected drawBlocks(): void {
+        this.blocksGroup.selectAll('.block').remove();
+        this.blocks.forEach((block) => {
+            const startPoint = this.scaleTimeX(middleOfDay(block.startDate));
+            const endPoint = this.scaleTimeX(middleOfDay(block.endDate));
+            const blockWidth = endPoint - startPoint;
+
+            this.blocksGroup
+                .append('rect')
+                .attr('class', 'block')
+                .attr('x', startPoint)
+                .attr('y', this.margin.top)
+                .attr('width', blockWidth)
+                .attr(
+                    'height',
+                    this.scaleLinearY(this.domainMin ?? 0) - this.margin.top // subtract the top margin as the starting point is not 0 but the top margin
+                )
+                .attr('fill', block.color);
         });
     }
 }

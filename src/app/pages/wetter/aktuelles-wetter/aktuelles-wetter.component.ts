@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { WetterService } from 'src/app/services/wetter/wetter.service';
 import {
     WetterTemperaturTrend,
     WetterTemperaturTrendEntry
 } from '../../../core/models/wetter-temperatur-trend';
+import { WetterService } from '../../../services/wetter/wetter.service';
 import { COLOR_SPACE, DEFAULT_REGION } from '../wetter.consts';
 
 @Component({

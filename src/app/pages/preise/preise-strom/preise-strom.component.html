@@ -64,7 +64,17 @@
     </div>
 
     <div class="divider-section">
-        <hr />
+        <hr/>
+    </div>
+
+    <div class="diagram-container">
+        <bfe-preise-futures-chart
+            [chartData]="chartDataFutures"
+            [colors]="colorsFutures"
+            titleKey="kpi-preise-5_strom_futures.titel"
+            langtextKey="kpi-preise-5_strom_futures.langtext"
+        >
+        </bfe-preise-futures-chart>
     </div>
 
     <div class="diagram-container">

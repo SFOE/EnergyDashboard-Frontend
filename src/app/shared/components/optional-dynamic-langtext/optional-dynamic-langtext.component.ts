@@ -7,14 +7,30 @@ import { TranslationService } from '../../../core/i18n/translation.service';
     styleUrls: ['./optional-dynamic-langtext.component.scss']
 })
 export class OptionalDynamicLangtextComponent implements OnChanges {
-    @Input() text: string;
+    @Input() text?: string;
     isEmpty: boolean;
 
     existingDynamicText = this.getTranslation();
 
     constructor(private translationService: TranslationService) {}
 
-    getTranslation() {
+    ngOnChanges() {
+        this.existingDynamicText = this.getTranslation();
+        if (!this.getTranslation()) {
+            this.isEmpty = false;
+            return;
+        }
+        if (this.getTranslation() == this.text) {
+            this.isEmpty = false;
+            return;
+        }
+        if (this.getTranslation().length == 0) {
+            this.isEmpty = false;
+            return;
+        }
+    }
+
+    private getTranslation() {
         if (!this.text) {
             return '';
         }
@@ -22,15 +38,5 @@ export class OptionalDynamicLangtextComponent implements OnChanges {
         return this.translationService.returnTranslation(
             `dynamic:${this.text}`
         );
-    }
-
-    ngOnChanges() {
-        this.existingDynamicText = this.getTranslation();
-        if (this.getTranslation() == this.text) {
-            this.isEmpty = false;
-        }
-        if (this.getTranslation().length == 0) {
-            this.isEmpty = false;
-        }
     }
 }

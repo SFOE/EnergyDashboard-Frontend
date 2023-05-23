@@ -11,6 +11,12 @@ import {
     WetterTemperaturPrognoseEntry
 } from '../../core/models/wetter-temperatur-prognose';
 import { WetterTemperaturTrend } from '../../core/models/wetter-temperatur-trend';
+import { WetterNiederschlagTrend } from '../../core/models/wetter-niederschlag-trend';
+import { WetterNiederschlagAktuellEntry } from '../../core/models/wetter-niederschlag-aktuell';
+import { HistogramDetailEntry } from '../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
+import { convertToDate } from 'src/app/shared/static-utils/date-utils';
+import { WetterSchneereservenAktuellEntry } from '../../core/models/wetter-schneereserven-aktuell';
+import { WetterSchneereservenTrend } from '../../core/models/wetter-schneereserven-trend';
 
 @Injectable({
     providedIn: 'root'
@@ -20,23 +26,49 @@ export class WetterService {
     private cachedWetterPrognose: Observable<WetterTemperaturPrognose>;
     private cachedWetterAktuell: Observable<WetterTemperaturAktuell>;
 
+    private cachedNiederschlagTrend: Observable<WetterNiederschlagTrend>;
+    private cachedNiederschlagAktuell: Observable<
+        WetterNiederschlagAktuellEntry[]
+    >;
+
+    private cachedSchneereservenTrend: Observable<WetterSchneereservenTrend>;
+    private cachedSchneereservenAktell: Observable<
+        WetterSchneereservenAktuellEntry[]
+    >;
+
     constructor(private dataService: DataService) {}
 
     getWetterTrend() {
         if (!this.cachedWetterTrend) {
             this.cachedWetterTrend = this.dataService
                 .getWetterTrend()
-                .pipe()
                 .pipe(shareReplay(1));
         }
         return this.cachedWetterTrend;
+    }
+
+    getNiederschlagTrend() {
+        if (!this.cachedNiederschlagTrend) {
+            this.cachedNiederschlagTrend = this.dataService
+                .getNiederschlagTrend()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedNiederschlagTrend;
+    }
+
+    getNiederschlagAktuell() {
+        if (!this.cachedNiederschlagAktuell) {
+            this.cachedNiederschlagAktuell = this.dataService
+                .getNiederschlagAktuell()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedNiederschlagAktuell;
     }
 
     getWetterPrognose() {
         if (!this.cachedWetterPrognose) {
             this.cachedWetterPrognose = this.dataService
                 .getWetterPrognose()
-                .pipe()
                 .pipe(shareReplay(1));
         }
         return this.cachedWetterPrognose;
@@ -46,10 +78,27 @@ export class WetterService {
         if (!this.cachedWetterAktuell) {
             this.cachedWetterAktuell = this.dataService
                 .getWetterAktuell()
-                .pipe()
                 .pipe(shareReplay(1));
         }
         return this.cachedWetterAktuell;
+    }
+
+    getSchneereservenTrend() {
+        if (!this.cachedSchneereservenTrend) {
+            this.cachedSchneereservenTrend = this.dataService
+                .getSchneereservenTrend()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedSchneereservenTrend;
+    }
+
+    getSchneereservenAktuell() {
+        if (!this.cachedSchneereservenAktell) {
+            this.cachedSchneereservenAktell = this.dataService
+                .getSchneereservenAktuell()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedSchneereservenAktell;
     }
 
     mapWetterPrognoseToHistogramEntries(
@@ -62,7 +111,7 @@ export class WetterService {
                 dto.fiveYearMax,
                 dto.fiveYearMin
             ],
-            date: new Date(dto.datum),
+            date: new Date(dto.date),
             band: {
                 upper: dto.fiveYearMax,
                 lower: dto.fiveYearMin
@@ -85,7 +134,7 @@ export class WetterService {
                 dto.fiveYearMax,
                 dto.fiveYearMin
             ],
-            date: new Date(dto.datum),
+            date: new Date(dto.date),
             band: {
                 upper: dto.fiveYearMax,
                 lower: dto.fiveYearMin
@@ -96,5 +145,20 @@ export class WetterService {
                 differenzMax: dto.differenzMax
             }
         }));
+    }
+
+    mapNiederschlagAktuellToHistogramEntries(
+        data: WetterNiederschlagAktuellEntry[]
+    ): HistogramDetailEntry[] {
+        return data.map((dto: WetterNiederschlagAktuellEntry) => {
+            return {
+                date: convertToDate(dto.date.toString()),
+                barValues: [dto.niederschlagGemessen],
+                barLineValue: null,
+                hiddenValues: [],
+                lineValues: [100],
+                exists: true
+            };
+        });
     }
 }

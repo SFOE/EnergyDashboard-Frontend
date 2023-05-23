@@ -1,0 +1,26 @@
+<div #tooltip [class.hidden]="!event" class="tooltip-container">
+    <ng-container *ngIf="!!data">
+        <section class="date-section">
+            {{ data.date | date: 'MMMM yyyy' }}
+        </section>
+
+        <ng-container *ngIf="data.barValues[0]">
+            <section class="tooltip-content">
+                <div>
+                    <span
+                        [style.backgroundColor]="barColors[0]"
+                        class="dot"
+                    ></span>
+
+                    <span class="text">{{
+                        'commons.wetter.niederschlag.precipitation' | i18next
+                        }}</span>
+                </div>
+
+                <span class="text-value">
+                    <span> {{ data.barValues[0] | number: '1.1-1' }}%</span>
+                </span>
+            </section>
+        </ng-container>
+    </ng-container>
+</div>

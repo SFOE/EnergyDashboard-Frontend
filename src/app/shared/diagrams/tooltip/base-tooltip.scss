@@ -1,0 +1,51 @@
+@use 'mix';
+
+.tooltip-container {
+    @include mix.tooltip-container;
+
+    .date-section {
+        padding: 4px 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .column-margin {
+        margin-right: 24px;
+    }
+
+    .value-section {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        justify-items: flex-start;
+        align-items: center;
+        column-gap: 4px;
+        padding: 4px 8px;
+        margin-top: 4px;
+        row-gap: 4px;
+
+        .divider {
+            grid-column: span 4;
+            display: flex;
+            align-items: stretch;
+            justify-content: stretch;
+            width: calc(100% + 16px);
+            margin: 0 -8px;
+
+            hr {
+                height: 1px;
+                background-color: #ebebeb;
+                border: none;
+            }
+        }
+
+        .dot {
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+    }
+}
+
+.hidden {
+    display: none;
+}

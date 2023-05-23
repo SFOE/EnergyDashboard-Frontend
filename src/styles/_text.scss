@@ -164,7 +164,7 @@ a {
 
 .label-small {
     font-size: 8px;
-    line-height: 14px;
+    line-height: 9.6px;
 }
 
 .label-medium {
@@ -271,4 +271,12 @@ a {
     font-size: 12px;
     line-height: 14px;
     color: #000;
+}
+
+.tooltip-subfix {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 10px;
+    color: col.$dark;
 }

@@ -16,10 +16,10 @@
                             unit="GWh"
                             [color]="COLOR_SPACE"
                         ></bfe-large-number-unit>
-                        <p>
+                        <p class="label-medium">
                             {{
-                                'dashboard.strom.verbrauch-daily.per-day'
-                                    | i18next
+                            'dashboard.strom.verbrauch-daily.per-day'
+                                | i18next
                             }}
                         </p>
                     </section>
@@ -31,10 +31,10 @@
                             unit="GWh"
                             [color]="COLOR_SPACE"
                         ></bfe-large-number-unit>
-                        <p>
+                        <p class="label-medium">
                             {{
-                                'dashboard.strom.verbrauch-daily.in-five-days'
-                                    | i18next
+                            'dashboard.strom.verbrauch-daily.in-five-days'
+                                | i18next
                             }}
                         </p>
                     </section>
@@ -44,9 +44,9 @@
                         [trend]="currentEntry.trend"
                         [rating]="currentEntry.trendRating"
                     ></bfe-trend-indicator>
-                    <p>
+                    <p class="label-medium">
                         {{
-                            'dashboard.strom.produktion.rolling-trend' | i18next
+                        'dashboard.strom.produktion.rolling-trend' | i18next
                         }}
                     </p>
                 </section>

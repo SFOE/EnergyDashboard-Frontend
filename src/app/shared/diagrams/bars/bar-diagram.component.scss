@@ -1,0 +1,69 @@
+@use 'col';
+
+.bar-diagram-container {
+    display: flex;
+    position: relative;
+    --bottom-label-height: 20px;
+
+    .y-axis {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding-bottom: var(--bottom-label-height);
+        margin-right: 4px;
+        margin-top: -4px;
+        margin-bottom: -4px;
+
+        .label {
+            line-height: 1;
+        }
+    }
+
+    .value-lines {
+        position: absolute;
+        left: 28px;
+        top: 0;
+        bottom: var(--bottom-label-height);
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        hr {
+            width: 100%;
+            margin: 0;
+            opacity: 0.6;
+            background-color: col.$medium;
+            border-color: col.$medium;
+        }
+    }
+
+    .bar-container {
+        display: grid;
+        grid-auto-rows: auto 20px;
+        align-items: flex-end;
+        justify-items: center;
+        padding: 0 12px;
+
+        .bottom-label {
+            height: var(var(--bottom-label-height));
+        }
+
+        .bar {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: red;
+            width: 44px;
+            z-index: 1;
+
+            .label {
+                position: absolute;
+                top: -20px;
+            }
+        }
+    }
+}

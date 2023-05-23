@@ -1,0 +1,39 @@
+@use 'col';
+@use 'layout';
+@use 'var';
+
+:host {
+    display: block;
+
+    .dashboard__main,
+    .dashboard__more {
+        & ::ng-deep {
+            @include layout.container();
+        }
+    }
+
+    .dashboard__main {
+        border-top: 1px solid var(--c-divider);
+        background-color: var(--c-bg-card-container);
+        min-height: calc(100vh - var(--d-header-height));
+        padding-bottom: var.$kpi-container-column-gap;
+    }
+}
+
+.info-page__content-card {
+    box-shadow: var(--bs-card);
+    background-color: var(--c-bg-card);
+    min-height: calc(100vh - var(--d-header-height));
+}
+
+.info-page_title {
+    padding-top: var.$kpi-container-column-gap;
+    padding-bottom: var.$kpi-container-indentation;
+    font-weight: 700;
+    line-height: 24px;
+    color: col.$dark;
+}
+
+.info-page__content {
+    padding: var.$kpi-container-column-gap;
+}

@@ -1,35 +1,60 @@
+import { DateModel } from './base/date.model';
 import { Trend, TrendRating } from './trend.enum';
 
-export interface SparzielZielDto {
+export interface SparzielZielDtoV4 {
     date: string;
     kumulierteMonatlicheEinsparungGWh: number;
-    kumulierteEinsparungProzent: number;
     sparzielGWh: number;
     standSparzielProzent: number;
+    standSparzielGemessenWitterungsbereinigtProzent: number;
     standSparzielGeschaetztProzent: number;
     trend: Trend;
     trendRating: TrendRating;
 }
 
-export interface SparzielEntry {
-    date: Date;
+export interface SparzielEntry extends DateModel {
     kumulierteMonatlicheEinsparungGWh: number;
-    kumulierteEinsparungProzent: number;
     sparzielGWh: number;
     standSparzielProzent: number;
+    standSparzielGemessenWitterungsbereinigtProzent: number;
     standSparzielGeschaetztProzent: number;
     trend: Trend;
     trendRating: TrendRating;
 }
 
-export interface SparzielAktuelleEinsparungDtoV2V3 {
+export interface SparzielAktuelleEinsparungDtoV4 {
     date: string;
     differenzMittelwertProzent: number;
+    isEstimation: boolean;
     temperaturAbweichungNorm: number;
+    differenzMittelwertWitterungsbereinigtProzent: number;
 }
 
-export interface SparzielAktuelleEinsparungEntryV2V3 {
-    date: Date;
+export interface SparzielAktuelleEinsparungEntryV4 extends DateModel {
     differenzMittelwertProzent: number;
+    isEstimation: boolean;
     temperaturAbweichungNorm: number;
+    differenzMittelwertWitterungsbereinigtProzent: number;
+}
+
+export interface SparzielNachBereichProMonat extends DateModel {
+    anteilPrivate: number;
+    anteilKMU: number;
+    anteilIndustrie: number;
+    nationalSavingsPercent: number;
+}
+
+export interface SparzielNachBereichAktuellerMonat extends DateModel {
+    anteilPrivate: number;
+    anteilKMU: number;
+    anteilIndustrie: number;
+    nationalSavingsPercent: number;
+    nationalSavingsMWh: number;
+}
+
+export interface SparzielZielNachBereichAktuellerMonat extends DateModel {
+    anteilPrivate: number;
+    anteilKMU: number;
+    anteilIndustrie: number;
+    nationalSavingsGWh: number;
 }

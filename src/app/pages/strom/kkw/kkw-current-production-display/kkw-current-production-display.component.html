@@ -1,0 +1,20 @@
+<section *ngIf="!isLoading; else loading" class="number-section">
+    <p class="label-medium">
+        {{ topLabelKey | i18next }}
+    </p>
+    <bfe-trend-and-number
+        [model]="{
+            color: stromColor,
+            bigNumber: {
+                value: latestProduction,
+                postfix: 'GWh',
+                subTextKeys: ['commons.updated-daily']
+            }
+        }"
+    ></bfe-trend-and-number>
+</section>
+<ng-template #loading>
+    <div class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</ng-template>

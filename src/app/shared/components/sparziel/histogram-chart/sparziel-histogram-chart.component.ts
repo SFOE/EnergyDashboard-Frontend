@@ -1,7 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { TranslationService } from '../../../../core/i18n/translation.service';
 import { DiagramLegendEntry } from '../../../diagrams/diagram-legend/diagram-legend.component';
-import { LabelModifier } from '../../../diagrams/histogram/base-histogram.component';
+import {
+    Block,
+    LabelModifier
+} from '../../../diagrams/histogram/base-histogram.model';
 import { HistogramDetailEntry } from '../../../diagrams/histogram/histogram-detail/histogram-detail.component';
 import { HistogramElFocusEvent } from '../../../diagrams/histogram/interactive-histogram.component';
 import { LabelFilters, LabelFormatters } from '../../../diagrams/label.utils';
@@ -9,6 +12,7 @@ import { LabelFilters, LabelFormatters } from '../../../diagrams/label.utils';
 export interface SparzielHistogramChartModel {
     lastUpdate?: Date;
     data: HistogramDetailEntry[];
+    blocks: Block[];
     colors: {
         bars: string[];
         lines: string[];
@@ -58,7 +62,7 @@ export class SparzielHistogramChartComponent implements OnChanges {
     constructor(translationService: TranslationService) {
         this.xLabelModifier = {
             formatter: LabelFormatters.monthShort(translationService.language),
-            filter: LabelFilters.everyNth(1, { excludeLast: true })
+            filter: LabelFilters.everyNth(1, { excludeLast: false })
         };
         this.xSubLabelModifier = {
             formatter: LabelFormatters.yearFull(translationService.language),

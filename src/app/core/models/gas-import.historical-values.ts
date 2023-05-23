@@ -1,8 +1,7 @@
-export interface GasImportHistoricalValues {
+import { FiveYearStatisticsModel } from './base/statisics.model';
+
+export interface GasImportHistoricalValues extends FiveYearStatisticsModel {
     nettoimport: number | null;
-    fiveYearMin: number;
-    fiveYearMax: number;
-    fiveYearMittelwert: number;
     date: string;
     differenzMittelwert: number | null;
     differenzMin: number | null;

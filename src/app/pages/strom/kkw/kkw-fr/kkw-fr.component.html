@@ -1,0 +1,43 @@
+<bfe-kpi-container
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-strom-6_kkw-fr.datenquelle',
+        langtextDynamicKey: 'kpi-strom-6_kkw-fr.langtext'
+    }"
+    titleKeyDynamic="kpi-strom-6_kkw-fr.titel"
+>
+    <bfe-kpi-container-row>
+        <bfe-kkw-current-production-display
+            [productionData]="productionFr"
+            topLabelKey="dashboard.strom.kkw.production"
+        ></bfe-kkw-current-production-display>
+
+        <section class="teaser-section">
+            <div
+                [innerHTML]="
+                    'dynamic:kpi-strom-6_kkw-fr.kurztext' | i18nextDynamic
+                "
+                class="teaser"
+            ></div>
+        </section>
+    </bfe-kpi-container-row>
+
+    <bfe-kkw-production-chart
+        [model]="{
+            titleDynamicKey: 'kpi-gas-strom-6_kkw-produktion-fr.titel',
+            kurztextDynamicKey: 'kpi-gas-strom-6_kkw-produktion-fr.kurztext',
+            chartData: productionFr,
+            displayAusfaelleInBackground: false
+        }"
+    ></bfe-kkw-production-chart>
+
+    <bfe-kkw-availability-chart
+        [model]="{
+            titleDynamicKey: 'kpi-gas-strom-6_kkw-verfuegbarkeit-fr.titel',
+            kurztextDynamicKey:
+                'kpi-gas-strom-6_kkw-verfuegbarkeit-fr.kurztext',
+            chartData: availabilityFr
+        }"
+        [displayAusfaelleInBackground]="false"
+        [showNumberOfOutages]="true"
+    ></bfe-kkw-availability-chart>
+</bfe-kpi-container>

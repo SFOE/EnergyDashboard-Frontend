@@ -1,9 +1,10 @@
+import { DateModel } from './base/date.model';
+
 export interface WetterTemperaturPrognose {
     [station: string]: WetterTemperaturPrognoseEntry[];
 }
 
-export interface WetterTemperaturPrognoseEntry {
-    datum: string;
+export interface WetterTemperaturPrognoseEntry extends DateModel {
     lufttemperaturPrognose: number | null;
     lufttemperaturTagesmittelNorm: number;
     fiveYearMin: number;

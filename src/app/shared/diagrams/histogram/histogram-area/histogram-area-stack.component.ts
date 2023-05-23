@@ -7,8 +7,9 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { area, Area, Line } from 'd3';
+import { middleOfDay } from '../../../static-utils/date-utils';
 import { isDefined } from '../../../xternal-helpers/from-c19-commons/utils/is-defined.function';
-import { HistogramEntry, middleOfDay } from '../base-histogram.component';
+import { HistogramEntry } from '../base-histogram.model';
 import { HistogramAreaComponent } from './histogram-area.component';
 
 export interface HistogramAreaEntry extends HistogramEntry {

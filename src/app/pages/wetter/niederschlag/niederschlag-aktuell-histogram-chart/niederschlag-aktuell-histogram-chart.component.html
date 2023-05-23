@@ -1,0 +1,51 @@
+<div
+    *ngIf="!loading && chartDatadataNiederschlagAktuell; else loadingTemplate"
+    class="diagram-container"
+>
+    <bfe-kpi-subtitle>
+        {{ 'dynamic:kpi-wetter-3_niederschlag-aktuell.titel' | i18nextDynamic }}
+    </bfe-kpi-subtitle>
+
+    <bfe-kpi-date-info-subtext
+        [date]="dateOfLastUpdate"
+    ></bfe-kpi-date-info-subtext>
+
+    <bfe-optional-dynamic-langtext
+        text="kpi-wetter-3_niederschlag-aktuell.langtext"
+    ></bfe-optional-dynamic-langtext>
+
+    <div class="diagram-container">
+        <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+
+        <bfe-histogram-detail
+            (diagramLeave)="hideTooltip()"
+            (elFocus)="showLineChartTooltip($event)"
+            [barColors]="barColors"
+            [blocks]="blocks"
+            [barWidth]="40"
+            [data]="chartDatadataNiederschlagAktuell"
+            [domainMax]="domainMax"
+            [domainMin]="domainMin"
+            [lineColors]="lineColors"
+            [lineThickness]="[2, 2, 1]"
+            [lineStyle]="['solid', 'solid', 'dashed']"
+            [margin]="{ top: 20, bottom: 40, left: 0, right: 12 }"
+            [xLabelModifier]="xLabelModifier"
+            [xSubLabelModifier]="xSubLabelModifier"
+            [yLabelFormatter]="yLabelFormatter"
+            [yTickCount]="4"
+        >
+        </bfe-histogram-detail>
+
+        <bfe-niederschlag-aktuell-histogram-chart-tooltip
+            [event]="tooltipEvent"
+            [barColors]="barColors"
+        ></bfe-niederschlag-aktuell-histogram-chart-tooltip>
+    </div>
+</div>
+
+<ng-template #loadingTemplate>
+    <div class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</ng-template>

@@ -21,7 +21,7 @@ export interface TooltipDiagramComponent {
     svg: D3SvgComponent;
 }
 
-@Component({ template: '' })
+@Component({ template: '', styleUrls: ['./base-tooltip.scss'] })
 export abstract class BaseTooltipComponent<T>
     implements OnChanges, AfterViewInit
 {

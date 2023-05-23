@@ -1,0 +1,58 @@
+@use 'mix';
+
+.divider-section {
+    width: 100%;
+
+    hr {
+        height: 1px;
+        background-color: #ebebeb;
+        border: none;
+        width: 100%;
+    }
+}
+
+.tooltip-container {
+    @include mix.tooltip-container;
+
+    .date-section {
+        padding: 4px 8px;
+        border-bottom: 1px solid #ccc;
+    }
+}
+
+.tooltip-container.hidden {
+    visibility: hidden;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    margin-right: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.tooltip-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px;
+    row-gap: 4px;
+}
+
+.text {
+    font-weight: 400;
+    text-align: left;
+    padding-left: 4px;
+}
+
+.text-value {
+    width: 120px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.stromsparziel-container {
+    position: unset;
+}
+

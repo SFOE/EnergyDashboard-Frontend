@@ -1,29 +1,22 @@
-import { SparzielAktuelleEinsparungEntryV2V3 } from '../../../core/models/sparziel';
+import { SparzielAktuelleEinsparungEntryV4 } from '../../../core/models/sparziel';
 import { HistogramDetailEntry } from '../../diagrams/histogram/histogram-detail/histogram-detail.component';
-import { ArrayUtils } from '../../static-utils/array-utils';
 
 export const mapAktuelleEinsparungEntryToHistogramEntry = (
-    data: SparzielAktuelleEinsparungEntryV2V3[],
-    sparzielPercentage: number,
-    relevantCutoffDate: Date
+    data: SparzielAktuelleEinsparungEntryV4[],
+    sparzielPercentage: number
 ): HistogramDetailEntry[] => {
-    const lastNotEmptyIndex = ArrayUtils.findLastIndex(
-        data,
-        (entry) => entry.differenzMittelwertProzent !== 0
-    );
-    return data.map((entry, index) => {
-        let barValues: number[] = []; // contains 3 values: [not relevant for goal, meassured & relevant for goal, projected savings]
-        if (index === lastNotEmptyIndex) {
-            barValues = [0, 0, entry.differenzMittelwertProzent];
+    return data.map((entry) => {
+        let barValues: number[]; // contains 3 values: [not relevant for goal, measured & relevant for goal, projected (estimated) savings]
+        if (!entry.isEstimation) {
+            barValues = [entry.differenzMittelwertProzent, 0];
         } else {
-            const isEntryRelevant = entry.date >= relevantCutoffDate;
-            barValues = isEntryRelevant
-                ? [0, entry.differenzMittelwertProzent, 0]
-                : [entry.differenzMittelwertProzent, 0, 0];
+            barValues = [0, entry.differenzMittelwertProzent];
         }
         return {
             date: entry.date,
-            barValues,
+            barValues: barValues,
+            barLineValue: null,
+            hiddenValues: [entry.differenzMittelwertWitterungsbereinigtProzent],
             lineValues: [-sparzielPercentage, 0, entry.temperaturAbweichungNorm]
         };
     });

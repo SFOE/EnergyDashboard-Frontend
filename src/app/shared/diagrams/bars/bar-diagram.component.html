@@ -1,0 +1,34 @@
+<div class="bar-diagram-container" [style.height]="height + 'px'">
+    <section class="y-axis">
+        <span class="label">{{ maxValue }}{{ yAxisSubfix }}</span>
+        <span class="label"
+        >{{ maxValue / 2 | roundNumber }}{{ yAxisSubfix }}</span
+        >
+        <span class="label">0{{ yAxisSubfix }}</span>
+    </section>
+    <section class="value-lines">
+        <hr/>
+        <hr/>
+        <hr/>
+    </section>
+    <section *ngFor="let entry of data" class="bar-container">
+        <span
+            class="bar"
+            [style]="calculateBarHeight(entry.value)"
+            [style.backgroundColor]="entry.color"
+        >
+            <span class="label">
+                {{ entry.absoluteValue ? entry.absoluteValue : entry.value }}
+                {{ valueSubfix }}
+            </span>
+            <fa-icon
+                *ngIf="entry.icon"
+                [icon]="entry.icon.faIcon"
+                [style.color]="entry.icon.color"
+            ></fa-icon>
+        </span>
+        <span class="bottom-label label-medium">{{
+            entry.labelKey | i18next
+            }}</span>
+    </section>
+</div>

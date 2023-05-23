@@ -19,13 +19,13 @@
     }
 }
 
-.master-detail__content-card {
+.info-page__content-card {
     box-shadow: var(--bs-card);
     background-color: var(--c-bg-card);
     min-height: calc(100vh - var(--d-header-height));
 }
 
-.ax-title-page {
+.info-page_title {
     padding-top: 44px;
     padding-bottom: 12px;
     font-weight: 700;
@@ -53,7 +53,7 @@
     }
 }
 
-.ax-statement {
+.info-page__content {
     padding: 44px;
 }
 

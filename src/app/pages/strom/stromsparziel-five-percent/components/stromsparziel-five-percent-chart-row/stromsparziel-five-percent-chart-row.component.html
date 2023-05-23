@@ -1,0 +1,33 @@
+<div class="bar-row">
+    <section class="header">{{ weekdayKey | i18next }}</section>
+    <section *ngFor="let entry of entries" class="bar">
+        <span
+            class="value"
+            [class.missed]="isPositive(entry.savedPercent)"
+            [style]="calculateStackedBarWidth(entry.savedPercent)"
+        ></span>
+        <section class="tooltip">
+            <bfe-stromsparziel-five-percent-tooltip
+                [data]="entry"
+                [weekday]="weekday"
+            ></bfe-stromsparziel-five-percent-tooltip>
+        </section>
+    </section>
+
+    <!-- Fill the chart so that the display scale is always at the bottom -->
+    <section
+        class="bar"
+        *ngFor="
+            let entry of getRange(numberOfElementsInHeight - entries.length)
+        "
+    ></section>
+</div>
+
+<section *ngIf="displayScale" class="value-scale">
+    <span class="lines"></span>
+    <span class="labels">
+        <span class="label">0%</span>
+        <span class="label">{{ maxPercentage / 2 | roundNumber }}%</span>
+        <span class="label">{{ maxPercentage }}%</span>
+    </span>
+</section>

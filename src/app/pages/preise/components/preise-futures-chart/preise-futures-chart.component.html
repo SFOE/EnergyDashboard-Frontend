@@ -1,0 +1,34 @@
+<div class="preise-futures-chart-container">
+    <div *ngIf="data" class="diagram-container">
+        <section class="title-selection-container">
+            <bfe-kpi-subtitle>
+                {{ 'dynamic:' + titleKey | i18nextDynamic }}
+            </bfe-kpi-subtitle>
+            <bfe-kpi-date-info-subtext [date]="lastUpdated">
+            </bfe-kpi-date-info-subtext>
+        </section>
+        <bfe-optional-dynamic-langtext
+            [text]="langtextKey"
+        ></bfe-optional-dynamic-langtext>
+        <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+        <bfe-histogram-line
+            (diagramLeave)="hideTooltip()"
+            (elFocus)="showTooltip($event)"
+            [colors]="colors"
+            [data]="data"
+            [strokeWidths]="[2, 2, 2, 2, 2, 2]"
+            [xLabelModifier]="xLabelModifier"
+            [xSubLabelModifier]="xSubLabelModifier"
+            [yLabelFormatter]="yLabelFormatter"
+        ></bfe-histogram-line>
+        <bfe-preise-tooltip
+            [isMonthly]="false"
+            [event]="tooltipEvent"
+            [lineEntries]="legendEntries"
+            postfix="EUR"
+        ></bfe-preise-tooltip>
+    </div>
+    <div *ngIf="isLoading" class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</div>
