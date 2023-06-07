@@ -16,6 +16,8 @@ import { filterHistogramAreaEntryByDate } from '../../../../shared/diagrams/util
 import { oneWeekInMilliseconds } from '../../../../shared/static-utils/date-utils';
 import { ProduktionChartIndex } from './produktion-verbrauch-histogram-chart.consts';
 
+const DOMAIN_MAX_PADDING = 5;
+
 @Component({
     selector: 'bfe-produktion-verbrauch-histogram-chart',
     templateUrl: './produktion-verbrauch-histogram-chart.component.html',
@@ -28,6 +30,7 @@ export class ProduktionVerbrauchHistogramChartComponent implements OnInit {
     };
     tooltipEvent?: HistogramElFocusEvent<HistogramAreaChartEntry>;
     isLoading: boolean = true;
+    domainMax: number;
     lastUpdate?: Date;
 
     readonly labelModifier: LabelModifier;
@@ -73,6 +76,8 @@ export class ProduktionVerbrauchHistogramChartComponent implements OnInit {
                         this.fourWeeksBackFromToday
                     )
                 };
+
+                this.domainMax = this.getDomainMax(this.chartData.areaEntries);
                 this.isLoading = false;
             });
     }
@@ -85,5 +90,25 @@ export class ProduktionVerbrauchHistogramChartComponent implements OnInit {
 
     hideTooltip(): void {
         this.tooltipEvent = undefined;
+    }
+
+    private getDomainMax(entries: HistogramAreaChartEntry[]): number {
+        let maxSum: number = 0;
+
+        for (const entry of entries) {
+            if (entry.values) {
+                const sum =
+                    entry.values
+                        .filter((e) => (e ?? 0) > 0)
+                        .reduce((a, b) => (a ?? 0) + (b || 0), 0) ?? 0; // sum the array values, treating null as 0
+
+                if (sum > maxSum) {
+                    maxSum = sum;
+                }
+            }
+        }
+
+        maxSum += DOMAIN_MAX_PADDING;
+        return maxSum;
     }
 }

@@ -18,6 +18,8 @@ import {
     StromKkwAusfallDto,
     StromKkwProductionEntry,
     StromKkwProductionEntryDto,
+    StromKkwVerfuegbarkeitEntry,
+    StromKkwVerfuegbarkeitEntryDto,
     StromProductionData,
     StromProductionDto,
     StromProductionEntry,
@@ -234,3 +236,23 @@ export const mapStromKkwAusfaelle = (
             color: getAusfallColor(dto.wasPlanned)
         };
     });
+
+export const mapStromKkwVerfuegbarkeitDtoToEntry = (
+    dto: StromKkwVerfuegbarkeitEntryDto,
+    ausfaelle: StromKkwAusfall[] = [],
+    aggregateAusfaelle: boolean = false
+): StromKkwVerfuegbarkeitEntry => {
+    const date = new Date(dto.date);
+
+    return {
+        date: date,
+        barValues: [dto.kkwVerfuegbareLeistung],
+        barLineValue: null,
+        hiddenValues: [],
+        lineValues: [dto.kkwInstallierteLeistung],
+        ausfaelle: aggregateAusfaelle
+            ? aggregateAusfaelleToHistogramEntry({ date }, ausfaelle)
+            : findKkwAusfallToHistogramEntry({ date }, ausfaelle),
+        exists: true
+    };
+};

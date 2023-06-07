@@ -1,4 +1,5 @@
 @use 'col';
+@use 'dim';
 
 .sparziel-chart-container {
     --achievedPercentage: 0;
@@ -111,7 +112,6 @@
                 margin: 0;
                 white-space: nowrap;
             }
-
             .p-grey {
                 color: col.$medium;
             }
@@ -183,5 +183,10 @@
         left: 330px;
         visibility: hidden;
         pointer-events: none;
+
+        @media (max-width: #{dim.$bp-min-md}) {
+            left: 20px;
+            top: 300px;
+        }
     }
 }

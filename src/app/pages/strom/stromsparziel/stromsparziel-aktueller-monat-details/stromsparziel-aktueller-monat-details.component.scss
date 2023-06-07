@@ -1,3 +1,6 @@
+@use 'dim';
+@use 'var';
+
 .sparziel-five-percent-details-chart-container {
     margin-top: 22px;
 
@@ -101,5 +104,10 @@
         left: 260px;
         visibility: hidden;
         pointer-events: none;
+
+        @media (max-width: #{dim.$bp-min-md}) {
+            left: 0;
+            top: calc(100% + #{var.$kpi-container-row-gap-mobile});
+        }
     }
 }

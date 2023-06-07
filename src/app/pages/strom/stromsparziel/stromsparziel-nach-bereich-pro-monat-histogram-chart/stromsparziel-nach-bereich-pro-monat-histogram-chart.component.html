@@ -22,10 +22,10 @@
 
     <bfe-histogram-detail
         (diagramLeave)="hideTooltip()"
-        (elFocus)="showLineChartTooltip($event)"
+        (elFocus)="showTooltip($event)"
         [data]="entries"
         [blocks]="blocks"
-        [barWidth]="22"
+        [barWidth]="barWidth"
         [barColors]="barColors"
         [lineColors]="lineColors"
         [barLineColor]="barLineColor"

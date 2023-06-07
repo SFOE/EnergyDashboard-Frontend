@@ -1,5 +1,5 @@
 // import { isDefined } from '@c19/commons'
-import {isDefined} from '../xternal-helpers/from-c19-commons/utils/is-defined.function';
+import { isDefined } from '../xternal-helpers/from-c19-commons/utils/is-defined.function';
 
 // the actual minus sign (− which is longer) than the normal hyphen
 export const MINUS_SIGN = '−';

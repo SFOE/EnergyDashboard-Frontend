@@ -36,6 +36,7 @@ describe('SparzielOverviewComponent', () => {
                 sparzielGWh: 1,
                 standSparzielProzent: 1,
                 standSparzielGeschaetztProzent: 1,
+                standSparzielGemessenWitterungsbereinigtProzent: 1,
                 trend: Trend.NEUTRAL,
                 trendRating: TrendRating.NEUTRAL
             },

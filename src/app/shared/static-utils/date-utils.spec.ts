@@ -33,11 +33,11 @@ describe('dateWithoutTime', () => {
 
 describe('weekdayToTranslationKey', () => {
     const expectedWeekdayMapping = [
-        'commons.day.mondays',
-        'commons.day.tuesdays',
-        'commons.day.wednesdays',
-        'commons.day.thursdays',
-        'commons.day.fridays'
+        'commons.day.long.mondays',
+        'commons.day.long.tuesdays',
+        'commons.day.long.wednesdays',
+        'commons.day.long.thursdays',
+        'commons.day.long.fridays'
     ];
 
     it('should map all mapped keys correctly', () => {

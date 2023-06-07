@@ -55,6 +55,7 @@ import { StromsparzielNachBereichProMonatHistogramChartTooltipComponent } from '
 import { StromsparzielAktuellerMonatDetailsTooltipComponent } from './stromsparziel/stromsparziel-aktueller-monat-details/stromsparziel-aktueller-monat-details-tooltip/stromsparziel-aktueller-monat-details-tooltip.component';
 import { StromsparzielFivePercentDetailsComponent } from './stromsparziel-five-percent/components/stromsparziel-five-percent-details/stromsparziel-five-percent-details.component';
 import { StromsparzielFivePercentDetailsTooltipComponent } from './stromsparziel-five-percent/components/stromsparziel-five-percent-details/stromsparziel-five-percent-details-tooltip/stromsparziel-five-percent-details-tooltip.component';
+import { StromsparzielMehrMindestverbrauchProMonatComponent } from './stromsparziel/stromsparziel-mehr-mindestverbrauch-pro-monat/stromsparziel-mehr-mindestverbrauch-pro-monat.component';
 
 @NgModule({
     declarations: [
@@ -97,7 +98,8 @@ import { StromsparzielFivePercentDetailsTooltipComponent } from './stromsparziel
         StromsparzielNachBereichProMonatHistogramChartTooltipComponent,
         StromsparzielAktuellerMonatDetailsTooltipComponent,
         StromsparzielFivePercentDetailsComponent,
-        StromsparzielFivePercentDetailsTooltipComponent
+        StromsparzielFivePercentDetailsTooltipComponent,
+        StromsparzielMehrMindestverbrauchProMonatComponent
     ],
     imports: [
         CommonModule,

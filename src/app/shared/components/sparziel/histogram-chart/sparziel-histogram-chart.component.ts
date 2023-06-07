@@ -12,6 +12,7 @@ import { LabelFilters, LabelFormatters } from '../../../diagrams/label.utils';
 export interface SparzielHistogramChartModel {
     lastUpdate?: Date;
     data: HistogramDetailEntry[];
+    barWidth: number;
     blocks: Block[];
     colors: {
         bars: string[];

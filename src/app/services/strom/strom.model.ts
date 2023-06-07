@@ -96,32 +96,24 @@ export interface StromKkwProductionData {
     ausfaelle: StromKkwAusfall[];
 }
 
-export interface StromKkwVerfuegbarkeitData {
-    entries: StromKkwVerfuegbarkeitEntry[];
-    ausfaelle: StromKkwVerfuegbarkeitAusfall[];
+export interface StromKkwVerfuegbarkeitDto {
+    entries: StromKkwVerfuegbarkeitEntryDto[];
+    ausfaelle: StromKkwAusfallDto[];
 }
 
-export interface StromKkwVerfuegbarkeitEntry {
-    date: Date;
+export interface StromKkwVerfuegbarkeitEntryDto {
+    date: string;
     kkwInstallierteLeistung: number;
     ungeplanterAusfallMittelwert: number;
     geplanterAusfallMittelwert: number;
     kkwVerfuegbareLeistung: number;
 }
 
-export interface StromKkwVerfuegbarkeitAusfall {
-    productionPlant: string;
-    endDate: Date;
-    startDate: Date;
-    wasPlanned: boolean;
+export interface StromKkwVerfuegbarkeitData {
+    entries: StromKkwVerfuegbarkeitEntry[];
+    ausfaelle: StromKkwAusfall[];
 }
 
-export interface StromKkwVerfuegbarkeitHistogramDetailEntry
-    extends HistogramDetailEntry {
-    outages: StromKkwVerfuegbarkeitAusfallHistogramDetailEntry[];
-}
-
-export interface StromKkwVerfuegbarkeitAusfallHistogramDetailEntry {
-    productionPlant: string;
-    wasPlanned: boolean;
+export interface StromKkwVerfuegbarkeitEntry extends HistogramDetailEntry {
+    ausfaelle: StromKkwAusfall[];
 }

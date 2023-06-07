@@ -1,3 +1,5 @@
+@use 'dim';
+
 .diagram-container {
     display: flex;
     flex-direction: column;
@@ -11,8 +13,6 @@
 }
 
 .trend-section-diagram {
-    margin-right: 22px;
-    margin-left: 22px;
     position: relative;
 }
 
@@ -43,16 +43,16 @@
     }
 
     .row:nth-of-type(2) .col:nth-of-type(1) {
-        border-bottom: 2px solid #D9D9D9;
+        border-bottom: 2px solid #d9d9d9;
         display: flex;
     }
 
     .row:nth-of-type(2) .col:nth-of-type(2) {
-        border: 2px solid #D9D9D9;
+        border: 2px solid #d9d9d9;
     }
 
     .row:nth-of-type(2) .col:nth-of-type(3) {
-        border-bottom: 2px solid #D9D9D9;
+        border-bottom: 2px solid #d9d9d9;
         display: flex;
         justify-content: flex-end;
         align-items: end;
@@ -112,4 +112,9 @@
     left: 200px;
     visibility: hidden;
     pointer-events: none;
+
+    @media (max-width: #{dim.$bp-min-md}) {
+        left: 0;
+        top: 100%;
+    }
 }

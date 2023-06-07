@@ -7,6 +7,8 @@ import {
     SimpleChanges
 } from '@angular/core';
 
+const SHORT_WEEKDAYS_SCREEN_BREAKPOINT = 1150;
+
 @Component({
     selector: 'bfe-stromsparziel-five-percent-month-switch',
     templateUrl: './stromsparziel-five-percent-month-switch.component.html',
@@ -18,7 +20,6 @@ export class StromsparzielFivePercentMonthSwitchComponent implements OnChanges {
 
     currentIndex: number = 0;
     cardWidth = 140; // 120px width of the cards and 10px width margins on each side.
-    visibleCards = 4;
 
     selectedMonth: Date;
 
@@ -37,10 +38,6 @@ export class StromsparzielFivePercentMonthSwitchComponent implements OnChanges {
             this.selectedMonth = selected;
             this.changeSelectedMonth(selected);
         }
-    }
-
-    get maxIndex(): number {
-        return this.availableMonths.length - this.visibleCards;
     }
 
     changeSelectedMonth(month: Date): void {
@@ -80,5 +77,9 @@ export class StromsparzielFivePercentMonthSwitchComponent implements OnChanges {
         }
 
         return closestDate ?? new Date();
+    }
+
+    showCarousel() {
+        return window.innerWidth > SHORT_WEEKDAYS_SCREEN_BREAKPOINT;
     }
 }

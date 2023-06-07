@@ -1,5 +1,6 @@
 <ng-container *ngIf="consolidatedChartEntries">
     <bfe-histogram-area-stack
+        #diagramContainer
         [data]="consolidatedChartEntries"
         [colors]="consolidatedColors"
         [focusPointColors]="consolidatedFocusPointColors"

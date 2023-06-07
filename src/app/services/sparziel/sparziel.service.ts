@@ -8,16 +8,19 @@ import { COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA } from '../../shared/commons/
 export class SparzielService {
     constructor() {}
 
-    getRelevantMonthsForSparziel(): Block[] {
-        let blocks: Block[] = [];
+    /**
+     * Relevant Months (october until march) in Winter 2022 / 2023; Will need to be updated for the coming winter season
+     * Includes full bars in chart for both october and march.
+     * Different methods need to be used depending on whether the date is set on the first or last of the month.
+     **/
 
-        // Relevant Months in Winter 2022 / 2023; Will need to be updated for the coming winter season
-        blocks.push({
-            startDate: new Date(2022, 10, 1), // 1. Oktober 2022
-            endDate: new Date(2023, 4, 1), // 31. März 2023
-            color: COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA
-        });
-
-        return blocks;
+    getRelevantMonthsForSparzielOnMonthEnd(): Block[] {
+        return [
+            {
+                startDate: new Date(2022, 9, 15),
+                endDate: new Date(2023, 3, 15),
+                color: COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA
+            }
+        ];
     }
 }

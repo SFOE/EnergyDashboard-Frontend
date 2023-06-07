@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { TranslationService } from '../../../core/i18n/translation.service';
+import { take } from 'rxjs';
 
 @Component({
     selector: 'bfe-optional-dynamic-langtext',
@@ -15,19 +16,24 @@ export class OptionalDynamicLangtextComponent implements OnChanges {
     constructor(private translationService: TranslationService) {}
 
     ngOnChanges() {
-        this.existingDynamicText = this.getTranslation();
-        if (!this.getTranslation()) {
-            this.isEmpty = false;
-            return;
-        }
-        if (this.getTranslation() == this.text) {
-            this.isEmpty = false;
-            return;
-        }
-        if (this.getTranslation().length == 0) {
-            this.isEmpty = false;
-            return;
-        }
+        this.translationService.isTranslationLoaded
+            .pipe(take(1))
+            .subscribe(() => {
+                this.existingDynamicText = this.getTranslation();
+
+                if (!this.existingDynamicText) {
+                    this.isEmpty = false;
+                    return;
+                }
+                if (this.existingDynamicText == this.text) {
+                    this.isEmpty = false;
+                    return;
+                }
+                if (this.existingDynamicText.length == 0) {
+                    this.isEmpty = false;
+                    return;
+                }
+            });
     }
 
     private getTranslation() {

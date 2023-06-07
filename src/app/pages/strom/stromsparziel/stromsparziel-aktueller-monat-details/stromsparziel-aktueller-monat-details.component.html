@@ -1,4 +1,7 @@
-<div *ngIf="!isLoading; else loadingTemplate" class="sparziel-five-percent-details-chart-container">
+<div
+    *ngIf="!isLoading; else loadingTemplate"
+    class="sparziel-five-percent-details-chart-container"
+>
     <bfe-kpi-subtitle>
         {{
         'dynamic:kpi-strom-3_sparziel_aktueller-monat-details.titel'
@@ -26,7 +29,10 @@
                 <div class="row" [style.height]="getPrivateHeight()">
                     <div class="col" [style.border-color]="privateColor">
                         <span class="label-medium">
-                            {{ 'commons.sparziel.sectors.private' | i18next }} ({{ getPrivatePercent() }}%)
+                            {{
+                            'commons.sparziel.sectors.private' | i18next
+                            }}
+                            ({{ getPrivatePercent() }}%)
                         </span>
                     </div>
                     <div class="col" [style.backgroundColor]="privateColor">
@@ -56,7 +62,9 @@
                     </div>
                     <div class="col" [style.border-color]="kmuColor">
                         <span class="label-medium">
-                            {{ 'commons.sparziel.sectors.kmu' | i18next }} ({{ getKmuPercent() }}%)
+                            {{ 'commons.sparziel.sectors.kmu' | i18next }} ({{
+                            getKmuPercent()
+                            }}%)
                         </span>
                     </div>
                 </div>
@@ -64,7 +72,10 @@
                 <div class="row" [style.height]="getIndustryHeight()">
                     <div class="col" [style.border-color]="industryColor">
                         <span class="label-medium">
-                            {{ 'commons.sparziel.sectors.industry' | i18next }} ({{ getIndustryPercent() }}%)
+                            {{
+                            'commons.sparziel.sectors.industry' | i18next
+                            }}
+                            ({{ getIndustryPercent() }}%)
                         </span>
                     </div>
                     <div class="col" [style.backgroundColor]="industryColor">

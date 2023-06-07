@@ -11,6 +11,7 @@ import { I18NextModule } from 'angular-i18next';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { I18N_PROVIDERS } from './core/i18n/i18next';
+import { AxStatementComponent } from './pages/ax-statement/ax-statement.component';
 import { NavBoardService } from './shared/components/header/nav-board/nav-board.service';
 import { SharedComponentsModule } from './shared/components/shared-components.module';
 import { FlyingFocusModule } from './shared/xternal-helpers/from-sc-ng-commons-public/components/flying-focus/flying-focus.module';

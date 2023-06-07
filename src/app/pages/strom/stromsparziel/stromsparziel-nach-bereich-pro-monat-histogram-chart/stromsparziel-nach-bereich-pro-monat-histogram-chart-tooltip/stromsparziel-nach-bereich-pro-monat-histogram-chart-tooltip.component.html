@@ -4,9 +4,7 @@
             {{ data.date | date: 'MMMM yyyy' }}
         </section>
 
-        <ng-container
-            *ngIf="data.barValues[0] || data.barValues[1] || data.barValues[2]"
-        >
+        <ng-container>
             <section class="tooltip-content">
                 <div>
                     <span class="dot">
@@ -22,7 +20,8 @@
                 </div>
 
                 <span class="text-value">
-                    <span> {{ data.barValues[0] }}% </span>
+                    <span> {{ data.barValues[0] }} </span>
+                    <span class="text-muted"> % </span>
                 </span>
             </section>
 
@@ -41,17 +40,18 @@
                 </div>
 
                 <span class="text-value">
-                    <span> {{ data.barValues[1] }}% </span>
+                    <span> {{ data.barValues[1] }} </span>
+                    <span class="text-muted"> % </span>
                 </span>
             </section>
 
             <section class="tooltip-content">
                 <div>
                     <span class="dot">
-                    <fa-icon
-                        [icon]="'industry-windows'"
-                        [style.color]="barColors[2]"
-                    ></fa-icon>
+                        <fa-icon
+                            [icon]="'industry-windows'"
+                            [style.color]="barColors[2]"
+                        ></fa-icon>
                     </span>
 
                     <span class="text">{{
@@ -59,7 +59,10 @@
                         }}</span>
                 </div>
 
-                <span> {{ data.barValues[2] }}% </span>
+                <span class="text-value">
+                    <span> {{ data.barValues[2] }} </span>
+                    <span class="text-muted"> % </span>
+                </span>
             </section>
 
             <div class="divider-section">
@@ -79,7 +82,8 @@
                 </div>
 
                 <span class="text-value">
-                    <span> {{ data.barLineValue }}%</span>
+                    <span> {{ data.barLineValue }}</span>
+                    <span class="text-muted"> % </span>
                 </span>
             </section>
         </ng-container>

@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
-import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.model';
+import { Component, HostListener } from '@angular/core';
+import {
+    Block,
+    LabelModifier
+} from '../../../../shared/diagrams/histogram/base-histogram.model';
 import {
     COLOR_CHART_HISTOGRAM_AREA_MIN_MAX_DOT,
-    COLOR_CHART_HISTOGRAM_AREA_SECONDARY
+    COLOR_CHART_HISTOGRAM_AREA_SECONDARY,
+    COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA
 } from '../../../../shared/commons/colors.const';
 import { COLOR_CONTEXT, COLOR_CONTEXT_SECONDARY } from '../../strom.consts';
 import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
@@ -17,7 +21,9 @@ import { SparzielNachBereichAktuellerMonat } from '../../../../core/models/sparz
 
 const DOMAIN_MAX_PADDING = 5;
 const DOMAIN_MIN_PADDING = -5;
-const SPARZIEL_PERCENTAGE = 10;
+
+const BAR_MEDIUM_WIDTH_SCREEN_BREAKPOINT = 800;
+const BAR_LARGE_WIDTH_SCREEN_BREAKPOINT = 1000;
 
 @Component({
     selector: 'bfe-stromsparziel-nach-bereich-aktueller-monat-histogram-chart',
@@ -28,16 +34,7 @@ const SPARZIEL_PERCENTAGE = 10;
     ]
 })
 export class StromsparzielNachBereichAktuellerMonatHistogramChartComponent {
-    isLoading: boolean = true;
-    lastUpdate: Date = new Date();
-    domainMax: number = DOMAIN_MAX_PADDING;
-    domainMin: number = DOMAIN_MIN_PADDING;
-    tooltipEvent?: HistogramElFocusEvent<HistogramDetailEntry>;
-
-    data: SparzielNachBereichAktuellerMonat[];
-    entries: HistogramDetailEntry[];
-
-    readonly sparzielTarget = SPARZIEL_PERCENTAGE;
+    readonly sparzielTarget = 10;
     readonly xLabelModifier: LabelModifier;
     readonly yLabelFormatter;
     readonly barColors = [
@@ -71,14 +68,31 @@ export class StromsparzielNachBereichAktuellerMonatHistogramChartComponent {
             color: 'grey',
             labelKey: 'commons.sparziel.missing',
             type: 'diagonal'
+        },
+        {
+            color: COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA,
+            labelKey:
+                'commons.sparziel.chart-legend.current-month-1-till-today',
+            type: 'area'
         }
     ];
+
+    isLoading: boolean = true;
+    lastUpdate: Date = new Date();
+    domainMax: number = 5;
+    domainMin: number = -5;
+    barWidth: number = 16;
+    tooltipEvent?: HistogramElFocusEvent<HistogramDetailEntry>;
+
+    entries: HistogramDetailEntry[];
+    blocks: Block[] = [];
 
     constructor(private stromService: StromService) {
         this.xLabelModifier = {
             formatter: LabelFormatters.day(),
             filter: LabelFilters.everyNth(5, { excludeLast: false })
         };
+
         this.yLabelFormatter = (value: number) =>
             value >= 0 ? `+${value}%` : `${value}%  `;
     }
@@ -86,11 +100,18 @@ export class StromsparzielNachBereichAktuellerMonatHistogramChartComponent {
     ngOnInit(): void {
         this.stromService.getSparzielNachBereichAktuellerMonat().subscribe({
             next: (data) => {
-                this.data = data;
-                this.entries = this.mapHistogramEntries(this.data);
+                this.entries = this.mapHistogramEntries(data);
 
-                this.domainMax = this.getDomainMax();
-                this.domainMin = this.getDomainMin();
+                this.domainMax = this.getDomainMax(data);
+                this.domainMin = this.getDomainMin(data);
+
+                this.setBarWidth();
+
+                this.blocks.push({
+                    startDate: this.getFirstDayOfCurrentMonth(),
+                    endDate: this.getLastDateFromEntries(this.entries),
+                    color: COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA
+                });
             },
             error: (error) => {
                 console.error(error);
@@ -101,10 +122,27 @@ export class StromsparzielNachBereichAktuellerMonatHistogramChartComponent {
         });
     }
 
-    private getDomainMax(): number {
+    private getFirstDayOfCurrentMonth(): Date {
+        const now = new Date();
+        return new Date(now.getFullYear(), now.getMonth(), 1);
+    }
+
+    private getLastDateFromEntries(objects: HistogramDetailEntry[]): Date {
+        let highestDate: Date = objects[0].date;
+
+        for (const obj of objects) {
+            if (obj.date > highestDate) {
+                highestDate = obj.date;
+            }
+        }
+
+        return highestDate;
+    }
+
+    private getDomainMax(data: SparzielNachBereichAktuellerMonat[]): number {
         let maxSum = -Infinity;
 
-        this.data.forEach((item) => {
+        data.forEach((item) => {
             let currentSum = 0;
 
             if (item.anteilKMU > 0) {
@@ -127,10 +165,10 @@ export class StromsparzielNachBereichAktuellerMonatHistogramChartComponent {
         return maxSum + DOMAIN_MAX_PADDING;
     }
 
-    private getDomainMin(): number {
+    private getDomainMin(data: SparzielNachBereichAktuellerMonat[]): number {
         let minSum = Infinity;
 
-        this.data.forEach((item) => {
+        data.forEach((item) => {
             let currentSum = 0;
 
             if (item.anteilKMU < 0) {
@@ -153,18 +191,7 @@ export class StromsparzielNachBereichAktuellerMonatHistogramChartComponent {
         return minSum + DOMAIN_MIN_PADDING;
     }
 
-    private findInHistogramEntries = (
-        entries: HistogramDetailEntry[],
-        higherOrderFunction: (...args: number[]) => number
-    ): number => {
-        const values: number[] = entries
-            .flatMap((entry) => [...entry.barValues, ...entry.lineValues])
-            .filter((values) => !!values) as number[];
-
-        return higherOrderFunction(...values);
-    };
-
-    showLineChartTooltip(event: HistogramElFocusEvent<HistogramDetailEntry>) {
+    showTooltip(event: HistogramElFocusEvent<HistogramDetailEntry>) {
         this.tooltipEvent = event;
     }
 
@@ -183,12 +210,23 @@ export class StromsparzielNachBereichAktuellerMonatHistogramChartComponent {
                 ],
                 barLineValue: current.nationalSavingsPercent,
                 hiddenValues: [],
-                lineValues: [
-                    -this.sparzielTarget,
-                    0,
-                    -Math.floor(Math.random() * 20)
-                ]
+                lineValues: [-this.sparzielTarget, 0]
             };
         });
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event: Event) {
+        this.setBarWidth();
+    }
+
+    private setBarWidth() {
+        if (window.innerWidth > BAR_LARGE_WIDTH_SCREEN_BREAKPOINT) {
+            this.barWidth = 16;
+        } else if (window.innerWidth > BAR_MEDIUM_WIDTH_SCREEN_BREAKPOINT) {
+            this.barWidth = 12;
+        } else {
+            this.barWidth = 7;
+        }
     }
 }

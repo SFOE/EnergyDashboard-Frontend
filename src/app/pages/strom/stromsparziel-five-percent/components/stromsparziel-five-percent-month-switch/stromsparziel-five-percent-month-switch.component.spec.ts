@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {StromsparzielFivePercentMonthSwitchComponent} from './stromsparziel-five-percent-month-switch.component';
+import { StromsparzielFivePercentMonthSwitchComponent } from './stromsparziel-five-percent-month-switch.component';
 
 describe('StromsparzielFivePercentMonthSwitchComponent', () => {
     let component: StromsparzielFivePercentMonthSwitchComponent;

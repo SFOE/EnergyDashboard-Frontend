@@ -14,14 +14,11 @@
             >
                 <section class="trend-section-large-number">
                     <span class="label-medium">
-                        {{
-                        'dashboard.wetter.niederschlag.currentmonth'
-                            | i18next
-                        }}
+                        {{ currentMonthTranslationKey | i18next }}
                     </span>
                     <bfe-large-number-unit
                         [color]="primaryColor"
-                        [number]="trend.differenzZuNormProzent"
+                        [number]="trend.niederschlagGemessen"
                         unit="%"
                     ></bfe-large-number-unit>
                     <span class="label-medium">

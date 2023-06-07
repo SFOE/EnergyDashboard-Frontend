@@ -1,0 +1,26 @@
+<div *ngIf="!isLoading; else loadingTemplate">
+    <bfe-sparziel-histogram-chart
+        [model]="{
+            lastUpdate: lastUpdated,
+            data: mehrMindestverbrauchData,
+            blocks: mehrMindestverbrauchBlocks,
+            colors: {
+                bars: barColors,
+                lines: lineColors
+            },
+            barWidth: barWidth,
+            legendEntries: legendEntries,
+            titleDynamicKey: 'kpi-strom-3_sparziel_aktuelle_einsparung.titel',
+            langtextDynamicKey:
+                'kpi-strom-3_sparziel_aktuelle_einsparung.langtext',
+            sparzielTarget: targetPercentage
+        }"
+        [loading]="isLoading"
+    ></bfe-sparziel-histogram-chart>
+</div>
+
+<ng-template #loadingTemplate>
+    <div class="loading-container">
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </div>
+</ng-template>

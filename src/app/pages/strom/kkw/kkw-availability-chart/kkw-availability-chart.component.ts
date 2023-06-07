@@ -1,11 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { TranslationService } from '../../../../core/i18n/translation.service';
 import {
-    StromKkwVerfuegbarkeitAusfall,
     StromKkwVerfuegbarkeitData,
-    StromKkwVerfuegbarkeitEntry,
-    StromKkwVerfuegbarkeitHistogramDetailEntry
+    StromKkwVerfuegbarkeitEntry
 } from '../../../../services/strom/strom.model';
 import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
 import {
@@ -18,16 +16,40 @@ import {
     LabelFormatters
 } from '../../../../shared/diagrams/label.utils';
 import { kkwColors } from '../../strom.consts';
-import {
-    convertToDate,
-    getYesterday
-} from '../../../../shared/static-utils/date-utils';
+import { getYesterday } from '../../../../shared/static-utils/date-utils';
 
 export interface KKWAvailabilityChartModel {
     titleDynamicKey: string;
-    kurztextDynamicKey?: string;
+    kurztextDynamicKey: string;
     chartData: Observable<StromKkwVerfuegbarkeitData>;
+    displayAusfaelleInBackground?: boolean;
 }
+
+const baseLegendEntries: DiagramLegendEntry[] = [
+    {
+        color: kkwColors.COLOR_KKW_PRIMARY,
+        labelKey: 'dashboard.strom.kkw.available-power',
+        type: 'line'
+    },
+    {
+        color: kkwColors.COLOR_KKW_INSTALLED_POWER,
+        labelKey: 'dashboard.strom.kkw.max-power',
+        type: 'line'
+    }
+];
+
+const ausfaelleLegendEntries: DiagramLegendEntry[] = [
+    {
+        color: kkwColors.COLOR_KKW_OUTAGE_PLANNED,
+        labelKey: 'dashboard.strom.kkw.outage.planned',
+        type: 'area'
+    },
+    {
+        color: kkwColors.COLOR_KKW_OUTAGE_UNPLANNED,
+        labelKey: 'dashboard.strom.kkw.outage.unplanned',
+        type: 'area'
+    }
+];
 
 @Component({
     selector: 'bfe-kkw-availability-chart',
@@ -36,8 +58,6 @@ export interface KKWAvailabilityChartModel {
 })
 export class KkwAvailabilityChartComponent implements OnChanges {
     @Input() model: KKWAvailabilityChartModel;
-    @Input() showNumberOfOutages: boolean;
-    @Input() displayAusfaelleInBackground: boolean;
 
     readonly kkwColors = kkwColors;
     readonly xLabelModifier: LabelModifier;
@@ -45,25 +65,18 @@ export class KkwAvailabilityChartComponent implements OnChanges {
     readonly yLabelFormatter;
 
     isLoading: boolean = true;
-    data: StromKkwVerfuegbarkeitData;
-    chartData: StromKkwVerfuegbarkeitHistogramDetailEntry[];
-    blocks: Block[];
-    lastUpdated: Date = getYesterday();
 
-    tooltipEvent?: HistogramElFocusEvent<StromKkwVerfuegbarkeitHistogramDetailEntry>;
+    legendEntries: DiagramLegendEntry[] = baseLegendEntries;
+    chartData$: Observable<{
+        entries: StromKkwVerfuegbarkeitEntry[];
+        ausfaelle: Block[];
+    }>;
+    displayAusfaelle: boolean = false;
+    domainMax: number = 0;
 
-    legendEntries: DiagramLegendEntry[] = [
-        {
-            color: kkwColors.COLOR_KKW_PRIMARY,
-            labelKey: 'dashboard.strom.kkw.available-power',
-            type: 'line'
-        },
-        {
-            color: kkwColors.COLOR_KKW_INSTALLED_POWER,
-            labelKey: 'dashboard.strom.kkw.max-power',
-            type: 'line'
-        }
-    ];
+    lastUpdate: Date = getYesterday();
+
+    tooltipEvent?: HistogramElFocusEvent<StromKkwVerfuegbarkeitEntry>;
 
     constructor(translationService: TranslationService) {
         this.xLabelModifier = {
@@ -81,43 +94,30 @@ export class KkwAvailabilityChartComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (!!changes['model']) {
-            this.model.chartData.subscribe({
-                next: (data) => {
-                    this.data = data;
-                    this.chartData =
-                        this.mapKkwVerfuegbarkeitDataToHistogramEntries(data);
-                    this.blocks = this.displayAusfaelleInBackground
-                        ? this.mapKkwVerfuegbarkeitDataToHistogramBlocks(data)
-                        : [];
-                },
-                error: (error) => {
-                    console.error(error);
-                },
-                complete: () => {
+            this.chartData$ = this.model.chartData.pipe(
+                tap((data) => {
                     this.isLoading = false;
-                }
-            });
-        }
-
-        if (this.displayAusfaelleInBackground) {
-            this.legendEntries.push(
-                {
-                    color: kkwColors.COLOR_KKW_OUTAGE_PLANNED,
-                    labelKey: 'dashboard.strom.kkw.outage.planned',
-                    type: 'area'
-                },
-                {
-                    color: kkwColors.COLOR_KKW_OUTAGE_UNPLANNED,
-                    labelKey: 'dashboard.strom.kkw.outage.unplanned',
-                    type: 'area'
-                }
+                    this.setDomainMax(data);
+                })
             );
+            this.displayAusfaelle =
+                this.model.displayAusfaelleInBackground ?? true;
+            this.setLegendEntries();
         }
     }
 
-    showTooltip(
-        event: HistogramElFocusEvent<StromKkwVerfuegbarkeitHistogramDetailEntry>
-    ) {
+    private setLegendEntries() {
+        if (this.displayAusfaelle) {
+            this.legendEntries = [
+                ...baseLegendEntries,
+                ...ausfaelleLegendEntries
+            ];
+        } else {
+            this.legendEntries = baseLegendEntries;
+        }
+    }
+
+    showTooltip(event: HistogramElFocusEvent<StromKkwVerfuegbarkeitEntry>) {
         this.tooltipEvent = event;
     }
 
@@ -125,85 +125,22 @@ export class KkwAvailabilityChartComponent implements OnChanges {
         this.tooltipEvent = undefined;
     }
 
-    mapKkwVerfuegbarkeitDataToHistogramEntries(
-        data: StromKkwVerfuegbarkeitData
-    ): StromKkwVerfuegbarkeitHistogramDetailEntry[] {
-        return data.entries.map((dto: StromKkwVerfuegbarkeitEntry) => {
-            const date = convertToDate(dto.date.toString());
-            const dateWithoutTime = this.getDateWithoutTime(date); // Used to check if there was an outage on that day.
+    setDomainMax(data: StromKkwVerfuegbarkeitData): void {
+        if (!data?.entries) {
+            this.domainMax = 0;
+        }
 
-            return {
-                date: date,
-                barValues: [dto.kkwVerfuegbareLeistung],
-                barLineValue: null,
-                hiddenValues: [],
-                lineValues: [dto.kkwInstallierteLeistung],
-                outages: data.ausfaelle
-                    .filter(
-                        (outage) =>
-                            this.getDateWithoutTime(outage.startDate) <=
-                                dateWithoutTime &&
-                            this.getDateWithoutTime(outage.endDate) >=
-                                dateWithoutTime
-                    )
-                    .map((e) => {
-                        return {
-                            wasPlanned: e.wasPlanned,
-                            productionPlant: e.productionPlant
-                        };
-                    }),
-                exists: true
-            };
-        });
-    }
-
-    mapKkwVerfuegbarkeitDataToHistogramBlocks(
-        data: StromKkwVerfuegbarkeitData
-    ): Block[] {
-        return data.ausfaelle.map((dto: StromKkwVerfuegbarkeitAusfall) => {
-            if (
-                this.getDateWithoutTime(dto.startDate) ===
-                this.getDateWithoutTime(dto.endDate)
-            ) {
-                return {
-                    startDate: dto.startDate,
-                    endDate: dto.endDate,
-                    color: dto.wasPlanned
-                        ? kkwColors.COLOR_KKW_OUTAGE_PLANNED
-                        : kkwColors.COLOR_KKW_OUTAGE_UNPLANNED
-                };
-            } else {
-                return {
-                    startDate: dto.startDate,
-                    endDate: this.addDaysToDate(dto.endDate, 1),
-                    color: dto.wasPlanned
-                        ? kkwColors.COLOR_KKW_OUTAGE_PLANNED
-                        : kkwColors.COLOR_KKW_OUTAGE_UNPLANNED
-                };
-            }
-        });
-    }
-
-    addDaysToDate(inputDate: Date, numberOfDays: number): Date {
-        const newDate = new Date(inputDate);
-        newDate.setDate(inputDate.getDate() + numberOfDays);
-        return newDate;
-    }
-
-    getDateWithoutTime(date: Date) {
-        return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    }
-
-    getDomainMax(): number {
         let highestValue = Number.NEGATIVE_INFINITY;
 
-        for (const entry of this.data.entries) {
-            if (entry.kkwVerfuegbareLeistung > highestValue) {
-                highestValue = entry.kkwVerfuegbareLeistung;
+        for (const entry of data.entries) {
+            const verfuegbareLeistung = entry.barValues[0] || 0;
+            if (verfuegbareLeistung > highestValue) {
+                highestValue = verfuegbareLeistung;
             }
 
-            if (entry.kkwInstallierteLeistung > highestValue) {
-                highestValue = entry.kkwInstallierteLeistung;
+            const installierteLeistung = entry.lineValues[0] || 0;
+            if (installierteLeistung > highestValue) {
+                highestValue = installierteLeistung;
             }
         }
 
@@ -211,9 +148,9 @@ export class KkwAvailabilityChartComponent implements OnChanges {
 
         // If the next 1000 is less than 200 more, we give it another 1000.
         if (nextThousand - highestValue < 200) {
-            return nextThousand + 1000;
+            this.domainMax = nextThousand + 1000;
         } else {
-            return nextThousand;
+            this.domainMax = nextThousand;
         }
     }
 }

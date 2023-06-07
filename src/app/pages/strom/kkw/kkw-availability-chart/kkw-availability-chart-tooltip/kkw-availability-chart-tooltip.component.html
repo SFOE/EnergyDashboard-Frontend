@@ -3,133 +3,87 @@
         <section class="date-section">
             {{ data.date | date }}
         </section>
-
-        <ng-container
-            *ngIf="data.barValues[0] || data.barValues[1] || data.barValues[2]"
-        >
-            <section
-                class="tooltip-content"
-                *ngIf="showNumberOfOutages && data.outages.length > 0"
-            >
-                <div>
-                    <span
-                        [style.backgroundColor]="plannedOutageColor"
-                        class="dot"
-                    ></span>
-
-                    <span class="text">
-                        {{ 'dashboard.strom.kkw.maintenance' | i18next }} -
-                        {{
-                        'dashboard.strom.kkw.count'
-                            | i18next: {count: getPlannedOutagesCount()}
-                        }}
-                    </span>
-                </div>
-
-                <span class="text-value"> </span>
-            </section>
-
-            <section
-                class="tooltip-content"
-                *ngIf="showNumberOfOutages && data.outages.length > 0"
-            >
-                <div>
-                    <span
-                        [style.backgroundColor]="unplannedOutageColor"
-                        class="dot"
-                    ></span>
-
-                    <span class="text">
-                        {{ 'dashboard.strom.kkw.outage' | i18next }} -
-                        {{
-                        'dashboard.strom.kkw.count'
-                            | i18next: {count: getUnplannedOutagesCount()}
-                        }}
-                    </span>
-                </div>
-
-                <span class="text-value"> </span>
-            </section>
-
-            <section
-                class="tooltip-content"
-                *ngFor="let outage of getOutagesToDisplay()"
-            >
-                <div>
-                    <span
-                        [style.backgroundColor]="
-                            outage.wasPlanned
-                                ? plannedOutageColor
-                                : unplannedOutageColor
-                        "
-                        class="dot"
-                    ></span>
-
-                    <span class="text" *ngIf="outage.wasPlanned">
-                        {{ 'dashboard.strom.kkw.maintenance' | i18next }} -
-                        {{ outage.productionPlant }}
-                    </span>
-
-                    <span class="text" *ngIf="!outage.wasPlanned">
-                        {{ 'dashboard.strom.kkw.outage' | i18next }} -
-                        {{ outage.productionPlant }}
-                    </span>
-                </div>
-
-                <span class="text-value"> </span>
-            </section>
-
-            <div
-                class="divider-section"
+        <section class="value-section">
+            <ng-container
                 *ngIf="
-                    getPlannedOutagesCount() > 0 ||
-                    getUnplannedOutagesCount() > 0
+                    data.barValues[0] || data.barValues[1] || data.barValues[2]
                 "
             >
-                <hr/>
-            </div>
-
-            <section class="tooltip-content">
-                <div>
+                <!-- Outages -->
+                <ng-container *ngFor="let ausfall of data.ausfaelle">
                     <span
-                        [style.backgroundColor]="
-                            kkwColors.COLOR_KKW_INSTALLED_POWER
-                        "
                         class="dot"
+                        [style.backgroundColor]="
+                            getAusfallColor(ausfall.wasPlanned)
+                        "
                     ></span>
+                    <span class="column-margin label-medium">
+                        {{
+                        (ausfall.wasPlanned
+                                ? 'dashboard.strom.kkw.maintenance'
+                                : 'dashboard.strom.kkw.outage'
+                        ) | i18next
+                        }}
+                        <ng-container *ngIf="ausfall.productionPlant">
+                            -
+                            {{
+                            'dashboard.strom.kkw.' + ausfall.productionPlant
+                                | i18next
+                            }}
+                        </ng-container>
+                        <ng-container *ngIf="ausfall.count">
+                            -
+                            {{
+                            'dashboard.strom.kkw.count'
+                                | i18next: {count: ausfall.count}
+                            }}
+                        </ng-container>
+                    </span>
+                    <span></span>
+                    <span></span>
+                </ng-container>
+                <span *ngIf="(data.ausfaelle?.length ?? 0) > 0" class="divider">
+                    <hr width="100%"/>
+                </span>
 
-                    <span class="text">{{
-                        'dashboard.strom.kkw.max-power' | i18next
-                        }}</span>
-                </div>
+                <!-- Max Availability-->
+                <span
+                    [style.backgroundColor]="
+                        kkwColors.COLOR_KKW_INSTALLED_POWER
+                    "
+                    class="dot"
+                ></span>
 
-                <span class="text-value">
+                <span class="column-margin label-medium">{{
+                    'dashboard.strom.kkw.max-power' | i18next
+                    }}</span>
+
+                <span>
                     <span>
                         {{ data.lineValues[0] }}
                     </span>
                 </span>
                 <span class="tooltip-subfix">MW</span>
-            </section>
 
-            <section class="tooltip-content">
-                <div>
-                    <span
-                        [style.backgroundColor]="kkwColors.COLOR_KKW_PRIMARY"
-                        class="dot"
-                    ></span>
+                <!-- Current Availability-->
 
-                    <span class="text">{{
-                        'dashboard.strom.kkw.available-power' | i18next
-                        }}</span>
-                </div>
+                <span
+                    [style.backgroundColor]="kkwColors.COLOR_KKW_PRIMARY"
+                    class="dot"
+                ></span>
 
-                <span class="text-value">
+                <span class="column-margin label-medium">{{
+                    'dashboard.strom.kkw.available-power' | i18next
+                    }}</span>
+
+                <span>
                     <span>
                         {{ data.barValues[0] }}
                     </span>
                 </span>
                 <span class="tooltip-subfix">MW</span>
-            </section>
-        </ng-container>
+                <span></span>
+            </ng-container>
+        </section>
     </ng-container>
 </div>

@@ -1,4 +1,4 @@
-<div class="month-switch-container">
+<div class="month-switch-container" *ngIf="showCarousel()">
     <div class="prev">
         <span>
             <fa-icon
@@ -37,4 +37,16 @@
             ></fa-icon>
         </span>
     </div>
+</div>
+
+<div class="month-switch-container" *ngIf="!showCarousel()">
+    <section
+        *ngFor="let month of availableMonths"
+        class="card"
+        [class.selected]="selectedMonth === month"
+        (click)="changeSelectedMonth(month)"
+    >
+        <span class="month-label">{{ month | date: 'MMMM' }}</span>
+        <span class="year-label">{{ month | date: 'YYYY' }}</span>
+    </section>
 </div>

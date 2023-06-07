@@ -61,7 +61,8 @@ Also, make sure to use the IntelliJ version 2022.2.2+, as there is a bug with ES
 
 ## I18n - Internationalization
 
-We use `i18next` and `angular-i18next` to fully internationalize the application. We currently support four languages (DE, FR, IT, EN) and have translations for all of those.
+We use `i18next` and `angular-i18next` to fully internationalize the application. We currently support four languages (
+DE, FR, IT, EN) and have translations for all of those.
 
 Due to project requirements we have a mix of static texts which are loaded at runtime
 from `src/app/core/i18n/translations` and dynamic texts which are loaded at runtime from a

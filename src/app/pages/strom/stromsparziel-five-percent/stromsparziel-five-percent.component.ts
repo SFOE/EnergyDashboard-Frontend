@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { StromService } from '../../../services/strom/strom.service';
-import { COLOR_CONTEXT, StromsparzielFivePercentConsts } from '../strom.consts';
+import {
+    COLOR_CONTEXT,
+    COLOR_INDUSTRY,
+    COLOR_KMU,
+    COLOR_PRIVATE,
+    StromsparzielFivePercentConsts
+} from '../strom.consts';
 import { StromsparzielFivePercentPeakHoursModel } from '../../../core/models/strom-sparziel-five-percent.model';
 import { Trend, TrendRating } from '../../../core/models/trend.enum';
 import { DiagramLegendEntry } from '../../../shared/diagrams/diagram-legend/diagram-legend.component';

@@ -6,6 +6,8 @@ import {
     faBars,
     faChevronLeft,
     faChevronRight,
+    faChevronDown,
+    faChevronUp,
     faClock,
     faClose,
     faCoins,
@@ -41,6 +43,8 @@ export class IconsModule {
         library.addIcons(faBars);
         library.addIcons(faChevronRight);
         library.addIcons(faChevronLeft);
+        library.addIcons(faChevronDown);
+        library.addIcons(faChevronUp);
         library.addIcons(faCoins);
         library.addIcons(faDroplet);
         library.addIcons(faIndustryWindows as IconDefinition);

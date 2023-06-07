@@ -3,19 +3,17 @@
         <section class="date-section">
             {{ data.date | date: 'MMMM yyyy' }}
         </section>
-        <ng-container
-            *ngIf="data.barValues[0] || data.barValues[1] || data.barValues[2]"
-        >
+        <ng-container>
             <section class="tooltip-content">
                 <!-- aktuelle Abweichung von 5 Jahresdurchschnitt-->
                 <span
-                    [style.backgroundColor]="this.dataColors[1]"
+                    [style.backgroundColor]="this.dataColors[0]"
                     [style.opacity]="isProjectedEntry ? '0.5' : '1'"
                     class="dot"
                 ></span>
                 <span class="text"
-                    >{{
-                        (isProjectedEntry
+                >{{
+                    (isProjectedEntry
                             ? 'commons.sparziel.chart-legend.relevant-difference-projected'
                             : 'commons.sparziel.chart-legend.relevant-difference-meassured'
                         ) | i18next

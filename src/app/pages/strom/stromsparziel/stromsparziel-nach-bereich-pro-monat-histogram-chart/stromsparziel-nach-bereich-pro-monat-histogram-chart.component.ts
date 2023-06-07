@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { HistogramDetailEntry } from '../../../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
 import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
 import {
@@ -20,8 +20,8 @@ import { TranslationService } from '../../../../core/i18n/translation.service';
 import { HistogramElFocusEvent } from '../../../../shared/diagrams/histogram/interactive-histogram.component';
 import { StromService } from '../../../../services/strom/strom.service';
 import { SparzielNachBereichProMonat } from '../../../../core/models/sparziel';
-import { SparzielService } from '../../../../services/sparziel/sparziel.service';
 import { getYesterday } from '../../../../shared/static-utils/date-utils';
+import { SparzielService } from '../../../../services/sparziel/sparziel.service';
 
 const DOMAIN_MAX_PADDING = 5;
 const DOMAIN_MIN_PADDING = -5;
@@ -38,16 +38,6 @@ const SPARZIEL_PERCENTAGE = 10;
 export class StromsparzielNachBereichProMonatHistogramChartComponent
     implements OnInit
 {
-    isLoading: boolean = true;
-    lastUpdate: Date = getYesterday();
-    domainMax: number = DOMAIN_MAX_PADDING;
-    domainMin: number = DOMAIN_MIN_PADDING;
-    tooltipEvent?: HistogramElFocusEvent<HistogramDetailEntry>;
-
-    data: SparzielNachBereichProMonat[];
-    entries: HistogramDetailEntry[];
-    blocks: Block[] = [];
-
     readonly sparzielTarget = SPARZIEL_PERCENTAGE;
     readonly xLabelModifier: LabelModifier;
     readonly xSubLabelModifier: LabelModifier;
@@ -59,7 +49,6 @@ export class StromsparzielNachBereichProMonatHistogramChartComponent
     ];
     readonly lineColors = [COLOR_POSITIVE, '#000000'];
     readonly barLineColor = COLOR_CHART_HISTOGRAM_AREA_MIN_MAX_DOT;
-
     readonly legendEntries: DiagramLegendEntry[] = [
         {
             color: COLOR_CONTEXT + '80', // add transparency to color, 80 is equal to 0.5 opacity
@@ -99,6 +88,16 @@ export class StromsparzielNachBereichProMonatHistogramChartComponent
         }
     ];
 
+    isLoading: boolean = true;
+    lastUpdate: Date = getYesterday();
+    domainMax: number = DOMAIN_MAX_PADDING;
+    domainMin: number = DOMAIN_MIN_PADDING;
+    barWidth: number = 22;
+    tooltipEvent?: HistogramElFocusEvent<HistogramDetailEntry>;
+
+    entries: HistogramDetailEntry[];
+    blocks: Block[];
+
     constructor(
         translationService: TranslationService,
         private stromService: StromService,
@@ -108,30 +107,29 @@ export class StromsparzielNachBereichProMonatHistogramChartComponent
             formatter: LabelFormatters.monthShort(translationService.language),
             filter: LabelFilters.none()
         };
+
         this.xSubLabelModifier = {
             formatter: LabelFormatters.yearFull(translationService.language),
             filter: LabelFilters.januaryAndDecember({
                 excludeLast: true
             })
         };
+
         this.yLabelFormatter = (value: number) =>
             value >= 0 ? `+${value}%` : `${value}%  `;
 
-        this.blocks.push({
-            startDate: new Date(2022, 9, 1),
-            endDate: new Date(2023, 2, 31),
-            color: COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA
-        });
+        this.blocks =
+            this.sparzielService.getRelevantMonthsForSparzielOnMonthEnd();
     }
 
     ngOnInit(): void {
         this.stromService.getSparzielNachBereichProMonat().subscribe({
             next: (data) => {
-                this.data = data;
-                this.entries = this.mapHistogramEntries(this.data);
+                this.entries = this.mapHistogramEntries(data);
 
                 this.domainMax = this.getDomainMax();
                 this.domainMin = this.getDomainMin();
+                this.setBarWidth();
             },
             error: (error) => {
                 console.error(error);
@@ -169,7 +167,7 @@ export class StromsparzielNachBereichProMonatHistogramChartComponent
         return higherOrderFunction(...values);
     };
 
-    showLineChartTooltip(event: HistogramElFocusEvent<HistogramDetailEntry>) {
+    showTooltip(event: HistogramElFocusEvent<HistogramDetailEntry>) {
         this.tooltipEvent = event;
     }
 
@@ -188,12 +186,21 @@ export class StromsparzielNachBereichProMonatHistogramChartComponent
                 ],
                 barLineValue: current.nationalSavingsPercent,
                 hiddenValues: [],
-                lineValues: [
-                    -this.sparzielTarget,
-                    0,
-                    -Math.floor(Math.random() * 20)
-                ]
+                lineValues: [-this.sparzielTarget, 0]
             };
         });
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event: Event) {
+        this.setBarWidth();
+    }
+
+    private setBarWidth() {
+        if (window.innerWidth > 1000) {
+            this.barWidth = 22;
+        } else {
+            this.barWidth = 14;
+        }
     }
 }

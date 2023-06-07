@@ -1,8 +1,12 @@
 <div class="kpi-footer-container">
-    <div
-        class="langtext"
-        [innerHTML]="'dynamic:' + langtextKey | i18nextDynamic"
-    ></div>
+    <bfe-expandable>
+        <div
+            class="langtext"
+            [innerHTML]="'dynamic:' + langtextKey | i18nextDynamic"
+        >
+        </div>
+    </bfe-expandable>
+
     <bfe-kpi-container-row>
         <div class="data-source-container">
             <section class="icon-title-section">
@@ -19,25 +23,5 @@
                 ></div>
             </section>
         </div>
-        <!--        <section class="actions-section">-->
-        <!--            <span class="action" (click)="notImplemented()">-->
-        <!--                <img-->
-        <!--                    src="/assets/icon/arrow-up-right-from-square.svg"-->
-        <!--                    alt="{{ 'commons.kpi-footer.link-icon.alt' | i18next }}"-->
-        <!--                />-->
-        <!--                <p class="teaser">-->
-        <!--                    {{ 'commons.kpi-footer.download-data' | i18next }}-->
-        <!--                </p>-->
-        <!--            </span>-->
-        <!--            <span class="action" (click)="notImplemented()">-->
-        <!--                <img-->
-        <!--                    src="/assets/icon/share.svg"-->
-        <!--                    alt="{{ 'commons.kpi-footer.share-icon.alt' | i18next }}"-->
-        <!--                />-->
-        <!--                <p class="teaser">-->
-        <!--                    {{ 'commons.kpi-footer.share' | i18next }}-->
-        <!--                </p>-->
-        <!--            </span>-->
-        <!--        </section>-->
     </bfe-kpi-container-row>
 </div>

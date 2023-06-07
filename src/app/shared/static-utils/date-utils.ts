@@ -38,28 +38,62 @@ export const dateWithoutTime = (dateString: string): Date => {
     return date;
 };
 
-const weekdayMapping = [
-    'commons.day.mondays',
-    'commons.day.tuesdays',
-    'commons.day.wednesdays',
-    'commons.day.thursdays',
-    'commons.day.fridays'
+const weekdayLongMapping = [
+    'commons.day.long.mondays',
+    'commons.day.long.tuesdays',
+    'commons.day.long.wednesdays',
+    'commons.day.long.thursdays',
+    'commons.day.long.fridays'
+];
+
+const weekdayShortMapping = [
+    'commons.day.short.mondays',
+    'commons.day.short.tuesdays',
+    'commons.day.short.wednesdays',
+    'commons.day.short.thursdays',
+    'commons.day.short.fridays'
+];
+
+const monthMapping = [
+    'commons.month.january',
+    'commons.month.february',
+    'commons.month.march',
+    'commons.month.april',
+    'commons.month.may',
+    'commons.month.june',
+    'commons.month.july',
+    'commons.month.august',
+    'commons.month.september',
+    'commons.month.october',
+    'commons.month.november',
+    'commons.month.december'
 ];
 
 /**
  * Get the translation key for a weekday number. Only monday (0) to friday (4) is currently mapped.
  * @param weekday weekday number
+ * @param useLongName weather or not to use the long name for the weekday or the short name
  * @returns weekday translation key
  */
 export const weekdayToTranslationKey = (
-    weekday: number | undefined
+    weekday: number | undefined,
+    useLongName: boolean
 ): string => {
     if (
         weekday !== undefined &&
         weekday >= 0 &&
-        weekday < weekdayMapping.length
+        weekday < weekdayLongMapping.length
     ) {
-        return weekdayMapping[weekday];
+        return useLongName
+            ? weekdayLongMapping[weekday]
+            : weekdayShortMapping[weekday];
+    }
+    return 'commons.not-available';
+};
+
+export const monthToTranslationKey = (monthIndex: number): string => {
+    if (monthIndex >= 0 && monthIndex < monthMapping.length) {
+        return monthMapping[monthIndex];
     }
     return 'commons.not-available';
 };

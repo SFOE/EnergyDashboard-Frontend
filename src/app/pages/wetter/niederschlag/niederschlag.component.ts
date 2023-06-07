@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WetterService } from '../../../services/wetter/wetter.service';
 import { WetterNiederschlagTrend } from '../../../core/models/wetter-niederschlag-trend';
 import { COLOR_SPACE } from '../wetter.consts';
+import { monthToTranslationKey } from '../../../shared/static-utils/date-utils';
 
 @Component({
     selector: 'bfe-niederschlag',
@@ -13,6 +14,8 @@ export class NiederschlagComponent implements OnInit {
 
     isLoading = true;
     trend: WetterNiederschlagTrend;
+    currentMonthTranslationKey: string;
+    lastMonthTranslationKey: string;
 
     constructor(private wetterService: WetterService) {}
 
@@ -28,5 +31,13 @@ export class NiederschlagComponent implements OnInit {
                 this.isLoading = false;
             }
         });
+
+        const currentMonthIndex = new Date().getMonth();
+        this.currentMonthTranslationKey =
+            monthToTranslationKey(currentMonthIndex);
+        this.lastMonthTranslationKey =
+            currentMonthIndex === 0
+                ? monthToTranslationKey(11)
+                : monthToTranslationKey(currentMonthIndex - 1);
     }
 }

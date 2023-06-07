@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Context } from '../../../../core/models/context.enum';
 import {
     StromKkwProductionData,

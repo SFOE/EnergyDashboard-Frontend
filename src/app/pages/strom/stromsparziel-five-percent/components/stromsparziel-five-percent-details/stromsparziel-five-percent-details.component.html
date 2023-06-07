@@ -13,54 +13,51 @@
             <div class="einsparungen-diagram">
                 <div class="row">
                     <div class="col">
-                        <span class="label-medium">
+                        <span class="label-medium"> </span>
+                    </div>
+                    <div class="col"></div>
 
-                        </span>
-                    </div>
-                    <div class="col">
-                    </div>
-
-                    <div class="col">
-                    </div>
+                    <div class="col"></div>
                 </div>
 
-                <div class="row" [style.height]="(getSavingsHeight() +  'px')">
+                <div class="row" [style.height]="getSavingsHeight() + 'px'">
                     <div class="col">
                         <span class="label-medium">
-                            {{ 'commons.sparziel.goal' | i18next }}: {{ this.savingsGoalGwh }} GWh
+                            {{ 'commons.sparziel.goal' | i18next }}:
+                            {{ this.savingsGoalGwh }} GWh
                         </span>
                     </div>
-                    <div class="col savings-reached"
-                         [style.backgroundColor]="isSavingsGoalReached ? savedColor : ''"
+                    <div
+                        class="col savings-reached"
+                        [style.backgroundColor]="
+                            isSavingsGoalReached ? savedColor : ''
+                        "
                     >
                         <span>
                             <p class="num-xtra-small">
-                                {{ isSavingsGoalReached ? (getSavings() - 100) + '%' : '' }}
+                                {{
+                                isSavingsGoalReached
+                                    ? getSavings() - 100 + '%'
+                                    : ''
+                                }}
                             </p>
                         </span>
                     </div>
 
                     <div class="col">
-                        <span class="label-medium">Gespart: {{ getSavings() }}%</span>
+                        <span class="label-medium"
+                        >Gespart: {{ getSavings() }}%</span
+                        >
                     </div>
                 </div>
 
-                <div class="row" [style.height]="(getPrivateHeight() +  'px')">
-                    <div
-                        class="col"
-                        [style.border-color]="privateColor"
-                    >
+                <div class="row" [style.height]="getPrivateHeight() + 'px'">
+                    <div class="col" [style.border-color]="privateColor">
                         <span class="label-medium">
-                            {{
-                            'commons.sparziel.sectors.private'
-                                | i18next
-                            }}
+                            {{ 'commons.sparziel.sectors.private' | i18next }}
                         </span>
                     </div>
-                    <div
-                        class="col"
-                        [style.backgroundColor]="privateColor"
-                    >
+                    <div class="col" [style.backgroundColor]="privateColor">
                         <span>
                             <fa-icon
                                 [icon]="'house'"
@@ -68,17 +65,12 @@
                             ></fa-icon>
                         </span>
                     </div>
-                    <div class="col">
-                    </div>
+                    <div class="col"></div>
                 </div>
 
-                <div class="row" [style.height]="(getKmuHeight() +  'px')">
-                    <div class="col">
-                    </div>
-                    <div
-                        class="col"
-                        [style.backgroundColor]="kmuColor"
-                    >
+                <div class="row" [style.height]="getKmuHeight() + 'px'">
+                    <div class="col"></div>
+                    <div class="col" [style.backgroundColor]="kmuColor">
                         <span>
                             <fa-icon
                                 [icon]="'buildings'"
@@ -86,35 +78,20 @@
                             ></fa-icon>
                         </span>
                     </div>
-                    <div
-                        class="col"
-                        [style.border-color]="kmuColor"
-                    >
+                    <div class="col" [style.border-color]="kmuColor">
                         <span class="label-medium">
-                            {{
-                            'commons.sparziel.sectors.kmu'
-                                | i18next
-                            }}
+                            {{ 'commons.sparziel.sectors.kmu' | i18next }}
                         </span>
                     </div>
                 </div>
 
-                <div class="row" [style.height]="(getIndustryHeight() +  'px')">
-                    <div
-                        class="col"
-                        [style.border-color]="industryColor"
-                    >
+                <div class="row" [style.height]="getIndustryHeight() + 'px'">
+                    <div class="col" [style.border-color]="industryColor">
                         <span class="label-medium">
-                            {{
-                            'commons.sparziel.sectors.industry'
-                                | i18next
-                            }}
+                            {{ 'commons.sparziel.sectors.industry' | i18next }}
                         </span>
                     </div>
-                    <div
-                        class="col"
-                        [style.backgroundColor]="industryColor"
-                    >
+                    <div class="col" [style.backgroundColor]="industryColor">
                         <span>
                             <fa-icon
                                 [icon]="'industry-windows'"
@@ -133,9 +110,9 @@
                 [industryColor]="industryColor"
                 [kmuColor]="kmuColor"
                 [privateColor]="privateColor"
-                [savingsGoalGwh]="savingsGoalGwh">
+                [savingsGoalGwh]="savingsGoalGwh"
+            >
             </bfe-stromsparziel-five-percent-details-tooltip>
         </section>
-
     </section>
 </section>

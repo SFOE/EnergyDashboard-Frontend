@@ -1,29 +1,35 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { SparzielEntry } from '../../../core/models/sparziel';
-import { GasService } from '../../../services/gas/gas.service';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { mapAktuelleEinsparungEntryToHistogramEntry } from '../../../../shared/components/sparziel/sparziel.utils';
+import { StromService } from '../../../../services/strom/strom.service';
+import { SparzielService } from '../../../../services/sparziel/sparziel.service';
+import { COLOR_CONTEXT } from '../../strom.consts';
 import {
     COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA,
     COLOR_CHART_STROM_ADDITIONAL_LINE,
     COLOR_POSITIVE
-} from '../../../shared/commons/colors.const';
-import { mapAktuelleEinsparungEntryToHistogramEntry } from '../../../shared/components/sparziel/sparziel.utils';
-import { DiagramLegendEntry } from '../../../shared/diagrams/diagram-legend/diagram-legend.component';
-import { HistogramDetailEntry } from '../../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
-import { HistogramElFocusEvent } from '../../../shared/diagrams/histogram/interactive-histogram.component';
-import { COLOR_CONTEXT } from '../gas.consts';
-import { Block } from '../../../shared/diagrams/histogram/base-histogram.model';
-import { SparzielService } from '../../../services/sparziel/sparziel.service';
+} from '../../../../shared/commons/colors.const';
+import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
+import { HistogramDetailEntry } from '../../../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
+import { Block } from '../../../../shared/diagrams/histogram/base-histogram.model';
 
-const SPARZIEL_PERCENTAGE = 15;
+const SPARZIEL_PERCENTAGE = 10;
 
 @Component({
-    selector: 'bfe-gassparziel',
-    templateUrl: './gassparziel.component.html',
-    styleUrls: ['./gassparziel.component.scss']
+    selector: 'bfe-stromsparziel-mehr-mindestverbrauch-pro-monat',
+    templateUrl:
+        './stromsparziel-mehr-mindestverbrauch-pro-monat.component.html',
+    styleUrls: [
+        './stromsparziel-mehr-mindestverbrauch-pro-monat.component.scss'
+    ]
 })
-export class GassparzielComponent implements OnInit {
+export class StromsparzielMehrMindestverbrauchProMonatComponent
+    implements OnInit
+{
+    @Input()
+    lastUpdated: Date | undefined;
+
     readonly primaryColor = COLOR_CONTEXT;
-    readonly sparzielTarget = SPARZIEL_PERCENTAGE;
+    readonly targetPercentage = SPARZIEL_PERCENTAGE;
     readonly barColors = [COLOR_CONTEXT, COLOR_CONTEXT + '80'];
     readonly lineColors = [
         COLOR_POSITIVE,
@@ -51,7 +57,7 @@ export class GassparzielComponent implements OnInit {
         {
             color: this.lineColors[0],
             labelKey: 'commons.sparziel.chart-legend.target',
-            labelKeyOptions: { target: this.sparzielTarget },
+            labelKeyOptions: { target: this.targetPercentage },
             type: 'line'
         },
         {
@@ -66,41 +72,31 @@ export class GassparzielComponent implements OnInit {
         }
     ];
 
-    isLoadingTrend: boolean = true;
-    isLoadingPerMonth: boolean = true;
-    sparzielPerMonth: HistogramDetailEntry[] = [];
-    sparzielZielData: SparzielEntry;
-    sparzielBlocks: Block[];
+    isLoading: boolean = true;
+    mehrMindestverbrauchData: HistogramDetailEntry[] = [];
+    mehrMindestverbrauchBlocks: Block[];
     barWidth: number = 22;
 
-    tooltipEvent?: HistogramElFocusEvent<HistogramDetailEntry>;
-
     constructor(
-        private gasService: GasService,
+        private stromService: StromService,
         private sparzielService: SparzielService
-    ) {
-        this.sparzielBlocks =
-            this.sparzielService.getRelevantMonthsForSparzielOnMonthEnd();
-    }
+    ) {}
 
     ngOnInit(): void {
-        this.gasService.getSparzielZiel().subscribe({
-            next: (data) => {
-                this.sparzielZielData = data;
-                this.setBarWidth();
-            },
-            complete: () => (this.isLoadingTrend = false)
-        });
+        this.mehrMindestverbrauchBlocks =
+            this.sparzielService.getRelevantMonthsForSparzielOnMonthEnd();
 
-        this.gasService.getSparzielAktuelleEinsparung().subscribe({
+        this.stromService.getSparzielAktuelleEinsparungen().subscribe({
             next: (data) => {
-                this.sparzielPerMonth =
+                this.mehrMindestverbrauchData =
                     mapAktuelleEinsparungEntryToHistogramEntry(
                         data,
                         SPARZIEL_PERCENTAGE
                     );
+
+                this.setBarWidth();
             },
-            complete: () => (this.isLoadingPerMonth = false)
+            complete: () => (this.isLoading = false)
         });
     }
 

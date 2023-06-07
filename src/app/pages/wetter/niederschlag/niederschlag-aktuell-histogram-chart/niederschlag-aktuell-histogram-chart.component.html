@@ -1,7 +1,4 @@
-<div
-    *ngIf="!loading && chartDatadataNiederschlagAktuell; else loadingTemplate"
-    class="diagram-container"
->
+<div *ngIf="!loading && data; else loadingTemplate" class="diagram-container">
     <bfe-kpi-subtitle>
         {{ 'dynamic:kpi-wetter-3_niederschlag-aktuell.titel' | i18nextDynamic }}
     </bfe-kpi-subtitle>
@@ -19,11 +16,11 @@
 
         <bfe-histogram-detail
             (diagramLeave)="hideTooltip()"
-            (elFocus)="showLineChartTooltip($event)"
+            (elFocus)="showTooltip($event)"
             [barColors]="barColors"
             [blocks]="blocks"
-            [barWidth]="40"
-            [data]="chartDatadataNiederschlagAktuell"
+            [barWidth]="barWidth"
+            [data]="data"
             [domainMax]="domainMax"
             [domainMin]="domainMin"
             [lineColors]="lineColors"

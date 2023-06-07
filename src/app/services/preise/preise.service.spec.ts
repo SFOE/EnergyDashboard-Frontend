@@ -118,10 +118,10 @@ describe('PreiseService', () => {
             });
         });
 
-        describe('getPreiseGasBoerse', () => {
+        describe('getPreiseGasDayahead', () => {
             it('should call DataService only once', async () => {
                 const mockDataService = {
-                    getPreiseGasBoerse: jest.fn(() => of(mockEntries))
+                    getPreiseGasDayahead: jest.fn(() => of(mockEntries))
                 };
                 service = new PreiseService(
                     (<unknown>mockDataService) as DataService
@@ -129,12 +129,14 @@ describe('PreiseService', () => {
 
                 await callServiceMethodTwice(service.getPreiseGasDayahead());
 
-                expect(mockDataService.getPreiseGasBoerse).toBeCalledTimes(1);
+                expect(mockDataService.getPreiseGasDayahead).toBeCalledTimes(1);
             });
 
-            it('should map getPreiseGasBoerse to HistogramEntry', async () => {
+            it('should map getPreiseGasDayahead to HistogramEntry', async () => {
                 const mockDataService = {
-                    getPreiseGasBoerse: jest.fn(() => of([mockPreisIndexiert]))
+                    getPreiseGasDayahead: jest.fn(() =>
+                        of([mockPreisIndexiert])
+                    )
                 };
                 service = new PreiseService(
                     (<unknown>mockDataService) as DataService

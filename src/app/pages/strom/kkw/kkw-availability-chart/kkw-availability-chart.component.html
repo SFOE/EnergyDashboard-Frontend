@@ -2,33 +2,29 @@
     <bfe-kpi-subtitle>
         {{ 'dynamic:' + model.titleDynamicKey | i18nextDynamic }}
     </bfe-kpi-subtitle>
-    <bfe-kpi-date-info-subtext [date]="lastUpdated">
-    </bfe-kpi-date-info-subtext>
+    <bfe-kpi-date-info-subtext [date]="lastUpdate"></bfe-kpi-date-info-subtext>
     <bfe-optional-dynamic-langtext
         [text]="model.kurztextDynamicKey"
     ></bfe-optional-dynamic-langtext>
-    <ng-container *ngIf="chartData">
-        <ng-container>
+    <ng-container *ngIf="chartData$ | async; let chartData">
+        <ng-container *ngIf="chartData.entries.length > 0">
             <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
             <bfe-histogram-detail
-                [data]="chartData"
+                [data]="chartData.entries"
                 [lineThickness]="[2]"
                 [barColors]="[kkwColors.COLOR_KKW_PRIMARY]"
                 [lineColors]="[kkwColors.COLOR_KKW_INSTALLED_POWER]"
                 [margin]="{ top: 20, bottom: 40, left: 0, right: 12 }"
-                [domainMax]="getDomainMax()"
+                [domainMax]="domainMax"
                 [barWidth]="2"
-                [blocks]="blocks"
+                [blocks]="displayAusfaelle ? chartData.ausfaelle : []"
                 [xLabelModifier]="xLabelModifier"
                 [xSubLabelModifier]="xSubLabelModifier"
                 [yLabelFormatter]="yLabelFormatter"
                 (elFocus)="showTooltip($event)"
                 (diagramLeave)="hideTooltip()"
             ></bfe-histogram-detail>
-            <bfe-kkw-availability-chart-tooltip
-                [event]="tooltipEvent"
-                [showNumberOfOutages]="showNumberOfOutages"
-            >
+            <bfe-kkw-availability-chart-tooltip [event]="tooltipEvent">
             </bfe-kkw-availability-chart-tooltip>
         </ng-container>
     </ng-container>

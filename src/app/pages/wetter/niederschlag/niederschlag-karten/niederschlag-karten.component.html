@@ -17,9 +17,7 @@
         <div class="map-container">
             <div class="map" (click)="showMap(0)">
                 <p class="info-subtext">
-                    {{
-                    'dashboard.wetter.niederschlag.currentmonth' | i18next
-                    }}:
+                    {{ currentMonthTranslationKey | i18next }}:
                     <b>{{
                         'dashboard.wetter.niederschlag.total-precipitation-in-mm'
                             | i18next
@@ -32,9 +30,7 @@
             </div>
             <div class="map" (click)="showMap(1)">
                 <p class="info-subtext">
-                    {{
-                    'dashboard.wetter.niederschlag.currentmonth' | i18next
-                    }}:
+                    {{ currentMonthTranslationKey | i18next }}:
                     <b>{{
                         'dashboard.wetter.niederschlag.anomaly-to-norm'
                             | i18next
@@ -64,7 +60,7 @@
         <div class="map-container">
             <div class="map" (click)="showMap(2)">
                 <p class="info-subtext">
-                    {{ 'dashboard.wetter.niederschlag.lastmonth' | i18next }}:
+                    {{ lastMonthTranslationKey | i18next }}:
                     <b>{{
                         'dashboard.wetter.niederschlag.total-precipitation-in-mm'
                             | i18next
@@ -77,7 +73,7 @@
             </div>
             <div class="map" (click)="showMap(3)">
                 <p class="info-subtext">
-                    {{ 'dashboard.wetter.niederschlag.lastmonth' | i18next }}:
+                    {{ lastMonthTranslationKey | i18next }}:
                     <b>{{
                         'dashboard.wetter.niederschlag.anomaly-to-norm'
                             | i18next
@@ -98,20 +94,14 @@
             <div class="map-highlighted">
                 <div class="map-highlighted-title">
                     <p class="info-subtext" *ngIf="mapIndexToShow == 0">
-                        {{
-                        'dashboard.wetter.niederschlag.currentmonth'
-                            | i18next
-                        }}:
+                        {{ currentMonthTranslationKey | i18next }}:
                         <b>{{
                             'dashboard.wetter.niederschlag.total-precipitation-in-mm'
                                 | i18next
                             }}</b>
                     </p>
                     <p class="info-subtext" *ngIf="mapIndexToShow == 1">
-                        {{
-                        'dashboard.wetter.niederschlag.currentmonth'
-                            | i18next
-                        }}:
+                        {{ currentMonthTranslationKey | i18next }}:
                         <b>{{
                             'dashboard.wetter.niederschlag.anomaly-to-norm'
                                 | i18next

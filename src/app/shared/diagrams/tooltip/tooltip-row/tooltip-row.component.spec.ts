@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { I18NextModule } from 'angular-i18next';
 
 import { TooltipRowComponent } from './tooltip-row.component';

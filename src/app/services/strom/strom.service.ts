@@ -28,6 +28,7 @@ import {
     mapStromImportExportHistoricalValueToChartEntry,
     mapStromKkwAusfaelle,
     mapStromKkwProductionDtoToEntry,
+    mapStromKkwVerfuegbarkeitDtoToEntry,
     mapStromProductionImportVerbrauchDto,
     mapStromProductionToEntry,
     mapStromVerbrauchEndverbrauchToChartEntries,
@@ -363,7 +364,18 @@ export class StromService {
             this.cachedStromKkwVerfuegbarkeitCh$ = this.dataService
                 .getStromKkwVerfuegbarkeitCh()
                 .pipe(
-                    map((data) => this.mapKkwVerfuegbarkeit(data)),
+                    map((data) => {
+                        const ausfaelle = mapStromKkwAusfaelle(data.ausfaelle);
+                        return {
+                            entries: data.entries.map((entry) =>
+                                mapStromKkwVerfuegbarkeitDtoToEntry(
+                                    entry,
+                                    ausfaelle
+                                )
+                            ),
+                            ausfaelle
+                        };
+                    }),
                     shareReplay(1)
                 );
         }
@@ -376,48 +388,23 @@ export class StromService {
             this.cachedStromKkwVerfuegbarkeitFr$ = this.dataService
                 .getStromKkwVerfuegbarkeitFr()
                 .pipe(
-                    map((data) => this.mapKkwVerfuegbarkeit(data)),
+                    map((data) => {
+                        const ausfaelle = mapStromKkwAusfaelle(data.ausfaelle);
+                        return {
+                            entries: data.entries.map((entry) =>
+                                mapStromKkwVerfuegbarkeitDtoToEntry(
+                                    entry,
+                                    ausfaelle,
+                                    true
+                                )
+                            ),
+                            ausfaelle
+                        };
+                    }),
                     shareReplay(1)
                 );
         }
 
         return this.cachedStromKkwVerfuegbarkeitFr$;
-    }
-
-    mapKkwVerfuegbarkeit(data: StromKkwVerfuegbarkeitData) {
-        let entry: StromKkwVerfuegbarkeitData = {
-            entries: data.entries.map((u) => ({
-                ...u,
-                date: convertToDate(u.date.toString())
-            })),
-            ausfaelle: []
-        };
-
-        // Filter out duplicate outages
-        const seen = new Set();
-
-        for (const item of data.ausfaelle) {
-            item.endDate = convertToDate(item.endDate.toString());
-            item.startDate = convertToDate(item.startDate.toString());
-
-            if (item.productionPlant && item.productionPlant.length !== 0) {
-                item.productionPlant =
-                    item.productionPlant.charAt(0).toUpperCase() +
-                    item.productionPlant.slice(1);
-            }
-
-            const key =
-                item.productionPlant +
-                '|' +
-                item.endDate.toISOString() +
-                '|' +
-                item.startDate.toISOString();
-            if (!seen.has(key)) {
-                seen.add(key);
-                entry.ausfaelle.push(item);
-            }
-        }
-
-        return entry;
     }
 }

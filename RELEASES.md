@@ -36,7 +36,7 @@ Initial Release of Energy-Dashboard. Includes the basic setup and all functional
 - Added KPI Preise Fernwärme
 - Improved Chart of Sparziel
 
-## v2.0.0 - 26.01.2023
+## v2.0.0 - 23.05.2023
 
 Feature Release for the following KPIs
 
@@ -48,4 +48,10 @@ Feature Release for the following KPIs
 - Improvements to Prices
 - Improvements to Gas Sparziel
 
+## v2.1.0 - 07.06.2023
 
+Small Improvements following the 2.0.0 release
+
+- Improved Responsiveness in charts and tooltips
+- Added expandable and collapsable texts
+- Fixed issues and inconsistencies in charts and data

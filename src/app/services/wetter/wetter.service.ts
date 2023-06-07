@@ -17,6 +17,7 @@ import { HistogramDetailEntry } from '../../shared/diagrams/histogram/histogram-
 import { convertToDate } from 'src/app/shared/static-utils/date-utils';
 import { WetterSchneereservenAktuellEntry } from '../../core/models/wetter-schneereserven-aktuell';
 import { WetterSchneereservenTrend } from '../../core/models/wetter-schneereserven-trend';
+import { WetterNiederschlagKartenMonths } from '../../core/models/wetter-niederschlag-karten-months';
 
 @Injectable({
     providedIn: 'root'
@@ -30,6 +31,7 @@ export class WetterService {
     private cachedNiederschlagAktuell: Observable<
         WetterNiederschlagAktuellEntry[]
     >;
+    private cachedNiederschlagKartenMonths: Observable<WetterNiederschlagKartenMonths>;
 
     private cachedSchneereservenTrend: Observable<WetterSchneereservenTrend>;
     private cachedSchneereservenAktell: Observable<
@@ -63,6 +65,15 @@ export class WetterService {
                 .pipe(shareReplay(1));
         }
         return this.cachedNiederschlagAktuell;
+    }
+
+    getNiederschlagKartenMonths() {
+        if (!this.cachedNiederschlagKartenMonths) {
+            this.cachedNiederschlagKartenMonths = this.dataService
+                .getNiederschlagKartenMonths()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedNiederschlagKartenMonths;
     }
 
     getWetterPrognose() {

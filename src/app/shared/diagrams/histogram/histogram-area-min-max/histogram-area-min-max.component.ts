@@ -1,10 +1,12 @@
 import {
     Component,
+    ElementRef,
     EventEmitter,
     Input,
     OnChanges,
     Output,
-    SimpleChanges
+    SimpleChanges,
+    ViewChild
 } from '@angular/core';
 import { DateModel } from '../../../../core/models/base/date.model';
 import { HistogramAreaChartEntry } from '../../../../core/models/charts';
@@ -42,6 +44,8 @@ export class HistogramAreaMinMaxComponent implements OnChanges {
     };
 
     @Input() xSubLabelModifier?: LabelModifier;
+
+    @ViewChild('diagramContainer', { read: ElementRef }) viewChild: ElementRef;
 
     @Output()
     readonly elFocus = new EventEmitter<
@@ -151,8 +155,10 @@ export class HistogramAreaMinMaxComponent implements OnChanges {
         event: HistogramElFocusEvent<HistogramAreaChartEntry>
     ): void {
         const middleValueIndex = Math.round(event.data.values.length / 2);
+
         this.elFocus.emit({
             source: event.source,
+            histogramComponent: this.viewChild,
             data: {
                 date: event.data.date,
                 positiveEntries: event.data.values.slice(

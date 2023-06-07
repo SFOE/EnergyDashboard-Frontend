@@ -51,6 +51,7 @@ import { TabItemDirective } from './tab-list/tab-item.directive';
 import { TabListComponent } from './tab-list/tab-list.component';
 import { NgxResize } from 'ngx-resize';
 import { InfoPageComponent } from './info-page/info-page.component';
+import { ExpandableComponent } from './expandable/expandable.component';
 
 @NgModule({
     declarations: [
@@ -84,7 +85,8 @@ import { InfoPageComponent } from './info-page/info-page.component';
         KpiDateInfoSubtextComponent,
         ContextTitleComponent,
         PointsOfInterestLegendComponent,
-        InfoPageComponent
+        InfoPageComponent,
+        ExpandableComponent
     ],
     imports: [
         CommonModule,

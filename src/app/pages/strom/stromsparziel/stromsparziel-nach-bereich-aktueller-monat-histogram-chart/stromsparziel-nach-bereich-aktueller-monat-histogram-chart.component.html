@@ -3,9 +3,10 @@
 
     <bfe-histogram-detail
         (diagramLeave)="hideTooltip()"
-        (elFocus)="showLineChartTooltip($event)"
+        (elFocus)="showTooltip($event)"
         [data]="entries"
-        [barWidth]="20"
+        [blocks]="blocks"
+        [barWidth]="barWidth"
         [barColors]="barColors"
         [barLineColor]="barLineColor"
         [lineColors]="[]"

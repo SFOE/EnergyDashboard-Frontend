@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { COLOR_SPACE } from '../wetter.consts';
+import { WetterNiederschlagTrend } from '../../../core/models/wetter-niederschlag-trend';
 import { WetterSchneereservenTrend } from '../../../core/models/wetter-schneereserven-trend';
 import { WetterService } from '../../../services/wetter/wetter.service';
 

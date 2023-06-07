@@ -52,7 +52,7 @@ const ausfaelleLegendEntries: DiagramLegendEntry[] = [
 
 export interface KKWProductionChartModel {
     titleDynamicKey: string;
-    kurztextDynamicKey?: string;
+    kurztextDynamicKey: string;
     chartData: Observable<StromKkwProductionData>;
     displayAusfaelleInBackground?: boolean;
 }

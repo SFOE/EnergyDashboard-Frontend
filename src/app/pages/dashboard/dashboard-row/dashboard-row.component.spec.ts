@@ -1,6 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {FontAwesomeTestingModule} from '@fortawesome/angular-fontawesome/testing';
 import {I18NextModule} from 'angular-i18next';
 import {AppModule} from '../../../app.module';
 import {CommonsModule} from '../../../shared/commons/commons.module';

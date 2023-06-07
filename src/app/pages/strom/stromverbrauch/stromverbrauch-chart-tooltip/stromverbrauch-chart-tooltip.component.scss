@@ -8,6 +8,10 @@
         border-bottom: 1px solid #ccc;
     }
 
+    .long-label {
+        white-space: normal;
+    }
+
     .percent-section,
     .percent-section-no-current {
         display: grid;

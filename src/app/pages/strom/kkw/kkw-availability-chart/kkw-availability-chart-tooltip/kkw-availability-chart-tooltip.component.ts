@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { StromKkwVerfuegbarkeitHistogramDetailEntry } from '../../../../../services/strom/strom.model';
+import { Component } from '@angular/core';
 import { BaseTooltipComponent } from '../../../../../shared/diagrams/tooltip/base-tooltip';
 import { kkwColors } from '../../../strom.consts';
+import { StromKkwVerfuegbarkeitEntry } from '../../../../../services/strom/strom.model';
+import { getAusfallColor } from '../../kkw.utils';
 
 @Component({
     selector: 'bfe-kkw-availability-chart-tooltip',
@@ -11,28 +12,10 @@ import { kkwColors } from '../../../strom.consts';
         './kkw-availability-chart-tooltip.component.scss'
     ]
 })
-export class KkwAvailabilityChartTooltipComponent extends BaseTooltipComponent<StromKkwVerfuegbarkeitHistogramDetailEntry> {
-    @Input()
-    showNumberOfOutages: boolean;
-
+export class KkwAvailabilityChartTooltipComponent extends BaseTooltipComponent<StromKkwVerfuegbarkeitEntry> {
     kkwColors = kkwColors;
 
-    plannedOutageColor = kkwColors.COLOR_KKW_OUTAGE_PLANNED;
-    unplannedOutageColor = kkwColors.COLOR_KKW_OUTAGE_UNPLANNED;
-
-    getPlannedOutagesCount(): number {
-        return this.data?.outages.filter((e) => e.wasPlanned).length ?? 0;
-    }
-
-    getUnplannedOutagesCount(): number {
-        return this.data?.outages.filter((e) => !e.wasPlanned).length ?? 0;
-    }
-
-    getOutagesToDisplay() {
-        if (this.showNumberOfOutages) {
-            return [];
-        } else {
-            return this.data?.outages;
-        }
+    getAusfallColor(wasPlanned: boolean): string {
+        return getAusfallColor(wasPlanned);
     }
 }

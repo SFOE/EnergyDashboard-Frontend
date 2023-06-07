@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {PreiseFuturesChartComponent} from './preise-futures-chart.component';
+import { PreiseFuturesChartComponent } from './preise-futures-chart.component';
 
 describe('PreiseFuturesChartComponent', () => {
     let component: PreiseFuturesChartComponent;

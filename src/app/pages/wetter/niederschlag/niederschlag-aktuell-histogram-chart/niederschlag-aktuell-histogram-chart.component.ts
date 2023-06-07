@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { TranslationService } from '../../../../core/i18n/translation.service';
 import {
     LabelFilters,
@@ -21,24 +21,13 @@ import { COLOR_SPACE, WetterConsts } from '../../wetter.consts';
 })
 export class NiederschlagAktuellHistogramChartComponent implements OnInit {
     @Input() loading: boolean = true;
-    @Input() dateOfLastUpdate: Date = new Date();
-
-    readonly xLabelModifier: LabelModifier;
-    readonly xSubLabelModifier: LabelModifier;
-    readonly yLabelFormatter;
-
-    isLoading = true;
-
-    tooltipEvent?: HistogramElFocusEvent<HistogramDetailEntry>;
-    blocks: Block[] = [];
-
-    domainMax: number = 200;
-    domainMin: number = 0;
 
     readonly primaryColor = COLOR_SPACE;
     readonly barColors = [WetterConsts.COLOR_CHART_PRIMARY];
     readonly lineColors = ['#000000'];
-
+    readonly xLabelModifier: LabelModifier;
+    readonly xSubLabelModifier: LabelModifier;
+    readonly yLabelFormatter;
     readonly legendEntries: DiagramLegendEntry[] = [
         {
             color: '#000000',
@@ -57,7 +46,15 @@ export class NiederschlagAktuellHistogramChartComponent implements OnInit {
         }
     ];
 
-    chartDatadataNiederschlagAktuell: HistogramDetailEntry[];
+    isLoading = true;
+    data: HistogramDetailEntry[];
+    blocks: Block[] = [];
+    domainMax: number = 200;
+    domainMin: number = 0;
+    dateOfLastUpdate: Date = new Date();
+    barWidth: number = 40;
+
+    tooltipEvent?: HistogramElFocusEvent<HistogramDetailEntry>;
 
     constructor(
         private wetterService: WetterService,
@@ -67,37 +64,41 @@ export class NiederschlagAktuellHistogramChartComponent implements OnInit {
             formatter: LabelFormatters.monthShort(translationService.language),
             filter: LabelFilters.everyNth(1, { excludeLast: false })
         };
+
         this.xSubLabelModifier = {
             formatter: LabelFormatters.yearFull(translationService.language),
             filter: LabelFilters.januaryAndDecember()
         };
+
         this.yLabelFormatter = (value: number) => `${value}%`;
     }
 
     ngOnInit(): void {
         this.wetterService.getNiederschlagAktuell().subscribe({
             next: (data) => {
-                this.chartDatadataNiederschlagAktuell =
+                this.data =
                     this.wetterService.mapNiederschlagAktuellToHistogramEntries(
                         data
                     );
                 let latestDate = this.getLatestDateFromData();
 
-                this.blocks = [];
-                // Setting these specific days centers the block
-                this.blocks.push({
-                    startDate: new Date(
-                        latestDate.getFullYear(),
-                        latestDate.getMonth() - 1,
-                        18
-                    ),
-                    endDate: new Date(
-                        latestDate.getFullYear(),
-                        latestDate.getMonth(),
-                        15
-                    ),
-                    color: WetterConsts.COLOR_CHART_NIEDERSCHLAG_CURRENT_MONTH
-                });
+                this.blocks = [
+                    {
+                        startDate: new Date(
+                            latestDate.getFullYear(),
+                            latestDate.getMonth() - 1,
+                            18
+                        ),
+                        endDate: new Date(
+                            latestDate.getFullYear(),
+                            latestDate.getMonth(),
+                            15
+                        ),
+                        color: WetterConsts.COLOR_CHART_NIEDERSCHLAG_CURRENT_MONTH
+                    }
+                ];
+
+                this.setBarWidth();
             },
             error: (error) => {
                 console.error(error);
@@ -108,7 +109,7 @@ export class NiederschlagAktuellHistogramChartComponent implements OnInit {
         });
     }
 
-    showLineChartTooltip(event: HistogramElFocusEvent<HistogramDetailEntry>) {
+    showTooltip(event: HistogramElFocusEvent<HistogramDetailEntry>) {
         this.tooltipEvent = event;
     }
 
@@ -119,7 +120,7 @@ export class NiederschlagAktuellHistogramChartComponent implements OnInit {
     getLatestDateFromData() {
         let highestDate = new Date(0);
 
-        this.chartDatadataNiederschlagAktuell.forEach((obj) => {
+        this.data.forEach((obj) => {
             const currentDate = new Date(obj.date);
             if (currentDate > highestDate) {
                 highestDate = currentDate;
@@ -127,5 +128,18 @@ export class NiederschlagAktuellHistogramChartComponent implements OnInit {
         });
 
         return highestDate;
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event: Event) {
+        this.setBarWidth();
+    }
+
+    private setBarWidth() {
+        if (window.innerWidth > 1000) {
+            this.barWidth = 40;
+        } else {
+            this.barWidth = 20;
+        }
     }
 }

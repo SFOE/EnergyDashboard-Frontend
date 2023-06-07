@@ -2,11 +2,15 @@ import { Inject, Injectable } from '@angular/core';
 import { I18NEXT_SERVICE, ITranslationService } from 'angular-i18next';
 import { DataService } from '../data/data.service';
 import { TranslationKeys } from '../models/dynamic-translations';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TranslationService {
+    private dynamicTranslationLoaded = new ReplaySubject<boolean>();
+
     constructor(
         @Inject(I18NEXT_SERVICE) private i18NextService: ITranslationService,
         private readonly dataService: DataService
@@ -17,13 +21,21 @@ export class TranslationService {
                 this.addDynamicResource('fr', translations.fr);
                 this.addDynamicResource('it', translations.it);
                 this.addDynamicResource('en', translations.en);
+                this.dynamicTranslationLoaded.next(true);
             },
             error: (err) => {
                 console.log(
                     `Translations could not be loaded ${JSON.stringify(err)}`
                 );
+                this.dynamicTranslationLoaded.next(false);
             }
         });
+    }
+
+    public get isTranslationLoaded(): Observable<boolean> {
+        return this.dynamicTranslationLoaded.pipe(
+            filter((loaded) => loaded === true)
+        );
     }
 
     public get language(): string {

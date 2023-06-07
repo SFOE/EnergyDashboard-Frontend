@@ -42,7 +42,7 @@ export class StromverbrauchAktuellerEndverbrauchHistogramChartComponent
     readonly lineEntries: DiagramLegendEntry[] = [
         {
             color: this.primaryColor,
-            labelKey: 'dashboard.strom.verbrauch-daily.legend.usage',
+            labelKey: 'dashboard.strom.verbrauch-daily.legend.endusage',
             type: 'line'
         },
         {

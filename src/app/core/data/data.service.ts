@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
     StromKkwProductionDataDto,
-    StromKkwVerfuegbarkeitData,
+    StromKkwVerfuegbarkeitDto,
     StromProductionDto,
     StromProductionImportVerbrauchDto
 } from '../../services/strom/strom.model';
@@ -46,6 +46,7 @@ import {
     StromsparzielFivePercentEinsparungen,
     StromsparzielFivePercentPeakHoursModel
 } from '../models/strom-sparziel-five-percent.model';
+import { WetterNiederschlagKartenMonths } from '../models/wetter-niederschlag-karten-months';
 
 @Injectable({
     providedIn: 'root'
@@ -72,7 +73,7 @@ export class DataService {
     readonly stromProductionImportVerbrauchUrl = `${this.baseUrl}/strom-produktion-import-verbrauch`;
     readonly stromSparzielUrl = `${this.baseUrl}/v4/strom-sparziel/ziel`;
     readonly stromSparzielAktuelleEinsparungUrl = `${this.baseUrl}/v4/strom-sparziel/aktuelle-einsparung`;
-    readonly stromSparzielNachBereichProMonat = `${this.baseUrl}/strom-sparziel/einsparung-pro-monat-kundengruppe`;
+    readonly stromSparzielNachBereichProMonat = `${this.baseUrl}/v2/strom-sparziel/einsparung-pro-monat-kundengruppe`;
     readonly stromSparzielZielNachBereichAktuellerMonat = `${this.baseUrl}/strom-sparziel/ziel-aktueller-monat-kundengruppe`;
     readonly stromSparzielNachBereichAktuellerMonat = `${this.baseUrl}/strom-sparziel/einsparung-aktueller-monat-kundengruppe`;
     readonly stromSparziel5PercentPeakHours = `${this.baseUrl}/strom-sparziel/5-percent-peak-h`;
@@ -91,7 +92,6 @@ export class DataService {
     readonly preiseStromBoerseUrl = `${this.baseUrl}/preise/strom-boerse`;
     readonly preiseStromEndverbrauchUrl = `${this.baseUrl}/preise/strom-endverbrauch`;
     readonly preiseStromFuturesUrl = `${this.baseUrl}/preise/strom-futures`;
-    readonly preiseGasBoerseUrl = `${this.baseUrl}/preise/gas-boerse`;
     readonly preiseGasDayaheadUrl = `${this.baseUrl}/preise/gas-dayahead`;
     readonly preiseGasEndverbrauchUrl = `${this.baseUrl}/preise/gas-endverbrauch`;
     readonly preiseGasFuturesUrl = `${this.baseUrl}/preise/gas-futures`;
@@ -101,11 +101,12 @@ export class DataService {
     readonly preiseBrennholzEndverbrauchUrl = `${this.baseUrl}/preise/brennholz-endverbrauch`;
     readonly preiseFernwaermeEndverbrauchUrl = `${this.baseUrl}/preise/fernwaerme-endverbrauch`;
 
-    readonly wetterTemperaturTrend = `${this.baseUrl}/wetter/temperatur-trend`;
+    readonly wetterTemperaturTrend = `${this.baseUrl}/v2/wetter/temperatur-trend`;
     readonly wetterTemperaturAktuell = `${this.baseUrl}/wetter/temperatur-aktuell`;
     readonly wetterTemperaturPrognose = `${this.baseUrl}/wetter/temperatur-prognose`;
-    readonly wetterNiederschlag = `${this.baseUrl}/wetter/niederschlag`;
-    readonly wetterNiederschlagTrend = `${this.baseUrl}/wetter/niederschlag-trend`;
+    readonly wetterNiederschlag = `${this.baseUrl}/v2/wetter/niederschlag`;
+    readonly wetterNiederschlagTrend = `${this.baseUrl}/v2/wetter/niederschlag-trend`;
+    readonly wetterNiederschlagKartenMonths = `${this.baseUrl}/wetter/niederschlag-bilder-daten`;
     readonly wetterSchneereservenTrend = `${this.baseUrl}/wetter/schneereserven-trend`;
     readonly wetterSchneereservenAktuell = `${this.baseUrl}/wetter/schneereserven`;
 
@@ -257,14 +258,14 @@ export class DataService {
         );
     }
 
-    public getStromKkwVerfuegbarkeitCh(): Observable<StromKkwVerfuegbarkeitData> {
-        return this.httpClient.get<StromKkwVerfuegbarkeitData>(
+    public getStromKkwVerfuegbarkeitCh(): Observable<StromKkwVerfuegbarkeitDto> {
+        return this.httpClient.get<StromKkwVerfuegbarkeitDto>(
             this.stromStromKkwVerfuegbarkeitChUrl
         );
     }
 
-    public getStromKkwVerfuegbarkeitFr(): Observable<StromKkwVerfuegbarkeitData> {
-        return this.httpClient.get<StromKkwVerfuegbarkeitData>(
+    public getStromKkwVerfuegbarkeitFr(): Observable<StromKkwVerfuegbarkeitDto> {
+        return this.httpClient.get<StromKkwVerfuegbarkeitDto>(
             this.stromStromKkwVerfuegbarkeitFrUrl
         );
     }
@@ -315,10 +316,6 @@ export class DataService {
         return this.httpClient.get<PreiseFuturesDto[]>(
             this.preiseStromFuturesUrl
         );
-    }
-
-    public getPreiseGasBoerse() {
-        return this.httpClient.get<PreiseIndexiert[]>(this.preiseGasBoerseUrl);
     }
 
     public getPreiseGasDayahead() {
@@ -386,6 +383,12 @@ export class DataService {
     > {
         return this.httpClient.get<WetterNiederschlagAktuellEntry[]>(
             this.wetterNiederschlag
+        );
+    }
+
+    public getNiederschlagKartenMonths(): Observable<WetterNiederschlagKartenMonths> {
+        return this.httpClient.get<WetterNiederschlagKartenMonths>(
+            this.wetterNiederschlagKartenMonths
         );
     }
 
