@@ -1,9 +1,9 @@
 /* tslint:disable:no-unused-variable */
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {I18NextModule} from 'angular-i18next';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { I18NextModule } from 'angular-i18next';
 
-import {DashboardSpartippsCardComponent} from './dashboard-spartipps-card.component';
+import { DashboardSpartippsCardComponent } from './dashboard-spartipps-card.component';
 
 describe('DashboardSpartippsCardComponent', () => {
     let component: DashboardSpartippsCardComponent;

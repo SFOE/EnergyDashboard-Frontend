@@ -126,6 +126,7 @@
     "dashboard.gas.import.daily-net-import.trend": "Tendenza, ultimi 10 giorni",
     "dashboard.holz.context-name": "Legna da ardere",
     "dashboard.oel.context-name": "Olio da riscaldamento",
+
     "dashboard.preise.benzin.index-preis.subtitle": "Indice del prezzo consumo finale",
     "dashboard.preise.benzin.legend.index-preis": "Indice del prezzo consumo finale",
     "dashboard.preise.context-name": "Prezzi",
@@ -151,6 +152,7 @@
     "dashboard.preise.strom.legend.endverbrauch": "Indice del prezzo consumo finale",
     "dashboard.preise.strom.legend.spotpreis-boerse": "Prezzo di borsa spot per MWh",
     "dashboard.preise.strom.spotpreis-boerse.subtitle": "Prezzo di borsa spot",
+
     "dashboard.strom.context-name": "Elettricità",
     "dashboard.strom.fuellstaende-speicherseen.diagram-legend.five-year-average": "Media su 5a.",
     "dashboard.strom.fuellstaende-speicherseen.diagram-legend.five-year-min-max": "Min / Max ultimi 5a.",
@@ -256,6 +258,7 @@
     "dashboard.wetter.region.schweiz": "Svizzera",
     "dashboard.wetter.region.sion": "Sion",
     "dashboard.wetter.schneereserven.forecast": "Previsione",
+
     "footer.ax-statement": "Dichiarazione di accessibilità",
     "footer.contact": "Contatto",
     "footer.contact.url": "mailto:media@bfe.admin.ch",
@@ -274,14 +277,17 @@
     "footer.legal.url": "https://www.admin.ch/gov/it/pagina-iniziale/basi-legali.html",
     "footer.title.data": "Scaricare i dati",
     "footer.title.info": "Ulteriori informazioni",
+
     "integration-guide.title": "Guida all'integrazione",
     "integration-guide.content": "La pagina panoramica del Cruscotto energetico può essere integrata e resa disponibile come iFrame su qualsiasi sito web. Per l'integrazione, potete copiare la seguente istruzione e aggiungerla al vostro sito web. La pagina panoramica del cruscotto energetico verrà visualizzata in forma ridotta. È possibile regolare la larghezza e l'altezza dell'integrazione in base alle proprie esigenze.",
     "integration-guide.questions": "Per domande, contattare <a href=\"mailto:media@bfe.admin.ch\">media@bfe.admin.ch</a>",
+
     "navigation.gas": "Gas",
     "navigation.overview": "Panoramica",
     "navigation.preise": "Prezzi",
     "navigation.strom": "Elettricità",
     "navigation.wetter": "Meteo",
+
     "page.subtitle.date-info": "Aggiornamento quotidiano",
     "page.subtitle.date-info-month": "Aggiornamento mensile",
     "page.subtitle.date-info-semi-month": "Aggiornamento semestrale",

@@ -126,6 +126,7 @@
     "dashboard.gas.sparziel.per-month": "Monthly",
     "dashboard.holz.context-name": "Firewood",
     "dashboard.oel.context-name": "Heating oil",
+
     "dashboard.preise.benzin.index-preis.subtitle": "Price index final consumption",
     "dashboard.preise.benzin.legend.index-preis": "Price index final consumption",
     "dashboard.preise.context-name": "Prices",
@@ -151,6 +152,7 @@
     "dashboard.preise.strom.legend.endverbrauch": "Price index final consumption",
     "dashboard.preise.strom.legend.spotpreis-boerse": "Exchange spot price per MWh",
     "dashboard.preise.strom.spotpreis-boerse.subtitle": "Exchange spot price",
+
     "dashboard.strom.context-name": "Electricity",
     "dashboard.strom.fuellstaende-speicherseen.diagram-legend.five-year-average": "Average over 5 Y",
     "dashboard.strom.fuellstaende-speicherseen.diagram-legend.five-year-min-max": "Min / Max over last 5 Y",
@@ -256,6 +258,7 @@
     "dashboard.wetter.region.schweiz": "Switzerland",
     "dashboard.wetter.region.sion": "Sion",
     "dashboard.wetter.schneereserven.forecast": "Forecast",
+
     "footer.ax-statement": "Accessibility statement",
     "footer.contact": "Contact",
     "footer.contact.url": "mailto:media@bfe.admin.ch",
@@ -274,14 +277,17 @@
     "footer.legal.url": "https://www.admin.ch/gov/en/start/terms-and-conditions.html",
     "footer.title.data": "Data downloads",
     "footer.title.info": "Additional information",
+
     "integration-guide.title": "Integration Guide",
     "integration-guide.content": "The Energy Dashboard overview page can be integrated and made available as an iFrame on any web pages. For integration, you can copy the following instruction and add it to your website. The Energy Dashboard overview page is then displayed in a reduced form. You can adjust the width and height of the integration based on your needs.",
     "integration-guide.questions": "For questions, contact <a href=\"mailto:media@bfe.admin.ch\">media@bfe.admin.ch</a>",
+
     "navigation.gas": "Gas",
     "navigation.overview": "Overview",
     "navigation.preise": "Prices",
     "navigation.strom": "Electricity",
     "navigation.wetter": "Weather",
+
     "page.subtitle.date-info": "Daily updates",
     "page.subtitle.date-info-month": "Monthly updates",
     "page.subtitle.date-info-semi-month": "Semi monlthy updates",

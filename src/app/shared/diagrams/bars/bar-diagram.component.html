@@ -2,14 +2,14 @@
     <section class="y-axis">
         <span class="label">{{ maxValue }}{{ yAxisSubfix }}</span>
         <span class="label"
-        >{{ maxValue / 2 | roundNumber }}{{ yAxisSubfix }}</span
+            >{{ maxValue / 2 | roundNumber }}{{ yAxisSubfix }}</span
         >
         <span class="label">0{{ yAxisSubfix }}</span>
     </section>
     <section class="value-lines">
-        <hr/>
-        <hr/>
-        <hr/>
+        <hr />
+        <hr />
+        <hr />
     </section>
     <section *ngFor="let entry of data" class="bar-container">
         <span
@@ -29,6 +29,6 @@
         </span>
         <span class="bottom-label label-medium">{{
             entry.labelKey | i18next
-            }}</span>
+        }}</span>
     </section>
 </div>

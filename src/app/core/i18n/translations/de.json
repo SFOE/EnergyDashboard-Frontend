@@ -125,6 +125,7 @@
     "dashboard.gas.import.daily-net-import.trend": "Trend, letzte 10 Tage",
     "dashboard.holz.context-name": "Brennholz",
     "dashboard.oel.context-name": "Heizöl",
+
     "dashboard.preise.benzin.index-preis.subtitle": "Preisindex Endverbrauch",
     "dashboard.preise.benzin.legend.index-preis": "Preisindex Endverbrauch",
     "dashboard.preise.context-name": "Preise",
@@ -150,6 +151,7 @@
     "dashboard.preise.strom.legend.endverbrauch": "Preisindex Endverbrauch",
     "dashboard.preise.strom.legend.spotpreis-boerse": "Spotpreis Börse pro MWh",
     "dashboard.preise.strom.spotpreis-boerse.subtitle": "Spotpreis Börse",
+
     "dashboard.strom.context-name": "Strom",
     "dashboard.strom.fuellstaende-speicherseen.diagram-legend.five-year-average": "Mittelwert über 5 J.",
     "dashboard.strom.fuellstaende-speicherseen.diagram-legend.five-year-min-max": "Min / Max der letzten 5 J.",
@@ -255,6 +257,7 @@
     "dashboard.wetter.region.luzern": "Luzern",
     "dashboard.wetter.region.schweiz": "Schweiz",
     "dashboard.wetter.region.sion": "Sion",
+
     "footer.ax-statement": "Erklärung zur Barrierefreiheit",
     "footer.contact": "Kontakt",
     "footer.contact.url": "mailto:media@bfe.admin.ch",
@@ -273,14 +276,17 @@
     "footer.legal.url": "https://www.admin.ch/gov/de/start/rechtliches.html",
     "footer.title.data": "Daten herunterladen",
     "footer.title.info": "Weiterführende Informationen",
+
     "integration-guide.title": "Integrations-Guide",
     "integration-guide.content": "Die Übersichtsseite des Energie-Dashboard kann als iFrame auf beliebigen Webseiten integriert und zur Verfügung gestellt werden. Für die Integration können Sie folgende Anweisung kopieren und auf Ihrer Website hinzufügen. Die Übersichtsseite des Energie-Dashboard wird dann in reduzierter Form dargestellt. Die Breite und Höhe der Integration können Sie anhand Ihrer Bedürfnisse anpassen.",
     "integration-guide.questions": "Bei Fragen wenden Sie sich an <a href=\"mailto:media@bfe.admin.ch\">media@bfe.admin.ch</a>",
+
     "navigation.gas": "Gas",
     "navigation.overview": "Übersicht",
     "navigation.preise": "Preise",
     "navigation.strom": "Strom",
     "navigation.wetter": "Wetter",
+
     "page.subtitle.date-info": "Tägliche Aktualisierung",
     "page.subtitle.date-info-month": "Monatliche Aktualisierung",
     "page.subtitle.date-info-semi-month": "Halbmonatliche Aktualisierung",

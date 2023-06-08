@@ -1,11 +1,11 @@
 /* tslint:disable:no-unused-variable */
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement} from '@angular/core';
-import {I18NextModule} from 'angular-i18next';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
+import { I18NextModule } from 'angular-i18next';
 
-import {StatusAmpelComponent} from './status-ampel.component';
+import { StatusAmpelComponent } from './status-ampel.component';
 
 describe('StatusAmpelComponent', () => {
     let component: StatusAmpelComponent;

@@ -1,13 +1,13 @@
 /* tslint:disable:no-unused-variable */
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {I18NextModule} from 'angular-i18next';
-import {Trend, TrendRating} from '../../../../core/models/trend.enum';
-import {CommonsModule} from '../../../commons/commons.module';
-import {SparzielChartModule} from '../../../diagrams/sparziel/sparziel-chart.module';
-import {SharedComponentsModule} from '../../shared-components.module';
-import {TrendModule} from '../../trend/trend.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { I18NextModule } from 'angular-i18next';
+import { Trend, TrendRating } from '../../../../core/models/trend.enum';
+import { CommonsModule } from '../../../commons/commons.module';
+import { SparzielChartModule } from '../../../diagrams/sparziel/sparziel-chart.module';
+import { SharedComponentsModule } from '../../shared-components.module';
+import { TrendModule } from '../../trend/trend.module';
 
-import {SparzielOverviewComponent} from './sparziel-overview.component';
+import { SparzielOverviewComponent } from './sparziel-overview.component';
 
 describe('SparzielOverviewComponent', () => {
     let component: SparzielOverviewComponent;

@@ -61,48 +61,28 @@ Also, make sure to use the IntelliJ version 2022.2.2+, as there is a bug with ES
 
 ## I18n - Internationalization
 
-We use `i18next` and `angular-i18next` to fully internationalize the application. We currently support four languages (
-DE, FR, IT, EN) and have translations for all of those.
+We use `i18next` and `angular-i18next` to fully internationalize the application. We currently support four languages (DE, FR, IT, EN) and have translations for all of those.
 
-Due to project requirements we have a mix of static texts which are loaded at runtime
-from `src/app/core/i18n/translations` and dynamic texts which are loaded at runtime from a
-REST-API (`/api/dynamic-translations`). The dynamic texts can be updated by the BfE in the S3-Bucket and allow for a
-faster adaption to changed requirements of the texts.
+Due to project requirements we have a mix of static texts which are loaded at runtime from `src/app/core/i18n/translations` and dynamic texts which are loaded at runtime from a REST-API (`/api/dynamic-translations`). The dynamic texts can be updated by the BfE in the S3-Bucket and allow for a faster adaption to changed requirements of the texts.
 
-Dynamic Texts are added into a separate Namespace of i18net called `dynamic` and can be referenced with this namespace (
-e.g. `dynamic:uebersicht-platzhalter.titel`). It's important to use the `i18nextDynamic` pipe with dynamic texts because
-the regular `i18next` pipe is pure and therefore might not show texts that haven't been loaded.
+Dynamic Texts are added into a separate Namespace of i18net called `dynamic` and can be referenced with this namespace (e.g. `dynamic:uebersicht-platzhalter.titel`). It's important to use the `i18nextDynamic` pipe with dynamic texts because the regular `i18next` pipe is pure and therefore might not show texts that haven't been loaded.
 
 ## Icons from Fontawesome Pro
 
-We are using certain icons under the Fontawesome Pro license. In order to be allowed to install access them you need to
-have a valid key to the fortawesome npm registry and reference the key under the environment
-variable `FONTAWESOME_NPM_AUTH_TOKEN`. The token and fortawesome registry is configured in `.yarnrc.yml`
+We are using certain icons under the Fontawesome Pro license. In order to be allowed to install access them you need to have a valid key to the fortawesome npm registry and reference the key under the environment variable `FONTAWESOME_NPM_AUTH_TOKEN`. The token and fortawesome registry is configured in `.yarnrc.yml`
 
 ## Running unit tests
 
 Run `yarn test` to execute the unit tests with Jest. All tests need to pass in order to complete the build pipeline.
 
 ## Running e2e tests
+We use cypress for E2E testing. Run `yarn e2e:open` to open the Cypress Launchpad (GUI) and to run the tests. (Run the command in the root path where the cypress folder and cypress.config.ts are listed or the tests won't be found.) (see https://docs.cypress.io/guides/getting-started/opening-the-app for more information about Cypress)
 
-We use cypress for E2E testing. Run `yarn e2e:open` to open the Cypress Launchpad (GUI) and to run the tests. (Run the
-command in the root path where the cypress folder and cypress.config.ts are listed or the tests won't be found.) (
-see https://docs.cypress.io/guides/getting-started/opening-the-app for more information about Cypress)
-
-Run `yarn e2e` to start the cypress tests in headless mode (without GUI) and show the test results in the terminal. In
-cypress.config.ts we configured video-recordings to be off, change this if you need these. Videos and Screenshots from
-the latest run will be saved under videos and/or screenshots.
+Run `yarn e2e` to start the cypress tests in headless mode (without GUI) and show the test results in the terminal. In cypress.config.ts we configured video-recordings to be off, change this if you need these. Videos and Screenshots from the latest run will be saved under videos and/or screenshots. 
 
 ### skipped vs. pending tests
-
-Due to Cypress using Mocha dependencies the tests that are being skipped (it.skip, describe.skip, context.skip) are
-being shown as `pending`. The terminology of cypress understands that `pending` are tests not executed. The tests that
-are shown under `skipped` are those that were planned to run but were not because, for example, a beforeEach hook
-failed. https://github.com/cypress-io/cypress-skip-test
+Due to Cypress using Mocha dependencies the tests that are being skipped (it.skip, describe.skip, context.skip) are being shown as `pending`. The terminology of cypress understands that `pending` are tests not executed. The tests that are shown under `skipped` are those that were planned to run but were not because, for example, a beforeEach hook failed. https://github.com/cypress-io/cypress-skip-test
 
 ## Troubleshooting
 
-If `yarn install` is throwing an error concerning `FONTAWESOME_NPM_AUTH_TOKEN`, install
-direnv (https://direnv.net/#basic-installation / on Mac with brew) and create a .envrc-file
-with `export FONTAWESOME_NPM_AUTH_TOKEN=XXX` (check out confluence page for token). Then allow the current folder
-with `dotenv allow .` to make it work.
+If `yarn install` is throwing an error concerning `FONTAWESOME_NPM_AUTH_TOKEN`, install direnv (https://direnv.net/#basic-installation / on Mac with brew) and create a .envrc-file with `export FONTAWESOME_NPM_AUTH_TOKEN=XXX` (check out confluence page for token). Then allow the current folder with `dotenv allow .` to make it work.

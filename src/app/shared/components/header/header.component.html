@@ -58,7 +58,7 @@
                 [attr.href]="'bfe-url' | i18next"
                 target="_blank"
                 rel="noopener"
-            >{{ 'bfe-title' | i18next }}</a
+                >{{ 'bfe-title' | i18next }}</a
             >
         </div>
     </div>
@@ -93,7 +93,7 @@
                 (click)="changeLanguage(language)"
                 (keydown.enter)="changeLanguage(language)"
                 (keydown.space)="changeLanguageSpace(language, $event)"
-            >{{ language | uppercase }}</a
+                >{{ language | uppercase }}</a
             >
         </li>
         <li *ngIf="!isProduction">

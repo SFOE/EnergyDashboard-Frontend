@@ -1,12 +1,10 @@
 import {
-    Component,
-    ElementRef,
+    Component, ElementRef,
     EventEmitter,
     Input,
     OnChanges,
     Output,
-    SimpleChanges,
-    ViewChild
+    SimpleChanges, ViewChild
 } from '@angular/core';
 import { DateModel } from '../../../../core/models/base/date.model';
 import { HistogramAreaChartEntry } from '../../../../core/models/charts';

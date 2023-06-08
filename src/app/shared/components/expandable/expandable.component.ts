@@ -1,15 +1,8 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    OnInit,
-    ViewChild
-} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { Context } from 'src/app/core/models/context.enum';
-import { take } from 'rxjs';
-import { TranslationService } from '../../../core/i18n/translation.service';
+import {take} from "rxjs";
+import {TranslationService} from "../../../core/i18n/translation.service";
 
 @Component({
     selector: 'bfe-expandable',
@@ -26,15 +19,11 @@ export class ExpandableComponent implements AfterViewInit {
     constructor(private translationService: TranslationService) {}
 
     ngAfterViewInit() {
-        this.translationService.isTranslationLoaded
-            .pipe(take(1))
-            .subscribe(() => {
-                setTimeout(() => {
-                    this.showExpandIcon =
-                        this.container.nativeElement.scrollHeight >
-                        this.MAX_HEIGHT_WITHOUT_EXPANSION_BREAKPOINT;
-                });
+        this.translationService.isTranslationLoaded.pipe(take(1)).subscribe(() => {
+            setTimeout(() => {
+                this.showExpandIcon = this.container.nativeElement.scrollHeight > this.MAX_HEIGHT_WITHOUT_EXPANSION_BREAKPOINT;
             });
+        });
     }
 
     toggleExpand() {
@@ -46,8 +35,7 @@ export class ExpandableComponent implements AfterViewInit {
         if (this.expanded) {
             this.container.nativeElement.style.maxHeight = 'none';
         } else {
-            this.container.nativeElement.style.maxHeight =
-                this.MAX_HEIGHT_WITHOUT_EXPANSION_BREAKPOINT + 'px';
+            this.container.nativeElement.style.maxHeight = this.MAX_HEIGHT_WITHOUT_EXPANSION_BREAKPOINT + 'px';
         }
     }
 }

@@ -20,7 +20,7 @@ export class StromsparzielComponent implements OnInit {
         this.stromService.getSparziel().subscribe({
             next: (data) => {
                 this.trendData = data;
-            };,
+            },
             complete: () => (this.isLoadingTrend = false)
         });
     }

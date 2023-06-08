@@ -12,7 +12,7 @@
                 ></span>
                 <span class="column-margin label-medium">{{
                     'commons.legend.latest' | i18next
-                    }}</span>
+                }}</span>
                 <span>
                     <span>
                         {{ data.values[1] }}
@@ -21,7 +21,7 @@
                 </span>
                 <span></span>
 
-                <span class="divider"><hr width="100%"/></span>
+                <span class="divider"><hr width="100%" /></span>
             </ng-container>
 
             <ng-container *ngFor="let ausfall of data.ausfaelle">
@@ -32,24 +32,24 @@
                     "
                 ></span>
                 <span class="column-margin label-medium"
-                >{{
-                    (ausfall.wasPlanned
+                    >{{
+                        (ausfall.wasPlanned
                             ? 'dashboard.strom.kkw.maintenance'
                             : 'dashboard.strom.kkw.outage'
-                    ) | i18next
+                        ) | i18next
                     }}
                     <ng-container *ngIf="ausfall.productionPlant">
                         -
                         {{
-                        'dashboard.strom.kkw.' + ausfall.productionPlant
-                            | i18next
+                            'dashboard.strom.kkw.' + ausfall.productionPlant
+                                | i18next
                         }}
                     </ng-container>
                     <ng-container *ngIf="ausfall.count">
                         -
                         {{
-                        'dashboard.strom.kkw.count'
-                            | i18next: {count: ausfall.count}
+                            'dashboard.strom.kkw.count'
+                                | i18next: { count: ausfall.count }
                         }}
                     </ng-container>
                 </span>
@@ -57,7 +57,7 @@
                 <span></span>
             </ng-container>
             <span *ngIf="(data.ausfaelle?.length ?? 0) > 0" class="divider">
-                <hr width="100%"/>
+                <hr width="100%" />
             </span>
 
             <!-- max production -->
@@ -68,7 +68,7 @@
             <span class="column-margin label-medium">{{
                 'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-max-percentage'
                     | i18next
-                }}</span>
+            }}</span>
             <span>
                 <span>
                     {{ data.band?.upper }}
@@ -86,7 +86,7 @@
             ></span>
             <span class="column-margin label-medium">{{
                 'commons.legend.average' | i18next
-                }}</span>
+            }}</span>
             <span>
                 <span>
                     {{ data.values[0] }}
@@ -103,7 +103,7 @@
             <span class="column-margin label-medium">{{
                 'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-min-percentage'
                     | i18next
-                }}</span>
+            }}</span>
             <span>
                 <span>
                     {{ data.band?.lower }}
