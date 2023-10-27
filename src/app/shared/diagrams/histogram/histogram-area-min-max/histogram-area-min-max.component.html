@@ -12,6 +12,8 @@
         [xSubLabelModifier]="xSubLabelModifier"
         [yLabelFormatter]="yLabelFormatter"
         [margins]="margins"
+        [focusPointBorder]="true"
+        [isSplitChart]="true"
         (elFocus)="emitFocusEntry($event)"
         (diagramLeave)="diagramLeave.emit()"
     ></bfe-histogram-area-stack>

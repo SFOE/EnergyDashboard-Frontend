@@ -6,55 +6,83 @@
         langtextDynamicKey: 'kpi-gas-5_import.langtext'
     }"
 >
-    <bfe-kpi-container-row>
-        <bfe-trend-and-number
-            *ngIf="!!currentEntry"
-            [model]="{
-                color: primaryColor,
-                bigNumber: {
-                    value: currentEntry.nettoImportCH,
-                    postfix: 'GWh',
-                    subTextKeys: [
-                        'dashboard.gas.import.daily-net-import.per-day'
-                    ]
-                },
-                trend: {
-                    value: currentEntry.trend,
-                    rating: currentEntry.trendRating,
-                    subTextKeys: ['dashboard.gas.import.daily-net-import.trend']
-                }
-            }"
-        ></bfe-trend-and-number>
-        <section class="teaser-section">
-            <div
-                class="info-subtext"
-                [innerHTML]="
-                    'dynamic:kpi-gas-5_import.kurztext' | i18nextDynamic
-                "
-            ></div>
-        </section>
-    </bfe-kpi-container-row>
+    <section>
+        <bfe-kpi-container-row>
+            <bfe-trend-and-number
+                [isLoading]="isLoading"
+                [model]="{
+                    color: primaryColor,
+                    bigNumber: {
+                        value: currentEntry.nettoImportCH,
+                        postfix: 'GWh',
+                        subTextKeys: [
+                            'dashboard.gas.import.daily-net-import.per-day'
+                        ]
+                    },
+                    trend: {
+                        value: currentEntry.trend,
+                        rating: currentEntry.trendRating,
+                        subTextKeys: [
+                            'dashboard.gas.import.daily-net-import.trend'
+                        ]
+                    }
+                }"
+            ></bfe-trend-and-number>
 
-    <div class="chart-wrapper" *ngIf="!isLoading">
+            <section class="desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-gas-5_import.kurztext' | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="'dynamic:kpi-gas-5_import.kurztext'"
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
+
+    <div class="chart-wrapper" *ngIf="!isLoading; else loading">
         <bfe-kpi-subtitle>
             {{ 'dynamic:kpi-gas-5_import_karte.titel' | i18nextDynamic }}
         </bfe-kpi-subtitle>
         <bfe-kpi-date-info-subtext [date]="currentEntry.date">
         </bfe-kpi-date-info-subtext>
-        <bfe-optional-dynamic-langtext
-            text="kpi-gas-5_import_karte.langtext"
-        ></bfe-optional-dynamic-langtext>
+
         <bfe-import-export-per-day
             [currentEntry]="currentEntry"
             [context]="context"
         ></bfe-import-export-per-day>
+
+        <bfe-hideable-text-section
+            [context]="'chart'"
+            [textTranslationKey]="'dynamic:kpi-gas-5_import_karte.langtext'"
+        ></bfe-hideable-text-section>
     </div>
 
-    <div class="chart-wrapper" *ngIf="!isLoadingHistoricalValues">
+    <ng-template #loading>
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </ng-template>
+
+    <div
+        class="chart-wrapper"
+        *ngIf="!isLoadingHistoricalValues; else isLoadingHistorical"
+    >
         <bfe-gas-import-historical-values-histogram-chart
             [chartData]="historicalValuesChartEntries"
             [currentEntry]="currentEntry"
         >
         </bfe-gas-import-historical-values-histogram-chart>
     </div>
+
+    <ng-template #isLoadingHistorical>
+        <bfe-loading-spinner></bfe-loading-spinner>
+    </ng-template>
 </bfe-kpi-container>

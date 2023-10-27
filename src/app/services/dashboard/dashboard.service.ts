@@ -4,15 +4,18 @@ import { DataService } from '../../core/data/data.service';
 import { TranslationService } from '../../core/i18n/translation.service';
 import { Context } from '../../core/models/context.enum';
 import {
-    DashboardGas,
+    DashboardGasDto,
     DashboardSpartippDisplay,
-    DashboardStrom
+    DashboardStromDto,
+    DashboardWetterDto
 } from '../../core/models/dashboard';
 import { DashboardPriceRowModel } from '../../pages/dashboard/dashboard-price-row/dashboard-price-row.component';
 import { DashboardRowModel } from '../../pages/dashboard/dashboard-row/dashboard-row.component';
 import {
     getRandomSpartipp,
+    mapGasDtoToRowModels,
     mapPriceDtoToDataArray,
+    mapStromDtoToRowModels,
     mapWetterDtoToRowModels
 } from './dashboard.util';
 
@@ -20,8 +23,8 @@ import {
     providedIn: 'root'
 })
 export class DashboardService {
-    private cachedStromData$: Observable<DashboardStrom>;
-    private cachedGasData$: Observable<DashboardGas>;
+    private cachedStromData$: Observable<DashboardRowModel[]>;
+    private cachedGasData$: Observable<DashboardRowModel[]>;
     private cachedWetterModels$: Observable<DashboardRowModel[]>;
     private cachedPriceData$: Observable<DashboardPriceRowModel[]>;
     private cachedSpartipps$: Observable<DashboardSpartippDisplay | undefined>;
@@ -31,20 +34,36 @@ export class DashboardService {
         private translateService: TranslationService
     ) {}
 
-    getStromData(): Observable<DashboardStrom> {
+    getStromData(): Observable<DashboardRowModel[]> {
         if (!this.cachedStromData$) {
-            this.cachedStromData$ = this.dataService
-                .getDashboardStrom()
-                .pipe(shareReplay(1));
+            this.cachedStromData$ = this.dataService.getDashboardStrom().pipe(
+                map(mapStromDtoToRowModels),
+                shareReplay(1),
+                startWith(
+                    mapStromDtoToRowModels(<DashboardStromDto>{}).map(
+                        (model) => ({
+                            ...model,
+                            loading: true
+                        })
+                    )
+                )
+            );
         }
         return this.cachedStromData$;
     }
 
-    getGasData(): Observable<DashboardGas> {
+    getGasData(): Observable<DashboardRowModel[]> {
         if (!this.cachedGasData$) {
-            this.cachedGasData$ = this.dataService
-                .getDashboardGas()
-                .pipe(shareReplay(1));
+            this.cachedGasData$ = this.dataService.getDashboardGas().pipe(
+                map(mapGasDtoToRowModels),
+                shareReplay(1),
+                startWith(
+                    mapGasDtoToRowModels(<DashboardGasDto>{}).map((model) => ({
+                        ...model,
+                        loading: true
+                    }))
+                )
+            );
         }
         return this.cachedGasData$;
     }
@@ -57,10 +76,12 @@ export class DashboardService {
                     map(mapWetterDtoToRowModels),
                     shareReplay(1),
                     startWith(
-                        mapWetterDtoToRowModels().map((model) => ({
-                            ...model,
-                            loading: true
-                        }))
+                        mapWetterDtoToRowModels(<DashboardWetterDto>{}).map(
+                            (model) => ({
+                                ...model,
+                                loading: true
+                            })
+                        )
                     )
                 );
         }

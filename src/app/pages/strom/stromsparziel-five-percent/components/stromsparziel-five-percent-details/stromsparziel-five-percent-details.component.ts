@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { StromsparzielFivePercentEinsparungen } from '../../../../../core/models/strom-sparziel-five-percent.model';
+import { StromService } from '../../../../../services/strom/strom.service';
 import {
     COLOR_INDUSTRY,
     COLOR_KMU,
     COLOR_PRIVATE,
     COLOR_SAVED
 } from '../../../strom.consts';
-import { StromService } from '../../../../../services/strom/strom.service';
-import { StromsparzielFivePercentEinsparungen } from '../../../../../core/models/strom-sparziel-five-percent.model';
 
 @Component({
     selector: 'bfe-stromsparziel-five-percent-details',
@@ -31,16 +31,11 @@ export class StromsparzielFivePercentDetailsComponent implements OnInit {
             next: (data) => {
                 this.data = data;
                 // this.data = {
-                //     anteilIndustrie: -20,
-                //     anteilPrivate: -50,
-                //     anteilKMU: -30,
+                //     totalSavingIndustriePercent: -20,
+                //     totalSavingPrivatPercent: -50,
+                //     totalSavingKmuPercent: -30,
                 //     totalSavingsGWh: 123
                 // };
-                this.isSavingsGoalReached =
-                    this.data.anteilIndustrie +
-                        this.data.anteilPrivate +
-                        this.data.anteilKMU <
-                    -203;
             },
             error: (error) => {
                 console.error(error);
@@ -51,85 +46,22 @@ export class StromsparzielFivePercentDetailsComponent implements OnInit {
         });
     }
 
-    getSavingsHeight(): number {
-        if (this.isSavingsGoalReached) {
-            return 20;
-        }
-
-        const total = 203;
-
-        const percentPrivate =
-            (100 / total) * Math.abs(this.data.anteilPrivate);
-        const percentIndustry =
-            (100 / total) * Math.abs(this.data.anteilIndustrie);
-        const percentKmu = (100 / total) * Math.abs(this.data.anteilKMU);
-
-        const percent = 100 - percentPrivate - percentIndustry - percentKmu;
-        return Math.round((160 / 100) * percent);
-    }
-
     getPrivateHeight(): number {
-        if (this.isSavingsGoalReached) {
-            const total =
-                this.data.anteilIndustrie +
-                this.data.anteilPrivate +
-                this.data.anteilKMU;
-
-            const percent =
-                (100 / Math.abs(total)) * Math.abs(this.data.anteilPrivate);
-            return Math.round((140 / 100) * percent);
-        }
-
-        const total = this.savingsGoalGwh;
-
-        const percent =
-            (100 / Math.abs(total)) * Math.abs(this.data.anteilPrivate);
-        return Math.round((160 / 100) * percent);
+        let percent = Math.abs(this.data.totalSavingPrivatPercent);
+        return Math.round((140 / 100) * percent);
     }
 
     getIndustryHeight(): number {
-        if (this.isSavingsGoalReached) {
-            const total =
-                this.data.anteilIndustrie +
-                this.data.anteilPrivate +
-                this.data.anteilKMU;
-
-            const percent =
-                (100 / Math.abs(total)) * Math.abs(this.data.anteilIndustrie);
-            return Math.round((140 / 100) * percent);
-        }
-
-        const total = this.savingsGoalGwh;
-
-        const percent =
-            (100 / Math.abs(total)) * Math.abs(this.data.anteilIndustrie);
-        return Math.round((160 / 100) * percent);
+        const percent = Math.abs(this.data.totalSavingIndustriePercent);
+        return Math.round((140 / 100) * percent);
     }
 
     getKmuHeight(): number {
-        if (this.isSavingsGoalReached) {
-            const total =
-                this.data.anteilIndustrie +
-                this.data.anteilPrivate +
-                this.data.anteilKMU;
-
-            const percent =
-                (100 / Math.abs(total)) * Math.abs(this.data.anteilKMU);
-            return Math.round((140 / 100) * percent);
-        }
-
-        const total = this.savingsGoalGwh;
-
-        const percent = (100 / Math.abs(total)) * Math.abs(this.data.anteilKMU);
-        return Math.round((160 / 100) * percent);
+        const percent = Math.abs(this.data.totalSavingKmuPercent);
+        return Math.round((140 / 100) * percent);
     }
 
     getSavings(): number {
-        const total =
-            this.data.anteilIndustrie +
-            this.data.anteilPrivate +
-            this.data.anteilKMU;
-
-        return Math.round((100 / -this.savingsGoalGwh) * total);
+        return Math.round(this.data.totalSavingsGWh);
     }
 }

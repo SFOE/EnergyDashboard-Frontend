@@ -67,8 +67,8 @@ export class ImportExportNetAreaChartComponent implements OnChanges, OnInit {
         ...Object.values(ImportExportConsts.import)
     ];
     focusPointColors = [
-        ...Object.values(ImportExportConsts.import),
-        ...Object.values(ImportExportConsts.export)
+        ...Object.values(ImportExportConsts.export),
+        ...Object.values(ImportExportConsts.import)
     ];
 
     constructor(translationService: TranslationService) {
@@ -81,11 +81,11 @@ export class ImportExportNetAreaChartComponent implements OnChanges, OnInit {
     ngOnInit(): void {
         this.countrySelectionControl.valueChanges.subscribe((value) => {
             if (!!value) {
-                this.stromImports = this.setOtherValuesToZero(
+                this.stromImports = this.filterDataBySelection(
                     this.allData.selectedPeriod.stromImports,
                     value
                 );
-                this.stromExports = this.setOtherValuesToZero(
+                this.stromExports = this.filterDataBySelection(
                     this.allData.selectedPeriod.stromExports,
                     value
                 );
@@ -97,8 +97,27 @@ export class ImportExportNetAreaChartComponent implements OnChanges, OnInit {
                     legendExportEntries,
                     value
                 );
+                this.setColors(value);
             }
         });
+    }
+
+    setColors(selectedIndex?: number[]) {
+        const imports = Object.values(ImportExportConsts.export);
+        const exports = Object.values(ImportExportConsts.import);
+        if (selectedIndex?.length === 1) {
+            this.colors = [
+                ...imports.filter((_, index) => selectedIndex.includes(index)),
+                ...exports.filter((_, index) => selectedIndex.includes(index))
+            ];
+            this.focusPointColors = [
+                ...imports.filter((_, index) => selectedIndex.includes(index)),
+                ...exports.filter((_, index) => selectedIndex.includes(index))
+            ];
+        } else {
+            this.colors = [...imports, ...exports];
+            this.focusPointColors = [...imports, ...exports];
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -147,14 +166,14 @@ export class ImportExportNetAreaChartComponent implements OnChanges, OnInit {
         return values.map((value) => -value);
     }
 
-    private setOtherValuesToZero(
+    private filterDataBySelection(
         entries: HistogramAreaEntry[],
         positionsToKeep: number[]
     ): HistogramAreaEntry[] {
         return entries.map((entry) => ({
             ...entry,
-            values: entry.values.map((value, index) =>
-                positionsToKeep.includes(index) ? value : 0
+            values: entry.values.filter((_, index) =>
+                positionsToKeep.includes(index)
             )
         }));
     }

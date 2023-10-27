@@ -1,6 +1,6 @@
 <div class="dashboard">
     <div class="dashboard__main">
-        <div class="dashboard__ampeln">
+        <div *ngIf="!appView" class="dashboard__ampeln">
             <bfe-status-ampel [context]="context.STROM"></bfe-status-ampel>
             <bfe-status-ampel [context]="context.GAS"></bfe-status-ampel>
         </div>
@@ -8,9 +8,7 @@
         <div class="overview__card-grid">
             <bfe-dashboard-kpi-x1
                 [context]="context.STROM"
-                [embedMode]="embedMode"
                 sourceKey="uebersicht_strom.quelle"
-                link="/strom"
             >
                 <div class="kpi-container strom-kpi-container">
                     <bfe-dashboard-row
@@ -22,9 +20,7 @@
 
             <bfe-dashboard-kpi-x1
                 [context]="context.GAS"
-                [embedMode]="embedMode"
                 sourceKey="uebersicht_gas.quelle"
-                link="/gas"
             >
                 <div class="kpi-container">
                     <bfe-dashboard-row
@@ -36,9 +32,7 @@
 
             <bfe-dashboard-kpi-x1
                 [context]="context.WETTER"
-                [embedMode]="embedMode"
                 sourceKey="uebersicht_wetter.quelle"
-                link="/wetter"
             >
                 <div class="kpi-container wetter-kpi-container">
                     <bfe-dashboard-row
@@ -60,8 +54,6 @@
 
             <bfe-dashboard-kpi-x1
                 [context]="context.PREISE"
-                [embedMode]="embedMode"
-                link="/preise"
                 sourceKey="uebersicht_preise.quelle"
             >
                 <div class="kpi-container">

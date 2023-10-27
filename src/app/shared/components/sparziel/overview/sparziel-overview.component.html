@@ -1,53 +1,68 @@
-<section *ngIf="!loading; else loadingTemplate" class="container-sparziel">
-    <div class="number-and-trend">
-        <section class="number-section">
-            <bfe-large-number-unit
-                [alignTextRightSide]="true"
-                [color]="model.color"
-                [number]="
-                    model.sparzielEntry.kumulierteMonatlicheEinsparungGWh
-                        | roundNumber
-                "
-                unit="GWh"
-            ></bfe-large-number-unit>
-            <p class="label-medium right-align-text nowarp">
-                {{ 'commons.sparziel.saved-label' | i18next }}
-            </p>
-            <p class="label-medium right-align-text">
-                {{
-                    'commons.to'
-                        | i18next
-                            : { date: model.sparzielEntry.date | date: 'dd.MM' }
-                }}
-            </p>
-        </section>
-
-        <bfe-trend-indicator
-            [trend]="model.sparzielEntry.trend"
-            [rating]="model.sparzielEntry.trendRating"
-            [labelKey]="model.trendLabelKey"
-        ></bfe-trend-indicator>
+<section *ngIf="!loading; else loadingTemplate">
+    <div>
+        <bfe-trend-and-number
+            [model]="{
+                color: model.color,
+                bigNumber: {
+                    value:
+                        (model.sparzielEntry.kumulierteMonatlicheEinsparungGWh
+                            | roundNumber) ?? 0,
+                    postfix: 'GWh',
+                    subTextKeys: [
+                        'commons.sparziel.saved-label',
+                        'commons.to'
+                            | i18next
+                                : {
+                                      date:
+                                          model.sparzielEntry.date
+                                          | date: 'dd.MM'
+                                  }
+                    ]
+                },
+                trend: {
+                    value: model.sparzielEntry.trend,
+                    rating: model.sparzielEntry.trendRating,
+                    subTextKeys: [model.trendLabelKey]
+                }
+            }"
+        ></bfe-trend-and-number>
     </div>
 
-    <bfe-sparziel-chart
-        [achievedPercentage]="
-            (model.sparzielEntry.standSparzielProzent | roundNumber) ?? 0
-        "
-        [achievedColor]="model.color"
-        [projectedPercentage]="
-            (model.sparzielEntry.standSparzielGeschaetztProzent
-                | roundNumber) ?? 0
-        "
-        [sparzielLabelSubfix]="model.sparzielEntry.sparzielGWh + ' GWh'"
-        [weatherAdjustedPercent]="
-            model.sparzielEntry.standSparzielGemessenWitterungsbereinigtProzent
-        "
-    >
-    </bfe-sparziel-chart>
+    <div class="sparziel-chart">
+        <bfe-sparziel-chart
+            [achievedPercentage]="
+                !model.sparzielEntry.schaetzung
+                    ? (model.sparzielEntry.kumulierteEinsparungProzent
+                          | roundNumber) ?? 0
+                    : null
+            "
+            [achievedValue]="
+                (model.sparzielEntry.kumulierteMonatlicheEinsparungGWh
+                    | roundNumber) ?? 0
+            "
+            [achievedColor]="model.color"
+            [projectedPercentage]="
+                !!model.sparzielEntry.schaetzung
+                    ? (model.sparzielEntry.kumulierteEinsparungProzent
+                          | roundNumber) ?? 0
+                    : null
+            "
+            [weatherAdjustedPercent]="
+                model.sparzielEntry
+                    .kumulierteEinsparungWitterungsbereinigtProzent
+            "
+            [weatherAdjustedGwh]="
+                model.sparzielEntry
+                    .kumulierteEinsparungWitterungsbereinigtGwh
+            "
+            [date]="model.sparzielEntry.date"
+            [addSparziel]="model.addSparziel ?? false"
+            [sparziel]="model.sparziel"
+        >
+        </bfe-sparziel-chart>
+    </div>
 </section>
 
 <ng-template #loadingTemplate>
-    <div class="loading-container">
-        <bfe-loading-spinner></bfe-loading-spinner>
-    </div>
+    <bfe-loading-spinner></bfe-loading-spinner>
 </ng-template>

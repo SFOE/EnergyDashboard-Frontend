@@ -1,89 +1,38 @@
 <div #tooltip class="tooltip-container" [class.hidden]="!event">
-    <ng-container *ngIf="!!data">
-        <section class="date-section">
-            {{ data.date | date }}
-        </section>
-        <section class="value-section">
-            <ng-container
-                *ngIf="
-                    data.barValues[0] || data.barValues[1] || data.barValues[2]
-                "
-            >
-                <!-- Outages -->
-                <ng-container *ngFor="let ausfall of data.ausfaelle">
-                    <span
-                        class="dot"
-                        [style.backgroundColor]="
-                            getAusfallColor(ausfall.wasPlanned)
-                        "
-                    ></span>
-                    <span class="column-margin label-medium">
-                        {{
-                        (ausfall.wasPlanned
-                                ? 'dashboard.strom.kkw.maintenance'
-                                : 'dashboard.strom.kkw.outage'
-                        ) | i18next
-                        }}
-                        <ng-container *ngIf="ausfall.productionPlant">
-                            -
-                            {{
-                            'dashboard.strom.kkw.' + ausfall.productionPlant
-                                | i18next
-                            }}
-                        </ng-container>
-                        <ng-container *ngIf="ausfall.count">
-                            -
-                            {{
-                            'dashboard.strom.kkw.count'
-                                | i18next: {count: ausfall.count}
-                            }}
-                        </ng-container>
-                    </span>
-                    <span></span>
-                    <span></span>
-                </ng-container>
-                <span *ngIf="(data.ausfaelle?.length ?? 0) > 0" class="divider">
-                    <hr width="100%"/>
-                </span>
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header [title]="data.date | date" />
+        <!-- Outages -->
+        <bfe-tooltip-row
+            *ngFor="let ausfall of data.ausfaelle"
+            [shape]="ausfall.count ? 'none' : 'area'"
+            [color]="getAusfallColor(ausfall.wasPlanned)"
+            [label]="
+                getAusfallText(
+                    ausfall.wasPlanned,
+                    ausfall.productionPlant,
+                    ausfall.count
+                )
+            "
+        />
 
-                <!-- Max Availability-->
-                <span
-                    [style.backgroundColor]="
-                        kkwColors.COLOR_KKW_INSTALLED_POWER
-                    "
-                    class="dot"
-                ></span>
+        <!-- DIVIDER -->
+        <bfe-tooltip-divider *ngIf="(data.ausfaelle?.length ?? 0) > 0" />
 
-                <span class="column-margin label-medium">{{
-                    'dashboard.strom.kkw.max-power' | i18next
-                    }}</span>
+        <!-- Max Availability-->
+        <bfe-tooltip-row
+            shape="line"
+            [color]="kkwColors.COLOR_KKW_INSTALLED_POWER"
+            [label]="'dashboard.strom.kkw.max-power'"
+            [data]="{ value: data.lineValues[0], suffix: ' MW' }"
+        />
 
-                <span>
-                    <span>
-                        {{ data.lineValues[0] }}
-                    </span>
-                </span>
-                <span class="tooltip-subfix">MW</span>
+        <!-- Current Availability-->
 
-                <!-- Current Availability-->
-
-                <span
-                    [style.backgroundColor]="kkwColors.COLOR_KKW_PRIMARY"
-                    class="dot"
-                ></span>
-
-                <span class="column-margin label-medium">{{
-                    'dashboard.strom.kkw.available-power' | i18next
-                    }}</span>
-
-                <span>
-                    <span>
-                        {{ data.barValues[0] }}
-                    </span>
-                </span>
-                <span class="tooltip-subfix">MW</span>
-                <span></span>
-            </ng-container>
-        </section>
-    </ng-container>
+        <bfe-tooltip-row
+            shape="area"
+            [color]="kkwColors.COLOR_KKW_PRIMARY"
+            [label]="'dashboard.strom.kkw.available-power'"
+            [data]="{ value: data.barValues[0], suffix: ' MW' }"
+        />
+    </bfe-tooltip-container>
 </div>

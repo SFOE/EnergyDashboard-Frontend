@@ -1,0 +1,108 @@
+<bfe-kpi-container
+    titleKeyDynamic="kpi-preise-8_strom_europa.titel"
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-preise-8_strom_europa.datenquelle',
+        langtextDynamicKey: 'kpi-preise-8_strom_europa.langtext'
+    }"
+>
+    <section>
+        <bfe-kpi-container-row>
+            <section>
+                <section>
+                    <bfe-context-title
+                        [context]="context"
+                        marginLeft="0px"
+                    ></bfe-context-title>
+                </section>
+
+                <bfe-trend-and-number
+                    [isLoading]="isLoadingTrend | async"
+                    [model]="{
+                        color: primaryColor,
+                        bigNumber: {
+                            value: trend.value,
+                            postfix: 'MWh',
+                            subUnit: 'EUR',
+                            subTextKeys: [
+                                'dashboard.preise.strom.europa.average.subtitle'
+                            ]
+                        },
+                        trend: {
+                            value: trend.trend,
+                            rating: trend.rating,
+                            subTextKeys: [
+                                'dashboard.preise.strom.europa.trend.subtitle'
+                            ]
+                        }
+                    }"
+                ></bfe-trend-and-number>
+            </section>
+
+            <section class="teaser-section desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-preise-8_strom_europa.kurztext'
+                            | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="
+                        'dynamic:kpi-preise-8_strom_europa.kurztext'
+                    "
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
+
+    <section class="title-selection-container">
+        <bfe-kpi-subtitle>
+            {{
+                'dynamic:kpi-preise-8_strom_europa_karte.titel' | i18nextDynamic
+            }}
+        </bfe-kpi-subtitle>
+        <bfe-kpi-date-info-subtext
+            [date]="updatedAt | async"
+            updateInterval="daily"
+        >
+        </bfe-kpi-date-info-subtext>
+    </section>
+
+    <div class="diagram-container">
+        <bfe-gradient-legend
+            [labels]="legend | async"
+            [colors]="colors"
+        ></bfe-gradient-legend>
+        <section>
+            <bfe-maps-strompreis-europa
+                *ngIf="!(isLoading | async); else loading"
+                [prices]="prices | async"
+                [mapCenterCoordinates]="[49.84307345430358, 9.901978070512243]"
+                [thresholds]="thresholds | async"
+                [minZoom]="3"
+                [maxZoom]="6"
+            ></bfe-maps-strompreis-europa>
+            <bfe-hideable-text-section
+                class="margin-top"
+                [context]="'chart'"
+                [textTranslationKey]="
+                    'dynamic:kpi-preise-8_strom_europa_karte.kurztext'
+                "
+            ></bfe-hideable-text-section>
+        </section>
+
+        <ng-template #loading>
+            <bfe-loading-spinner [placeholder]="'chart'"></bfe-loading-spinner>
+        </ng-template>
+
+        <bfe-optional-dynamic-langtext
+            text="kpi-preise-8_strom_europa_karte.langtext"
+        ></bfe-optional-dynamic-langtext>
+    </div>
+</bfe-kpi-container>

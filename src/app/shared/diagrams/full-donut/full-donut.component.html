@@ -7,6 +7,7 @@
     <section
         *ngIf="selectedData; let data"
         class="value-display-container"
+        [ngClass]="{largeNumber: largeNumber}"
         [style.color]="data.color"
         [style.fontSize]="dimension + 'px'"
     >
@@ -14,7 +15,7 @@
         <span class="all-data-label label">{{
             data.labelKey ?? '' | i18next
         }}</span>
-        <span class="value">{{ data.value }}</span>
+        <span class="value">{{ data.value | thousandComma }}</span>
         <span class="postfix">{{ postfix }}</span>
     </section>
 </div>

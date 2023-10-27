@@ -43,10 +43,13 @@
             width: 8px;
             border-radius: 50%;
             display: inline-block;
+            margin: 3px 4px 3px 3px;
         }
     }
 }
-
-.hidden {
-    display: none;
+.tooltip-container.hidden {
+  visibility: hidden;
+}
+.tooltip-container {
+  visibility: visible;
 }

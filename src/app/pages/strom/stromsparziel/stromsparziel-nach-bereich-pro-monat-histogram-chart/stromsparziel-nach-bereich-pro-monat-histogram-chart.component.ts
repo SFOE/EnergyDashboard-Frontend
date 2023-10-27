@@ -1,27 +1,21 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { HistogramDetailEntry } from '../../../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
-import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
+import { TranslationService } from '../../../../core/i18n/translation.service';
+import { SparzielNachBereichProMonat } from '../../../../core/models/sparziel';
+import { StromService } from '../../../../services/strom/strom.service';
 import {
     COLOR_CHART_HISTOGRAM_AREA_MIN_MAX_DOT,
-    COLOR_CHART_HISTOGRAM_AREA_SECONDARY,
-    COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA,
-    COLOR_POSITIVE
+    COLOR_CHART_HISTOGRAM_AREA_SECONDARY
 } from '../../../../shared/commons/colors.const';
-import { COLOR_CONTEXT, COLOR_CONTEXT_SECONDARY } from '../../strom.consts';
-import {
-    Block,
-    LabelModifier
-} from '../../../../shared/diagrams/histogram/base-histogram.model';
+import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
+import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.model';
+import { HistogramDetailEntry } from '../../../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
+import { HistogramElFocusEvent } from '../../../../shared/diagrams/histogram/interactive-histogram.component';
 import {
     LabelFilters,
     LabelFormatters
 } from '../../../../shared/diagrams/label.utils';
-import { TranslationService } from '../../../../core/i18n/translation.service';
-import { HistogramElFocusEvent } from '../../../../shared/diagrams/histogram/interactive-histogram.component';
-import { StromService } from '../../../../services/strom/strom.service';
-import { SparzielNachBereichProMonat } from '../../../../core/models/sparziel';
 import { getYesterday } from '../../../../shared/static-utils/date-utils';
-import { SparzielService } from '../../../../services/sparziel/sparziel.service';
+import { COLOR_CONTEXT, COLOR_CONTEXT_SECONDARY } from '../../strom.consts';
 
 const DOMAIN_MAX_PADDING = 5;
 const DOMAIN_MIN_PADDING = -5;
@@ -38,7 +32,6 @@ const SPARZIEL_PERCENTAGE = 10;
 export class StromsparzielNachBereichProMonatHistogramChartComponent
     implements OnInit
 {
-    readonly sparzielTarget = SPARZIEL_PERCENTAGE;
     readonly xLabelModifier: LabelModifier;
     readonly xSubLabelModifier: LabelModifier;
     readonly yLabelFormatter;
@@ -47,7 +40,7 @@ export class StromsparzielNachBereichProMonatHistogramChartComponent
         COLOR_CONTEXT,
         COLOR_CHART_HISTOGRAM_AREA_SECONDARY
     ];
-    readonly lineColors = [COLOR_POSITIVE, '#000000'];
+    readonly lineColors = ['#000000'];
     readonly barLineColor = COLOR_CHART_HISTOGRAM_AREA_MIN_MAX_DOT;
     readonly legendEntries: DiagramLegendEntry[] = [
         {
@@ -72,19 +65,8 @@ export class StromsparzielNachBereichProMonatHistogramChartComponent
         },
         {
             color: this.lineColors[0],
-            labelKey: 'commons.sparziel.chart-legend.target',
-            labelKeyOptions: { target: this.sparzielTarget },
-            type: 'line'
-        },
-        {
-            color: this.lineColors[1],
             labelKey: 'commons.sparziel.chart-legend.five-year-average',
             type: 'line'
-        },
-        {
-            color: COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA,
-            labelKey: 'commons.sparziel.chart-legend.relevant-difference',
-            type: 'area'
         }
     ];
 
@@ -96,12 +78,10 @@ export class StromsparzielNachBereichProMonatHistogramChartComponent
     tooltipEvent?: HistogramElFocusEvent<HistogramDetailEntry>;
 
     entries: HistogramDetailEntry[];
-    blocks: Block[];
 
     constructor(
         translationService: TranslationService,
-        private stromService: StromService,
-        private sparzielService: SparzielService
+        private stromService: StromService
     ) {
         this.xLabelModifier = {
             formatter: LabelFormatters.monthShort(translationService.language),
@@ -117,9 +97,6 @@ export class StromsparzielNachBereichProMonatHistogramChartComponent
 
         this.yLabelFormatter = (value: number) =>
             value >= 0 ? `+${value}%` : `${value}%  `;
-
-        this.blocks =
-            this.sparzielService.getRelevantMonthsForSparzielOnMonthEnd();
     }
 
     ngOnInit(): void {
@@ -186,7 +163,7 @@ export class StromsparzielNachBereichProMonatHistogramChartComponent
                 ],
                 barLineValue: current.nationalSavingsPercent,
                 hiddenValues: [],
-                lineValues: [-this.sparzielTarget, 0]
+                lineValues: [0]
             };
         });
     }

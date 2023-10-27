@@ -1,12 +1,26 @@
-<span [style.backgroundColor]="dotColor" class="dot"></span>
-<span>{{ labelKey | i18next }}</span>
-<span class="first-value">
-    <ng-container *ngIf="firstRow">
-        {{ firstRow.value }}{{ firstRow.subfix }}
-    </ng-container>
-</span>
-<span class="second-value">
-    <ng-container *ngIf="secondRow">
-        {{ secondRow.value }}{{ secondRow.subfix }}
-    </ng-container>
-</span>
+<div class="bfe-row-wrapper" [class.active]="active">
+    <div class="description">
+        <span
+            [style.backgroundColor]="getBackgroundColor()"
+            [style.borderColor]="getBorderColor()"
+            class="color"
+            [ngClass]="shape"
+        ></span>
+        <span class="text">{{ label | i18next }}</span>
+    </div>
+
+    <div class="value-cols">
+        <div *ngIf="showDataCol1()" class="col">
+            <span>{{ data?.value ?? '' }}</span>
+            <span class="text-muted">{{ data!.suffix || '' }}</span>
+        </div>
+        <div *ngIf="showDataCol2()" class="col">
+            <span>{{ dataCol2?.value ?? '' }}</span>
+            <span class="text-muted">{{ dataCol2?.suffix || '' }}</span>
+        </div>
+        <div *ngIf="showDataCol3()" class="col">
+            <span>{{ dataCol3?.value ?? '' }}</span>
+            <span class="text-muted">{{ dataCol3?.suffix || '' }}</span>
+        </div>
+    </div>
+</div>

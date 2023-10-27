@@ -1,0 +1,181 @@
+<bfe-kpi-container
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-wetter-5_heizgradtage.datenquelle',
+        langtextDynamicKey: 'kpi-wetter-5_heizgradtage.langtext'
+    }"
+    titleKeyDynamic="kpi-wetter-5_heizgradtage.titel"
+    ><section>
+        <bfe-kpi-container-row>
+            <section>
+                <bfe-trend-and-number
+                    [isLoading]="isLoadingTrend"
+                    [model]="{
+                        color: colorHeizgradtage,
+                        bigNumber: {
+                            value: trend.messungPrognoseKumulativMittelwert,
+                            postfix: 'HGT',
+                            subTextKeys: [
+                                'dashboard.gas.import.daily-net-import.per-day'
+                            ]
+                        },
+                        trend: {
+                            value: trend.trend,
+                            rating: trend.trendRating,
+                            subTextKeys: [
+                                'dashboard.gas.import.daily-net-import.trend'
+                            ]
+                        }
+                    }"
+                ></bfe-trend-and-number>
+            </section>
+
+            <section class="teaser-section desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-wetter-5_heizgradtage.kurztext'
+                            | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-hideable-text-section
+                [context]="'trend'"
+                [textTranslationKey]="
+                    'dynamic:kpi-wetter-5_heizgradtage.kurztext'
+                "
+            ></bfe-hideable-text-section>
+        </div>
+    </section>
+    <section>
+        <bfe-image-section
+            [loading]="isLoading"
+            [model]="imageSection"
+        ></bfe-image-section>
+        <bfe-hideable-text-section
+            [context]="'chart'"
+            [textTranslationKey]="
+                'dynamic:kpi-wetter-5_heizgradtage-karten.currentmonth.kurztext'
+            "
+        ></bfe-hideable-text-section>
+    </section>
+
+    <div class="diagram-container">
+        <div class="diagram-headline-row">
+            <div>
+                <bfe-kpi-subtitle>
+                    {{
+                        'dynamic:kpi-wetter-5_heizgradtage_ch-gesamt.titel'
+                            | i18nextDynamic
+                    }}
+                </bfe-kpi-subtitle>
+                <bfe-kpi-date-info-subtext
+                    *ngIf="trend"
+                    [date]="trend.date"
+                    updateInterval="weekly"
+                >
+                </bfe-kpi-date-info-subtext>
+            </div>
+            <div>
+                <div class="desktop-only">
+                    <bfe-select
+                        [options]="options"
+                        [selectedOptionKey]="defaultSelectedOption"
+                        (selectedValue)="changeRegion($event)"
+                    ></bfe-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-only region-select">
+            <bfe-select
+                [options]="options"
+                [selectedOptionKey]="defaultSelectedOption"
+                (selectedValue)="changeRegion($event)"
+            ></bfe-select>
+        </div>
+
+        <bfe-optional-dynamic-langtext
+            text="kpi-wetter-5_heizgradtage_ch-gesamt.langtext"
+        ></bfe-optional-dynamic-langtext>
+
+        <div *ngIf="!isLoading; else loadingTemplate">
+            <bfe-diagram-legend
+                [entries]="legendEntries"
+                [secondLineEntries]="additionalEntries"
+            ></bfe-diagram-legend>
+            <bfe-histogram-line
+                (diagramLeave)="hideTooltip()"
+                (elFocus)="showLineChartTooltip($event)"
+                [colors]="[
+                    consts.COLOR_CHART_SECONDARY,
+                    'red',
+                    consts.COLOR_CHART_PRIMARY,
+                    'blue'
+                ]"
+                [bandColor]="consts.COLOR_CHART_MIN_MAX_RANGE"
+                [data]="chartData"
+                [strokeWidths]="[1, 2, 4, 2]"
+                [dashedLines]="['0', '0 4', '0', '0 4']"
+                [yLabelFormatter]="yLabelFormatter"
+                [xLabelModifier]="labelModifier"
+                [xSubLabelModifier]="subLabelModifier"
+                [pointsOfInterest]="pointsOfInterest"
+            ></bfe-histogram-line>
+            <bfe-points-of-interest-legend
+                class="margin-bottom"
+                [entries]="pointsOfInterest"
+            ></bfe-points-of-interest-legend>
+
+            <bfe-hideable-text-section
+                [context]="'chart'"
+                [textTranslationKey]="
+                    'dynamic:kpi-wetter-5_heizgradtage_ch-gesamt.kurztext'
+                "
+            ></bfe-hideable-text-section>
+
+            <!-- 
+                bfe-histogram-line.colors
+                bfe-histogram-line.strokeWidths
+                bfe-histogram-line.dashedLines
+                bfe-histogram-line.data
+                bfe-histogram-chart-tooltip.entries
+
+                all these arrays needs to be in the same order otherwise something will not match
+            -->
+
+            <bfe-histogram-chart-tooltip
+                [event]="tooltipEvent"
+                [primaryColor]="consts.COLOR_CHART_PRIMARY"
+                [withSpaceBeforePostfix]="true"
+                [entries]="[
+                    {
+                        color: consts.COLOR_CHART_SECONDARY,
+                        label: 'dashboard.wetter.heizgrad-tage.diagram-legend.norm-kumulativ-mean'
+                    },
+                    {
+                        color: 'red',
+                        label: 'dashboard.wetter.heizgrad-tage.diagram-legend.messung-prognose-kumulativ-max'
+                    },
+                    {
+                        color: consts.COLOR_CHART_PRIMARY,
+                        label: 'dashboard.wetter.heizgrad-tage.diagram-legend.messung-prognose-kumulativ-mean'
+                    },
+                    {
+                        color: 'blue',
+                        label: 'dashboard.wetter.heizgrad-tage.diagram-legend.messung-prognose-kumulativ-min'
+                    }
+                ]"
+                postfix="HGT"
+                postfixDifference="%P"
+                currentLabel="dashboard.wetter.heizgrad-tage.diagram-legend.messung-prognose-kumulativ-mean"
+            ></bfe-histogram-chart-tooltip>
+        </div>
+
+        <ng-template #loadingTemplate>
+            <bfe-loading-spinner [placeholder]="'chart'"></bfe-loading-spinner>
+        </ng-template>
+    </div>
+</bfe-kpi-container>

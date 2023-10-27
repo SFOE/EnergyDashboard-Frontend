@@ -3,6 +3,7 @@
 .dashboard-row-container {
     margin: 15px 0;
     max-width: 100%;
+    display: block;
 
     .title-section {
         margin-bottom: 16px;
@@ -32,5 +33,13 @@
         max-width: 100%;
         animation: skeleton-loading 1s linear infinite alternate;
         border-radius: 8px;
+    }
+    &:hover {
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      margin-top: 12px;
+      padding-bottom: 3px;
+      max-width: 100%;
+      transform: scale(1.02);
     }
 }

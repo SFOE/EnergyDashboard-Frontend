@@ -16,7 +16,7 @@ export class ProduktionComponent implements OnInit {
 
     context = Context.STROM;
 
-    isLoading: boolean = false;
+    isLoading: boolean = true;
 
     constructor(private stromService: StromService) {}
 

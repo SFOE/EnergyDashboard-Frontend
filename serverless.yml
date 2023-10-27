@@ -3,6 +3,8 @@ service: energy-dashboard-web
 plugins:
     - serverless-apigw-binary
     - serverless-offline
+    - 'serverless-plugin-lambda-insights'
+    - 'serverless-plugin-aws-alerts'
 
 provider:
     name: aws
@@ -41,6 +43,22 @@ custom:
     apigwBinary:
         types:
             - '*/*'
+    lambdaInsights:
+        defaultLambdaInsights: true #enables Lambda Insights for all functions
+    alerts:
+        topics:
+            alarm:
+                topic: ${self:service}-${opt:stage}-alerts-alarm
+                notifications:
+                    -   protocol: email
+                        endpoint: bas@ti8m.ch
+                    -   protocol: email
+                        endpoint: energiedashboard@ti8m.ch
+                    -   protocol: email
+                        endpoint: yannik.inniger@ti8m.ch
+        alarms:
+            - functionErrors
+            - functionThrottles
 
 functions:
     api:

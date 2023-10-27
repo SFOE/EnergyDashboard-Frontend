@@ -41,8 +41,8 @@ describe('weekdayToTranslationKey', () => {
     ];
 
     it('should map all mapped keys correctly', () => {
-        expectedWeekdayMapping.forEach((expected, index) => {
-            const result = weekdayToTranslationKey(index);
+        expectedWeekdayMapping.forEach((expected, index, useLongName) => {
+            const result = weekdayToTranslationKey(index, true);
 
             expect(result).toBe(expected);
         });
@@ -51,13 +51,13 @@ describe('weekdayToTranslationKey', () => {
     it('should map unmapped weekdays to N/A', () => {
         const expected = 'commons.not-available';
 
-        let result = weekdayToTranslationKey(6);
+        let result = weekdayToTranslationKey(6, true);
         expect(result).toBe(expected);
 
-        result = weekdayToTranslationKey(undefined);
+        result = weekdayToTranslationKey(undefined, true);
         expect(result).toBe(expected);
 
-        result = weekdayToTranslationKey(-1);
+        result = weekdayToTranslationKey(-1, true);
         expect(result).toBe(expected);
     });
 });

@@ -1,58 +1,77 @@
-<bfe-kpi-container
-    [footerConfig]="{
-        sourceDynamicKey: 'kpi-strom-3_sparziel-five-percent.datenquelle',
-        langtextDynamicKey: 'kpi-strom-3_sparziel-five-percent.langtext'
-    }"
-    titleKeyDynamic="kpi-strom-3_sparziel-five-percent.titel"
+<section
+    class="margin-bottom"
+    [id]="fragments.FRAGMENT_STROM_VERBRAUCH_NACH_BEREICH"
 >
-    <bfe-kpi-container-row>
+    <bfe-kpi-subtitle>
+        {{
+            'dynamic:kpi-strom-3_minder-mehrverbrauch-five-percent.titel'
+                | i18nextDynamic
+        }}
+    </bfe-kpi-subtitle>
+</section>
+<section>
+    <bfe-kpi-container-row [indented]="true">
         <section>
             <bfe-stromsparziel-five-percent-details>
             </bfe-stromsparziel-five-percent-details>
         </section>
-        <section class="teaser-section">
+        <section class="teaser-section desktop-only">
             <div
-                class="teaser"
                 [innerHTML]="
-                    'dynamic:kpi-strom-3_sparziel-five-percent.kurztext'
+                    'dynamic:kpi-strom-3_minder-mehrverbrauch-five-percent.kurztext'
                         | i18nextDynamic
                 "
+                class="teaser"
             ></div>
         </section>
     </bfe-kpi-container-row>
 
-    <div class="diagram-container">
-        <bfe-kpi-subtitle>
-            {{
-                'dynamic:kpi-strom-3_sparziel-five-percent.peakhours.title'
-                    | i18nextDynamic
-            }}
-        </bfe-kpi-subtitle>
-
-        <div>
-            <bfe-kpi-date-info-subtext
-                [updateInterval]="'daily'"
-                [date]="updatedDate"
-            ></bfe-kpi-date-info-subtext>
-
-            <bfe-optional-dynamic-langtext
-                text="kpi-strom-3_sparziel-five-percent.peakhours.langtext"
-            ></bfe-optional-dynamic-langtext>
-        </div>
-
-        <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
-
-        <bfe-stromsparziel-five-percent-chart
-            *ngIf="!isLoading && modelBySelectedMonth"
-            [data]="modelBySelectedMonth"
-            [hours]="availableHours"
-        >
-        </bfe-stromsparziel-five-percent-chart>
-
-        <bfe-stromsparziel-five-percent-month-switch
-            *ngIf="!isLoading"
-            [availableMonths]="availableMonths"
-            (monthChanged)="onMonthChanged($event)"
-        ></bfe-stromsparziel-five-percent-month-switch>
+    <div class="mobile-only">
+        <bfe-kpi-container-row>
+            <bfe-hideable-text-section
+                [context]="'trend'"
+                [textTranslationKey]="
+                    'dynamic:kpi-strom-3_minder-mehrverbrauch-five-percent.kurztext'
+                "
+            ></bfe-hideable-text-section>
+        </bfe-kpi-container-row>
     </div>
-</bfe-kpi-container>
+</section>
+
+<div class="diagram-container">
+    <bfe-kpi-subtitle>
+        {{
+            'dynamic:kpi-strom-3_minder-mehrverbrauch-five-percent.peakhours.title'
+                | i18nextDynamic
+        }}
+    </bfe-kpi-subtitle>
+
+    <div>
+        <bfe-kpi-date-info-subtext
+            [updateInterval]="'daily'"
+            [date]="updatedDate"
+        ></bfe-kpi-date-info-subtext>
+    </div>
+
+    <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+
+    <bfe-stromsparziel-five-percent-chart
+        *ngIf="!isLoading && modelBySelectedMonth"
+        [data]="modelBySelectedMonth"
+        [hours]="availableHours"
+    >
+    </bfe-stromsparziel-five-percent-chart>
+
+    <bfe-stromsparziel-five-percent-month-switch
+        *ngIf="!isLoading"
+        [availableMonths]="availableMonths"
+        (monthChanged)="onMonthChanged($event)"
+    ></bfe-stromsparziel-five-percent-month-switch>
+
+    <bfe-hideable-text-section
+        [context]="'chart'"
+        [textTranslationKey]="
+            'dynamic:kpi-strom-3_minder-mehrverbrauch-five-percent.peakhours.langtext'
+        "
+    ></bfe-hideable-text-section>
+</div>

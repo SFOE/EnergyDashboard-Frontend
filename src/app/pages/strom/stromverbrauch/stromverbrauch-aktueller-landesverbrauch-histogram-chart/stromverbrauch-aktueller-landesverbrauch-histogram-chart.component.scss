@@ -4,6 +4,9 @@
 @use 'var';
 
 .stromverbrauch-aktueller-landesverbrauch-histogram-chart {
+    .diagram-container {
+        margin-bottom: 22px;
+    }
     @media (max-width: #{dim.$bp-min-md}) {
         .kpi-head {
             grid-template-columns: 1fr;

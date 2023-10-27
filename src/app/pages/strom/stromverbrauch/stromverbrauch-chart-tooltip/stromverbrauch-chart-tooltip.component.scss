@@ -31,22 +31,6 @@
         margin-right: 12px;
     }
 
-    .divider-section {
-        grid-column: span 3;
-        display: flex;
-        align-items: stretch;
-        justify-content: stretch;
-        width: 100%;
-        margin-left: -8px;
-        padding-right: 4px;
-
-        hr {
-            height: 1px;
-            background-color: #ebebeb;
-            border: none;
-        }
-    }
-
     .sum-icon {
         display: flex;
         align-items: flex-end;

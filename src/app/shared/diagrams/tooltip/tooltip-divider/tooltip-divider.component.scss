@@ -1,0 +1,11 @@
+.divider-section {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+
+    hr {
+        height: 1px;
+        background-color: #ebebeb;
+        border: none;
+    }
+}

@@ -1,91 +1,50 @@
 <div #tooltip [class.hidden]="!event" class="tooltip-container">
-    <ng-container *ngIf="!!data">
-        <section class="date-section">
-            {{ data.date | date: 'MMMM yyyy' }}
-        </section>
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header header [title]="data.date | date: 'MMMM yyyy'" />
+        <bfe-tooltip-icon-row
+            *ngIf="data.barValues[0] !== null"
+            icon="house"
+            [color]="barColors[0]"
+            label="commons.sparziel.sectors.private"
+            [data]="{
+                value: data.barValues[0] | number,
+                suffix: '%'
+            }"
+        />
 
-        <ng-container>
-            <section class="tooltip-content">
-                <div>
-                    <span class="dot">
-                        <fa-icon
-                            [icon]="'house'"
-                            [style.color]="barColors[0]"
-                        ></fa-icon>
-                    </span>
+        <bfe-tooltip-icon-row
+            *ngIf="data.barValues[1] !== null"
+            icon="buildings"
+            [color]="barColors[1]"
+            label="commons.sparziel.sectors.kmu"
+            [data]="{
+                value: data.barValues[1] | number,
+                suffix: '%'
+            }"
+        />
 
-                    <span class="text">{{
-                        'commons.sparziel.sectors.private' | i18next
-                        }}</span>
-                </div>
+        <bfe-tooltip-icon-row
+            *ngIf="data.barValues[2] !== null"
+            icon="industry-windows"
+            [color]="barColors[2]"
+            label="commons.sparziel.sectors.industry"
+            [data]="{
+                value: data.barValues[2] | number,
+                suffix: '%'
+            }"
+        />
 
-                <span class="text-value">
-                    <span> {{ data.barValues[0] }} </span>
-                    <span class="text-muted"> % </span>
-                </span>
-            </section>
+        <bfe-tooltip-divider />
 
-            <section class="tooltip-content">
-                <div>
-                    <span class="dot">
-                        <fa-icon
-                            [icon]="'buildings'"
-                            [style.color]="barColors[1]"
-                        ></fa-icon>
-                    </span>
-
-                    <span class="text">{{
-                        'commons.sparziel.sectors.kmu' | i18next
-                        }}</span>
-                </div>
-
-                <span class="text-value">
-                    <span> {{ data.barValues[1] }} </span>
-                    <span class="text-muted"> % </span>
-                </span>
-            </section>
-
-            <section class="tooltip-content">
-                <div>
-                    <span class="dot">
-                        <fa-icon
-                            [icon]="'industry-windows'"
-                            [style.color]="barColors[2]"
-                        ></fa-icon>
-                    </span>
-
-                    <span class="text">{{
-                        'commons.sparziel.sectors.industry' | i18next
-                        }}</span>
-                </div>
-
-                <span class="text-value">
-                    <span> {{ data.barValues[2] }} </span>
-                    <span class="text-muted"> % </span>
-                </span>
-            </section>
-
-            <div class="divider-section">
-                <hr/>
-            </div>
-
-            <section class="tooltip-content">
-                <div>
-                    <span
-                        [style.backgroundColor]="barLineColor"
-                        class="dot"
-                    ></span>
-
-                    <span class="text">{{
-                        'commons.sparziel.netto-value' | i18next
-                        }}</span>
-                </div>
-
-                <span class="text-value">
-                    <span> {{ data.barLineValue }}</span>
-                    <span class="text-muted"> % </span>
-                </span>
-            </section>
-        </ng-container>
-    </ng-container>
+        <bfe-tooltip-row
+            *ngIf="data.barLineValue !== null"
+            shape="dashed-line"
+            [color]="barLineColor"
+            label="commons.sparziel.netto-value"
+            [data]="{
+                value: data.barLineValue | number,
+                suffix: '%'
+            }"
+        />
+    </bfe-tooltip-container>
 </div>

@@ -10,10 +10,6 @@
         [date]="dateOfLastUpdate"
     ></bfe-kpi-date-info-subtext>
 
-    <bfe-optional-dynamic-langtext
-        text="kpi-wetter-4_schneereserven-aktuell.langtext"
-    ></bfe-optional-dynamic-langtext>
-
     <div class="diagram-container" *ngIf="!isLoading; else loadingTemplate">
         <bfe-diagram-legend
             [entries]="[
@@ -36,6 +32,7 @@
         ></bfe-diagram-legend>
 
         <bfe-histogram-line
+            class="margin-bottom"
             (diagramLeave)="hideTooltip()"
             (elFocus)="showLineChartTooltip($event)"
             [bandColor]="consts.COLOR_CHART_MIN_MAX_RANGE"
@@ -59,11 +56,16 @@
             ]"
             postfix="%"
         ></bfe-schneereserven-aktuelles-jahr-chart-tooltip>
+
+        <bfe-hideable-text-section
+            [context]="'chart'"
+            [textTranslationKey]="
+                'dynamic:kpi-wetter-4_schneereserven-aktuell.langtext'
+            "
+        ></bfe-hideable-text-section>
     </div>
 
     <ng-template #loadingTemplate>
-        <div class="loading-container">
-            <bfe-loading-spinner></bfe-loading-spinner>
-        </div>
+        <bfe-loading-spinner></bfe-loading-spinner>
     </ng-template>
 </div>

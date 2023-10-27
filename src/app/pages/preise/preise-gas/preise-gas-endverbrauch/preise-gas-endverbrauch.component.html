@@ -9,9 +9,7 @@
         >
         </bfe-kpi-date-info-subtext>
     </section>
-    <bfe-optional-dynamic-langtext
-        text="kpi-preise-3_gas_endverbrauch.langtext"
-    ></bfe-optional-dynamic-langtext>
+
     <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
     <bfe-histogram-line
         (diagramLeave)="hideTooltip()"
@@ -29,4 +27,9 @@
         [lineEntries]="legendEntries"
         postfix="%"
     ></bfe-preise-tooltip>
+
+    <bfe-hideable-text-section
+        [context]="'chart'"
+        [textTranslationKey]="'dynamic:kpi-preise-3_gas_endverbrauch.langtext'"
+    ></bfe-hideable-text-section>
 </div>

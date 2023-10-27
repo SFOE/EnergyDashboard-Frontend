@@ -10,9 +10,6 @@
         </bfe-kpi-date-info-subtext>
 
         <div *ngIf="(chartData.length ?? 0) > 0" class="diagram-container">
-            <bfe-optional-dynamic-langtext
-                text="kpi-strom-1_landesverbrauch_endverbrauch_SG.langtext"
-            ></bfe-optional-dynamic-langtext>
             <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
             <bfe-histogram-line
                 [domainMin]="minYValue"
@@ -35,5 +32,12 @@
                 [withSpaceBeforePostfixDifference]="false"
             ></bfe-stromverbrauch-chart-tooltip>
         </div>
+
+        <bfe-hideable-text-section
+            [context]="'chart'"
+            [textTranslationKey]="
+                'dynamic:kpi-strom-1_landesverbrauch_endverbrauch_SG.langtext'
+            "
+        ></bfe-hideable-text-section>
     </section>
 </div>

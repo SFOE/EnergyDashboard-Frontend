@@ -1,14 +1,7 @@
 @use 'var';
 
-.loading-container {
-    height: 450px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 bfe-points-of-interest-legend {
     margin-left: var.$kpi-container-indentation;
     display: block;
+    margin-bottom: 22px;
 }

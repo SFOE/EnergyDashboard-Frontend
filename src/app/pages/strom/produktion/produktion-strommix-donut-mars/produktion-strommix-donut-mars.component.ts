@@ -7,9 +7,11 @@ import {
 } from '@angular/core';
 import { StromProductionEntry } from '../../../../services/strom/strom.model';
 import { StromService } from '../../../../services/strom/strom.service';
-import { COLORS_STROM } from '../../../../shared/commons/colors.const';
 import { DonutChartEntry } from '../../../../shared/diagrams/full-donut/full-donut.model';
-
+import {
+    StromProduktionChartIndex,
+    StromProduktionColors
+} from '../produktion.consts';
 @Component({
     selector: 'bfe-produktion-strommix-donut-mars',
     templateUrl: './produktion-strommix-donut-mars.component.html',
@@ -19,16 +21,20 @@ export class ProduktionStrommixDonutMarsComponent implements OnInit {
     lastFiveProductionEntries: DonutChartEntry[][];
     lastUpdated?: Date;
 
-    ColorsStrom = COLORS_STROM;
+    readonly chartColors = StromProduktionColors;
+    readonly chartIndex = StromProduktionChartIndex;
 
     @ViewChild('currentChartSection') currentSectionRef: ElementRef;
+    @ViewChild('historicChartSection') historicSectionRef: ElementRef;
+    @ViewChild('chartRowContainer') chartRowRef: ElementRef;
     @ViewChild('legend') legendRef: ElementRef;
     currentChartDimension: number = 0;
     historicChartDimension: number = 0;
-    private readonly maxChartDimension = 230;
+    private readonly maxChartDimension = 250;
 
     currentYear = new Date().getFullYear();
     loading: boolean = true;
+    selectedDataIndex: number | null = null;
 
     constructor(private stromService: StromService) {}
 
@@ -37,7 +43,9 @@ export class ProduktionStrommixDonutMarsComponent implements OnInit {
             this.lastUpdated = data.lastUpdate;
             this.lastFiveProductionEntries = data.entries
                 .sort((a, b) => b.year - a.year)
-                .map(this.mapProductionEntryToChartEntry);
+                .map((entry: any) =>
+                    this.mapProductionEntryToChartEntry(entry as any)
+                );
             this.waitForCurrentContainerAndResize();
             this.loading = false;
         });
@@ -50,37 +58,37 @@ export class ProduktionStrommixDonutMarsComponent implements OnInit {
             {
                 percentage: entry.anteilKernkraft,
                 value: entry.kumuliertKernkraft,
-                color: COLORS_STROM.KERNKRAFT,
+                color: this.chartColors[this.chartIndex.KERNKRAFT],
                 labelKey: 'dashboard.strom.produktion.type.kernkraft'
             },
             {
                 percentage: entry.anteilWind,
                 value: entry.kumuliertWind,
-                color: COLORS_STROM.WIND,
+                color: this.chartColors[this.chartIndex.WIND],
                 labelKey: 'dashboard.strom.produktion.type.wind'
             },
             {
                 percentage: entry.anteilFlusskraft,
                 value: entry.kumuliertFlusskraft,
-                color: COLORS_STROM.FLUSSKRAFT,
+                color: this.chartColors[this.chartIndex.FLUSSKRAFT],
                 labelKey: 'dashboard.strom.produktion.type.flusskraft'
             },
             {
                 percentage: entry.anteilThermische,
                 value: entry.kumuliertThermische,
-                color: COLORS_STROM.THERMISCHE,
+                color: this.chartColors[this.chartIndex.THERMISCHE],
                 labelKey: 'dashboard.strom.produktion.type.thermische'
             },
             {
                 percentage: entry.anteilSpeicherkraft,
                 value: entry.kumuliertSpeicherkraft,
-                color: COLORS_STROM.SPEICHERKRAFT,
+                color: this.chartColors[this.chartIndex.SPEICHERKRAFT],
                 labelKey: 'dashboard.strom.produktion.type.speicherkraft'
             },
             {
                 percentage: entry.anteilPhotovoltaik,
                 value: entry.kumuliertPhotovoltaik,
-                color: COLORS_STROM.PHOTOVOLTAIK,
+                color: this.chartColors[this.chartIndex.PHOTOVOLTAIK],
                 labelKey: 'dashboard.strom.produktion.type.photovoltaik'
             }
         ];
@@ -97,16 +105,31 @@ export class ProduktionStrommixDonutMarsComponent implements OnInit {
 
     @HostListener('window:resize', ['$event'])
     onResize() {
-        const currentContainerWidth =
+        const currentChartSectionWidth =
             this.currentSectionRef.nativeElement.clientWidth;
-        const calculatedWidth =
-            currentContainerWidth - this.legendRef.nativeElement.clientWidth;
         this.currentChartDimension =
-            calculatedWidth < this.maxChartDimension
-                ? calculatedWidth
+            currentChartSectionWidth < this.maxChartDimension
+                ? currentChartSectionWidth
                 : this.maxChartDimension;
 
-        //current container and historic container width should be equal
-        this.historicChartDimension = currentContainerWidth / 2 - 16; // subtract 16px for gap
+        // Calculate historic chart dimension
+        const chartRowContainer = this.chartRowRef.nativeElement.clientWidth;
+        const historicChartSectionWidth =
+            this.historicSectionRef.nativeElement.clientWidth;
+
+        const calculatedWidth =
+            historicChartSectionWidth === chartRowContainer
+                ? historicChartSectionWidth
+                : chartRowContainer - this.currentChartDimension - 64;
+
+        this.historicChartDimension = calculatedWidth / 2 - 32; // subtract 16px for gap
+    }
+
+    onReset(): void {
+        this.selectedDataIndex = null;
+    }
+    onSelect(dataIndex: number): void {
+        this.selectedDataIndex =
+            this.selectedDataIndex === dataIndex ? null : dataIndex;
     }
 }

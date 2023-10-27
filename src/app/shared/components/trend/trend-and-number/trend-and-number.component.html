@@ -1,4 +1,7 @@
-<section class="trend-section">
+<section
+    class="trend-section"
+    *ngIf="isLoading != null && !isLoading; else loading"
+>
     <section [class.align-right]="alignRight">
         <div *ngIf="model.bigNumber.topTextKeys">
             <p
@@ -13,15 +16,16 @@
             #number
             [number]="model.bigNumber.value"
             [unit]="model.bigNumber.postfix"
+            [subUnit]="model.bigNumber.subUnit"
             [color]="model.color"
         ></bfe-large-number-unit>
-        <div #numberText>
-            <p
+        <div #numberText class="number-label-container">
+            <div
                 *ngFor="let key of model.bigNumber.subTextKeys"
                 class="label-medium"
             >
                 {{ key | i18next }}
-            </p>
+            </div>
         </div>
     </section>
     <section *ngIf="model.trend">
@@ -34,3 +38,7 @@
         </p>
     </section>
 </section>
+
+<ng-template #loading>
+    <bfe-loading-spinner></bfe-loading-spinner>
+</ng-template>

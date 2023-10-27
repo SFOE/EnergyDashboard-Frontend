@@ -8,12 +8,23 @@
 
 .trend-section {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
+    gap: 44px;
     align-items: flex-start;
 }
 
 .trend-section-diagram {
     position: relative;
+}
+.label-medium {
+    white-space: nowrap;
+}
+.bottom-label {
+    position: relative;
+    span {
+        position: absolute;
+        bottom: -22px;
+    }
 }
 
 .einsparungen-diagram {
@@ -40,6 +51,7 @@
 
     .row div:nth-of-type(3) {
         width: 120px;
+        box-sizing: content-box;
     }
 
     .row:nth-of-type(2) .col:nth-of-type(1) {
@@ -48,7 +60,8 @@
     }
 
     .row:nth-of-type(2) .col:nth-of-type(2) {
-        border: 2px solid #d9d9d9;
+        box-sizing: content-box;
+        border-bottom: 2px solid #d9d9d9;
     }
 
     .row:nth-of-type(2) .col:nth-of-type(3) {

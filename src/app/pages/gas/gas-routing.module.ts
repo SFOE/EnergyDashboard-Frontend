@@ -5,6 +5,7 @@ import { EuGasspeicherComponent } from './eu-gasspeicher/eu-gasspeicher.componen
 import { GasImportComponent } from './gas-import/gas-import.component';
 import { GasComponent } from './gas.component';
 import { GassparzielComponent } from './gassparziel/gassparziel.component';
+import { GasImportEuropaComponent } from './import-europa/import-europa.component';
 
 const routes: Routes = [
     {
@@ -14,6 +15,10 @@ const routes: Routes = [
             {
                 path: RoutePaths.DASHBOARD_GAS_IMPORT,
                 component: GasImportComponent
+            },
+            {
+                path: RoutePaths.DASHBOARD_GAS_IMPORT_EUROPA,
+                component: GasImportEuropaComponent
             },
             {
                 path: RoutePaths.DASHBOARD_GAS_EU_GASSPEICHER,

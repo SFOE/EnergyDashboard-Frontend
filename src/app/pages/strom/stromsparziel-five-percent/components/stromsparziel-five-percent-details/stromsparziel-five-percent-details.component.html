@@ -11,7 +11,7 @@
 
             <!-- TODO: Check for the height values and do not show the icon if the value is too small -->
             <div class="einsparungen-diagram">
-                <div class="row">
+                <div class="row" [style.height]="'0px'">
                     <div class="col">
                         <span class="label-medium"> </span>
                     </div>
@@ -20,34 +20,15 @@
                     <div class="col"></div>
                 </div>
 
-                <div class="row" [style.height]="getSavingsHeight() + 'px'">
-                    <div class="col">
-                        <span class="label-medium">
-                            {{ 'commons.sparziel.goal' | i18next }}:
-                            {{ this.savingsGoalGwh }} GWh
-                        </span>
-                    </div>
-                    <div
-                        class="col savings-reached"
-                        [style.backgroundColor]="
-                            isSavingsGoalReached ? savedColor : ''
-                        "
-                    >
-                        <span>
-                            <p class="num-xtra-small">
-                                {{
-                                isSavingsGoalReached
-                                    ? getSavings() - 100 + '%'
-                                    : ''
-                                }}
-                            </p>
-                        </span>
-                    </div>
+                <div class="row" [style.height]="'20px'">
+                    <div></div>
+                    <div class="col"></div>
 
                     <div class="col">
-                        <span class="label-medium"
-                        >Gespart: {{ getSavings() }}%</span
-                        >
+                        <span class="label-medium">{{
+                            'commons.sparziel.sectors.savings'
+                                | i18next: { value: getSavings() }
+                        }}</span>
                     </div>
                 </div>
 
@@ -57,9 +38,14 @@
                             {{ 'commons.sparziel.sectors.private' | i18next }}
                         </span>
                     </div>
-                    <div class="col" [style.backgroundColor]="privateColor">
+                    <div
+                        class="col"
+                        [style.backgroundColor]="privateColor"
+                        [style.overflow]="'hidden'"
+                    >
                         <span>
                             <fa-icon
+                                *ngIf="getPrivateHeight() > 6"
                                 [icon]="'house'"
                                 [style.color]="'white'"
                             ></fa-icon>
@@ -70,15 +56,23 @@
 
                 <div class="row" [style.height]="getKmuHeight() + 'px'">
                     <div class="col"></div>
-                    <div class="col" [style.backgroundColor]="kmuColor">
+                    <div
+                        class="col"
+                        [style.backgroundColor]="kmuColor"
+                        [style.overflow]="'hidden'"
+                    >
                         <span>
                             <fa-icon
+                                *ngIf="getKmuHeight() > 6"
                                 [icon]="'buildings'"
                                 [style.color]="'white'"
                             ></fa-icon>
                         </span>
                     </div>
-                    <div class="col" [style.border-color]="kmuColor">
+                    <div
+                        class="col bottom-label"
+                        [style.border-color]="kmuColor"
+                    >
                         <span class="label-medium">
                             {{ 'commons.sparziel.sectors.kmu' | i18next }}
                         </span>
@@ -86,14 +80,22 @@
                 </div>
 
                 <div class="row" [style.height]="getIndustryHeight() + 'px'">
-                    <div class="col" [style.border-color]="industryColor">
+                    <div
+                        class="col bottom-label"
+                        [style.border-color]="industryColor"
+                    >
                         <span class="label-medium">
                             {{ 'commons.sparziel.sectors.industry' | i18next }}
                         </span>
                     </div>
-                    <div class="col" [style.backgroundColor]="industryColor">
+                    <div
+                        class="col"
+                        [style.backgroundColor]="industryColor"
+                        [style.overflow]="'hidden'"
+                    >
                         <span>
                             <fa-icon
+                                *ngIf="getIndustryHeight() > 6"
                                 [icon]="'industry-windows'"
                                 [style.color]="'white'"
                             ></fa-icon>

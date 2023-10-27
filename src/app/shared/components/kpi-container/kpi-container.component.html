@@ -3,12 +3,17 @@
         <bfe-loading-spinner></bfe-loading-spinner>
     </div>
     <h2
+        *ngIf="titleKeyDynamic"
         class="kpi-title"
+        [ngClass]="{ 'app-view': appView }"
         [innerHTML]="'dynamic:' + titleKeyDynamic | i18nextDynamic"
     ></h2>
     <div class="kpi-content">
         <ng-content></ng-content>
         <bfe-kpi-footer
+            *ngIf="
+                footerConfig.sourceDynamicKey || footerConfig.langtextDynamicKey
+            "
             [sourceKey]="footerConfig.sourceDynamicKey"
             [langtextKey]="footerConfig.langtextDynamicKey"
         ></bfe-kpi-footer>

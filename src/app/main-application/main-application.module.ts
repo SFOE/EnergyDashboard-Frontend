@@ -8,12 +8,14 @@ import { AxStatementComponent } from '../pages/ax-statement/ax-statement.compone
 import { IntegrationGuideComponent } from '../pages/integration-guide/integration-guide.component';
 import { I18NextModule } from 'angular-i18next';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DataProtectionComponent } from '../pages/data-protection/data-protection.component';
 
 @NgModule({
     declarations: [
         MainApplicationComponent,
         AxStatementComponent,
-        IntegrationGuideComponent
+        IntegrationGuideComponent,
+        DataProtectionComponent
     ],
     imports: [
         CommonModule,

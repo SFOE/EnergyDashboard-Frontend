@@ -23,26 +23,18 @@ export class StromsparzielFivePercentDetailsTooltipComponent {
     savingsGoalGwh: number;
 
     getKmuPercent(): number {
-        const total = this.savingsGoalGwh;
-        return (100 / total) * Math.abs(this.data.anteilKMU);
+        return Math.abs(this.data.totalSavingKmuPercent);
     }
 
     getIndustryPercent(): number {
-        const total = this.savingsGoalGwh;
-        return (100 / total) * Math.abs(this.data.anteilIndustrie);
+        return Math.abs(this.data.totalSavingIndustriePercent);
     }
 
     getPrivatePercent(): number {
-        const total = this.savingsGoalGwh;
-        return (100 / total) * Math.abs(this.data.anteilPrivate);
+        return Math.abs(this.data.totalSavingPrivatPercent);
     }
 
     getSavings(): number {
-        const total =
-            this.data.anteilIndustrie +
-            this.data.anteilPrivate +
-            this.data.anteilKMU;
-
-        return Math.round((100 / -this.savingsGoalGwh) * total);
+      return Math.round(this.data.totalSavingsGWh);
     }
 }

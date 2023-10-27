@@ -3,42 +3,8 @@
 
 .tooltip-container {
     @include mix.tooltip-container;
-    position: relative;
 
-    .date-section {
-        padding: 4px 8px;
-        border-bottom: 1px solid #ccc;
+    &.hidden {
+        visibility: hidden;
     }
-
-    .percent-section {
-        display: flex;
-        justify-content: space-between;
-        padding: 4px 8px;
-
-        .text-value {
-            text-align: right;
-            width: 70px;
-        }
-    }
-
-    .column-margin {
-        margin-right: 12px;
-    }
-}
-
-.dot {
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 8px;
-}
-
-.dot-achieved {
-    background-color: var(--achievedColor);
-}
-
-.dot-projected {
-    background-color: var(--achievedColor);
-    opacity: var(--projectedOpacity);
 }

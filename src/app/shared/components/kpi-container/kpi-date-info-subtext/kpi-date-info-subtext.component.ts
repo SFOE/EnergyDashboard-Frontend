@@ -13,6 +13,6 @@ export type UpdateInterval =
     styleUrls: ['./kpi-date-info-subtext.component.scss']
 })
 export class KpiDateInfoSubtextComponent {
-    @Input() date: Date | string;
+    @Input() date: Date | string | null;
     @Input() updateInterval?: UpdateInterval;
 }

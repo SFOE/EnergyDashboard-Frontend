@@ -1,26 +1,49 @@
 import { Component, Input } from '@angular/core';
+import { HistogramDetailEntry } from '../../histogram/histogram-detail/histogram-detail.component';
+import { BaseTooltipComponent } from '../../tooltip/base-tooltip';
+
+import { COLOR_POSITIVE } from '../../../../shared/commons/colors.const';
+
+export interface Sparziel {
+    percent: number;
+    gwh: number;
+}
 
 @Component({
     selector: 'bfe-sparziel-chart-tooltip',
     templateUrl: './sparziel-chart-tooltip.component.html',
     styleUrls: ['./sparziel-chart-tooltip.component.scss']
 })
-export class SparzielChartTooltipComponent {
+export class SparzielChartTooltipComponent extends BaseTooltipComponent<HistogramDetailEntry> {
     @Input()
     titleKey: string;
 
     @Input()
-    alreadySaved: number;
+    projectedPercentage: number | string | null;
 
     @Input()
-    projectedPercentage: number;
+    projectedValue: string | null;
 
     @Input()
-    achievedPercentage: number;
+    achievedPercentage: number | string | null;
 
     @Input()
-    target: string;
+    achievedValue: number | null;
 
     @Input()
-    weatherAdjustedPercent: number;
+    weatherAdjustedPercent: number | string | null;
+
+    @Input()
+    weatherAdjustedGwh: number;
+
+    @Input()
+    achievedColor: string;
+
+    @Input()
+    target?: Sparziel;
+
+    @Input()
+    schaezung: boolean = false;
+
+    targetColor = COLOR_POSITIVE;
 }

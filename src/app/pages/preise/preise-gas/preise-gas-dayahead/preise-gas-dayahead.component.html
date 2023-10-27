@@ -6,9 +6,7 @@
         <bfe-kpi-date-info-subtext [date]="currentEntry.date">
         </bfe-kpi-date-info-subtext>
     </section>
-    <bfe-optional-dynamic-langtext
-        text="kpi-preise-3_gas_dayahead.langtext"
-    ></bfe-optional-dynamic-langtext>
+
     <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
     <bfe-histogram-line
         (diagramLeave)="hideTooltip()"
@@ -23,6 +21,12 @@
     <bfe-preise-tooltip
         [event]="tooltipEvent"
         [lineEntries]="legendEntries"
+        [withSpaceBeforePostfix]="true"
         postfix="EUR"
     ></bfe-preise-tooltip>
+
+    <bfe-hideable-text-section
+        [context]="'chart'"
+        [textTranslationKey]="'dynamic:kpi-preise-3_gas_dayahead.langtext'"
+    ></bfe-hideable-text-section>
 </div>

@@ -8,6 +8,7 @@ import { PreiseTreibstoffComponent } from './preise-treibstoff/preise-treibstoff
 import { PreiseComponent } from './preise.component';
 import { PreiseHolzComponent } from './preise-holz/preise-holz.component';
 import { PreiseFernwaermeComponent } from './preise-fernwaerme/preise-fernwaerme.component';
+import { StrompreisKarte } from './strompreis-karte/strompreis-karte.component';
 
 const routes: Routes = [
     {
@@ -39,8 +40,12 @@ const routes: Routes = [
                 component: PreiseFernwaermeComponent
             },
             {
+                path: RoutePaths.DASHBOARD_PREISE_STROM_KARTE_EUROPA,
+                component: StrompreisKarte
+            },
+            {
                 path: '**',
-                redirectTo: RoutePaths.DASHBOARD_PREISE_STROM
+                redirectTo: RoutePaths.DASHBOARD_PREISE_STROM_KARTE_EUROPA
             }
         ]
     }

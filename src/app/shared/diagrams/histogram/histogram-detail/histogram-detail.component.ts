@@ -5,11 +5,11 @@ import {
     SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
-import { CurveFactory, curveLinear, curveStepAfter, Line, Selection } from 'd3';
+import { CurveFactory, Line, Selection, curveLinear, curveStepAfter } from 'd3';
 import { isSameDay } from 'date-fns';
 import {
-    COLOR_CHART_NO_DATA,
-    COLORS_HISTOGRAM_DEFAULT
+    COLORS_HISTOGRAM_DEFAULT,
+    COLOR_CHART_NO_DATA
 } from '../../../commons/colors.const';
 import { ArrayUtils } from '../../../static-utils/array-utils';
 import { middleOfDay } from '../../../static-utils/date-utils';
@@ -126,6 +126,15 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
     @Input()
     barWidth: number = 10;
 
+    @Input()
+    drawXAxis?: boolean = true;
+
+    @Input()
+    highlight0Axis?: boolean = false;
+
+    @Input()
+    strokeDasharray: string = '2 2';
+
     get svgMaxHeight(): string | null {
         return this.maxHeight ? `${this.maxHeight}px` : null;
     }
@@ -215,8 +224,15 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
         this.drawLines();
         this.drawBarLines((t: T) => t.barLineValue);
         this.drawFullYAxis();
-        this.drawFullXAxis();
+        this.drawXAxis ? this.drawFullXAxis() : () => {};
         this.updateValueDomain(this.valueDomainRect);
+        this.highlight0Axis
+            ? this.yAxisGrp
+                  .selectAll('g')
+                  .filter((value) => value === 0)
+                  .selectAll('line')
+                  .attr('stroke', '#333333')
+            : null;
     }
 
     // Draws a line on top of each bar
@@ -320,7 +336,7 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
             .attr('stroke-width', ([ix]) => this.lineThickness[ix])
             .attr('stroke-dasharray', ([ix]) =>
                 !!this.lineStyle && this.lineStyle[ix] === 'dashed'
-                    ? '2 2'
+                    ? this.strokeDasharray
                     : '0 0'
             );
     }

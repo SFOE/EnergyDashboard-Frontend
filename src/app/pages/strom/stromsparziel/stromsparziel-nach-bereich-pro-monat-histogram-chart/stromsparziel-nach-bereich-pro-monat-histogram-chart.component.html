@@ -1,8 +1,8 @@
 <div *ngIf="!isLoading; else loadingTemplate" class="diagram-container">
     <bfe-kpi-subtitle>
         {{
-        'dynamic:kpi-strom-3_sparziel_nach_bereich_pro_monat.titel'
-            | i18nextDynamic
+            'dynamic:kpi-strom-3_sparziel_nach_bereich_pro_monat.titel'
+                | i18nextDynamic
         }}
     </bfe-kpi-subtitle>
 
@@ -12,10 +12,6 @@
             [date]="lastUpdate"
             [updateInterval]="'monthly'"
         ></bfe-kpi-date-info-subtext>
-
-        <bfe-optional-dynamic-langtext
-            text="kpi-strom-3_sparziel_nach_bereich_pro_monat.langtext"
-        ></bfe-optional-dynamic-langtext>
     </div>
 
     <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
@@ -24,7 +20,7 @@
         (diagramLeave)="hideTooltip()"
         (elFocus)="showTooltip($event)"
         [data]="entries"
-        [blocks]="blocks"
+        [blocks]="[]"
         [barWidth]="barWidth"
         [barColors]="barColors"
         [lineColors]="lineColors"
@@ -47,10 +43,15 @@
         [barLineColor]="barLineColor"
     >
     </bfe-stromsparziel-nach-bereich-pro-monat-histogram-chart-tooltip>
+
+    <bfe-hideable-text-section
+        [context]="'chart'"
+        [textTranslationKey]="
+            'dynamic:kpi-strom-3_sparziel_nach_bereich_pro_monat.langtext'
+        "
+    ></bfe-hideable-text-section>
 </div>
 
 <ng-template #loadingTemplate>
-    <div class="loading-container">
-        <bfe-loading-spinner></bfe-loading-spinner>
-    </div>
+    <bfe-loading-spinner></bfe-loading-spinner>
 </ng-template>

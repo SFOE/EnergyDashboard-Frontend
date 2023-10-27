@@ -7,7 +7,7 @@ import {
     FuellstandGasspeicherChartEntriesByRegion,
     FuellstandGasspeicherRegion,
     FuellstandGasspeicherRegionCurrentEntry
-} from '../../../core/models/gas-fuellstand-gasspeicher';
+} from '../../../core/models/gas/gas-fuellstand-gasspeicher';
 import { GasService } from '../../../services/gas/gas.service';
 import { LabelModifier } from '../../../shared/diagrams/histogram/base-histogram.model';
 import { HistogramElFocusEvent } from '../../../shared/diagrams/histogram/interactive-histogram.component';

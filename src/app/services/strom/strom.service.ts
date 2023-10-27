@@ -4,7 +4,7 @@ import { catchError, map, Observable, of, shareReplay } from 'rxjs';
 import { DataService } from '../../core/data/data.service';
 import { HistogramAreaChartEntry } from '../../core/models/charts';
 import {
-    SparzielAktuelleEinsparungEntryV4,
+    SparzielAktuelleEinsparungEntryV5,
     SparzielEntry,
     SparzielNachBereichAktuellerMonat,
     SparzielNachBereichProMonat,
@@ -59,7 +59,7 @@ export class StromService {
     private cachedStromProductionImportVerbrauch$: Observable<StromProductionImportVerbrauchData>;
     private cachedStromSparziel$: Observable<SparzielEntry>;
     private cachedStromSparzielAktuelleEinsparung$: Observable<
-        SparzielAktuelleEinsparungEntryV4[]
+        SparzielAktuelleEinsparungEntryV5[]
     >;
     private cachedStromSparzielFivePercentPeakstunden$: Observable<
         StromsparzielFivePercentPeakHoursModel[]
@@ -215,7 +215,7 @@ export class StromService {
     }
 
     getSparzielAktuelleEinsparungen(): Observable<
-        SparzielAktuelleEinsparungEntryV4[]
+        SparzielAktuelleEinsparungEntryV5[]
     > {
         if (!this.cachedStromSparzielAktuelleEinsparung$) {
             this.cachedStromSparzielAktuelleEinsparung$ = this.dataService

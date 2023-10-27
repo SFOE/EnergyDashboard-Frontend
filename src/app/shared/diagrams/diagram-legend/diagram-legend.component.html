@@ -2,54 +2,47 @@
     <div
         class="diagram-legend-container"
         [ngClass]="horizontal ? 'horizontal' : 'vertical'"
+        *ngIf="isInteractive; else staticFirstLine"
     >
-        <section class="legend-entry" *ngFor="let entry of entries">
-            <ng-container *ngIf="!entry.secondColor; else twoColors">
-                <span
-                    class="color-rectangle {{ entry.type }}"
-                    [style.borderColor]="entry.color"
-                ></span>
-            </ng-container>
-            <ng-template #twoColors>
-                <div class="two-colors">
-                    <span
-                        class="color-rectangle {{ entry.type }}"
-                        [style.borderColor]="entry.color"
-                    ></span>
-                    <span
-                        class="color-rectangle {{ entry.type }}"
-                        [style.borderColor]="entry.secondColor"
-                    ></span>
-                </div>
-            </ng-template>
-            <span class="label">{{
-                entry.labelKey | i18next: entry.labelKeyOptions
-            }}</span>
-        </section>
+        <bfe-diagram-legend-entry
+            *ngFor="let entry of entries"
+            [entry]="entry"
+            class="interactive-entry"
+            [active]="entry.key === selectedDataIndex"
+            (click)="onEntryClick(entry?.key)"
+        />
     </div>
-    <div class="diagram-legend-container horizontal">
-        <section class="legend-entry" *ngFor="let entry of secondLineEntries">
-            <ng-container *ngIf="!entry.secondColor; else twoColors">
-                <span
-                    class="color-rectangle {{ entry.type }}"
-                    [style.borderColor]="entry.color"
-                ></span>
-            </ng-container>
-            <ng-template #twoColors>
-                <div class="two-colors">
-                    <span
-                        class="color-rectangle {{ entry.type }}"
-                        [style.borderColor]="entry.color"
-                    ></span>
-                    <span
-                        class="color-rectangle {{ entry.type }}"
-                        [style.borderColor]="entry.secondColor"
-                    ></span>
-                </div>
-            </ng-template>
-            <span class="label">{{
-                entry.labelKey | i18next: entry.labelKeyOptions
-            }}</span>
-        </section>
+    <div
+        class="diagram-legend-container horizontal"
+        *ngIf="isInteractive; else staticSecondLine"
+    >
+        <bfe-diagram-legend-entry
+            *ngFor="let entry of secondLineEntries"
+            [entry]="entry"
+            class="interactive-entry"
+            [active]="entry.key === selectedDataIndex"
+            (click)="onEntryClick(entry?.key)"
+        />
     </div>
 </div>
+<!-- STATIC / INTERACTIVE -->
+<ng-template #staticFirstLine class="test">
+    <div
+        class="diagram-legend-container"
+        [ngClass]="horizontal ? 'horizontal' : 'vertical'"
+    >
+        <bfe-diagram-legend-entry
+            *ngFor="let entry of entries"
+            [entry]="entry"
+        />
+    </div>
+</ng-template>
+
+<ng-template #staticSecondLine>
+    <div class="diagram-legend-container horizontal">
+        <bfe-diagram-legend-entry
+            *ngFor="let entry of secondLineEntries"
+            [entry]="entry"
+        />
+    </div>
+</ng-template>

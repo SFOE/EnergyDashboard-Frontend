@@ -1,16 +1,10 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { mapAktuelleEinsparungEntryToHistogramEntry } from '../../../../shared/components/sparziel/sparziel.utils';
 import { StromService } from '../../../../services/strom/strom.service';
-import { SparzielService } from '../../../../services/sparziel/sparziel.service';
-import { COLOR_CONTEXT } from '../../strom.consts';
-import {
-    COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA,
-    COLOR_CHART_STROM_ADDITIONAL_LINE,
-    COLOR_POSITIVE
-} from '../../../../shared/commons/colors.const';
+import { COLOR_CHART_STROM_ADDITIONAL_LINE } from '../../../../shared/commons/colors.const';
+import { mapAktuelleEinsparungEntryToHistogramEntry } from '../../../../shared/components/sparziel/sparziel.utils';
 import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
 import { HistogramDetailEntry } from '../../../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
-import { Block } from '../../../../shared/diagrams/histogram/base-histogram.model';
+import { COLOR_CONTEXT } from '../../strom.consts';
 
 const SPARZIEL_PERCENTAGE = 10;
 
@@ -31,11 +25,7 @@ export class StromsparzielMehrMindestverbrauchProMonatComponent
     readonly primaryColor = COLOR_CONTEXT;
     readonly targetPercentage = SPARZIEL_PERCENTAGE;
     readonly barColors = [COLOR_CONTEXT, COLOR_CONTEXT + '80'];
-    readonly lineColors = [
-        COLOR_POSITIVE,
-        '#000000',
-        COLOR_CHART_STROM_ADDITIONAL_LINE
-    ];
+    readonly lineColors = ['#000000', COLOR_CHART_STROM_ADDITIONAL_LINE];
     readonly legendEntries: DiagramLegendEntry[] = [
         {
             color: COLOR_CONTEXT,
@@ -50,49 +40,28 @@ export class StromsparzielMehrMindestverbrauchProMonatComponent
             type: 'area'
         },
         {
-            color: this.lineColors[1],
+            color: this.lineColors[0],
             labelKey: 'commons.sparziel.chart-legend.five-year-average',
             type: 'line'
         },
         {
-            color: this.lineColors[0],
-            labelKey: 'commons.sparziel.chart-legend.target',
-            labelKeyOptions: { target: this.targetPercentage },
-            type: 'line'
-        },
-        {
-            color: this.lineColors[2],
+            color: this.lineColors[1],
             labelKey: 'commons.sparziel.chart-legend.temperature',
             type: 'dashed-line'
-        },
-        {
-            color: COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA,
-            labelKey: 'commons.sparziel.chart-legend.relevant-difference',
-            type: 'area'
         }
     ];
 
     isLoading: boolean = true;
     mehrMindestverbrauchData: HistogramDetailEntry[] = [];
-    mehrMindestverbrauchBlocks: Block[];
     barWidth: number = 22;
 
-    constructor(
-        private stromService: StromService,
-        private sparzielService: SparzielService
-    ) {}
+    constructor(private stromService: StromService) {}
 
     ngOnInit(): void {
-        this.mehrMindestverbrauchBlocks =
-            this.sparzielService.getRelevantMonthsForSparzielOnMonthEnd();
-
         this.stromService.getSparzielAktuelleEinsparungen().subscribe({
             next: (data) => {
                 this.mehrMindestverbrauchData =
-                    mapAktuelleEinsparungEntryToHistogramEntry(
-                        data,
-                        SPARZIEL_PERCENTAGE
-                    );
+                    mapAktuelleEinsparungEntryToHistogramEntry(data, null);
 
                 this.setBarWidth();
             },

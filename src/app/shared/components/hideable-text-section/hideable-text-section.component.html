@@ -1,0 +1,11 @@
+<a (click)="toggleTextSection()" class="info-title" *ngIf="!isEmpty">
+    <fa-icon [icon]="'circle-info'" [style.color]="'#006699'"></fa-icon>
+    {{ titleTranslationKey | i18nextDynamic }}
+</a>
+
+<section class="fade" [class.active]="hide === false">
+    <div
+        class="teaser text"
+        [innerHTML]="textTranslationKey | i18nextDynamic"
+    ></div>
+</section>

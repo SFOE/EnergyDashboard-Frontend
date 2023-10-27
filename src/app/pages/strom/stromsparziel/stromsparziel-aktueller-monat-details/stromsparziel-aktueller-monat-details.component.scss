@@ -3,21 +3,15 @@
 
 .sparziel-five-percent-details-chart-container {
     margin-top: 22px;
-
-    .diagram-item {
-        width: 50%;
+    .margin-bottom {
+        margin-bottom: 22px;
+        display: block;
     }
 
     .diagram-container {
         display: flex;
-        justify-content: space-around;
-    }
-
-    .diagram-container {
-        display: flex;
-        padding-left: 22px;
-        padding-right: 22px;
-        justify-content: space-between;
+        margin: 0 0 0 22px;
+        justify-content: flex-start;
         flex-wrap: wrap;
     }
 
@@ -80,10 +74,6 @@
     @media screen and (max-width: 1000px) {
         .diagram-item {
             flex-basis: 100%;
-        }
-
-        .diagram-item:nth-of-type(1) {
-            margin-bottom: 40px;
         }
     }
 

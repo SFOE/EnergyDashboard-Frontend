@@ -10,7 +10,6 @@
         @include layout.container();
         padding-top: 32px;
         background-color: var(--c-bg-header);
-        border-bottom: 1px solid var(--c-divider);
     }
 
     .dashboard__title {
@@ -30,11 +29,5 @@
 
     .dashboard__notification {
         margin-bottom: 16px;
-    }
-
-    @media (max-width: #{dim.$bp-max-sm}) {
-        .dashboard__tabs {
-            display: none;
-        }
     }
 }

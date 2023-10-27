@@ -1,153 +1,91 @@
 <div #tooltip class="tooltip-container" [class.hidden]="!event">
-    <ng-container *ngIf="!!data">
-        <section class="date-section" *ngIf="!isMonthly">
-            {{ data.date | date }}
-        </section>
-        <section class="date-section" *ngIf="isMonthly">
-            {{ data.date | date: 'MMMM yyyy' }}
-        </section>
-        <section
-            class="percent-section"
-            *ngIf="hasAnyValue(); else noCurrentPercentage"
-        >
-            <!-- current percentage -->
-            <ng-container *ngFor="let entry of lineEntries; index as i">
-                <ng-container *ngIf="data.values[i + 1] as value">
-                    <span
-                        class="dot"
-                        [style.backgroundColor]="entry.color"
-                    ></span>
-                    <span class="column-margin long-label">{{
-                        entry.labelKey | i18next
-                        }}</span>
-                    <span class="column-margin d-flex">
-                        {{ value }}
-                        <span class="text-muted">
-                            <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                            {{ postfix }}
-                        </span>
-                    </span>
-                    <span></span>
-                </ng-container>
-            </ng-container>
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header
+            header
+            [title]="
+                isMonthly ? (data.date | date: 'MMMM yyyy') : (data.date | date)
+            "
+        />
+        <!-- current percentage -->
+        <ng-container *ngFor="let entry of lineEntries; index as i">
+            <bfe-tooltip-row
+                *ngIf="data.values[i + 1] as value"
+                [color]="entry.color"
+                [shape]="'dot'"
+                [label]="entry.labelKey | i18next"
+                [data]="{
+                    value,
+                    suffix
+                }"
+                [colNumber]="showDifference() ? 2 : 1"
+            />
+        </ng-container>
 
-            <!-- divider -->
-            <span class="divider-section"><hr width="100%" /></span>
-            <span class="sum-icon text-muted" *ngIf="showDifference()"
-                >&#8710;</span
-            >
-            <span *ngIf="!showDifference()"></span>
+        <!-- divider -->
+        <ng-container *ngIf="hasAnyValue()">
+            <bfe-tooltip-divider *ngIf="!showDifference()" />
+            <bfe-tooltip-diff-divider *ngIf="showDifference()" />
+        </ng-container>
 
-            <!-- 5 year max -->
-            <span class="dot" [style.backgroundColor]="colorMinMax"></span>
-            <span class="column-margin">{{
-                'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-max-percentage'
-                    | i18next
-            }}</span>
-            <span class="column-margin justify-right d-flex">
-                {{ data.band?.upper }}
-                <span class="text-muted">
-                    <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                    {{ postfix }}
-                </span>
-            </span>
-            <span class="justify-right d-flex" *ngIf="showDifference()">
-                {{ data.tooltipInformation?.differenzMax ?? 0 }}
-                <span class="text-muted">
-                    <span *ngIf="withSpaceBeforePostfixDifference">&nbsp;</span>
-                    {{ postfixDifference ?? postfix }}
-                </span>
-            </span>
-            <span *ngIf="!showDifference()"></span>
+        <!-- 5 year max -->
+        <bfe-tooltip-row
+            [color]="colorMinMax"
+            [shape]="'dot'"
+            label="dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-max-percentage"
+            [data]="{
+                value: data.band?.upper,
+                suffix
+            }"
+            [dataCol2]="{
+                value: showDifference()
+                    ? data.tooltipInformation?.differenzMax ?? 0
+                    : null,
+                suffix: showDifference() ? diffSuffix : ''
+            }"
+            [colNumber]="showDifference() ? 2 : 1"
+        />
 
-            <!-- 5 year average -->
-            <span class="dot" [style.backgroundColor]="colorSecondary"></span>
-            <span class="column-margin">{{
-                'commons.legend.five-year-average' | i18next
-            }}</span>
-            <span class="column-margin justify-right d-flex">
-                {{ data.values[0] }}
-                <span class="text-muted">
-                    <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                    {{ postfix }}
-                </span>
-            </span>
-            <span class="justify-right d-flex" *ngIf="showDifference()">
-                {{ data.tooltipInformation?.differenzMittelwert ?? 0 }}
-                <span class="text-muted">
-                    <span *ngIf="withSpaceBeforePostfixDifference">&nbsp;</span>
-                    {{ postfixDifference ?? postfix }}
-                </span>
-            </span>
-            <span *ngIf="!showDifference()"></span>
+        <!-- 5 year average -->
+        <bfe-tooltip-row
+            [color]="colorSecondary"
+            [shape]="'dot'"
+            [label]="
+                hasAnyValue()
+                    ? 'commons.legend.five-year-average'
+                    : 'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-mittelwert-percentage'
+            "
+            [data]="{
+                value: data.values[0],
+                suffix
+            }"
+            [dataCol2]="{
+                value: showDifference()
+                    ? data.tooltipInformation?.differenzMittelwert ?? 0
+                    : null,
+                suffix: showDifference() ? diffSuffix : ''
+            }"
+            [colNumber]="showDifference() ? 2 : 1"
+        />
 
-            <!-- 5 year min -->
-            <span class="dot" [style.backgroundColor]="colorMinMax"></span>
-            <span class="column-margin">{{
+        <!-- 5 year min -->
+        <bfe-tooltip-row
+            [color]="colorMinMax"
+            [shape]="'dot'"
+            [label]="
                 'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-min-percentage'
-                    | i18next
-            }}</span>
-            <span class="column-margin justify-right d-flex">
-                {{ data.band?.lower }}
-                <span class="text-muted"
-                    ><span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                    {{ postfix }}</span
-                >
-            </span>
-            <span class="justify-right d-flex" *ngIf="showDifference()">
-                {{ data.tooltipInformation?.differenzMin ?? 0 }}
-                <span class="text-muted">
-                    <span *ngIf="withSpaceBeforePostfixDifference">&nbsp;</span>
-                    {{ postfixDifference ?? postfix }}
-                </span>
-            </span>
-            <span *ngIf="!showDifference()"></span>
-        </section>
+            "
+            [data]="{
+                value: data.band?.lower,
+                suffix
+            }"
+            [dataCol2]="{
+                value: showDifference()
+                    ? data.tooltipInformation?.differenzMin ?? 0
+                    : null,
+                suffix: showDifference() ? diffSuffix : ''
+            }"
+            [colNumber]="showDifference() ? 2 : 1"
+        />
 
-        <ng-template #noCurrentPercentage>
-            <section class="percent-section-no-current">
-                <!-- 5 year max -->
-                <span class="dot" style="background-color: #000"></span>
-                <span class="column-margin">{{
-                    'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-max-percentage'
-                        | i18next
-                }}</span>
-                <span class="justify-right d-flex">
-                    {{ data.band?.upper }}
-                    <span class="text-muted">
-                        <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfix }}
-                    </span>
-                </span>
-
-                <!-- 5 year average -->
-                <span class="dot" style="background-color: #636363"></span>
-                <span class="column-margin">{{
-                    'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-mittelwert-percentage'
-                        | i18next
-                }}</span>
-                <span class="justify-right d-flex">
-                    {{ data.values[0] }}
-                    <span class="text-muted">
-                        <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfix }}
-                    </span>
-                </span>
-
-                <!-- 5 year min -->
-                <span class="dot" style="background-color: #000"></span>
-                <span class="column-margin">{{
-                    'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-min-percentage'
-                        | i18next
-                }}</span>
-                <span class="justify-right d-flex">
-                    {{ data.band?.lower }}
-                    <span class="text-muted">
-                        <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfix }}
-                    </span>
-                </span>
-            </section>
-        </ng-template>
-    </ng-container>
+    </bfe-tooltip-container>
 </div>

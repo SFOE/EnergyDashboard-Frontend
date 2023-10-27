@@ -6,6 +6,7 @@ import { StromKkwProductionData } from '../../../../services/strom/strom.model';
 import { SharedComponentsModule } from '../../../../shared/components/shared-components.module';
 import { MockHistogramLineEntry } from '../../../../test/histogram.fixture';
 import { KkwCurrentProductionDisplayComponent } from './kkw-current-production-display.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe('KkwCurrentProductionDisplayComponent', () => {
     let component: KkwCurrentProductionDisplayComponent;
@@ -18,7 +19,8 @@ describe('KkwCurrentProductionDisplayComponent', () => {
                 CommonModule,
                 SharedComponentsModule,
                 I18NextModule.forRoot()
-            ]
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
     });
 

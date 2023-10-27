@@ -98,9 +98,9 @@ export class KkwProductionChartComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         if (!!changes['model']) {
             this.chartData$ = this.model.chartData.pipe(
-                tap((data) => {
+                tap(async (data) => {
                     this.isLoading = false;
-                    this.lastUpdate = findLatestProductionEntryDate(
+                    this.lastUpdate = await findLatestProductionEntryDate(
                         data.entries
                     );
                 })

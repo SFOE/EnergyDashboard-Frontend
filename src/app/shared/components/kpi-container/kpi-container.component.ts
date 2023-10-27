@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-
+import { QueryParamService } from '../../../services/queryparams/queryparams.service';
 export interface KpiFooterConfig {
     sourceDynamicKey: string;
     langtextDynamicKey: string;
@@ -11,14 +11,19 @@ export interface KpiFooterConfig {
     styleUrls: ['./kpi-container.component.scss']
 })
 export class KpiContainerComponent {
+    appView: boolean = false;
     @Input()
     titleKeyDynamic: string;
 
     @Input()
-    isLoading: boolean = false;
+    isLoading: boolean | null = false;
 
     @Input()
     footerConfig: KpiFooterConfig;
 
-    constructor() {}
+    constructor(private queryParamService: QueryParamService) {}
+
+    ngOnInit(): void {
+        this.appView = this.queryParamService.isAppView();
+    }
 }

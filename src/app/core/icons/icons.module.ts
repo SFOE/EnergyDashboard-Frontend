@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faEnvelope as farEnvelope } from '@fortawesome/free-regular-svg-icons';
 import {
+    IconDefinition,
+    faArrowRotateLeft,
     faBars,
+    faChevronDown,
     faChevronLeft,
     faChevronRight,
-    faChevronDown,
     faChevronUp,
     faClock,
     faClose,
@@ -17,8 +19,7 @@ import {
     faExternalLinkAlt,
     faExternalLinkSquareAlt,
     faHouse,
-    faUniversalAccess,
-    IconDefinition
+    faUniversalAccess
 } from '@fortawesome/free-solid-svg-icons';
 import {
     faBuildings,
@@ -44,6 +45,7 @@ export class IconsModule {
         library.addIcons(faChevronRight);
         library.addIcons(faChevronLeft);
         library.addIcons(faChevronDown);
+        library.addIcons(faArrowRotateLeft);
         library.addIcons(faChevronUp);
         library.addIcons(faCoins);
         library.addIcons(faDroplet);

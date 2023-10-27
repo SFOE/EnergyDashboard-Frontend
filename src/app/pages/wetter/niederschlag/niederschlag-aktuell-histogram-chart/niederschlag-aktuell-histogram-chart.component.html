@@ -7,10 +7,6 @@
         [date]="dateOfLastUpdate"
     ></bfe-kpi-date-info-subtext>
 
-    <bfe-optional-dynamic-langtext
-        text="kpi-wetter-3_niederschlag-aktuell.langtext"
-    ></bfe-optional-dynamic-langtext>
-
     <div class="diagram-container">
         <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
 
@@ -39,10 +35,15 @@
             [barColors]="barColors"
         ></bfe-niederschlag-aktuell-histogram-chart-tooltip>
     </div>
+
+    <bfe-hideable-text-section
+        [context]="'chart'"
+        [textTranslationKey]="
+            'dynamic:kpi-wetter-3_niederschlag-aktuell.langtext'
+        "
+    ></bfe-hideable-text-section>
 </div>
 
 <ng-template #loadingTemplate>
-    <div class="loading-container">
-        <bfe-loading-spinner></bfe-loading-spinner>
-    </div>
+    <bfe-loading-spinner></bfe-loading-spinner>
 </ng-template>

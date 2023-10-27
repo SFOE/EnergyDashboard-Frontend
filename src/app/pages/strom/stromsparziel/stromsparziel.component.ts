@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SparzielEntry } from '../../../core/models/sparziel';
 import { StromService } from '../../../services/strom/strom.service';
 import { COLOR_CONTEXT } from '../strom.consts';
-import { SparzielEntry } from '../../../core/models/sparziel';
 
 @Component({
     selector: 'bfe-stromstromsparziel',

@@ -7,8 +7,8 @@ import {
     SimpleChanges,
     ViewChild
 } from '@angular/core';
-import { weekdayToTranslationKey } from '../../../../../shared/static-utils/date-utils';
 import { StromsparzielFivePercentPeakHoursEntry } from '../../../../../core/models/strom-sparziel-five-percent.model';
+import { weekdayToTranslationKey } from '../../../../../shared/static-utils/date-utils';
 import {
     COLOR_CONTEXT,
     StromsparzielFivePercentConsts
@@ -32,7 +32,7 @@ export class StromsparzielFivePercentTooltip
 
     private goalMissed: boolean = false;
 
-    dotClass: string;
+    valueColor: string;
     valueLabel: string;
 
     get weekdayKey(): string {
@@ -42,7 +42,7 @@ export class StromsparzielFivePercentTooltip
     ngOnChanges(changes: SimpleChanges): void {
         if (!!changes['data']) {
             this.goalMissed = this.data.savedPercent > 0;
-            this.setDotClass();
+            this.setValueColor();
             this.setValueLabel();
         }
     }
@@ -70,8 +70,10 @@ export class StromsparzielFivePercentTooltip
             : 'commons.sparziel.saved';
     }
 
-    setDotClass(): void {
-        this.dotClass = this.goalMissed ? 'dot dot-red' : 'dot dot-yellow';
+    setValueColor(): void {
+        this.valueColor = this.goalMissed
+            ? StromsparzielFivePercentConsts.COLOR_CHART_MISSED_TARGET
+            : COLOR_CONTEXT;
     }
 
     getIconColor(value: number): string {

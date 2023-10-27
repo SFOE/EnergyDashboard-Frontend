@@ -1,76 +1,39 @@
 <div class="tooltip-container stromsparziel-container">
-    <ng-container *ngIf="!!data">
-        <section class="date-section">
-            {{ 'commons.sparziel' | i18next }}
-        </section>
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header header [title]="'commons.sparziel.difference' | i18next" />
 
-        <ng-container *ngIf="data">
-            <section class="tooltip-content">
-                <div>
-                    <span class="dot">
-                        <fa-icon
-                            [icon]="'house'"
-                            [style.color]="privateColor"
-                        ></fa-icon>
-                    </span>
+        <bfe-tooltip-icon-row
+            icon="house"
+            [color]="privateColor"
+            label="commons.sparziel.sectors.private"
+            [data]="{
+                value: getPrivatePercent() | number: '1.1-1',
+                suffix: '%'
+            }"
+        />
 
-                    <span class="text">{{
-                        'commons.sparziel.sectors.private' | i18next
-                        }}</span>
-                </div>
+        <bfe-tooltip-icon-row
+            icon="buildings"
+            [color]="kmuColor"
+            label="commons.sparziel.sectors.kmu"
+            [data]="{ value: getKmuPercent() | number: '1.1-1', suffix: '%' }"
+        />
 
-                <span class="text-value">
-                    <span> {{ getPrivatePercent() | number: '1.1-1' }}% </span>
-                </span>
-            </section>
+        <bfe-tooltip-icon-row
+            icon="industry-windows"
+            [color]="industryColor"
+            label="commons.sparziel.sectors.industry"
+            [data]="{
+                value: getIndustryPercent() | number: '1.1-1',
+                suffix: '%'
+            }"
+            
+        />
 
-            <section class="tooltip-content">
-                <div>
-                    <span class="dot">
-                        <fa-icon
-                            [icon]="'buildings'"
-                            [style.color]="kmuColor"
-                        ></fa-icon>
-                    </span>
-
-                    <span class="text">{{
-                        'commons.sparziel.sectors.kmu' | i18next
-                        }}</span>
-                </div>
-
-                <span class="text-value">
-                    <span> {{ getKmuPercent() | number: '1.1-1' }}% </span>
-                </span>
-            </section>
-
-            <section class="tooltip-content">
-                <div>
-                    <span class="dot">
-                        <fa-icon
-                            [icon]="'industry-windows'"
-                            [style.color]="kmuColor"
-                        ></fa-icon>
-                    </span>
-
-                    <span class="text">{{
-                        'commons.sparziel.sectors.industry' | i18next
-                        }}</span>
-                </div>
-
-                <span> {{ getIndustryPercent() | number: '1.1-1' }}% </span>
-            </section>
-
-            <section class="tooltip-content">
-                <div>
-                    <span class="dot"> </span>
-
-                    <span class="text">{{
-                        'commons.already-saved' | i18next
-                        }}</span>
-                </div>
-
-                <span> {{ getSavings() | number: '1.1-1' }}% </span>
-            </section>
-        </ng-container>
-    </ng-container>
+        <bfe-tooltip-row
+            shape="none"
+            label="commons.already-saved"
+            [data]="{ value: getSavings() | number: '1.1-1', suffix: ' GWh' }"
+        />
+    </bfe-tooltip-container>
 </div>

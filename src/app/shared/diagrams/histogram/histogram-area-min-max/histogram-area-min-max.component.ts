@@ -1,10 +1,12 @@
 import {
-    Component, ElementRef,
+    Component,
+    ElementRef,
     EventEmitter,
     Input,
     OnChanges,
     Output,
-    SimpleChanges, ViewChild
+    SimpleChanges,
+    ViewChild
 } from '@angular/core';
 import { DateModel } from '../../../../core/models/base/date.model';
 import { HistogramAreaChartEntry } from '../../../../core/models/charts';
@@ -106,9 +108,7 @@ export class HistogramAreaMinMaxComponent implements OnChanges {
             );
         }
         if (!!changes['focusPointColors']) {
-            this.consolidatedFocusPointColors = this.insertTransparentInMiddle(
-                this.focusPointColors
-            );
+            this.consolidatedFocusPointColors = this.focusPointColors;
         }
     }
 

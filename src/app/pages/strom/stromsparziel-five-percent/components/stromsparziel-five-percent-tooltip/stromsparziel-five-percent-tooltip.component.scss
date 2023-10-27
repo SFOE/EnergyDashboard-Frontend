@@ -4,42 +4,4 @@
 .tooltip-container {
     @include mix.tooltip-container;
     position: relative;
-
-    .date-section {
-        padding: 4px 8px;
-        border-bottom: 1px solid #ccc;
-    }
-
-    .percent-section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        column-gap: 4px;
-        padding: 4px 8px;
-        row-gap: 4px;
-    }
-
-    .text-label {
-        margin-left: 6px;
-        margin-right: 12px;
-    }
-}
-
-.dot {
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.dot-yellow {
-    background-color: col.$context-strom;
-}
-
-.dot-red {
-    background-color: col.$negativ;
-}
-
-.justify-right {
-    justify-self: right;
 }

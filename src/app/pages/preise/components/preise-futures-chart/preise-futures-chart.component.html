@@ -7,9 +7,7 @@
             <bfe-kpi-date-info-subtext [date]="lastUpdated">
             </bfe-kpi-date-info-subtext>
         </section>
-        <bfe-optional-dynamic-langtext
-            [text]="langtextKey"
-        ></bfe-optional-dynamic-langtext>
+
         <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
         <bfe-histogram-line
             (diagramLeave)="hideTooltip()"
@@ -25,8 +23,14 @@
             [isMonthly]="false"
             [event]="tooltipEvent"
             [lineEntries]="legendEntries"
+            [withSpaceBeforePostfix]="true"
             postfix="EUR"
         ></bfe-preise-tooltip>
+
+        <bfe-hideable-text-section
+            [context]="'chart'"
+            [textTranslationKey]="'dynamic:' + langtextKey"
+        ></bfe-hideable-text-section>
     </div>
     <div *ngIf="isLoading" class="loading-container">
         <bfe-loading-spinner></bfe-loading-spinner>

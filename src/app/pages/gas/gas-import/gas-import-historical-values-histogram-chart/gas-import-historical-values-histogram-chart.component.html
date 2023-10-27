@@ -12,9 +12,7 @@
             updateInterval="monthly"
         >
         </bfe-kpi-date-info-subtext>
-        <bfe-optional-dynamic-langtext
-            text="kpi-gas-5_import_netto-monat-vsg.langtext"
-        ></bfe-optional-dynamic-langtext>
+
         <div *ngIf="(chartData.length ?? 0) > 0" class="diagram-container">
             <bfe-diagram-legend [entries]="lengendEntries"></bfe-diagram-legend>
             <bfe-histogram-line
@@ -36,5 +34,12 @@
                 postfix="GWh"
             ></bfe-histogram-chart-tooltip>
         </div>
+
+        <bfe-hideable-text-section
+            [context]="'chart'"
+            [textTranslationKey]="
+                'dynamic:kpi-gas-5_import_netto-monat-vsg.langtext'
+            "
+        ></bfe-hideable-text-section>
     </section>
 </div>

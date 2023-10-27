@@ -13,7 +13,7 @@ import { COLOR_SPACE, DEFAULT_REGION } from '../wetter.consts';
 })
 export class AktuellesWetterComponent implements OnInit {
     readonly primaryColor = COLOR_SPACE;
-    isLoading = false;
+    isLoading = true;
 
     trend: WetterTemperaturTrend;
 

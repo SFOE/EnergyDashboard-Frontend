@@ -3,9 +3,7 @@
 </bfe-kpi-subtitle>
 <bfe-kpi-date-info-subtext *ngIf="currentTrend" [date]="currentTrend.date">
 </bfe-kpi-date-info-subtext>
-<bfe-optional-dynamic-langtext
-    text="kpi-wetter-1_meteoswiss_temp_prognose.langtext"
-></bfe-optional-dynamic-langtext>
+
 <div class="diagram-container" *ngIf="!isLoading; else loading">
     <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
     <bfe-histogram-line
@@ -25,10 +23,15 @@
         [event]="tooltipEvent"
         postfix="°C"
     ></bfe-histogram-chart-tooltip>
+
+    <bfe-hideable-text-section
+        [context]="'chart'"
+        [textTranslationKey]="
+            'dynamic:kpi-wetter-1_meteoswiss_temp_prognose.langtext'
+        "
+    ></bfe-hideable-text-section>
 </div>
 
 <ng-template #loading>
-    <div class="loading-container">
-        <bfe-loading-spinner></bfe-loading-spinner>
-    </div>
+    <bfe-loading-spinner></bfe-loading-spinner>
 </ng-template>

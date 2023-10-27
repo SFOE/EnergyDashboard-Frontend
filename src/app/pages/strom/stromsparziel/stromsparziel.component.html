@@ -6,7 +6,7 @@
     titleKeyDynamic="kpi-strom-3_sparziel.titel"
     [isLoading]="isLoadingTrend"
 >
-    <bfe-kpi-container-row [indented]="true">
+    <bfe-kpi-container-row [indented]="true" [marginBottom]="false">
         <bfe-sparziel-overview
             *ngIf="!!trendData"
             [model]="{
@@ -17,24 +17,32 @@
             [loading]="isLoadingTrend"
         >
         </bfe-sparziel-overview>
-        <section class="teaser-section">
+
+        <section class="teaser-section desktop-only">
             <div
                 [innerHTML]="
                     'dynamic:kpi-strom-3_sparziel.kurztext' | i18nextDynamic
                 "
-                class="info-subtext"
+                class="teaser"
             ></div>
         </section>
     </bfe-kpi-container-row>
+
+    <div class="mobile-only">
+        <bfe-kpi-container-row>
+            <bfe-hideable-text-section
+                [context]="'trend'"
+                [textTranslationKey]="'dynamic:kpi-strom-3_sparziel.kurztext'"
+            ></bfe-hideable-text-section>
+        </bfe-kpi-container-row>
+    </div>
 
     <bfe-stromsparziel-mehr-mindestverbrauch-pro-monat
         [lastUpdated]="trendData?.date"
     >
     </bfe-stromsparziel-mehr-mindestverbrauch-pro-monat>
 
-    <div class="divider-section">
-        <hr />
-    </div>
+    <bfe-divider />
 
     <bfe-stromsparziel-nach-bereich-pro-monat-histogram-chart>
     </bfe-stromsparziel-nach-bereich-pro-monat-histogram-chart>

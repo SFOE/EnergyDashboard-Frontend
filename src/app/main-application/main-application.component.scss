@@ -1,6 +1,19 @@
 :host {
     display: flex;
     flex-direction: column;
+    .sticky-navigation {
+        position: sticky;
+        top: 0px;
+        transition: all 0.15s ease-in-out;
+        &.sticky-shadow {
+            transition: all 0.15s ease-in-out;
+
+            z-index: 1000;
+            box-shadow:
+                rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+                rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+        }
+    }
 
     .dashboard__main {
         display: flex;

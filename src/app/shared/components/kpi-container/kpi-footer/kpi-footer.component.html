@@ -3,11 +3,10 @@
         <div
             class="langtext"
             [innerHTML]="'dynamic:' + langtextKey | i18nextDynamic"
-        >
-        </div>
+        ></div>
     </bfe-expandable>
 
-    <bfe-kpi-container-row>
+    <bfe-kpi-container-row *ngIf="sourceKey?.length && sourceKey.length > 0" [marginBottom]="false">
         <div class="data-source-container">
             <section class="icon-title-section">
                 <img

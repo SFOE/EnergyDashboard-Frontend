@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Context } from '../../core/models/context.enum';
 import { detailLinksGas } from '../../core/navigation/nav-links.const';
+import { QueryParamService } from '../../services/queryparams/queryparams.service';
 import {
     MasterDetailConfiguration,
     MasterDetailMenuItem
@@ -14,10 +15,12 @@ import {
 export class GasComponent implements OnInit {
     masterDetailConfig: MasterDetailConfiguration<MasterDetailMenuItem>;
     context = Context;
+    appView: boolean = false;
 
-    constructor() {}
+    constructor(private queryParamService: QueryParamService) {}
 
     ngOnInit(): void {
+        this.appView = this.queryParamService.isAppView();
         this.masterDetailConfig = {
             context: Context.GAS,
             menuItems: detailLinksGas.map((link) => ({

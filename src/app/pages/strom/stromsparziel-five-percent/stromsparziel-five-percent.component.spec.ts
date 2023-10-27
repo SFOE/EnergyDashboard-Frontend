@@ -5,7 +5,8 @@ import { CommonsModule } from '../../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
 import { StromsparzielFivePercentChartRowComponent } from './components/stromsparziel-five-percent-chart-row/stromsparziel-five-percent-chart-row.component';
 import { StromsparzielFivePercentChartComponent } from './components/stromsparziel-five-percent-chart/stromsparziel-five-percent-chart.component';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { mockActivatedRouteProvider } from '../../../test/queryParamService.fixture';
 import { StromsparzielFivePercentComponent } from './stromsparziel-five-percent.component';
 
 describe('GassparzielComponent', () => {
@@ -24,7 +25,9 @@ describe('GassparzielComponent', () => {
                 StromsparzielFivePercentComponent,
                 StromsparzielFivePercentChartComponent,
                 StromsparzielFivePercentChartRowComponent
-            ]
+            ],
+            providers: [mockActivatedRouteProvider],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
 
         fixture = TestBed.createComponent(StromsparzielFivePercentComponent);

@@ -1,3 +1,11 @@
 # https://github.com/prettier/prettier/blob/master/docs/options.md
 singleQuote: true
 trailingComma: none
+tabWidth: 4
+overrides:
+    - files:
+          - '*.md'
+          - '*.yaml'
+          - '*.yml'
+      options:
+          tabWidth: 2

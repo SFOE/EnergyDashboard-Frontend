@@ -2,6 +2,7 @@
     <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
 
     <bfe-histogram-detail
+        class="margin-bottom"
         (diagramLeave)="hideTooltip()"
         (elFocus)="showTooltip($event)"
         [data]="entries"
@@ -26,10 +27,15 @@
         [barLineColor]="barLineColor"
     >
     </bfe-stromsparziel-nach-bereich-aktueller-monat-histogram-chart-tooltip>
+
+    <bfe-hideable-text-section
+        [context]="'chart'"
+        [textTranslationKey]="
+            'dynamic:kpi-strom-3_sparziel_aktueller-monat-details.langtext'
+        "
+    ></bfe-hideable-text-section>
 </div>
 
 <ng-template #loadingTemplate>
-    <div class="loading-container">
-        <bfe-loading-spinner></bfe-loading-spinner>
-    </div>
+    <bfe-loading-spinner></bfe-loading-spinner>
 </ng-template>

@@ -4,6 +4,6 @@
         [alertTemplate]="ampel"
     ></ng-template>
     <ng-template #ampel>
-        <bfe-status-ampel [context]="context.GAS"></bfe-status-ampel>
+        <bfe-status-ampel *ngIf="!appView" [context]="context.GAS"></bfe-status-ampel>
     </ng-template>
 </div>

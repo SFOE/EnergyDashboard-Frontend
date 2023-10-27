@@ -1,0 +1,73 @@
+<bfe-kpi-subtitle>
+    {{ 'dynamic:kpi-gas-5_import-europa_taeglich.titel' | i18nextDynamic }}
+</bfe-kpi-subtitle>
+<bfe-kpi-date-info-subtext *ngIf="lastUpdate" [date]="lastUpdate">
+</bfe-kpi-date-info-subtext>
+
+<div class="diagram-container">
+    <bfe-diagram-legend
+        [entries]="[
+            {
+                color: chartColors[chartIndex.NORWAY],
+                labelKey: 'dashboard.gas.import-europa.region.norway',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.ALGERIA],
+                labelKey: 'dashboard.gas.import-europa.region.algeria',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.RUSSIA],
+                labelKey: 'dashboard.gas.import-europa.region.russia',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.AZERBAIJAN],
+                labelKey: 'dashboard.gas.import-europa.region.azerbaijan',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.UK],
+                labelKey: 'dashboard.gas.import-europa.region.uk',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.LNG],
+                labelKey: 'dashboard.gas.import-europa.region.lng',
+                type: 'area'
+            }
+        ]"
+    ></bfe-diagram-legend>
+    <bfe-histogram-area-stack
+        class="diagram-container"
+        *ngIf="!isLoading; else loading"
+        [data]="chartData.areaEntries"
+        [lines]="chartData.lineEntries"
+        [colors]="chartColors"
+        [focusPointColors]="chartColors"
+        [focusPointBorder]="true"
+        [showLines]="true"
+        [xLabelModifier]="labelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+        [domainMax]="domainMax"
+        [hideFocusDots]="false"
+        (diagramLeave)="hideTooltip()"
+        (elFocus)="showLineChartTooltip($event)"
+    >
+    </bfe-histogram-area-stack>
+    <bfe-gas-import-europa-tooltip
+        [event]="tooltipEvent"
+    ></bfe-gas-import-europa-tooltip>
+
+    <bfe-hideable-text-section
+        [context]="'chart'"
+        [textTranslationKey]="
+            'dynamic:kpi-gas-5_import-europa_taeglich.langtext'
+        "
+    ></bfe-hideable-text-section>
+
+    <ng-template #loading>
+        <bfe-loading-spinner [placeholder]="'chart'"></bfe-loading-spinner>
+    </ng-template>
+</div>

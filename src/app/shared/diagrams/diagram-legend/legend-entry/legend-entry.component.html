@@ -1,0 +1,24 @@
+<section class="legend-entry" [ngClass]="{ active }">
+    <ng-container *ngIf="!entry.secondColor; else twoColors">
+        <span
+            [style.backgroundColor]="getBackgroundColor()"
+            [style.borderColor]="getBorderColor()"
+            class="color-rectangle {{ entry.type }}"
+        ></span>
+    </ng-container>
+    <ng-template #twoColors>
+        <div class="two-colors">
+            <span
+                class="color-rectangle {{ entry.type }}"
+                [style.borderColor]="entry.color"
+            ></span>
+            <span
+                class="color-rectangle {{ entry.type }}"
+                [style.borderColor]="entry.secondColor"
+            ></span>
+        </div>
+    </ng-template>
+    <span class="label">{{
+        entry.labelKey | i18next: entry.labelKeyOptions
+    }}</span>
+</section>

@@ -1,82 +1,37 @@
-<div
-    class="sparziel-chart-container"
-    style="
-        --achievedPercentage: {{ calculatedAchievedPercentage }};
-        --projectedPercentage: {{ calculatedProjectedPercentage }};
-        --achievedColor: {{ achievedColor }};
-    "
->
-    <section class="labels-left">
-        <div class="goal-label">
-            <p class="label-medium nowarp">
-                {{ 'commons.sparziel' | i18next }}
-            </p>
-        </div>
-        <div
-            [style.height]="spaceToGoSizeLeft + 'px'"
-            class="to-go-space"
-        ></div>
-        <div class="projected-label">
-            <p
-                [ngClass]="{
-                    'label-medium': true,
-                    'p-grey': projectedPercentage === 0
-                }"
-            >
-                {{ 'commons.sparziel.projected-label' | i18next }}
-                ({{ projectedPercentage }}%)
-            </p>
-        </div>
-        <div class="achieved-label">
-            <p class="label-medium">
-                {{ 'commons.sparziel.meassured-label' | i18next }}
-                ({{ achievedPercentage }}%)
-            </p>
-        </div>
-    </section>
-    <section
-        [class.overachieved]="overarchievedPercentage > 0"
-        class="stacked-bars"
-    >
-        <span
-            *ngIf="overarchievedPercentage > 0"
-            [style.height]="overarchievedPercentage + 'px'"
-            class="overachieved-bar"
-        >
-            <p class="num-xtra-small">{{ overarchievedPercentage }}%</p>
-        </span>
-        <span class="projected-bar">
-            <div class="background"></div>
-        </span>
-        <span class="achieved-bar"></span>
-    </section>
-    <section class="labels-right">
-        <div class="goal-label">
-            <p class="label-medium">
-                <span *ngIf="sparzielLabelSubfix" class="sparziel-subfix">
-                    {{ sparzielLabelSubfix }}
-                </span>
-            </p>
-        </div>
-        <div [style.height]="percentageToGo + 'px'" class="to-go-space"></div>
-        <div class="achieved-label">
-            <p class="label-medium nowarp">
-                {{ 'commons.already-saved' | i18next }}
-            </p>
-            <p class="label-medium">
-                ({{ projectedPercentage + achievedPercentage }}%)
-            </p>
-        </div>
-    </section>
-
-    <section class="tooltip">
-        <bfe-sparziel-chart-tooltip
-            [achievedPercentage]="achievedPercentage"
-            [alreadySaved]="projectedPercentage + achievedPercentage"
-            [projectedPercentage]="projectedPercentage"
-            [target]="sparzielLabelSubfix"
-            [weatherAdjustedPercent]="weatherAdjustedPercent"
-            [titleKey]="'commons.sparziel'"
-        ></bfe-sparziel-chart-tooltip>
-    </section>
+<div class="diagram-container">
+    <bfe-histogram-detail
+        (diagramLeave)="hideTooltip()"
+        (elFocus)="showTooltip($event)"
+        [data]="entries"
+        [blocks]="blocks"
+        [barWidth]="50"
+        [barColors]="barColors"
+        [barLineColor]="'transparent'"
+        [lineColors]="[lineColor]"
+        [lineThickness]="[2]"
+        [lineStyle]="['dashed']"
+        [barLineStyle]="'none'"
+        [xLabelModifier]="xLabelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+        [domainMax]="domainMax"
+        [domainMin]="domainMin"
+        [steppedLine]="true"
+        [maxHeight]="150"
+        [drawXAxis]="false"
+        [highlight0Axis]="true"
+        [strokeDasharray]="'2 4'"
+    ></bfe-histogram-detail>
 </div>
+
+<bfe-sparziel-chart-tooltip
+    [event]="tooltipEvent"
+    [achievedPercentage]="achievedPercentage | number: '1.1-1'"
+    [achievedValue]="achievedValue"
+    [projectedPercentage]="projectedPercentage | number: '1.1-1'"
+    [projectedValue]="projectedValue | number: '1.1-1'"
+    [weatherAdjustedPercent]="weatherAdjustedPercent | number: '1.1-1'"
+    [weatherAdjustedGwh]="weatherAdjustedGwh"
+    [titleKey]="'commons.sparziel.difference'"
+    [achievedColor]="achievedColor"
+    [target]="sparziel"
+></bfe-sparziel-chart-tooltip>

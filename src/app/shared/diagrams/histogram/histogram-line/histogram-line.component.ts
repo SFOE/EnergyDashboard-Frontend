@@ -42,12 +42,23 @@ export class HistogramLineComponent<T extends HistogramLineEntry>
     @Input()
     override set data(data: T[]) {
         super.data = data;
-        const max = Math.max(
+        let max = Math.max(
             ...data.reduce(
                 (u, i) => [...u, ...i.values.map((v) => v || 0)],
                 [0]
             )
         );
+        var upperBands = data
+            .map((x) => x.band)
+            .map((x) => x?.upper)
+            .filter((x) => x) as number[];
+        if (upperBands.length > 0) {
+            const upperBandMax = Math.max(...upperBands.map((o) => o), 0);
+            if (upperBandMax > max) {
+                max = upperBandMax;
+            }
+        }
+
         this.yMaxValue = max === 0 ? 1 : max;
         this.lineFunctions = new Array(
             this.data.reduce((u, i) => Math.max(u, i.values.length), 0)

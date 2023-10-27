@@ -25,4 +25,30 @@ export class FuellstaendeSpeicherseenChartTooltipComponent extends BaseTooltipCo
     readonly colorHistoricalMinimum =
         SpeicherseenConsts.COLOR_CHART_HISTORICAL_MINIMUM;
     readonly colorSecondary = COLOR_CHART_HISTOGRAM_AREA_SECONDARY;
+
+    showDifference() {
+        return (
+            this.data?.tooltipInformation?.differenzMax != null ||
+            this.data?.tooltipInformation?.differenzMin != null ||
+            this.data?.tooltipInformation?.differenzMittelwert != null
+        );
+    }
+
+    hasCurrentValues() {
+        return (
+            this.data?.values[1] ||
+            this.data?.absoluteValue ||
+            this.data?.speicherstandBei100ProzentInGWh
+        );
+    }
+
+    suffix: string;
+    diffSuffix: string;
+
+    ngOnInit(): void {
+        this.suffix = (this.withSpaceBeforePostfix ? ' ' : '') + this.postfix;
+        this.diffSuffix =
+            (this.withSpaceBeforePostfix ? ' ' : '') +
+            (this.postfixDifference ?? this.postfix);
+    }
 }

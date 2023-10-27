@@ -14,8 +14,9 @@ export interface StromsparzielFivePercentPeakHoursModel {
 }
 
 export interface StromsparzielFivePercentEinsparungen {
+    totalSavingKmuPercent: number;
+    totalSavingPrivatPercent: number;
+    totalSavingIndustriePercent: number;
     totalSavingsGWh: number;
-    anteilPrivate: number;
-    anteilKMU: number;
-    anteilIndustrie: number;
+    totalReferenceDemandGWh: number;
 }

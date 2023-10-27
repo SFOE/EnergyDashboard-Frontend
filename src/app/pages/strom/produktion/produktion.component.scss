@@ -2,26 +2,3 @@ bfe-produktion-strommix-donut-mars,
 bfe-produktion-verbrauch-histogram-chart {
     width: 100%;
 }
-
-.trend-section {
-    display: flex;
-    column-gap: 32px;
-    align-items: flex-end;
-    text-align: center;
-
-    section {
-        display: flex;
-        flex-direction: column;
-    }
-
-    ::ng-deep .trend-display-container {
-        width: auto;
-    }
-}
-
-.loading-container {
-    height: 79px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}

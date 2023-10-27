@@ -1,0 +1,58 @@
+<bfe-kpi-container
+    titleKeyDynamic="kpi-gas-5_import-europa.titel"
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-gas-5_import-europa.datenquelle',
+        langtextDynamicKey: 'kpi-gas-5_import-europa.langtext'
+    }"
+>
+    <section>
+        <bfe-kpi-container-row>
+            <bfe-trend-and-number
+                [isLoading]="isLoadingTrend | async"
+                [model]="{
+                    color: spaceColor,
+                    bigNumber: {
+                        value: gasImportEuropaTrend.value,
+                        postfix: measuringUnit,
+                        subTextKeys: [
+                            'dashboard.gas.import-europa.wert.stichdatum'
+                                | i18next
+                                    : { date: gasImportEuropaTrend.date | date }
+                        ]
+                    },
+                    trend: {
+                        value: gasImportEuropaTrend.trend,
+                        rating: gasImportEuropaTrend.rating,
+                        subTextKeys: [
+                            'dashboard.gas.import-europa.rolling-trend'
+                        ]
+                    }
+                }"
+            ></bfe-trend-and-number>
+
+            <section class="desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-gas-5_import-europa.kurztext'
+                            | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="
+                        'dynamic:kpi-gas-5_import-europa.kurztext'
+                    "
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
+
+    <bfe-gas-import-europa-taeglich-chart></bfe-gas-import-europa-taeglich-chart>
+    <bfe-import-europa-Jaehrlich-donuts></bfe-import-europa-Jaehrlich-donuts>
+</bfe-kpi-container>

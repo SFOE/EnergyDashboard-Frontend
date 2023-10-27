@@ -1,77 +1,55 @@
-<div class="tooltip-container">
-    <ng-container *ngIf="titleKey">
-        <section class="date-section">
-            {{ titleKey | i18next }}
-        </section>
+<div #tooltip [class.hidden]="!event" class="tooltip-container">
+    <bfe-tooltip-container [positionRelative]="true">
+        <ng-container *ngIf="!!titleKey">
+            <bfe-tooltip-header [title]="titleKey | i18next" />
+            <bfe-tooltip-row
+                *ngIf="projectedPercentage !== null"
+                [color]="achievedColor + '99'"
+                shape="area"
+                label="commons.sparziel.projected-label"
+                [dataCol2]="{ value: projectedPercentage, suffix: '%' }"
+                [data]="{ value: achievedValue, suffix: ' GWh' }"
+            />
+            <bfe-tooltip-row
+                *ngIf="achievedPercentage !== null"
+                [color]="achievedColor"
+                shape="area"
+                label="commons.sparziel.meassured-label"
+                [dataCol2]="
+                    achievedPercentage
+                        ? { value: achievedPercentage, suffix: '%' }
+                        : undefined
+                "
+                [data]="{
+                    value: achievedValue ?? 0 | thousandComma,
+                    suffix: ' GWh'
+                }"
+            />
 
-        <ng-container>
-            <section class="percent-section">
-                <div>
-                    <span class="dot"></span>
+            <bfe-tooltip-row
+                *ngIf="target"
+                shape="dashed-line"
+                [color]="targetColor"
+                label="commons.sparziel"
+                [data]="{ value: target.gwh | thousandComma, suffix: ' GWh' }"
+                [dataCol2]="{
+                    value: target.percent | number: '1.1-1',
+                    suffix: '%'
+                }"
+            />
 
-                    <span class="text">{{ 'commons.sparziel' | i18next }}</span>
-                </div>
-
-                <span class="text-value">
-                    <span> {{ target }}</span>
-                </span>
-            </section>
-
-            <section class="percent-section">
-                <div>
-                    <span class="dot dot-projected"></span>
-
-                    <span class="text">{{
-                        'commons.sparziel.projected-label' | i18next
-                        }}</span>
-                </div>
-
-                <span class="text-value">
-                    <span> {{ projectedPercentage | number: '1.1-1' }}%</span>
-                </span>
-            </section>
-
-            <section class="percent-section">
-                <div>
-                    <span class="dot dot-achieved"></span>
-
-                    <span class="text">{{
-                        'commons.sparziel.meassured-label' | i18next
-                        }}</span>
-                </div>
-
-                <span class="text-value">
-                    <span> {{ achievedPercentage | number: '1.1-1' }}%</span>
-                </span>
-            </section>
-
-            <section class="percent-section">
-                <div>
-                    <span class="dot"></span>
-
-                    <span class="text">{{
-                        'commons.already-saved' | i18next
-                        }}</span>
-                </div>
-
-                <span class="text-value">
-                    <span> {{ alreadySaved }}%</span>
-                </span>
-            </section>
-
-            <section class="percent-section">
-                <div>
-                    <span class="dot"></span>
-
-                    <span class="text">{{
-                        'commons.sparziel.temperature-corrected' | i18next
-                        }}</span>
-                </div>
-
-                <span class="text-value">
-                    <span> {{ weatherAdjustedPercent }}%</span>
-                </span>
-            </section>
+            <bfe-tooltip-divider *ngIf="weatherAdjustedPercent !== null" />
+            <bfe-tooltip-row
+                *ngIf="weatherAdjustedPercent !== null"
+                [color]="achievedColor"
+                shape="none"
+                label="commons.sparziel.temperature-corrected"
+                [data]="{
+                    value: weatherAdjustedGwh | thousandComma,
+                    suffix: ' GWh'
+                }"
+                [dataCol2]="{ value: weatherAdjustedPercent, suffix: '%' }"
+            />
         </ng-container>
-    </ng-container>
+    </bfe-tooltip-container>
 </div>

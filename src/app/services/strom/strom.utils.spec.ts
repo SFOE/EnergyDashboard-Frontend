@@ -14,13 +14,14 @@ import {
     mapStromKkwProductionDtoToEntry,
     mapStromKkwVerfuegbarkeitDtoToEntry
 } from './strom.util';
+import {LineStyle} from "../../shared/diagrams/histogram/histogram-detail/histogram-detail.component";
 
 describe('mapStromKkwProductionDtoToEntry', () => {
     it('should map dto correctly', () => {
         const expected = <StromKkwProductionEntry>{
             date: new Date('2023-01-01'),
-            values: [15, 12],
-            band: { lower: 10, upper: 20 },
+            values: [15, 12, 10, 20],
+            band: { lower: 10, mean: 15, upper: 20 },
             ausfaelle: []
         };
 
@@ -40,17 +41,23 @@ describe('mapStromKkwProductionDtoToEntry', () => {
 describe('mapStromKkwVerfuegbarkeitDtoToEntry', () => {
     it('should map dto correctly', () => {
         const expected = <StromKkwVerfuegbarkeitEntry>{
+            barValues: [10],
+            barLineValue: null,
+            lineValues: [25],
+            hiddenValues: [],
             date: new Date('2023-01-01'),
-            lineValues: [10],
-            barValues: [20],
-            ausfaelle: []
+            ausfaelle: [],
+            exists: true
         };
 
         const dto = <StromKkwVerfuegbarkeitEntryDto>{
             date: '2023-01-01',
-            currentVerfuegbarkeit: 20,
-            fiveYearAverage: 10
+            kkwInstallierteLeistung: 25,
+            ungeplanterAusfallMittelwert: 5,
+            geplanterAusfallMittelwert: 20,
+            kkwVerfuegbareLeistung: 10
         };
+
         const result = mapStromKkwVerfuegbarkeitDtoToEntry(dto);
 
         expect(result).toEqual(expected);

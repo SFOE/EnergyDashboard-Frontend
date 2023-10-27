@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { I18NEXT_SERVICE, ITranslationService } from 'angular-i18next';
+import { Observable, ReplaySubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { DataService } from '../data/data.service';
 import { TranslationKeys } from '../models/dynamic-translations';
-import {Observable, ReplaySubject, Subject} from "rxjs";
-import {filter} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
@@ -33,7 +33,9 @@ export class TranslationService {
     }
 
     public get isTranslationLoaded(): Observable<boolean> {
-        return this.dynamicTranslationLoaded.pipe(filter(loaded => loaded === true));
+        return this.dynamicTranslationLoaded.pipe(
+            filter((loaded) => loaded === true)
+        );
     }
 
     public get language(): string {
@@ -47,6 +49,11 @@ export class TranslationService {
     public returnTranslation(key: string): string {
         // @ts-ignore
         return this.i18NextService.t(key);
+    }
+
+    public returnOptionTranslation(key: string, options?: any): string {
+        // @ts-ignore
+        return this.i18NextService.t(key, options);
     }
 
     public changeLanguage(language: string) {

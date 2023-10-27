@@ -40,4 +40,14 @@ export class StromverbrauchChartTooltipComponent extends BaseTooltipComponent<Hi
             this.data?.tooltipInformation?.differenzMittelwert != null
         );
     }
+
+    suffix: string;
+    diffSuffix: string;
+
+    ngOnInit(): void {
+        this.suffix = (this.withSpaceBeforePostfix ? ' ' : '') + this.postfix;
+        this.diffSuffix =
+            (this.withSpaceBeforePostfix ? ' ' : '') +
+            (this.postfixDifference ?? this.postfix);
+    }
 }

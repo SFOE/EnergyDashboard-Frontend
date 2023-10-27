@@ -14,10 +14,13 @@ import { WetterTemperaturTrend } from '../../core/models/wetter-temperatur-trend
 import { WetterNiederschlagTrend } from '../../core/models/wetter-niederschlag-trend';
 import { WetterNiederschlagAktuellEntry } from '../../core/models/wetter-niederschlag-aktuell';
 import { HistogramDetailEntry } from '../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
-import { convertToDate } from 'src/app/shared/static-utils/date-utils';
+import { convertToDate } from '../../shared/static-utils/date-utils';
 import { WetterSchneereservenAktuellEntry } from '../../core/models/wetter-schneereserven-aktuell';
 import { WetterSchneereservenTrend } from '../../core/models/wetter-schneereserven-trend';
 import { WetterNiederschlagKartenMonths } from '../../core/models/wetter-niederschlag-karten-months';
+import { WetterHeizgradtageZeitreihe } from 'src/app/core/models/wetter-heizgradtage-zeitreihe';
+import { WetterHeizgradtageTabelleDaten } from 'src/app/core/models/wetter-heizgradtage-tabelle-daten';
+import { WetterHeizgradtageTrend } from 'src/app/core/models/wetter-heizgradtage-trend';
 
 @Injectable({
     providedIn: 'root'
@@ -37,6 +40,10 @@ export class WetterService {
     private cachedSchneereservenAktell: Observable<
         WetterSchneereservenAktuellEntry[]
     >;
+
+    private cachedHeizgradtageZeitreihe: Observable<WetterHeizgradtageZeitreihe>;
+    private cachedHeizgradtageTabelleDaten: Observable<WetterHeizgradtageTabelleDaten>;
+    private cachedHeizgradtageTrend: Observable<WetterHeizgradtageTrend>;
 
     constructor(private dataService: DataService) {}
 
@@ -110,6 +117,33 @@ export class WetterService {
                 .pipe(shareReplay(1));
         }
         return this.cachedSchneereservenAktell;
+    }
+
+    getHeizgradTageZeitreihe() {
+        if (!this.cachedHeizgradtageZeitreihe) {
+            this.cachedHeizgradtageZeitreihe = this.dataService
+                .getHeizgradtageZeitreihe()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedHeizgradtageZeitreihe;
+    }
+
+    getHeizgradTageTabelleDaten() {
+        if (!this.cachedHeizgradtageTabelleDaten) {
+            this.cachedHeizgradtageTabelleDaten = this.dataService
+                .getHeizgradtageTabelleDaten()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedHeizgradtageTabelleDaten;
+    }
+
+    getHeizgradTageTrend() {
+        if (!this.cachedHeizgradtageTrend) {
+            this.cachedHeizgradtageTrend = this.dataService
+                .getHeizgradtageTrend()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedHeizgradtageTrend;
     }
 
     mapWetterPrognoseToHistogramEntries(

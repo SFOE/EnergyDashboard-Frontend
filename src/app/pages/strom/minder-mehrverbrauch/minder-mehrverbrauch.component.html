@@ -1,0 +1,61 @@
+<bfe-kpi-container
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-strom-3_minder-mehrverbrauch.datenquelle',
+        langtextDynamicKey: 'kpi-strom-3_minder-mehrverbrauch.langtext'
+    }"
+    titleKeyDynamic="kpi-strom-3_minder-mehrverbrauch.title"
+>
+    <section>
+        <bfe-kpi-container-row [indented]="true">
+            <bfe-sparziel-overview
+                *ngIf="trendData"
+                [model]="{
+                    sparzielEntry: trendData,
+                    trendLabelKey: 'commons.trend',
+                    color: primaryColor
+                }"
+                [loading]="isLoadingTrend"
+            >
+            </bfe-sparziel-overview>
+
+            <section class="teaser-section desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-strom-3_minder-mehrverbrauch.kurztext'
+                            | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="
+                        'dynamic:kpi-strom-3_minder-mehrverbrauch.kurztext'
+                    "
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
+
+    <section [id]="fragments.FRAGMENT_STROM_VERBRAUCH_PRO_MONAT">
+        <bfe-stromsparziel-mehr-mindestverbrauch-pro-monat
+            [lastUpdated]="trendData?.date"
+        />
+    </section>
+
+    <bfe-divider />
+
+    <section [id]="fragments.FRAGMENT_STROM_VERBRAUCH_NACH_KUNDENGRUPPEN">
+        <bfe-stromsparziel-nach-bereich-pro-monat-histogram-chart />
+    </section>
+    <bfe-stromsparziel-aktueller-monat-details />
+    <bfe-stromsparziel-nach-bereich-aktueller-monat-histogram-chart />
+
+    <bfe-divider />
+
+    <bfe-stromstromsparziel-five-percent></bfe-stromstromsparziel-five-percent>
+</bfe-kpi-container>

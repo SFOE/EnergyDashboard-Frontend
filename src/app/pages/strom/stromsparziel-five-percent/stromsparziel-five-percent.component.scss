@@ -1,12 +1,25 @@
+:host {
+    width: 100%;
+}
 .diagram-container {
     display: flex;
     flex-direction: column;
     row-gap: 24px;
+    padding-top: 22px;
+    width: 100%;
+}
+.diagram-item {
+    padding-bottom: 22px;
+}
+
+.margin-bottom {
+    margin-bottom: 22px;
 }
 
 .trend-section {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
+    gap: 44px;
     align-items: flex-start;
 }
 

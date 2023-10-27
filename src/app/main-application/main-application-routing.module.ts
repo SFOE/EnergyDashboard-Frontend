@@ -4,6 +4,7 @@ import { RoutePaths } from '../core/navigation/route-paths.enum';
 import { AxStatementComponent } from '../pages/ax-statement/ax-statement.component';
 import { MainApplicationComponent } from './main-application.component';
 import { IntegrationGuideComponent } from '../pages/integration-guide/integration-guide.component';
+import { DataProtectionComponent } from '../pages/data-protection/data-protection.component';
 
 const routes: Routes = [
     {
@@ -50,6 +51,10 @@ const routes: Routes = [
             {
                 path: RoutePaths.DASHBOARD_INTEGRATION_GUIDE,
                 component: IntegrationGuideComponent
+            },
+            {
+                path: RoutePaths.DASHBOARD_DATA_PROTECTION,
+                component: DataProtectionComponent
             },
             {
                 path: '',

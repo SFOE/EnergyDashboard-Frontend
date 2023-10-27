@@ -6,9 +6,6 @@
     </bfe-kpi-date-info-subtext>
 
     <div class="diagram-container">
-        <bfe-optional-dynamic-langtext
-            text="kpi-strom-9_import-export_netto.langtext"
-        ></bfe-optional-dynamic-langtext>
         <section class="legend">
             <span class="label">
                 {{
@@ -62,5 +59,12 @@
             [event]="tooltipEvent"
             [displayedCountries]="countrySelectionControl.value"
         ></bfe-import-export-net-area-tooltip>
+
+        <bfe-hideable-text-section
+            [context]="'chart'"
+            [textTranslationKey]="
+                'dynamic:kpi-strom-9_import-export_netto.langtext'
+            "
+        ></bfe-hideable-text-section>
     </div>
 </div>

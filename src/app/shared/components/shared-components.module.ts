@@ -7,27 +7,32 @@ import {
     FontAwesomeModule
 } from '@fortawesome/angular-fontawesome';
 import {
+    IconDefinition,
     faBolt,
     faExclamation,
     faExclamationTriangle,
     faInfoCircle,
     faUpRightFromSquare,
-    faXmark,
-    IconDefinition
+    faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import { faFireFlame } from '@fortawesome/pro-solid-svg-icons';
 import { I18NextModule } from 'angular-i18next';
+import { NgxResize } from 'ngx-resize';
 import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { CommonsModule } from '../commons/commons.module';
 import { HistogramChartTooltipComponent } from '../diagrams/tooltip/histogram-chart-tooltip/histogram-chart-tooltip.component';
+import { TooltipModule } from '../diagrams/tooltip/tooltip.module';
 import { ContextIconComponent } from './context-icon/context-icon.component';
 import { ContextTitleComponent } from './context-title/context-title.component';
+import { DividerComponent } from './divider/divider.component';
+import { ExpandableComponent } from './expandable/expandable.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { NavBoardComponent } from './header/nav-board/nav-board.component';
 import { IconTooltipComponent } from './icon-tooltip/icon-tooltip.component';
 import { ImportExportBoxComponent } from './import-export-per-day/import-export-box/import-export-box.component';
 import { ImportExportPerDayComponent } from './import-export-per-day/import-export-per-day.component';
+import { InfoPageComponent } from './info-page/info-page.component';
 import { KpiContainerRowComponent } from './kpi-container/kpi-container-row/kpi-container-row.component';
 import { KpiContainerComponent } from './kpi-container/kpi-container.component';
 import { KpiDateInfoSubtextComponent } from './kpi-container/kpi-date-info-subtext/kpi-date-info-subtext.component';
@@ -45,13 +50,11 @@ import { OverviewCardWarningDirective } from './overview-card/overview-card-warn
 import { OverviewCardWarningComponent } from './overview-card/overview-card-warning/overview-card-warning.component';
 import { OverviewCardComponent } from './overview-card/overview-card.component';
 import { PageTitleComponent } from './page-title/page-title.component';
+import { PageTopNavigationComponent } from './page-top-navigation/page-top-navigation.component';
 import { PointsOfInterestLegendComponent } from './points-of-interest-legend/points-of-interest-legend.component';
 import { StatusAmpelComponent } from './status-ampel/status-ampel.component';
 import { TabItemDirective } from './tab-list/tab-item.directive';
 import { TabListComponent } from './tab-list/tab-list.component';
-import { NgxResize } from 'ngx-resize';
-import { InfoPageComponent } from './info-page/info-page.component';
-import { ExpandableComponent } from './expandable/expandable.component';
 
 @NgModule({
     declarations: [
@@ -59,6 +62,7 @@ import { ExpandableComponent } from './expandable/expandable.component';
         FooterComponent,
         NavBoardComponent,
         PageTitleComponent,
+        PageTopNavigationComponent,
         TabListComponent,
         TabItemDirective,
         OverviewCardComponent,
@@ -88,21 +92,12 @@ import { ExpandableComponent } from './expandable/expandable.component';
         InfoPageComponent,
         ExpandableComponent
     ],
-    imports: [
-        CommonModule,
-        A11yModule,
-        CommonsModule,
-        I18NextModule,
-        RouterModule,
-        FontAwesomeModule,
-        NgxTippyModule,
-        NgxResize
-    ],
     exports: [
         HeaderComponent,
         FooterComponent,
         NavBoardComponent,
         PageTitleComponent,
+        PageTopNavigationComponent,
         TabListComponent,
         TabItemDirective,
         OverviewCardComponent,
@@ -129,7 +124,20 @@ import { ExpandableComponent } from './expandable/expandable.component';
         KpiDateInfoSubtextComponent,
         ContextTitleComponent,
         PointsOfInterestLegendComponent,
-        InfoPageComponent
+        InfoPageComponent,
+        DividerComponent
+    ],
+    imports: [
+        TooltipModule,
+        CommonModule,
+        A11yModule,
+        CommonsModule,
+        I18NextModule,
+        RouterModule,
+        FontAwesomeModule,
+        NgxTippyModule,
+        NgxResize,
+        DividerComponent
     ]
 })
 export class SharedComponentsModule {

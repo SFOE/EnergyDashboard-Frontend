@@ -6,26 +6,42 @@
     [isLoading]="isLoadingTrend"
     titleKeyDynamic="kpi-gas-3_gassparziel.titel"
 >
-    <bfe-kpi-container-row [indented]="true">
-        <bfe-sparziel-overview
-            *ngIf="!!sparzielZielData"
-            [model]="{
-                sparzielEntry: sparzielZielData,
-                trendLabelKey: 'commons.trend',
-                color: primaryColor
-            }"
-        >
-        </bfe-sparziel-overview>
-        <section class="teaser-section">
-            <div
-                [innerHTML]="
-                    'dynamic:kpi-gas-3_gassparziel.kurztext' | i18nextDynamic
-                "
-                class="info-subtext"
-            ></div>
-        </section>
-    </bfe-kpi-container-row>
+    <section>
+        <bfe-kpi-container-row [indented]="true">
+            <bfe-sparziel-overview
+                *ngIf="!!sparzielZielData"
+                [model]="{
+                    sparzielEntry: sparzielZielData,
+                    trendLabelKey: 'commons.trend',
+                    color: primaryColor,
+                    addSparziel: true,
+                    sparziel: gasSparziel
+                }"
+            >
+            </bfe-sparziel-overview>
 
+            <section class="desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-gas-3_gassparziel.kurztext'
+                            | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="
+                        'dynamic:kpi-gas-3_gassparziel.kurztext'
+                    "
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
     <bfe-sparziel-histogram-chart
         *ngIf="!!sparzielZielData"
         [model]="{

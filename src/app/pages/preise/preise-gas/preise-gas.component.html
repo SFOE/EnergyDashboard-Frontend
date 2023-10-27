@@ -6,55 +6,66 @@
     }"
     [isLoading]="isLoadingBoerse"
 >
-    <bfe-kpi-container-row>
-        <section class="trend-section">
-            <section>
-                <bfe-context-title
-                    [context]="context"
-                    marginLeft="0px"
-                ></bfe-context-title>
+    <section>
+        <bfe-kpi-container-row>
+            <section class="trend-section">
+                <section>
+                    <bfe-context-title
+                        [context]="context"
+                        marginLeft="0px"
+                    ></bfe-context-title>
+                </section>
+                <div class="trend-entries">
+                    <section *ngIf="currentEntryBoerse">
+                        <bfe-large-number-unit
+                            [number]="
+                                currentEntryBoerse.values[0] ?? 0 | roundNumber
+                            "
+                            unit="MWh"
+                            subUnit="EUR"
+                            [color]="primaryColor"
+                        ></bfe-large-number-unit>
+                        <p class="right-align-text">
+                            {{
+                                'dashboard.preise.gas.spotpreis-boerse.subtitle'
+                                    | i18next
+                            }}
+                        </p>
+                    </section>
+                    <section *ngIf="currentEntryEndverbrauch">
+                        <bfe-large-number-unit
+                            [number]="currentEntryEndverbrauch.values[0]"
+                            unit="%"
+                            [color]="primaryColor"
+                        ></bfe-large-number-unit>
+                        <p class="right-align-text">
+                            {{
+                                'dashboard.preise.gas.endverbrauch.subtitle'
+                                    | i18next
+                            }}
+                        </p>
+                    </section>
+                </div>
             </section>
-            <div class="trend-entries">
-                <section *ngIf="currentEntryBoerse">
-                    <bfe-large-number-unit
-                        [number]="
-                            currentEntryBoerse.values[0] ?? 0 | roundNumber
-                        "
-                        unit="MWh"
-                        subUnit="EUR"
-                        [color]="primaryColor"
-                    ></bfe-large-number-unit>
-                    <p class="right-align-text">
-                        {{
-                            'dashboard.preise.gas.spotpreis-boerse.subtitle'
-                                | i18next
-                        }}
-                    </p>
-                </section>
-                <section *ngIf="currentEntryEndverbrauch">
-                    <bfe-large-number-unit
-                        [number]="currentEntryEndverbrauch.values[0]"
-                        unit="%"
-                        [color]="primaryColor"
-                    ></bfe-large-number-unit>
-                    <p class="right-align-text">
-                        {{
-                            'dashboard.preise.gas.endverbrauch.subtitle'
-                                | i18next
-                        }}
-                    </p>
-                </section>
-            </div>
-        </section>
-        <section class="teaser-section">
-            <div
-                [innerHTML]="
-                    'dynamic:kpi-preise-3_gas.kurztext' | i18nextDynamic
-                "
-                class="teaser"
-            ></div>
-        </section>
-    </bfe-kpi-container-row>
+            <section class="teaser-section desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-preise-3_gas.kurztext' | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="'dynamic:kpi-preise-3_gas.kurztext'"
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
 
     <div class="diagram-container">
         <bfe-preise-gas-dayahead
@@ -65,9 +76,7 @@
         </bfe-preise-gas-dayahead>
     </div>
 
-    <div class="divider-section">
-        <hr />
-    </div>
+    <bfe-divider />
 
     <div class="diagram-container">
         <bfe-preise-futures-chart

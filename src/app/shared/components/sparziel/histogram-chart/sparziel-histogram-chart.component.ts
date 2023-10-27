@@ -21,7 +21,7 @@ export interface SparzielHistogramChartModel {
     legendEntries: DiagramLegendEntry[];
     titleDynamicKey: string;
     langtextDynamicKey: string;
-    sparzielTarget: number;
+    sparzielTarget: number | null;
 }
 
 const DOMAIN_MAX_PADDING = 5;
@@ -35,6 +35,7 @@ const DOMAIN_MIN_PADDING = -5;
 export class SparzielHistogramChartComponent implements OnChanges {
     @Input() model: SparzielHistogramChartModel;
     @Input() loading: boolean = false;
+    @Input() hasSparziel: boolean = true;
 
     readonly xLabelModifier: LabelModifier;
     readonly xSubLabelModifier: LabelModifier;

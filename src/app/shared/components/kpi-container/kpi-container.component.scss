@@ -5,7 +5,13 @@
     @include layout.kpi-container;
     padding-bottom: 20px;
     position: relative;
-
+    
+    .kpi-title {
+      &.app-view {
+        visibility: hidden;
+        margin: 0;
+      }
+    }
     .loading-overlay {
         width: 100%;
         height: 100%;

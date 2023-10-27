@@ -5,6 +5,7 @@ import { CommonsModule } from '../../../../../shared/commons/commons.module';
 import { StromsparzielFivePercentChartRowComponent } from '../stromsparziel-five-percent-chart-row/stromsparziel-five-percent-chart-row.component';
 
 import { StromsparzielFivePercentChartComponent } from './stromsparziel-five-percent-chart.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe('StromsparzielFivePercentChartComponent', () => {
     let component: StromsparzielFivePercentChartComponent;
@@ -16,7 +17,11 @@ describe('StromsparzielFivePercentChartComponent', () => {
                 StromsparzielFivePercentChartComponent,
                 StromsparzielFivePercentChartRowComponent
             ],
-            imports: [CommonsModule, I18NextModule.forRoot()]
+            imports: [
+                CommonsModule,
+                I18NextModule.forRoot()
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
     });
 

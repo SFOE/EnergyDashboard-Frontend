@@ -13,7 +13,8 @@ export class SparzielChartTooltipComponent extends BaseTooltipComponent<Histogra
     @Input() colorTemperature: string;
     colorTemperatureTransparent: string = 'transparent';
     @Input() colorAverageUse: string;
-    @Input() sparzielTarget: number;
+    @Input() sparzielTarget: number | null;
+    @Input() hasSparziel: boolean = false;
 
     get isProjectedEntry(): boolean {
         return this.data?.barValues[1] !== 0 ?? false;

@@ -6,35 +6,50 @@
     }"
     [isLoading]="isLoading"
 >
-    <bfe-kpi-container-row>
-        <section class="trend-section">
-            <bfe-context-title
-                [context]="context"
-                marginLeft="0px"
-            ></bfe-context-title>
-            <section *ngIf="currentEntry" class="trend-entries">
-                <bfe-large-number-unit
-                    [number]="currentEntry.values[0]"
-                    unit="%"
-                    [color]="primaryColor"
-                ></bfe-large-number-unit>
-                <p class="center-text">
-                    {{
-                        'dashboard.preise.holz.spotpreis-boerse.subtitle'
-                            | i18next
-                    }}
-                </p>
+    <section>
+        <bfe-kpi-container-row>
+            <section class="trend-section">
+                <bfe-context-title
+                    [context]="context"
+                    marginLeft="0px"
+                ></bfe-context-title>
+                <section *ngIf="currentEntry" class="trend-entries">
+                    <bfe-large-number-unit
+                        [number]="currentEntry.values[0]"
+                        unit="%"
+                        [color]="primaryColor"
+                    ></bfe-large-number-unit>
+                    <p class="center-text">
+                        {{
+                            'dashboard.preise.holz.spotpreis-boerse.subtitle'
+                                | i18next
+                        }}
+                    </p>
+                </section>
             </section>
-        </section>
-        <section class="teaser-section">
-            <div
-                [innerHTML]="
-                    'dynamic:kpi-preise-6_brennholz.kurztext' | i18nextDynamic
-                "
-                class="teaser"
-            ></div>
-        </section>
-    </bfe-kpi-container-row>
+
+            <section class="teaser-section desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-preise-6_brennholz.kurztext'
+                            | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="
+                        'dynamic:kpi-preise-6_brennholz.kurztext'
+                    "
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
 
     <div *ngIf="!!chartData" class="diagram-container">
         <section class="title-selection-container">
@@ -50,9 +65,7 @@
             >
             </bfe-kpi-date-info-subtext>
         </section>
-        <bfe-optional-dynamic-langtext
-            text="kpi-preise-6_brennholz_endverbrauch.langtext"
-        ></bfe-optional-dynamic-langtext>
+
         <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
         <bfe-histogram-line
             (diagramLeave)="hideTooltip()"
@@ -70,5 +83,12 @@
             [lineEntries]="legendEntries"
             postfix="%"
         ></bfe-preise-tooltip>
+
+        <bfe-hideable-text-section
+            [context]="'chart'"
+            [textTranslationKey]="
+                'dynamic:kpi-preise-6_brennholz_endverbrauch.langtext'
+            "
+        ></bfe-hideable-text-section>
     </div>
 </bfe-kpi-container>

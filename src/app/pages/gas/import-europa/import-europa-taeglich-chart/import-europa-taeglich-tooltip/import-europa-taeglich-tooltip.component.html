@@ -1,0 +1,62 @@
+<div #tooltip class="tooltip-container" [class.hidden]="!event">
+    <bfe-tooltip-container>
+        <ng-container *ngIf="!!data">
+            <bfe-tooltip-header [title]="data.date | date" />
+            <bfe-tooltip-row
+                [color]="colors[index.LNG]"
+                shape="dot"
+                label="dashboard.gas.import-europa.region.lng"
+                [data]="{
+                    value: data.values[index.LNG],
+                    suffix: measuringUnit
+                }"
+            />
+            <bfe-tooltip-row
+                [color]="colors[index.UK]"
+                shape="dot"
+                label="dashboard.gas.import-europa.region.uk"
+                [data]="{
+                    value: data.values[index.UK],
+                    suffix: measuringUnit
+                }"
+                [active]="false"
+            />
+            <bfe-tooltip-row
+                [color]="colors[index.AZERBAIJAN]"
+                shape="dot"
+                label="dashboard.gas.import-europa.region.azerbaijan"
+                [data]="{
+                    value: data.values[index.AZERBAIJAN],
+                    suffix: measuringUnit
+                }"
+            />
+            <bfe-tooltip-row
+                [color]="colors[index.RUSSIA]"
+                shape="dot"
+                label="dashboard.gas.import-europa.region.russia"
+                [data]="{
+                    value: data.values[index.RUSSIA],
+                    suffix: measuringUnit
+                }"
+            />
+            <bfe-tooltip-row
+                [color]="colors[index.ALGERIA]"
+                shape="dot"
+                label="dashboard.gas.import-europa.region.algeria"
+                [data]="{
+                    value: data.values[index.ALGERIA],
+                    suffix: measuringUnit
+                }"
+            />
+            <bfe-tooltip-row
+                [color]="colors[index.NORWAY]"
+                shape="dot"
+                label="dashboard.gas.import-europa.region.norway"
+                [data]="{
+                    value: data.values[index.NORWAY],
+                    suffix: measuringUnit
+                }"
+            />
+        </ng-container>
+    </bfe-tooltip-container>
+</div>

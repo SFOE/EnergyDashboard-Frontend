@@ -7,6 +7,8 @@ import {
     mapPreiseIndexiertToLineEntries,
     mapPreiseStromBoerseToLineEntries
 } from './preise.util';
+import { PreiseStromEuropa } from 'src/app/core/models/preise-strom-europa.model';
+import { PreiseStromEuropaTrend } from 'src/app/core/models/preise-strom-europa-trend.model';
 
 @Injectable({
     providedIn: 'root'
@@ -25,6 +27,8 @@ export class PreiseService {
     private cachedPreiseFernwaermeEndverbrauch: Observable<
         HistogramLineEntry[]
     >;
+    private cachedPreiseStromEuropa: Observable<PreiseStromEuropa[]>;
+    private cachedPreiseStromEuropaTrend: Observable<PreiseStromEuropaTrend>;
 
     constructor(private dataService: DataService) {}
 
@@ -158,5 +162,23 @@ export class PreiseService {
                 .pipe(shareReplay(1));
         }
         return this.cachedPreiseFernwaermeEndverbrauch;
+    }
+
+    getPreiseStromEuropa() {
+        if (!this.cachedPreiseStromEuropa) {
+            this.cachedPreiseStromEuropa = this.dataService
+                .getPreiseStromEuropa()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedPreiseStromEuropa;
+    }
+
+    getPreiseStromEuropaTrend() {
+        if (!this.cachedPreiseStromEuropaTrend) {
+            this.cachedPreiseStromEuropaTrend = this.dataService
+                .getPreiseStromEuropaTrend()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedPreiseStromEuropaTrend;
     }
 }

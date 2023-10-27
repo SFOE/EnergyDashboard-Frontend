@@ -1,0 +1,10 @@
+.region-selection-section {
+    display: flex;
+    flex-direction: column;
+    row-gap: 31px;
+    margin-top: -28px;
+
+    bfe-speicherseen-region-select {
+        width: 100%;
+    }
+}

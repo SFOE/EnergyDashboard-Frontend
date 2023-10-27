@@ -31,7 +31,7 @@ export class AmpelService {
     constructor(private readonly http: HttpClient) {}
 
     private loadAmpelData(): void {
-        const url = environment.baseUrl + '/ampel';
+        const url = environment.baseUrl + '/dashboard/ampel';
         this.cachedAmpelData$ = this.http.get<AmpelDataDto>(url).pipe(
             first(),
             map((data) => {

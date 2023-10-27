@@ -43,6 +43,7 @@ export const mapSpeicherseeDtoToChartEntry = (
         date: new Date(dto.date),
         band: {
             upper: dto.fiveYearMax,
+            mean: dto.fiveYearMittelwert,
             lower: dto.fiveYearMin
         },
         tooltipInformation: {
@@ -68,6 +69,7 @@ export const mapStromImportExportHistoricalValueToChartEntry = (
         date: new Date(dto.date),
         band: {
             upper: dto.fiveYearMax,
+            mean: dto.fiveYearMittelwert,
             lower: dto.fiveYearMin
         },
         tooltipInformation: {
@@ -93,6 +95,7 @@ export const mapStromVerbrauchLandesverbrauchMitPrognoseToChartEntry = (
         date: new Date(dto.date),
         band: {
             upper: dto.fiveYearMax,
+            mean: dto.fiveYearMittelwert,
             lower: dto.fiveYearMin
         },
         tooltipInformation: {
@@ -117,6 +120,7 @@ export const mapStromVerbrauchEndverbrauchToChartEntries = (
         date: new Date(dto.date),
         band: {
             upper: dto.fiveYearMax,
+            mean: dto.fiveYearMittelwert,
             lower: dto.fiveYearMin
         },
         tooltipInformation: {
@@ -142,6 +146,7 @@ export const mapStromVerbrauchLandesverbrauchToChartEntries = (
         date: new Date(dto.date),
         band: {
             upper: dto.fiveYearMax,
+            mean: dto.fiveYearMittelwert,
             lower: dto.fiveYearMin
         },
         tooltipInformation: {
@@ -208,8 +213,17 @@ export const mapStromKkwProductionDtoToEntry = (
     const date = new Date(dto.date);
     return {
         date,
-        values: [dto.fiveYearMittelwert, dto.currentProduction], // add mittelwert first to draw current production line above the average line
-        band: { lower: dto.fiveYearMin, upper: dto.fiveYearMax },
+        values: [
+            dto.fiveYearMittelwert,
+            dto.currentProduction,
+            dto.fiveYearMin, // add min to draw dot
+            dto.fiveYearMax // add max to draw dot
+        ], // add mittelwert first to draw current production line above the average line
+        band: {
+            lower: dto.fiveYearMin,
+            mean: dto.fiveYearMittelwert,
+            upper: dto.fiveYearMax
+        },
         ausfaelle: aggregateAusfaelle
             ? aggregateAusfaelleToHistogramEntry({ date }, ausfaelle)
             : findKkwAusfallToHistogramEntry({ date }, ausfaelle)

@@ -1,5 +1,6 @@
 @use 'col';
 @use 'layout';
+@use 'dim';
 @use 'var';
 
 :host {
@@ -9,6 +10,12 @@
     .dashboard__more {
         & ::ng-deep {
             @include layout.container();
+        }
+        &.app-view {
+          & ::ng-deep {
+            @include layout.container(dim.$detail-container, 0);
+        }
+          padding: var(--card-padding);
         }
     }
 
@@ -36,4 +43,12 @@
 
 .info-page__content {
     padding: var.$kpi-container-column-gap;
+}
+.app-view {
+  .info-page__content {
+    padding: var(--card-padding);
+  }
+  .info-page__content-card {
+    min-height: calc(100vh - var(--card-padding));
+  }
 }

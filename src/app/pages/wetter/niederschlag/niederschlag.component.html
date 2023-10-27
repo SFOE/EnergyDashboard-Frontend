@@ -6,72 +6,61 @@
     }"
     [isLoading]="isLoading"
 >
-    <bfe-kpi-container-row>
-        <section>
-            <section
-                class="trend-section"
-                *ngIf="!isLoading && trend; else loading"
-            >
-                <section class="trend-section-large-number">
-                    <span class="label-medium">
-                        {{ currentMonthTranslationKey | i18next }}
-                    </span>
-                    <bfe-large-number-unit
-                        [color]="primaryColor"
-                        [number]="trend.niederschlagGemessen"
-                        unit="%"
-                    ></bfe-large-number-unit>
-                    <span class="label-medium">
-                        {{
-                        'commons.wetter.niederschlag.incomparison' | i18next
-                        }}
-                    </span>
-                </section>
-                <section>
-                    <bfe-trend-indicator
-                        [trend]="trend.trend"
-                        [rating]="trend.trendRating"
-                    ></bfe-trend-indicator>
-                    <span class="label-medium">
-                        {{ 'commons.trend' | i18next }}
-                    </span>
-                </section>
+    <section>
+        <bfe-kpi-container-row>
+            <section>
+                <bfe-trend-and-number
+                    *ngIf="!!trend"
+                    [model]="{
+                        color: primaryColor,
+                        bigNumber: {
+                            value: trend.niederschlagGemessen,
+                            postfix: '%',
+                            subTextKeys: [
+                                'commons.wetter.niederschlag.incomparison'
+                            ],
+                            topTextKeys: [currentMonthTranslationKey]
+                        },
+                        trend: {
+                            value: trend.trend,
+                            rating: trend.trendRating,
+                            subTextKeys: ['commons.trend']
+                        }
+                    }"
+                ></bfe-trend-and-number>
             </section>
-            <ng-template #loading>
-                <div class="loading-container">
-                    <bfe-loading-spinner></bfe-loading-spinner>
-                </div>
-            </ng-template>
-        </section>
 
-        <section class="teaser-section">
-            <div>
-                <p
+            <section class="teaser-section desktop-only">
+                <div
                     [innerHTML]="
                         'dynamic:kpi-wetter-3_niederschlag.kurztext'
                             | i18nextDynamic
                     "
                     class="teaser"
-                ></p>
-            </div>
-        </section>
-    </bfe-kpi-container-row>
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
 
-    <bfe-niederschlag-karten
-        *ngIf="!isLoading"
-        [loading]="isLoading"
-    ></bfe-niederschlag-karten>
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="
+                        'dynamic:kpi-wetter-3_niederschlag.kurztext'
+                    "
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
 
-    <div class="divider-section">
-        <hr />
-    </div>
+    <bfe-niederschlag-karten [isLoading]="isLoading"></bfe-niederschlag-karten>
+
+    <bfe-divider />
 
     <bfe-niederschlag-aktuell-histogram-chart
         *ngIf="!isLoading"
         [loading]="isLoading"
     ></bfe-niederschlag-aktuell-histogram-chart>
 
-    <div class="divider-section">
-        <hr />
-    </div>
+    <bfe-divider />
 </bfe-kpi-container>

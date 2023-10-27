@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'bfe-loading-spinner',
-    template: '<span class="loader"></span>',
+    templateUrl: './loading-spinner.component.html',
     styleUrls: ['./loading-spinner.component.scss']
 })
 export class LoadingSpinnerComponent {
-    constructor() {}
+    @Input() placeholder: 'chart' | 'trend' = 'trend';
 }

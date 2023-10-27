@@ -6,62 +6,77 @@
     [isLoading]="isLoading"
     titleKeyDynamic="kpi-strom-1_landesverbrauch.titel"
 >
-    <bfe-kpi-container-row>
-        <section>
-            <section class="trend-section" *ngIf="!!currentEntry">
-                <section>
+    <section>
+        <bfe-kpi-container-row>
+            <section>
+                <section class="trend-section" *ngIf="!!currentEntry">
                     <section>
-                        <bfe-large-number-unit
-                            [number]="currentEntry.landesverbrauchPrognose"
-                            unit="GWh"
-                            [color]="COLOR_SPACE"
-                        ></bfe-large-number-unit>
+                        <section>
+                            <bfe-large-number-unit
+                                [number]="currentEntry.landesverbrauchPrognose"
+                                unit="GWh"
+                                [color]="COLOR_SPACE"
+                            ></bfe-large-number-unit>
+                            <p class="label-medium">
+                                {{
+                                    'dashboard.strom.verbrauch-daily.per-day'
+                                        | i18next
+                                }}
+                            </p>
+                        </section>
+                        <section>
+                            <bfe-large-number-unit
+                                [number]="
+                                    currentEntry.landesverbrauchPrognoseInFiveDays
+                                "
+                                unit="GWh"
+                                [color]="COLOR_SPACE"
+                            ></bfe-large-number-unit>
+                            <p class="label-medium">
+                                {{
+                                    'dashboard.strom.verbrauch-daily.in-five-days'
+                                        | i18next
+                                }}
+                            </p>
+                        </section>
+                    </section>
+                    <section class="trend-display-section">
+                        <bfe-trend-indicator
+                            [trend]="currentEntry.trend"
+                            [rating]="currentEntry.trendRating"
+                        ></bfe-trend-indicator>
                         <p class="label-medium">
                             {{
-                                'dashboard.strom.verbrauch-daily.per-day'
+                                'dashboard.strom.produktion.rolling-trend'
                                     | i18next
                             }}
                         </p>
                     </section>
-                    <section>
-                        <bfe-large-number-unit
-                            [number]="
-                                currentEntry.landesverbrauchPrognoseInFiveDays
-                            "
-                            unit="GWh"
-                            [color]="COLOR_SPACE"
-                        ></bfe-large-number-unit>
-                        <p class="label-medium">
-                            {{
-                                'dashboard.strom.verbrauch-daily.in-five-days'
-                                    | i18next
-                            }}
-                        </p>
-                    </section>
-                </section>
-                <section class="trend-display-section">
-                    <bfe-trend-indicator
-                        [trend]="currentEntry.trend"
-                        [rating]="currentEntry.trendRating"
-                    ></bfe-trend-indicator>
-                    <p class="label-medium">
-                        {{
-                            'dashboard.strom.produktion.rolling-trend' | i18next
-                        }}
-                    </p>
                 </section>
             </section>
-        </section>
-        <section class="teaser-section">
-            <div
-                class="teaser"
-                [innerHTML]="
-                    'dynamic:kpi-strom-1_landesverbrauch.kurztext'
-                        | i18nextDynamic
-                "
-            ></div>
-        </section>
-    </bfe-kpi-container-row>
+
+            <section class="teaser-section desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-strom-1_landesverbrauch.kurztext'
+                            | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="
+                        'dynamic:kpi-strom-1_landesverbrauch.kurztext'
+                    "
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
 
     <div
         class="chart-wrapper"

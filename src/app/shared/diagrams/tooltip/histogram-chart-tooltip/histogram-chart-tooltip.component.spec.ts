@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { SharedComponentsModule } from '../../../../shared/components/shared-components.module';
 
 import { HistogramChartTooltipComponent } from './histogram-chart-tooltip.component';
 
@@ -11,6 +10,7 @@ describe('FuellstandSpeicherseeTooltipComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            imports: [SharedComponentsModule],
             declarations: [HistogramChartTooltipComponent]
         }).compileComponents();
     }));

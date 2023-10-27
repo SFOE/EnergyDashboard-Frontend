@@ -1,6 +1,6 @@
 <div
     #container
-    class="expandable-container"
+    class="teaser expandable-container"
     [class.collapsed]="showExpandIcon && !expanded"
     [style.max-height]="showExpandIcon ? MAX_HEIGHT_WITHOUT_EXPANSION_BREAKPOINT + 'px' : 'none'"
     (click)="toggleExpand()"

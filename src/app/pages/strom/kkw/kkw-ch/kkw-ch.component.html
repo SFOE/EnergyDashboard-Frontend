@@ -5,21 +5,32 @@
     }"
     titleKeyDynamic="kpi-strom-6_kkw-ch.titel"
 >
-    <bfe-kpi-container-row>
-        <bfe-kkw-current-production-display
-            [productionData]="productionCh"
-            topLabelKey="dashboard.strom.kkw.production"
-        ></bfe-kkw-current-production-display>
+    <section>
+        <bfe-kpi-container-row>
+            <bfe-kkw-current-production-display
+                [productionData]="productionCh"
+                topLabelKey="dashboard.strom.kkw.production"
+            ></bfe-kkw-current-production-display>
 
-        <section class="teaser-section">
-            <div
-                [innerHTML]="
-                    'dynamic:kpi-strom-6_kkw-ch.kurztext' | i18nextDynamic
-                "
-                class="teaser"
-            ></div>
-        </section>
-    </bfe-kpi-container-row>
+            <section class="teaser-section desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-strom-6_kkw-ch.kurztext' | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="'dynamic:kpi-strom-6_kkw-ch.kurztext'"
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
 
     <bfe-kkw-production-chart
         [model]="{

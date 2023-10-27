@@ -1,0 +1,21 @@
+@use 'mix';
+@use 'col';
+
+.tooltip-container {
+    // @include mix.tooltip-container;
+    &.position-relative {
+        position: relative;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1px;
+        &:not(:empty){
+          margin-bottom: 6px;
+        }
+        &:empty {
+          margin-bottom: -6px
+        }
+    }
+}

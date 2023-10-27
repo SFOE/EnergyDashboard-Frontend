@@ -1,239 +1,106 @@
 <div #tooltip [class.hidden]="!event" class="tooltip-container">
-    <ng-container *ngIf="!!data">
-        <section class="date-section">{{ data.date | date }}</section>
-        <ng-container *ngIf="data.values[1]; else noCurrentPercentage">
-            <section class="percent-section">
-                <!-- current percentage -->
-                <span [style.backgroundColor]="primaryColor" class="dot"></span>
-                <span class="column-margin">{{
-                    'dashboard.strom.fuellstaende-speicherseen.tooltip.current-percentage'
-                        | i18next
-                }}</span>
-                <span class="column-margin d-flex">
-                    <ng-container *ngIf="data.values[1]">
-                        {{ data.values[1] }}
-                        <span class="text-muted">
-                            <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                            {{ postfix }}
-                        </span>
-                    </ng-container>
-                </span>
-                <span>
-                    <span> {{ data.absoluteValue }}</span>
-                    <span class="text-muted"> GWh</span>
-                </span>
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header [title]="data.date | date" />
 
-                <!-- at 100% capacity -->
-                <span></span>
+        <!-- current percentage -->
+        <bfe-tooltip-row
+            *ngIf="data.values[1] || data.absoluteValue"
+            shape="dot"
+            label="dashboard.strom.fuellstaende-speicherseen.tooltip.current-percentage"
+            [color]="primaryColor"
+            [data]="{ value: data.absoluteValue, suffix: ' GWh' }"
+            [dataCol2]="{ value: data.values[1] ?? null, suffix }"
+            [colNumber]="showDifference() ? 3 : 2"
+        />
 
-                <span class="column-margin">{{
-                    'dashboard.strom.fuellstaende-speicherseen.tooltip.at-100-percent-capacity'
-                        | i18next
-                }}</span>
-                <span></span>
-                <span class="column-margin d-flex">
-                    <ng-container *ngIf="data.speicherstandBei100ProzentInGWh">
-                        {{ data.speicherstandBei100ProzentInGWh }}
-                        <span class="text-muted">&nbsp;GWh</span>
-                    </ng-container>
-                </span>
+        <!-- at 100% capacity -->
+        <bfe-tooltip-row
+            *ngIf="data.speicherstandBei100ProzentInGWh"
+            shape="none"
+            label="dashboard.strom.fuellstaende-speicherseen.tooltip.at-100-percent-capacity"
+            [data]="{
+                value: data.speicherstandBei100ProzentInGWh || null,
+                suffix: ' GWh'
+            }"
+            [colNumber]="showDifference() ? 3 : 2"
+        />
 
-                <!-- divider -->
-                <span class="divider-section"><hr width="100%" /></span>
-                <span class="sum-icon text-muted">&#8710;</span>
+        <!-- divider -->
+        <bfe-tooltip-diff-divider *ngIf="hasCurrentValues()" />
 
-                <!-- 5 year max -->
-                <span [style.backgroundColor]="colorMinMax" class="dot"></span>
-                <span class="column-margin">{{
-                    'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-max-percentage'
-                        | i18next
-                }}</span>
-                <span class="column-margin justify-right d-flex">
-                    {{ data.band?.upper }}
-                    <span class="text-muted">
-                        <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfix }}
-                    </span>
-                </span>
-                <span class="justify-right d-flex">
-                    {{ data.tooltipInformation?.differenzMax ?? 0 }}
-                    <span class="text-muted">
-                        <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfixDifference ?? postfix }}
-                    </span>
-                </span>
+        <!-- 5 year max -->
+        <bfe-tooltip-row
+            shape="dot"
+            [color]="colorMinMax"
+            label="dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-max-percentage"
+            [data]="{
+                value: data.band?.upper,
+                suffix
+            }"
+            [dataCol2]="{
+                value: data.tooltipInformation?.differenzMax ?? null,
+                suffix: diffSuffix
+            }"
+            [colNumber]="showDifference() ? 2 : 1"
+        />
 
-                <!-- 5 year average -->
-                <span
-                    [style.backgroundColor]="colorSecondary"
-                    class="dot"
-                ></span>
-                <span class="column-margin">{{
-                    'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-mittelwert-percentage'
-                        | i18next
-                }}</span>
-                <span class="column-margin justify-right d-flex">
-                    {{ data.values[0] }}
-                    <span class="text-muted">
-                        <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfix }}
-                    </span>
-                </span>
-                <span class="justify-right d-flex">
-                    {{ data.tooltipInformation?.differenzMittelwert ?? 0 }}
-                    <span class="text-muted">
-                        <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfixDifference ?? postfix }}
-                    </span>
-                </span>
+        <!-- 5 year average -->
+        <bfe-tooltip-row
+            shape="dot"
+            [color]="colorSecondary"
+            label="dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-mittelwert-percentage"
+            [data]="{
+                value: data.values[0],
+                suffix
+            }"
+            [dataCol2]="{
+                value: data.tooltipInformation?.differenzMittelwert ?? null,
+                suffix: diffSuffix
+            }"
+            [colNumber]="showDifference() ? 2 : 1"
+        />
+        <!-- 5 year min -->
+        <bfe-tooltip-row
+            shape="dot"
+            [color]="colorMinMax"
+            label="dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-min-percentage"
+            [data]="{
+                value: data.band?.lower,
+                suffix
+            }"
+            [dataCol2]="{
+                value: data.tooltipInformation?.differenzMin ?? null,
+                suffix: diffSuffix
+            }"
+            [colNumber]="showDifference() ? 2 : 1"
+        />
 
-                <!-- 5 year min -->
-                <span [style.backgroundColor]="colorMinMax" class="dot"></span>
-                <span class="column-margin">{{
-                    'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-min-percentage'
-                        | i18next
-                }}</span>
-                <span class="column-margin justify-right d-flex">
-                    {{ data.band?.lower }}
-                    <span class="text-muted"
-                        ><span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfix }}</span
-                    >
-                </span>
-                <span class="justify-right d-flex">
-                    {{ data.tooltipInformation?.differenzMin ?? 0 }}
-                    <span class="text-muted">
-                        <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfixDifference ?? postfix }}
-                    </span>
-                </span>
+        <ng-container *ngIf="isRegionTotalCH">
+            <bfe-tooltip-divider />
 
-                <ng-container *ngIf="isRegionTotalCH">
-                    <!-- divider -->
-                    <span class="divider-section"><hr width="100%" /></span>
-                    <span></span>
-                    <!-- Historical Minimum With Reserves -->
-                    <span
-                        [style.backgroundColor]="colorMinimumWithReserves"
-                        class="dot"
-                    ></span>
-                    <span class="column-margin longtext">{{
-                        'dashboard.strom.fuellstaende-speicherseen.diagram-legend.minimum-including-reserves'
-                            | i18next
-                    }}</span>
-                    <span class="column-margin justify-right d-flex">
-                        {{ data.values[2] }}
-                        <span class="text-muted">
-                            <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                            {{ postfix }}
-                        </span>
-                    </span>
-                    <span></span>
+            <!-- Historical Minimum With Reserves -->
+            <bfe-tooltip-row
+                shape="dot"
+                [color]="colorMinimumWithReserves"
+                label="dashboard.strom.fuellstaende-speicherseen.diagram-legend.minimum-including-reserves"
+                [data]="{
+                    value: data.values[2],
+                    suffix
+                }"
+                [colNumber]="showDifference() ? 2 : 1"
+            />
 
-                    <!-- Historical Minimum  -->
-                    <span
-                        [style.backgroundColor]="colorHistoricalMinimum"
-                        class="dot"
-                    ></span>
-                    <span class="column-margin">{{
-                        'dashboard.strom.fuellstaende-speicherseen.diagram-legend.historical-minimum'
-                            | i18next
-                    }}</span>
-                    <span class="column-margin justify-right d-flex">
-                        {{ data.values[3] }}
-                        <span class="text-muted"
-                            ><span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                            {{ postfix }}</span
-                        ></span
-                    >
-                    <span></span>
-                </ng-container>
-            </section>
+            <!-- Historical Minimum  -->
+            <bfe-tooltip-row
+                shape="dot"
+                [color]="colorHistoricalMinimum"
+                label="dashboard.strom.fuellstaende-speicherseen.diagram-legend.historical-minimum"
+                [data]="{
+                    value: data.values[3],
+                    suffix
+                }"
+                [colNumber]="showDifference() ? 2 : 1"
+            />
         </ng-container>
-
-        <ng-template #noCurrentPercentage>
-            <section class="percent-section-no-current">
-                <!-- 5 year max -->
-                <span class="dot" style="background-color: #000"></span>
-                <span class="column-margin">{{
-                    'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-max-percentage'
-                        | i18next
-                }}</span>
-                <span class="justify-right d-flex">
-                    {{ data.band?.upper }}
-                    <span class="text-muted">
-                        <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfix }}
-                    </span>
-                </span>
-
-                <!-- 5 year average -->
-                <span class="dot" style="background-color: #636363"></span>
-                <span class="column-margin">{{
-                    'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-mittelwert-percentage'
-                        | i18next
-                }}</span>
-                <span class="justify-right d-flex">
-                    {{ data.values[0] }}
-                    <span class="text-muted">
-                        <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfix }}
-                    </span>
-                </span>
-
-                <!-- 5 year min -->
-                <span class="dot" style="background-color: #000"></span>
-                <span class="column-margin">{{
-                    'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-min-percentage'
-                        | i18next
-                }}</span>
-                <span class="justify-right d-flex">
-                    {{ data.band?.lower }}
-                    <span class="text-muted">
-                        <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                        {{ postfix }}
-                    </span>
-                </span>
-
-                <ng-container *ngIf="isRegionTotalCH">
-                    <!-- divider -->
-                    <span class="divider-section"><hr width="100%" /></span>
-
-                    <!-- Historical Minimum With Reserves -->
-                    <span
-                        [style.backgroundColor]="colorMinimumWithReserves"
-                        class="dot"
-                    ></span>
-                    <span class="column-margin longtext">{{
-                        'dashboard.strom.fuellstaende-speicherseen.diagram-legend.minimum-including-reserves'
-                            | i18next
-                    }}</span>
-                    <span class="justify-right d-flex">
-                        {{ data.values[2] }}
-                        <span class="text-muted">
-                            <span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                            {{ postfix }}</span
-                        >
-                    </span>
-
-                    <!-- Historical Minimum  -->
-                    <span
-                        [style.backgroundColor]="colorHistoricalMinimum"
-                        class="dot"
-                    ></span>
-                    <span class="column-margin">{{
-                        'dashboard.strom.fuellstaende-speicherseen.diagram-legend.historical-minimum'
-                            | i18next
-                    }}</span>
-                    <span class="justify-right d-flex">
-                        {{ data.values[3] }}
-                        <span class="text-muted"
-                            ><span *ngIf="withSpaceBeforePostfix">&nbsp;</span>
-                            {{ postfix }}</span
-                        >
-                    </span>
-                </ng-container>
-            </section>
-        </ng-template>
-    </ng-container>
+    </bfe-tooltip-container>
 </div>

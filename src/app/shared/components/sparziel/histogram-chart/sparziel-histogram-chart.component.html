@@ -8,10 +8,6 @@
         [updateInterval]="'monthly'"
     ></bfe-kpi-date-info-subtext>
 
-    <bfe-optional-dynamic-langtext
-        [text]="model.langtextDynamicKey"
-    ></bfe-optional-dynamic-langtext>
-
     <bfe-diagram-legend [entries]="model.legendEntries"></bfe-diagram-legend>
 
     <bfe-histogram-detail
@@ -24,8 +20,8 @@
         [domainMax]="domainMax"
         [domainMin]="domainMin"
         [lineColors]="model.colors.lines"
-        [lineThickness]="[2, 2, 1]"
-        [lineStyle]="['solid', 'solid', 'dashed']"
+        [lineThickness]="hasSparziel ? [2, 2, 1] : [2, 1] "
+        [lineStyle]="hasSparziel ? ['solid', 'solid', 'dashed'] : ['solid', 'dashed']"
         [margin]="{ top: 20, bottom: 40, left: 0, right: 12 }"
         [pointsOfInterest]="pointsOfInterest"
         [xLabelModifier]="xLabelModifier"
@@ -38,19 +34,23 @@
         [entries]="pointsOfInterest"
     ></bfe-points-of-interest-legend>
     <bfe-sparziel-chart-tooltip
-        [colorAverageUse]="model.colors.lines[1]"
+        [colorAverageUse]="hasSparziel ? model.colors.lines[1] : model.colors.lines[0]"
         [colorSparziel]="model.colors.lines[0]"
-        [colorTemperature]="model.colors.lines[2]"
+        [colorTemperature]="hasSparziel ? model.colors.lines[2] : model.colors.lines[1]"
         [dataColors]="model.colors.bars"
         [event]="tooltipEvent"
-        [sparzielTarget]="model.sparzielTarget"
+        [sparzielTarget]="hasSparziel ? model.sparzielTarget : null"
+        [hasSparziel]="hasSparziel"
         postfix="GWh"
     >
     </bfe-sparziel-chart-tooltip>
+
+    <bfe-hideable-text-section
+        [context]="'chart'"
+        [textTranslationKey]="'dynamic:' + model.langtextDynamicKey"
+    ></bfe-hideable-text-section>
 </div>
 
 <ng-template #loadingTemplate>
-    <div class="loading-container">
-        <bfe-loading-spinner></bfe-loading-spinner>
-    </div>
+    <bfe-loading-spinner></bfe-loading-spinner>
 </ng-template>

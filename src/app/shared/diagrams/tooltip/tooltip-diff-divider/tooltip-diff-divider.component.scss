@@ -1,0 +1,25 @@
+
+.divider-section {
+  grid-column: span 3;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+
+  hr {
+      height: 1px;
+      background-color: #ebebeb;
+      border: none;
+  }
+  .sum-icon {
+    display: flex;
+    justify-self: center;
+    min-width: 44px;
+    justify-content: center;
+  }
+  .text-muted {
+    color: #636363;
+    font-weight: 400;
+    font-size: 8px;
+  }
+}
+

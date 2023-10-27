@@ -1,17 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { StromService } from '../../../services/strom/strom.service';
-import {
-    COLOR_CONTEXT,
-    COLOR_INDUSTRY,
-    COLOR_KMU,
-    COLOR_PRIVATE,
-    StromsparzielFivePercentConsts
-} from '../strom.consts';
 import { StromsparzielFivePercentPeakHoursModel } from '../../../core/models/strom-sparziel-five-percent.model';
 import { Trend, TrendRating } from '../../../core/models/trend.enum';
+import { RoutePathFragments } from '../../../core/navigation/route-paths.enum';
+import { StromService } from '../../../services/strom/strom.service';
 import { DiagramLegendEntry } from '../../../shared/diagrams/diagram-legend/diagram-legend.component';
 import { getYesterday } from '../../../shared/static-utils/date-utils';
-
+import { COLOR_CONTEXT, StromsparzielFivePercentConsts } from '../strom.consts';
 @Component({
     selector: 'bfe-stromstromsparziel-five-percent',
     templateUrl: './stromsparziel-five-percent.component.html',
@@ -22,6 +16,7 @@ export class StromsparzielFivePercentComponent implements OnInit {
 
     private model: StromsparzielFivePercentPeakHoursModel[];
 
+    readonly fragments = RoutePathFragments;
     modelBySelectedMonth: StromsparzielFivePercentPeakHoursModel;
     availableMonths: Date[];
     availableHours: number[];

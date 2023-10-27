@@ -5,6 +5,7 @@ import { CommonsModule } from '../../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
 import { SparzielHistogramChartComponent } from '../../../shared/components/sparziel/histogram-chart/sparziel-histogram-chart.component';
 
+import { mockActivatedRouteProvider } from '../../../test/queryParamService.fixture';
 import { StromsparzielComponent } from './stromsparziel.component';
 
 describe('GassparzielComponent', () => {
@@ -22,7 +23,8 @@ describe('GassparzielComponent', () => {
             declarations: [
                 StromsparzielComponent,
                 SparzielHistogramChartComponent
-            ]
+            ],
+            providers: [mockActivatedRouteProvider]
         }).compileComponents();
 
         fixture = TestBed.createComponent(StromsparzielComponent);

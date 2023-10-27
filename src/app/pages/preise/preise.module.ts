@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { I18NextModule } from 'angular-i18next';
+import { TooltipModule } from 'src/app/shared/diagrams/tooltip/tooltip.module';
 import { CommonsModule } from '../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../shared/components/shared-components.module';
 import { DiagramLegendModule } from '../../shared/diagrams/diagram-legend/diagram-legend.module';
@@ -21,6 +22,7 @@ import { PreiseTreibstoffBenzinComponent } from './preise-treibstoff/preise-trei
 import { PreiseTreibstoffDieselComponent } from './preise-treibstoff/preise-treibstoff-diesel/preise-treibstoff-diesel.component';
 import { PreiseTreibstoffComponent } from './preise-treibstoff/preise-treibstoff.component';
 import { PreiseComponent } from './preise.component';
+import { HideableTextSection } from '../../shared/components/hideable-text-section/hideable-text-section.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +49,9 @@ import { PreiseComponent } from './preise.component';
         CommonsModule,
         HistogramLineModule,
         DiagramLegendModule,
-        I18NextModule
+        I18NextModule,
+        TooltipModule,
+        HideableTextSection
     ]
 })
 export class PreiseModule {}

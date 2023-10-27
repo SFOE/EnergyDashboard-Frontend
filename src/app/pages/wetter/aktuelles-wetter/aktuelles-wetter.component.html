@@ -6,55 +6,56 @@
     }"
     [isLoading]="isLoading"
 >
-    <bfe-kpi-container-row>
-        <section>
-            <section
-                class="trend-section"
-                *ngIf="!isLoading && trend; else loading"
-            >
-                <section>
-                    <bfe-large-number-unit
-                        [number]="currentTrend.lufttemperaturTagesmittel"
-                        unit="°C"
-                        [color]="primaryColor"
-                    ></bfe-large-number-unit>
-                    <p>
-                        {{
-                        'dashboard.wetter.aktuelles-wetter.aktuelle-temperatur'
-                            | i18next
-                        }}
-                    </p>
-                </section>
-                <section>
-                    <bfe-trend-indicator
-                        [trend]="trend.trend"
-                        [rating]="trend.trendRating"
-                    ></bfe-trend-indicator>
-                    <p>
-                        {{
-                            'dashboard.wetter.aktuelles-wetter.trend' | i18next
-                        }}
-                    </p>
+    <section>
+        <bfe-kpi-container-row>
+            <section>
+                <bfe-trend-and-number
+                    *ngIf="!!trend"
+                    [model]="{
+                        color: primaryColor,
+                        bigNumber: {
+                            value: currentTrend.lufttemperaturTagesmittel,
+                            postfix: '°C',
+                            subTextKeys: [
+                                'dashboard.wetter.aktuelles-wetter.aktuelle-temperatur'
+                            ]
+                        },
+                        trend: {
+                            value: trend.trend,
+                            rating: trend.trendRating,
+                            subTextKeys: [
+                                'dashboard.wetter.aktuelles-wetter.trend'
+                            ]
+                        }
+                    }"
+                ></bfe-trend-and-number>
+            </section>
+            <section>
+                <bfe-aktuelles-wetter-region-select
+                    (selectedRegion)="changeRegion($event)"
+                ></bfe-aktuelles-wetter-region-select>
+
+                <section class="teaser-section desktop-only">
+                    <div
+                        [innerHTML]="
+                            'dynamic:kpi-wetter-1_meteoswiss.kurztext'
+                                | i18nextDynamic
+                        "
+                        class="teaser"
+                    ></div>
                 </section>
             </section>
-            <ng-template #loading>
-                <div class="loading-container">
-                    <bfe-loading-spinner></bfe-loading-spinner>
-                </div>
-            </ng-template>
-        </section>
-        <section class="region-selection-section">
-            <bfe-aktuelles-wetter-region-select
-                (selectedRegion)="changeRegion($event)"
-            ></bfe-aktuelles-wetter-region-select>
-            <div
-                [innerHTML]="
-                    'dynamic:kpi-wetter-1_meteoswiss.kurztext' | i18nextDynamic
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-hideable-text-section
+                [context]="'trend'"
+                [textTranslationKey]="
+                    'dynamic:kpi-wetter-1_meteoswiss.kurztext'
                 "
-                class="teaser"
-            ></div>
-        </section>
-    </bfe-kpi-container-row>
+            ></bfe-hideable-text-section>
+        </div>
+    </section>
 
     <bfe-aktuelles-wetter-aktuelle-temperatur-histogram-chart
         [currentRegion]="currentRegion"

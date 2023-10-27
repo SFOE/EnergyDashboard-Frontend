@@ -4,6 +4,7 @@ import { I18NextModule } from 'angular-i18next';
 import { CommonsModule } from '../../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
 
+import { mockActivatedRouteProvider } from '../../../test/queryParamService.fixture';
 import { PreiseStromComponent } from './preise-strom.component';
 
 describe('PreiseStromComponent', () => {
@@ -18,6 +19,7 @@ describe('PreiseStromComponent', () => {
                 CommonsModule,
                 SharedComponentsModule
             ],
+            providers: [mockActivatedRouteProvider],
             declarations: [PreiseStromComponent]
         }).compileComponents();
 

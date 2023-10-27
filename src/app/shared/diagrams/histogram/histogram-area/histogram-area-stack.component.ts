@@ -6,7 +6,7 @@ import {
     SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
-import { area, Area, Line } from 'd3';
+import { Area, Line, area } from 'd3';
 import { middleOfDay } from '../../../static-utils/date-utils';
 import { isDefined } from '../../../xternal-helpers/from-c19-commons/utils/is-defined.function';
 import { HistogramEntry } from '../base-histogram.model';
@@ -36,6 +36,7 @@ export class HistogramAreaStackComponent<T extends HistogramAreaEntry>
         left: number;
         right: number;
     };
+    @Input() isSplitChart: boolean = false;
 
     override ngOnChanges(changes: SimpleChanges): void {
         if (changes['margins'] && this.margins) {
@@ -144,7 +145,13 @@ export class HistogramAreaStackComponent<T extends HistogramAreaEntry>
     }
 
     protected override getFocusPointColor = (val: any, ix: number): string => {
-        if (val !== 0) {
+        if (
+            val === 0 &&
+            this.focusPointColors.length > (this.isSplitChart ? 2 : 1)
+        ) {
+            // prevents focus points to be hidden behind '0' values in stacked charts
+            return 'transparent';
+        } else if (val !== null) {
             return (
                 this.focusPointColors.slice(0, this.areaFunctions.length)[ix] ||
                 '#ccc'
@@ -171,12 +178,32 @@ export class HistogramAreaStackComponent<T extends HistogramAreaEntry>
             .attr('y1', this.margin.top)
             .attr('y2', this.svg.height - this.margin.bottom);
 
-        const dotsData = item.values.slice();
+        let dotsData = item.values
+            .slice()
+            .filter((element) => element !== null);
+
+        let cumulativeArray = [];
+        for (let i = 0; i < dotsData.length; i++) {
+            let stackedValue: number = 0;
+            stackedValue = dotsData
+                .slice(0, i + 1)
+                .reduce(
+                    (accumulator: number, current) =>
+                        (accumulator += current ?? 0),
+                    0
+                );
+            cumulativeArray.push(stackedValue);
+        }
+        if (this.isSplitChart && cumulativeArray.length % 2 !== 0) {
+            // remove middle value that represents the 0 line from focus points
+            cumulativeArray.splice(Math.floor(cumulativeArray.length / 2), 1);
+            dotsData.splice(Math.floor(dotsData.length / 2), 1);
+        }
 
         if (this.showLines && !this.hideFocusDots) {
             this.focusGuideGroup
                 .selectAll('circle')
-                .data(dotsData)
+                .data(cumulativeArray)
                 .join((s) => {
                     if (this.focusPointBorder) {
                         return s
@@ -189,20 +216,12 @@ export class HistogramAreaStackComponent<T extends HistogramAreaEntry>
                     return s.append('circle').attr('r', 5);
                 })
                 .attr('cy', (value, pos) => {
-                    let stackedValue: number = 0;
-                    if (!!value && value !== 0) {
-                        stackedValue = dotsData
-                            .slice(0, pos + 1)
-                            .reduce(
-                                (accumulator: number, current) =>
-                                    (accumulator += current ?? 0),
-                                0
-                            );
-                    }
-                    return <number>this.scaleLinearY(stackedValue);
+                    return <number>this.scaleLinearY(value);
                 })
                 .attr('opacity', (v) => (isDefined(v) ? null : 0))
-                .attr('fill', this.getFocusPointColor);
+                .attr('fill', (_, pos) =>
+                    this.getFocusPointColor(dotsData[pos], pos)
+                );
         }
     }
 

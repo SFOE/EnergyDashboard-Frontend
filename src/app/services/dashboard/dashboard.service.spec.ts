@@ -1,5 +1,4 @@
 /* tslint:disable:no-unused-variable */
-
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { I18NextModule } from 'angular-i18next';

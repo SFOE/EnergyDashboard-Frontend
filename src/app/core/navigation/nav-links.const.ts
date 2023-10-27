@@ -1,4 +1,4 @@
-import { RoutePaths } from './route-paths.enum';
+import { RoutePathFragments, RoutePaths } from './route-paths.enum';
 
 export interface NavLink {
     path: string;
@@ -35,12 +35,28 @@ export const detailLinksStrom = [
         path: RoutePaths.DASHBOARD_STROM_IMPORT_EXPORT
     },
     {
-        labelKey: 'kpi-strom-3_sparziel.titel',
-        path: RoutePaths.DASHBOARD_STROM_SPARZIEL
-    },
-    {
-        labelKey: 'kpi-strom-3_sparziel-five-percent.titel',
-        path: RoutePaths.DASHBOARD_STROM_SPARZIEL_FIVE_PERCENT
+        labelKey: 'kpi-strom-3_minder-mehrverbrauch.titel',
+        path: RoutePaths.DASHBOARD_STROM_MINDER_MEHRVERBRAUCH,
+        children: [
+            {
+                labelKey: 'kpi-strom-3_minder-mehrverbrauch.pro-monat.titel',
+                path: RoutePaths.DASHBOARD_STROM_MINDER_MEHRVERBRAUCH,
+                fragment: RoutePathFragments.FRAGMENT_STROM_VERBRAUCH_PRO_MONAT
+            },
+            {
+                labelKey:
+                    'kpi-strom-3_minder-mehrverbrauch.nach-kundengruppen.titel',
+                path: RoutePaths.DASHBOARD_STROM_MINDER_MEHRVERBRAUCH,
+                fragment:
+                    RoutePathFragments.FRAGMENT_STROM_VERBRAUCH_NACH_KUNDENGRUPPEN
+            },
+            {
+                labelKey: 'kpi-strom-3_minder-mehrverbrauch.nach-bereich.titel',
+                path: RoutePaths.DASHBOARD_STROM_MINDER_MEHRVERBRAUCH,
+                fragment:
+                    RoutePathFragments.FRAGMENT_STROM_VERBRAUCH_NACH_BEREICH
+            }
+        ]
     }
 ];
 
@@ -48,6 +64,10 @@ export const detailLinksGas = [
     {
         labelKey: 'kpi-gas-5_import.titel',
         path: RoutePaths.DASHBOARD_GAS_IMPORT
+    },
+    {
+        labelKey: 'kpi-gas-5_import-europa.titel',
+        path: RoutePaths.DASHBOARD_GAS_IMPORT_EUROPA
     },
     {
         labelKey: 'kpi-gas-7_fuellstand-gasspeicher.titel',
@@ -60,6 +80,10 @@ export const detailLinksGas = [
 ];
 
 export const detailLinksPreise = [
+    {
+        labelKey: 'kpi-preise-8_strom_europa.titel',
+        path: RoutePaths.DASHBOARD_PREISE_STROM_KARTE_EUROPA
+    },
     {
         labelKey: 'kpi-preise-5_strom.titel',
         path: RoutePaths.DASHBOARD_PREISE_STROM
@@ -98,6 +122,10 @@ export const detailLinksWetter = [
     {
         labelKey: 'kpi-wetter-4_schneereserven.titel',
         path: RoutePaths.DASHBOARD_WETTER_SCHNEERESERVEN
+    },
+    {
+        labelKey: 'kpi-wetter-5_heizgradtage.titel',
+        path: RoutePaths.DASHBOARD_WETTER_HEIZGRADTAGE
     }
 ];
 

@@ -1,11 +1,16 @@
 <div class="master-detail">
-    <div class="master-detail__container">
+    <div
+        class="master-detail__container"
+        [ngClass]="{ 'master-detail__app-view': appView }"
+    >
         <bfe-context-title
+            *ngIf="!appView"
             [context]="context"
             [marginBottom]="contextMargin"
             class="context-title"
         ></bfe-context-title>
         <div
+            *ngIf="!appView"
             #menuWrapperElRef
             [style.--row-span]="(items.length || 0) + 1"
             class="master-detail__menu"
@@ -29,11 +34,36 @@
                             ></p>
                         </div>
                     </a>
+                    <ng-container *ngIf="isActiveRoute(item)">
+                        <ng-container
+                            *ngFor="let child of item.children; let jx = index"
+                        >
+                            <a
+                                [routerLinkActiveOptions]="fragmentMatchOptions"
+                                [routerLink]="child.pathArgs"
+                                [fragment]="child.fragment"
+                                [style.order]="ix"
+                                queryParamsHandling="preserve"
+                                class="master-detail__menu-sub-item"
+                                routerLinkActive="master-detail__menu-sub-item--active"
+                            >
+                                <div class="master-detail__menu-sub-item-inner">
+                                    <p
+                                        [innerHTML]="
+                                            'dynamic:' + child.title
+                                                | i18nextDynamic
+                                        "
+                                        class="master-detail__menu-item-title"
+                                    ></p>
+                                </div>
+                            </a>
+                        </ng-container>
+                    </ng-container>
                 </ng-container>
             </div>
         </div>
 
-        <div class="master-detail__menu-mobile">
+        <div *ngIf="!appView" class="master-detail__menu-mobile">
             <bfe-context-icon
                 *ngIf="context"
                 [context]="context"
@@ -56,7 +86,7 @@
 
         <div
             [style.--order]="(activeMenuItemIndex | async) || 0"
-            [style.--row-span]="(items.length || 0) + 1"
+            [style.--row-span]="(items.length > 0 ? 1 : 0) + 1"
             class="master-detail__content"
         >
             <div

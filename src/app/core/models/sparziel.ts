@@ -1,40 +1,45 @@
 import { DateModel } from './base/date.model';
 import { Trend, TrendRating } from './trend.enum';
 
-export interface SparzielZielDtoV4 {
-    date: string;
-    kumulierteMonatlicheEinsparungGWh: number;
-    sparzielGWh: number;
-    standSparzielProzent: number;
-    standSparzielGemessenWitterungsbereinigtProzent: number;
-    standSparzielGeschaetztProzent: number;
+
+export interface SparzielZielDtoV5 {
     trend: Trend;
+    date: string;
     trendRating: TrendRating;
+    schaetzung: boolean;
+    kumulierteEinsparungProzent: number;
+    kumulierteEinsparungWitterungsbereinigtProzent: number;
+    kumulierteEinsparungWitterungsbereinigtGwh: number;
+    id: string;
+    kumulierteMonatlicheEinsparungGWh: number;
 }
 
 export interface SparzielEntry extends DateModel {
+    schaetzung: boolean;
+    kumulierteEinsparungProzent: number;
+    kumulierteEinsparungWitterungsbereinigtProzent: number;
+    kumulierteEinsparungWitterungsbereinigtGwh: number;
     kumulierteMonatlicheEinsparungGWh: number;
-    sparzielGWh: number;
-    standSparzielProzent: number;
-    standSparzielGemessenWitterungsbereinigtProzent: number;
-    standSparzielGeschaetztProzent: number;
     trend: Trend;
     trendRating: TrendRating;
 }
 
-export interface SparzielAktuelleEinsparungDtoV4 {
+export interface SparzielAktuelleEinsparungDtoV5 {
     date: string;
-    differenzMittelwertProzent: number;
+    differenzReferenzperiodeProzent: number;
     isEstimation: boolean;
+    differenzReferenzperiodeWitterungsbereinigtProzent: number;
+    differenzReferenzperiodeWitterungsbereingtProzentSchaetzung: boolean;
+    differenzReferenzperiodeWitterungsbereingtLowerBound: number;
+    differenzReferenzperiodeWitterungsbereingtUpperBound: number;
     temperaturAbweichungNorm: number;
-    differenzMittelwertWitterungsbereinigtProzent: number;
 }
 
-export interface SparzielAktuelleEinsparungEntryV4 extends DateModel {
-    differenzMittelwertProzent: number;
+export interface SparzielAktuelleEinsparungEntryV5 extends DateModel {
+    differenzReferenzperiodeProzent: number;
     isEstimation: boolean;
     temperaturAbweichungNorm: number;
-    differenzMittelwertWitterungsbereinigtProzent: number;
+    differenzReferenzperiodeWitterungsbereinigtProzent: number;
 }
 
 export interface SparzielNachBereichProMonat extends DateModel {

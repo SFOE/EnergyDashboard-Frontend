@@ -3,7 +3,7 @@
         [model]="{
             lastUpdate: lastUpdated,
             data: mehrMindestverbrauchData,
-            blocks: mehrMindestverbrauchBlocks,
+            blocks: [],
             colors: {
                 bars: barColors,
                 lines: lineColors
@@ -15,12 +15,11 @@
                 'kpi-strom-3_sparziel_aktuelle_einsparung.langtext',
             sparzielTarget: targetPercentage
         }"
+        [hasSparziel]="false"
         [loading]="isLoading"
     ></bfe-sparziel-histogram-chart>
 </div>
 
 <ng-template #loadingTemplate>
-    <div class="loading-container">
-        <bfe-loading-spinner></bfe-loading-spinner>
-    </div>
+    <bfe-loading-spinner></bfe-loading-spinner>
 </ng-template>

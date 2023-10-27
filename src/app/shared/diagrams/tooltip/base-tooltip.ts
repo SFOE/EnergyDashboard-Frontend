@@ -3,12 +3,12 @@ import {
     Component,
     ElementRef,
     Input,
-    OnChanges, Renderer2,
+    OnChanges,
     SimpleChanges,
     ViewChild
 } from '@angular/core';
 import { D3SvgComponent } from '../../components/d3-svg/d3-svg.component';
-import {Breakpoints} from "../../static-utils/breakpoints.enum";
+import { Breakpoints } from '../../static-utils/breakpoints.enum';
 
 const TOOLTIP_POINT_OFFSET = 12;
 const TOOLTIP_VIEWPORT_PADDING = 16; // minimal distance from the viewport end
@@ -33,7 +33,7 @@ export abstract class BaseTooltipComponent<T>
 
     data?: T;
 
-    constructor() { }
+    constructor() {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (!!changes['event'] && this.event && this.tooltip) {
@@ -41,7 +41,10 @@ export abstract class BaseTooltipComponent<T>
             this.data = data;
             const tooltipElement = this.tooltip.nativeElement;
 
-            if (this.isMobile() && this.event?.histogramComponent?.nativeElement) {
+            if (
+                this.isMobile() &&
+                this.event?.histogramComponent?.nativeElement
+            ) {
                 const refElement = this.event.histogramComponent?.nativeElement;
 
                 // This will wait for the next JavaScript event loop, giving Angular time to render the tooltip before calculating its size and position:
@@ -59,13 +62,16 @@ export abstract class BaseTooltipComponent<T>
                     if (displayBelow) {
                         tooltipElement.style.top = `${rect.bottom}px`;
                     } else {
-                        tooltipElement.style.top = `${rect.top - tooltipElement.offsetHeight}px`;
+                        tooltipElement.style.top = `${
+                            rect.top - tooltipElement.offsetHeight
+                        }px`;
                     }
 
                     // align to the middle of the refElement
-                    tooltipElement.style.left = `${middleRefElement - tooltipElement.offsetWidth / 2}px`;
+                    tooltipElement.style.left = `${
+                        middleRefElement - tooltipElement.offsetWidth / 2
+                    }px`;
                 }, 0);
-
             } else {
                 // calculate how much space the tooltip takes up and decide which side to display it
                 const viewportWidth = window.innerWidth;
@@ -82,8 +88,8 @@ export abstract class BaseTooltipComponent<T>
                 const tooltipXPosition = displayRight
                     ? source.x + TOOLTIP_POINT_OFFSET
                     : source.x -
-                    this.tooltip.nativeElement.clientWidth -
-                    TOOLTIP_POINT_OFFSET;
+                      this.tooltip.nativeElement.clientWidth -
+                      TOOLTIP_POINT_OFFSET;
                 tooltipElement.style.left = `${tooltipXPosition}px`;
             }
         }

@@ -36,21 +36,6 @@
     .celsius {
         padding-left: 2px;
     }
-
-    .divider-section {
-        grid-column: span 3;
-        display: flex;
-        align-items: stretch;
-        justify-content: stretch;
-        width: 100%;
-        padding-right: 4px;
-
-        hr {
-            height: 1px;
-            background-color: #ebebeb;
-            border: none;
-        }
-    }
 }
 
 .tooltip-container.hidden {

@@ -1,36 +1,20 @@
+@use 'var';
+@use 'dim';
+
+:host {
+    width: 100%;
+}
 bfe-aktuelles-wetter-prognose-histogram-chart,
 bfe-produktion-verbrauch-histogram-chart {
     width: 100%;
 }
 
-.trend-section {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    width: 100%;
-
-    section {
-        display: flex;
-        flex-direction: column;
-        justify-content: baseline;
-        align-items: center;
-    }
+.teaser-section {
+    margin-top: 15px;
 }
 
-.region-selection-section {
-    display: flex;
-    flex-direction: column;
-    row-gap: 31px;
-    margin-top: -28px;
-
-    bfe-aktuelles-wetter-region-select {
+@media (max-width: #{dim.$bp-max-sm}) {
+    section {
         width: 100%;
     }
-}
-
-.loading-container {
-    height: 79px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }

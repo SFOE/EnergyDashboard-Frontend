@@ -5,6 +5,7 @@ import { I18NextModule } from 'angular-i18next';
 import { CommonsModule } from '../../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
 
+import { mockActivatedRouteProvider } from '../../../test/queryParamService.fixture';
 import { FuellstaendeSpeicherseenComponent } from './fuellstaende-speicherseen.component';
 import { SpeicherseenRegionSelectComponent } from './speicherseen-region-select/speicherseen-region-select.component';
 
@@ -24,7 +25,8 @@ describe('FuellstaendeSpeicherseenComponent', () => {
             declarations: [
                 FuellstaendeSpeicherseenComponent,
                 SpeicherseenRegionSelectComponent
-            ]
+            ],
+            providers: [mockActivatedRouteProvider]
         }).compileComponents();
 
         fixture = TestBed.createComponent(FuellstaendeSpeicherseenComponent);

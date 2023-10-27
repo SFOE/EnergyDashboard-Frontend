@@ -5,60 +5,55 @@
         langtextDynamicKey: 'kpi-wetter-4_schneereserven.langtext'
     }"
 >
-    <bfe-kpi-container-row>
-        <section>
-            <section
-                class="trend-section"
-                *ngIf="!isLoading && trend; else loading"
-            >
-                <section class="trend-section-large-number">
-                    <span class="label-medium">
-                        {{
-                        'commons.wetter.schneereserven.snow-water-equivalent'
-                            | i18next
-                        }}
-                    </span>
-                    <bfe-large-number-unit
-                        [color]="primaryColor"
-                        [number]="trend.aktuellMm"
-                        unit="mm"
-                    ></bfe-large-number-unit>
-                    <span class="label-medium">
-                        {{
-                        'commons.wetter.schneereserven.current-reserves'
-                            | i18next
-                        }}
-                    </span>
-                </section>
-                <section>
-                    <bfe-trend-indicator
-                        [trend]="trend.trend"
-                        [rating]="trend.trendRating"
-                    ></bfe-trend-indicator>
-                    <span class="label-medium">
-                        {{ 'commons.trend' | i18next }}
-                    </span>
-                </section>
+    <section>
+        <bfe-kpi-container-row>
+            <section>
+                <bfe-trend-and-number
+                    *ngIf="trend"
+                    [isLoading]="isLoading"
+                    [model]="{
+                        color: primaryColor,
+                        bigNumber: {
+                            value: trend.aktuellMm,
+                            postfix: 'mm',
+                            topTextKeys: [
+                                'commons.wetter.schneereserven.snow-water-equivalent'
+                            ],
+                            subTextKeys: [
+                                'commons.wetter.schneereserven.current-reserves'
+                            ]
+                        },
+                        trend: {
+                            value: trend.trend,
+                            rating: trend.trendRating,
+                            subTextKeys: ['commons.trend']
+                        }
+                    }"
+                ></bfe-trend-and-number>
             </section>
-            <ng-template #loading>
-                <div class="loading-container">
-                    <bfe-loading-spinner></bfe-loading-spinner>
-                </div>
-            </ng-template>
-        </section>
 
-        <section class="teaser-section">
-            <div>
-                <p
+            <section class="teaser-section desktop-only">
+                <div
                     [innerHTML]="
                         'dynamic:kpi-wetter-4_schneereserven.kurztext'
                             | i18nextDynamic
                     "
                     class="teaser"
-                ></p>
-            </div>
-        </section>
-    </bfe-kpi-container-row>
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="
+                        'dynamic:kpi-wetter-4_schneereserven.kurztext'
+                    "
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
 
     <bfe-schneereserven-aktuelles-jahr-chart>
     </bfe-schneereserven-aktuelles-jahr-chart>

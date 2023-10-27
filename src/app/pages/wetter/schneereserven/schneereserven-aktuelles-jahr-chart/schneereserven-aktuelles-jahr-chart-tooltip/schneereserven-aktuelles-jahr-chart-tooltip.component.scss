@@ -2,55 +2,8 @@
 
 .tooltip-container {
     @include mix.tooltip-container;
-
-    .date-section {
-        padding: 4px 8px;
-        margin-bottom: 4px;
-        border-bottom: 1px solid #ccc;
-    }
-
-    width: 200px;
 }
 
 .tooltip-container.hidden {
     visibility: hidden;
-}
-
-.dot {
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.tooltip-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 4px 8px;
-    row-gap: 4px;
-}
-
-.text {
-    font-weight: 400;
-    text-align: left;
-    padding-left: 4px;
-}
-
-.text-value {
-    width: 40px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.text-muted {
-    color: #636363;
-    font-weight: 400;
-    font-size: 8px;
-}
-
-hr {
-    height: 1px;
-    background-color: #ebebeb;
-    border: none;
 }

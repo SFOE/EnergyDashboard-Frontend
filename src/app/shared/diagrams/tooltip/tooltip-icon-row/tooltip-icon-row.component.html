@@ -1,0 +1,18 @@
+<div class="bfe-row-wrapper">
+    <div class="description">
+        <span class="color">
+            <fa-icon [icon]="icon" [style.color]="color"></fa-icon>
+        </span>
+        <span class="text">{{ label | i18next }}</span>
+    </div>
+
+    <div class="value-cols">
+        <div
+            *ngIf="data?.value !== null || data?.value !== undefined"
+            class="col"
+        >
+            <span>{{ data?.value ?? '' }}</span>
+            <span class="text-muted">{{ data!.suffix || '' }}</span>
+        </div>
+    </div>
+</div>

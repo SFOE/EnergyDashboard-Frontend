@@ -6,39 +6,53 @@
         langtextDynamicKey: 'kpi-strom-9_import-export-kapazitaeten.langtext'
     }"
 >
-    <bfe-kpi-container-row>
-        <section>
-            <bfe-trend-and-number
-                *ngIf="!!currentEntry"
-                [model]="{
-                    color: stromColor,
-                    bigNumber: {
-                        value: currentEntry.nettoImportCH,
-                        postfix: 'GWh',
-                        subTextKeys: [
-                            'dashboard.gas.import.daily-net-import.per-day'
-                        ]
-                    },
-                    trend: {
-                        value: currentEntry.trend,
-                        rating: currentEntry.trendRating,
-                        subTextKeys: [
-                            'dashboard.gas.import.daily-net-import.trend'
-                        ]
-                    }
-                }"
-            ></bfe-trend-and-number>
-        </section>
-        <section class="teaser-section">
-            <div
-                class="teaser"
-                [innerHTML]="
-                    'dynamic:kpi-strom-9_import-export-kapazitaeten.kurztext'
-                        | i18nextDynamic
-                "
-            ></div>
-        </section>
-    </bfe-kpi-container-row>
+    <section>
+        <bfe-kpi-container-row>
+            <section>
+                <bfe-trend-and-number
+                    *ngIf="!!currentEntry"
+                    [model]="{
+                        color: stromColor,
+                        bigNumber: {
+                            value: currentEntry.nettoImportCH,
+                            postfix: 'GWh',
+                            subTextKeys: [
+                                'dashboard.gas.import.daily-net-import.per-day'
+                            ]
+                        },
+                        trend: {
+                            value: currentEntry.trend,
+                            rating: currentEntry.trendRating,
+                            subTextKeys: [
+                                'dashboard.gas.import.daily-net-import.trend'
+                            ]
+                        }
+                    }"
+                ></bfe-trend-and-number>
+            </section>
+
+            <section class="teaser-section desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-strom-9_import-export-kapazitaeten.kurztext'
+                            | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="
+                        'dynamic:kpi-strom-9_import-export-kapazitaeten.kurztext'
+                    "
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
 
     <div class="chart-wrapper" *ngIf="!!currentEntry">
         <bfe-kpi-subtitle>
@@ -48,13 +62,18 @@
         </bfe-kpi-subtitle>
         <bfe-kpi-date-info-subtext [date]="currentEntry.date">
         </bfe-kpi-date-info-subtext>
-        <bfe-optional-dynamic-langtext
-            text="kpi-strom-9_import-export_karte.langtext"
-        ></bfe-optional-dynamic-langtext>
+
         <bfe-import-export-per-day
             [context]="context"
             [currentEntry]="currentEntry"
         ></bfe-import-export-per-day>
+
+        <bfe-hideable-text-section
+            [context]="'chart'"
+            [textTranslationKey]="
+                'dynamic:kpi-strom-9_import-export_karte.langtext'
+            "
+        ></bfe-hideable-text-section>
     </div>
     <div class="chart-wrapper" *ngIf="!!currentEntry">
         <bfe-import-export-net-area-chart

@@ -1,0 +1,47 @@
+@use 'mix';
+@use 'col';
+
+.leaflet-custom-feature-label {
+    > span {
+        color: black;
+        font-weight: bold;
+    }
+}
+
+.leaflet-custom-tooltip {
+    @include mix.tooltip-container;
+    min-height: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .leaflet-custom-tooltip-header {
+        width: 100%;
+        padding: 5px 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .leaflet-custom-tooltip-body {
+        width: 100%;
+        padding: 5px 10px;
+    }
+    .leaflet-custom-suffix {
+        font-weight: 400;
+        color: col.$dark;
+        font-size: 10px;
+    }
+}
+
+/* hides default tooltip stuff */
+.leaflet-tooltip {
+    padding: 0 !important;
+    border: none !important;
+}
+
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+    content: unset !important;
+}

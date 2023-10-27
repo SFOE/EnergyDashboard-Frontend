@@ -5,6 +5,7 @@ import { Context } from '../../../core/models/context.enum';
 import { CommonsModule } from '../../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
 
+import { mockActivatedRouteProvider } from '../../../test/queryParamService.fixture';
 import { DashboardPriceRowComponent } from './dashboard-price-row.component';
 
 describe('DashboardPriceRowComponent', () => {
@@ -18,6 +19,7 @@ describe('DashboardPriceRowComponent', () => {
                 CommonsModule,
                 SharedComponentsModule
             ],
+            providers: [mockActivatedRouteProvider],
             declarations: [DashboardPriceRowComponent]
         }).compileComponents();
     });

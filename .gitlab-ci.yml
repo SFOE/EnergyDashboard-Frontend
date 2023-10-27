@@ -1,4 +1,4 @@
-image: node:latest
+image: node:18-alpine3.17
 
 stages:
     #    - test
@@ -6,6 +6,7 @@ stages:
     - deploy
     - invalidate-cdn
     - e2e-cypress-test-dev
+    - cache-warming
 
 #cache:
 #    untracked: true
@@ -41,6 +42,15 @@ e2e-cypress-test-chrome-dev:
         - yarn run e2e-dev --browser chrome --headless
     only:
         - master
+
+cache-warming:
+    stage: cache-warming
+    image: cypress/browsers:node-18.14.1-chrome-110.0.5481.96-1-ff-109.0-edge-110.0.1587.41-1
+    script:
+        - yarn install --frozen-lockfile
+        - yarn cy:cache-warming
+    only:
+        - schedules
 
 build:
     stage: build

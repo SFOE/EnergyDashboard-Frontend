@@ -1,9 +1,18 @@
-<bfe-header></bfe-header>
+<bfe-header *ngIf="!appView"></bfe-header>
 
 <main class="dashboard__main">
-    <bfe-page-title></bfe-page-title>
+    <bfe-page-title *ngIf="!appView"></bfe-page-title>
+    <div
+        *ngIf="!appView"
+        #stickyNavigation
+        class="sticky-navigation"
+        [class.sticky-shadow]="stickyShadow"
+    >
+        <bfe-page-top-navigation />
+    </div>
+
     <router-outlet></router-outlet>
     <sc-flying-focus></sc-flying-focus>
 </main>
 
-<bfe-footer></bfe-footer>
+<bfe-footer *ngIf="!appView"></bfe-footer>

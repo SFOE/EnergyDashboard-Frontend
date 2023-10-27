@@ -1,0 +1,83 @@
+<div #tooltip class="tooltip-container" [class.hidden]="!event">
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header header [title]="data.date | date" />
+
+        <bfe-tooltip-row
+            [color]="'black'"
+            shape="line"
+            label="dashboard.strom.produktion.verbrauch"
+            [data]="{
+                value: data.values[index.VERBRAUCH],
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="colorStrom"
+            shape="dot"
+            label="dashboard.strom.produktion.type.nettoimporte"
+            [data]="{
+                value: data.values[index.NETTOIMPORTE],
+                suffix: measuringUnit
+            }"
+        />
+
+        <!-- divider -->
+        <bfe-tooltip-divider />
+
+        <!-- Eigenproduktion -->
+        <bfe-tooltip-row
+            [color]="colors.THERMISCHE"
+            shape="dot"
+            label="dashboard.strom.produktion.type.thermische"
+            [data]="{
+                value: data.values[index.THERMISCHE],
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="colors.SPEICHERKRAFT"
+            shape="dot"
+            label="dashboard.strom.produktion.type.speicherkraft"
+            [data]="{
+                value: data.values[index.SPEICHERKRAFT],
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="colors.WIND"
+            shape="dot"
+            label="dashboard.strom.produktion.type.wind"
+            [data]="{
+                value: data.values[index.WIND],
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="colors.PHOTOVOLTAIK"
+            shape="dot"
+            label="dashboard.strom.produktion.type.photovoltaik"
+            [data]="{
+                value: data.values[index.PHOTOVOLTAIK],
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="colors.KERNKRAFT"
+            shape="dot"
+            label="dashboard.strom.produktion.type.kernkraft"
+            [data]="{
+                value: data.values[index.KERNKRAFT],
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="colors.FLUSSKRAFT"
+            shape="dot"
+            label="dashboard.strom.produktion.type.flusskraft"
+            [data]="{
+                value: data.values[index.FLUSSKRAFT],
+                suffix: measuringUnit
+            }"
+        />
+    </bfe-tooltip-container>
+</div>

@@ -13,23 +13,23 @@ Basic usage Cheatsheet: https://www.digitalocean.com/community/tutorials/nodejs-
 
 ## Run locally
 
--   `yarn start` --> [http://localhost:4200](http://localhost:4200)
+- `yarn start` --> [http://localhost:4200](http://localhost:4200)
 
 ### Server Side Rendering
 
 The application that is deployed on AWS uses Server Side rendering to improve performance and SEO. Rendered pages are cached by a CDN. SSR happens inside an AWS Lambda function that starts an express server that then runs Server Side Rendering from Angular Universal. The application is currently not optimized such that it would also fetch data in SSR.
 
--   `yarn start:ssr` --> [http://localhost:4000](http://localhost:4000) with Server Side Rendering from Angular Universal
--   `yarn dev:sls` --> [http://localhost:3000](http://localhost:3000) with local serverless, emulating AWS Lambda function
+- `yarn start:ssr` --> [http://localhost:4000](http://localhost:4000) with Server Side Rendering from Angular Universal
+- `yarn dev:sls` --> [http://localhost:3000](http://localhost:3000) with local serverless, emulating AWS Lambda function
 
 The following files are responsible for Server Side rendering:
 
--   `lambda.js` Contains the actual lambda function running on AWS
--   `serverless.ts` Contains the express server rendering the application
--   `src/main.server.ts` Contains the Angular Universal runtime exposed in the express server
--   `src/app/app.server.module.ts` Exposes the Angular App Module (and thus its main entrypoint) as a server module as opposed to a regular runtime module
--   `tsconfig.serverless.json` Contains the typescript config for SSR
--   `angular.json` Contains environment and build configuration for SSR (as well as regular rendering)
+- `lambda.js` Contains the actual lambda function running on AWS
+- `serverless.ts` Contains the express server rendering the application
+- `src/main.server.ts` Contains the Angular Universal runtime exposed in the express server
+- `src/app/app.server.module.ts` Exposes the Angular App Module (and thus its main entrypoint) as a server module as opposed to a regular runtime module
+- `tsconfig.serverless.json` Contains the typescript config for SSR
+- `angular.json` Contains environment and build configuration for SSR (as well as regular rendering)
 
 ## Build & Deployment
 
@@ -44,8 +44,9 @@ For managing deployment of the application, the SSR lambda functions and all oth
 
 Deployment currently happens on Gitlab @ti8m but can also be triggered manually. Currently, the following yarn commands are configured in ti8m's Gitlab-Instance:
 
--   `yarn build:sls && yarn deploy`: Deploys all functions to the DEV-Stage; Gets triggered on new commits to the `master` branch in Gitlab
--   `yarn build-prod:sls && yarn deploy-prod`: Deploys all functions to the PROD-Stage; Gets triggered on new commits to the `production` branch in Gitlab
+- `yarn build:sls && yarn deploy`: Deploys all functions to the DEV-Stage; Gets triggered on new commits to the `master` branch in Gitlab
+  - To be able to get the latest deployed version, the CDN cache needs to be cleared `aws cloudfront create-invalidation --distribution-id E2THVA6LSXZ35Q --paths "/*"`
+- `yarn build-prod:sls && yarn deploy-prod`: Deploys all functions to the PROD-Stage; Gets triggered on new commits to the `production` branch in Gitlab
 
 Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
@@ -69,20 +70,28 @@ Dynamic Texts are added into a separate Namespace of i18net called `dynamic` and
 
 ## Icons from Fontawesome Pro
 
-We are using certain icons under the Fontawesome Pro license. In order to be allowed to install access them you need to have a valid key to the fortawesome npm registry and reference the key under the environment variable `FONTAWESOME_NPM_AUTH_TOKEN`. The token and fortawesome registry is configured in `.yarnrc.yml`
+We are using certain icons under the Fontawesome Pro license. In order to be allowed to install access them you need to have a valid key to the fortawesome npm registry and reference the key under the environment variable `FONTAWESOME_NPM_AUTH_TOKEN`. The token and fortawesome registry is configured in `.yarnrc.yml`. More information can be found in [Conflunce Frontend Architecture](https://confluence.ti8m.ch/display/BE/2%29+Frontend-Architektur)
 
 ## Running unit tests
 
 Run `yarn test` to execute the unit tests with Jest. All tests need to pass in order to complete the build pipeline.
 
 ## Running e2e tests
+
 We use cypress for E2E testing. Run `yarn e2e:open` to open the Cypress Launchpad (GUI) and to run the tests. (Run the command in the root path where the cypress folder and cypress.config.ts are listed or the tests won't be found.) (see https://docs.cypress.io/guides/getting-started/opening-the-app for more information about Cypress)
 
-Run `yarn e2e` to start the cypress tests in headless mode (without GUI) and show the test results in the terminal. In cypress.config.ts we configured video-recordings to be off, change this if you need these. Videos and Screenshots from the latest run will be saved under videos and/or screenshots. 
+Run `yarn e2e` to start the cypress tests in headless mode (without GUI) and show the test results in the terminal. In cypress.config.ts we configured video-recordings to be off, change this if you need these. Videos and Screenshots from the latest run will be saved under videos and/or screenshots.
 
 ### skipped vs. pending tests
+
 Due to Cypress using Mocha dependencies the tests that are being skipped (it.skip, describe.skip, context.skip) are being shown as `pending`. The terminology of cypress understands that `pending` are tests not executed. The tests that are shown under `skipped` are those that were planned to run but were not because, for example, a beforeEach hook failed. https://github.com/cypress-io/cypress-skip-test
 
 ## Troubleshooting
 
+### Fontawesome
 If `yarn install` is throwing an error concerning `FONTAWESOME_NPM_AUTH_TOKEN`, install direnv (https://direnv.net/#basic-installation / on Mac with brew) and create a .envrc-file with `export FONTAWESOME_NPM_AUTH_TOKEN=XXX` (check out confluence page for token). Then allow the current folder with `dotenv allow .` to make it work.
+
+### Filename too long
+If git complains that the filenames are too long (can happen on Windows, depending on the Git-Client), you need to run the following command:
+
+`git config --system core.longpaths true`

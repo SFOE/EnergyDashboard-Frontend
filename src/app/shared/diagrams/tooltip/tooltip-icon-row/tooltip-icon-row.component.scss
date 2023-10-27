@@ -1,0 +1,61 @@
+@use 'col';
+
+.bfe-row-wrapper {
+    column-gap: 4px;
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    padding: 2px 8px;
+
+    .description {
+        display: flex;
+        align-items: center;
+        margin-right: 4px;
+        flex: 1;
+        justify-content: flex-start;
+        .text {
+            text-align: left;
+            white-space: normal;
+            min-width: 100px;
+            max-width: 220px;
+        }
+    }
+
+    .value-cols {
+        display: flex;
+        column-gap: 2px;
+        justify-content: stretch;
+        align-items: center;
+
+        .col {
+            min-width: 44px;
+            text-align: end;
+        }
+    }
+}
+.color {
+    height: 12px;
+    width: 16px;
+    display: inline-block;
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+
+.text-muted {
+    color: col.$dark;
+    font-size: 8px;
+}
+.description,
+.value,
+.difference,
+.text-muted {
+    font-weight: 400;
+}
+.active {
+    .description,
+    .value,
+    .difference,
+    .text-muted {
+        font-weight: 600;
+    }
+}

@@ -10,9 +10,7 @@
             updateInterval="weekly"
         >
         </bfe-kpi-date-info-subtext>
-        <bfe-optional-dynamic-langtext
-            text="kpi-strom-9_import-export_hist.langtext"
-        ></bfe-optional-dynamic-langtext>
+
         <div
             *ngIf="(chartData.length ?? 0) > 0"
             class="diagram-container-inner"
@@ -37,5 +35,12 @@
                 [withSpaceBeforePostfix]="true"
             ></bfe-histogram-chart-tooltip>
         </div>
+
+        <bfe-hideable-text-section
+            [context]="'chart'"
+            [textTranslationKey]="
+                'dynamic:kpi-strom-9_import-export_hist.langtext'
+            "
+        ></bfe-hideable-text-section>
     </section>
 </div>

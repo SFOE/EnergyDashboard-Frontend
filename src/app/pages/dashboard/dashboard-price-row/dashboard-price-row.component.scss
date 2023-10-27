@@ -27,4 +27,12 @@
         animation: skeleton-loading 1s linear infinite alternate;
         border-radius: 8px;
     }
+
+    &:hover,:focus {
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 21px;
+      padding-bottom: 3px;
+      transform: scale(1.02);
+    }
 }

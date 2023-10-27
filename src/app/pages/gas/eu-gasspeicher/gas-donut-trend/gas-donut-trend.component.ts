@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FuellstandGasspeicherRegion } from '../../../../core/models/gas-fuellstand-gasspeicher';
+import { FuellstandGasspeicherRegion } from '../../../../core/models/gas/gas-fuellstand-gasspeicher';
 import { Trend, TrendRating } from '../../../../core/models/trend.enum';
 import { COLOR_CONTEXT } from '../../gas.consts';
 

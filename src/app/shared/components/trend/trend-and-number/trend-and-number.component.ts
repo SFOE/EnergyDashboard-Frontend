@@ -12,6 +12,7 @@ export interface TrendAndNumberModel {
     bigNumber: {
         value: number;
         postfix: string;
+        subUnit?: string;
         subTextKeys: string[];
         topTextKeys?: string[];
     };
@@ -29,6 +30,7 @@ export interface TrendAndNumberModel {
 })
 export class TrendAndNumberComponent implements AfterViewInit {
     @Input() model: TrendAndNumberModel;
+    @Input() isLoading: boolean | null = false;
 
     @ViewChild('number', { read: ElementRef }) numberRef?: ElementRef;
     @ViewChild('numberText') numberTextRef?: ElementRef;

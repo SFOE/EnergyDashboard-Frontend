@@ -1,0 +1,128 @@
+<bfe-kpi-subtitle>
+    {{ 'dynamic:kpi-gas-5_import-europa_donuts-area.titel' | i18nextDynamic }}
+</bfe-kpi-subtitle>
+<bfe-kpi-date-info-subtext *ngIf="lastUpdated" [date]="lastUpdated">
+</bfe-kpi-date-info-subtext>
+
+<bfe-diagram-legend
+    *ngIf="lastFiveProductionEntries"
+    [horizontal]="true"
+    [isInteractive]="true"
+    (clickEventEmitter)="onChartClick($event)"
+    [selectedDataIndex]="selectedDataIndex"
+    [entries]="[
+        {
+            color: chartColors[chartIndex.NORWAY],
+            labelKey: 'dashboard.gas.import-europa.region.norway',
+            type: 'area',
+            key: chartIndex.NORWAY
+        },
+        {
+            color: chartColors[chartIndex.ALGERIA],
+            labelKey: 'dashboard.gas.import-europa.region.algeria',
+            type: 'area',
+            key: chartIndex.ALGERIA
+        },
+        {
+            color: chartColors[chartIndex.RUSSIA],
+            labelKey: 'dashboard.gas.import-europa.region.russia',
+            type: 'area',
+            key: chartIndex.RUSSIA
+        },
+        {
+            color: chartColors[chartIndex.AZERBAIJAN],
+            labelKey: 'dashboard.gas.import-europa.region.azerbaijan',
+            type: 'area',
+            key: chartIndex.AZERBAIJAN
+        },
+        {
+            color: chartColors[chartIndex.UK],
+            labelKey: 'dashboard.gas.import-europa.region.uk',
+            type: 'area',
+            key: chartIndex.UK
+        },
+        {
+            color: chartColors[chartIndex.LNG],
+            labelKey: 'dashboard.gas.import-europa.region.lng',
+            type: 'area',
+            key: chartIndex.LNG
+        },
+        {
+            color: chartColors[chartIndex.LIBYA],
+            labelKey: 'dashboard.gas.import-europa.region.libya',
+            type: 'area',
+            key: chartIndex.LIBYA
+        }
+    ]"
+></bfe-diagram-legend>
+<div class="chart-reset">
+    <span
+        (click)="onReset()"
+        class="reset-button"
+        [ngClass]="{ active: selectedDataIndex !== null }"
+    >
+        <fa-icon icon="arrow-rotate-left" size="lg"></fa-icon>
+        <span class="label">{{
+            'dashboard.gas.import-europa.auswahl.zuruecksetzen' | i18next
+        }}</span></span
+    >
+</div>
+
+<div
+    class="chart-row-container"
+    *ngIf="!isLoading; else loading"
+    #chartRowContainer
+>
+    <div class="current-chart-row" #currentChartSection>
+        <section class="current-chart">
+            <bfe-full-donut-chart
+                [data]="lastFiveProductionEntries[0]"
+                [dimension]="currentChartDimension"
+                [largeNumber]="true"
+                [postfix]="measuringUnit"
+                allDataKey="dashboard.gas.import-europa.total-import"
+                (clickEventEmitter)="onChartClick($event)"
+                [selectedDataIndex]="selectedDataIndex"
+            ></bfe-full-donut-chart>
+            <p class="label">
+                {{
+                    'dashboard.gas.import-europa.year-to-date'
+                        | i18next: { date: stichdatum | date }
+                }}
+            </p>
+        </section>
+    </div>
+    <div class="historic-chart-section" #historicChartSection>
+        <section
+            *ngFor="
+                let year of lastFiveProductionEntries.slice(1);
+                let index = index
+            "
+            class="historic-chart"
+        >
+            <bfe-full-donut-chart
+                *ngIf="lastFiveProductionEntries"
+                [data]="year"
+                [dimension]="historicChartDimension"
+                [largeNumber]="true"
+                [postfix]="measuringUnit"
+                allDataKey="dashboard.gas.import-europa.total-import"
+                [selectedDataIndex]="selectedDataIndex"
+                (clickEventEmitter)="onChartClick($event)"
+            ></bfe-full-donut-chart>
+            <!-- add one as index starts with 0 -->
+            <p>{{ currentYear - (index + 1) }}</p>
+        </section>
+    </div>
+</div>
+
+<bfe-hideable-text-section
+    [context]="'chart'"
+    [textTranslationKey]="
+        'dynamic:kpi-gas-5_import-europa_donuts-area.langtext'
+    "
+></bfe-hideable-text-section>
+
+<ng-template #loading>
+    <bfe-loading-spinner [placeholder]="'chart'"></bfe-loading-spinner>
+</ng-template>

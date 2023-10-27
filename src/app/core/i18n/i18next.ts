@@ -22,7 +22,7 @@ export function appInit(i18next: ITranslationService) {
             // lang detection plugin options
             detection: {
                 // order and from where user language should be detected
-                order: ['cookie', 'navigator'],
+                order: ['cookie', 'querystring', 'navigator'],
 
                 // keys or params to lookup language from
                 lookupCookie: 'lang',

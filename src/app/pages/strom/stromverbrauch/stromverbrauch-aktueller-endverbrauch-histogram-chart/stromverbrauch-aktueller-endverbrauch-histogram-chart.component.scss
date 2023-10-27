@@ -1,6 +1,9 @@
 @use 'dim';
 
 .stromverbrauch-aktueller-endverbrauch-histogram-chart {
+    .diagram-container {
+        margin-bottom: 22px;
+    }
     @media (max-width: #{dim.$bp-min-md}) {
         .kpi-head {
             grid-template-columns: 1fr;

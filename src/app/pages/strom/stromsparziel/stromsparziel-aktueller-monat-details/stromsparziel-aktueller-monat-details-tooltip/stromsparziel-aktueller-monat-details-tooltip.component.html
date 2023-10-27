@@ -1,66 +1,32 @@
 <div class="tooltip-container stromsparziel-container">
-    <ng-container *ngIf="!!data">
-        <section class="date-section">
-            {{ data.date | date: 'MMMM yyyy' }}
-        </section>
-
-        <ng-container *ngIf="data">
-            <section class="tooltip-content">
-                <div>
-                    <span class="dot">
-                        <fa-icon
-                            [icon]="'house'"
-                            [style.color]="privateColor"
-                        ></fa-icon>
-                    </span>
-
-                    <span class="text">{{
-                        'commons.sparziel.sectors.private' | i18next
-                        }}</span>
-                </div>
-
-                <span class="text-value">
-                    <span>
-                        {{ data.anteilPrivate | number: '1.1-1' }} GWh
-                    </span>
-                </span>
-            </section>
-
-            <section class="tooltip-content">
-                <div>
-                    <span class="dot">
-                        <fa-icon
-                            [icon]="'buildings'"
-                            [style.color]="kmuColor"
-                        ></fa-icon>
-                    </span>
-
-                    <span class="text">{{
-                        'commons.sparziel.sectors.kmu' | i18next
-                        }}</span>
-                </div>
-
-                <span class="text-value">
-                    <span> {{ data.anteilKMU | number: '1.1-1' }} GWh </span>
-                </span>
-            </section>
-
-            <section class="tooltip-content">
-                <div>
-                    <span class="dot">
-                        <fa-icon
-                            [icon]="'industry-windows'"
-                            [style.color]="industryColor"
-                        ></fa-icon>
-                    </span>
-
-                    <span class="text">{{
-                        'commons.sparziel.sectors.industry' | i18next
-                        }}</span>
-                </div>
-
-                <span> {{ data.anteilIndustrie | number: '1.1-1' }} GWh </span>
-            </section>
-        </ng-container>
-    </ng-container>
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header header [title]="data.date | date: 'MMMM yyyy'" />
+        <bfe-tooltip-icon-row
+            *ngIf="data.anteilPrivate !== null"
+            icon="house"
+            [color]="privateColor"
+            label="commons.sparziel.sectors.private"
+            [data]="{
+                value: data.anteilPrivate | number: '1.1-1',
+                suffix: ' GWh'
+            }"
+        />
+        <bfe-tooltip-icon-row
+            *ngIf="data.anteilKMU !== null"
+            icon="buildings"
+            [color]="kmuColor"
+            label="commons.sparziel.sectors.kmu"
+            [data]="{ value: data.anteilKMU | number: '1.1-1', suffix: ' GWh' }"
+        />
+        <bfe-tooltip-icon-row
+            *ngIf="data.anteilKMU !== null"
+            icon="industry-windows"
+            [color]="industryColor"
+            label="commons.sparziel.sectors.industry"
+            [data]="{
+                value: data.anteilIndustrie | number: '1.1-1',
+                suffix: ' GWh'
+            }"
+        />
+    </bfe-tooltip-container>
 </div>

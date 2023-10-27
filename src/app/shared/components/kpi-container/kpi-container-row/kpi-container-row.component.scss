@@ -1,13 +1,33 @@
-@use 'layout';
 @use 'var';
 @use 'dim';
 
+:host {
+    width: 100%;
+    display: flex;
+}
+.margin-bottom {
+    margin-bottom: 16px;
+}
 .kpi-container-row {
-    @include layout.kpi-container-row;
+    display: grid;
+    display: grid;
+    grid-template-columns: minmax(calc(50% - 30px), 326px) minmax(
+            calc(50% - 30px),
+            326px
+        );
+    column-gap: 60px;
 }
 
-@media (min-width: #{dim.$bp-max-md}) {
+@media (max-width: #{dim.$bp-max-md}) {
     .indented {
         margin-left: var.$kpi-container-indentation;
+    }
+
+    .kpi-container-row {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: null;
     }
 }

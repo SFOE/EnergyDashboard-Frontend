@@ -1,6 +1,6 @@
 import { ScaleLinear, ScaleTime, Selection } from 'd3';
 import { differenceInDays, isSameDay } from 'date-fns';
-import { fromEvent, merge, Observable } from 'rxjs';
+import { Observable, fromEvent, merge } from 'rxjs';
 import {
     distinctUntilChanged,
     filter,
@@ -143,12 +143,18 @@ export function calcDomainEnd(range: number, tickCount: number): number {
 }
 
 export function hexToRgb(hex: string): [number, number, number] {
-    const h = hex.replace('#', '');
+    let h = hex.replace('#', '');
     let bigint: number;
     switch (h.length) {
+        // @ts-ignore allow fallthrough to handle hex trancparency
+        case 8:
+            h = h.slice(0, 6);
         case 6:
             bigint = parseInt(h, 16);
             break;
+        // @ts-ignore allow fallthrough to handle hex trancparency
+        case 4:
+            h = h.slice(0, 3);
         case 3:
             bigint = parseInt(
                 h

@@ -6,10 +6,68 @@
 </bfe-kpi-subtitle>
 <bfe-kpi-date-info-subtext *ngIf="lastUpdated" [date]="lastUpdated">
 </bfe-kpi-date-info-subtext>
-<bfe-optional-dynamic-langtext
-    text="kpi-strom-5_produktion_strommix-donut-mars.langtext"
-></bfe-optional-dynamic-langtext>
-<bfe-kpi-container-row *ngIf="lastFiveProductionEntries; else loading">
+
+<bfe-diagram-legend
+    [isInteractive]="true"
+    (clickEventEmitter)="onSelect($event)"
+    [selectedDataIndex]="selectedDataIndex"
+    [entries]="[
+        {
+            color: chartColors[chartIndex.KERNKRAFT],
+            labelKey: 'dashboard.strom.produktion.type.kernkraft',
+            type: 'area',
+            key: chartIndex.KERNKRAFT
+        },
+        {
+            color: chartColors[chartIndex.WIND],
+            labelKey: 'dashboard.strom.produktion.type.wind',
+            type: 'area',
+            key: chartIndex.WIND
+        },
+        {
+            color: chartColors[chartIndex.FLUSSKRAFT],
+            labelKey: 'dashboard.strom.produktion.type.flusskraft',
+            type: 'area',
+            key: chartIndex.FLUSSKRAFT
+        },
+        {
+            color: chartColors[chartIndex.THERMISCHE],
+            labelKey: 'dashboard.strom.produktion.type.thermische',
+            type: 'area',
+            key: chartIndex.THERMISCHE
+        },
+        {
+            color: chartColors[chartIndex.SPEICHERKRAFT],
+            labelKey: 'dashboard.strom.produktion.type.speicherkraft',
+            type: 'area',
+            key: chartIndex.SPEICHERKRAFT
+        },
+        {
+            color: chartColors[chartIndex.PHOTOVOLTAIK],
+            labelKey: 'dashboard.strom.produktion.type.photovoltaik',
+            type: 'area',
+            key: chartIndex.PHOTOVOLTAIK
+        }
+    ]"
+></bfe-diagram-legend>
+<div class="chart-reset">
+    <span
+        (click)="onReset()"
+        class="reset-button"
+        [ngClass]="{ active: selectedDataIndex !== null }"
+    >
+        <fa-icon icon="arrow-rotate-left" size="lg"></fa-icon>
+        <span class="label">{{
+            'dashboard.gas.import-europa.auswahl.zuruecksetzen' | i18next
+        }}</span></span
+    >
+</div>
+
+<div
+    class="chart-row-container"
+    *ngIf="lastFiveProductionEntries; else loading"
+    #chartRowContainer
+>
     <div class="current-chart-row" #currentChartSection>
         <section class="current-chart">
             <bfe-full-donut-chart
@@ -17,6 +75,8 @@
                 [dimension]="currentChartDimension"
                 postfix="TWh"
                 allDataKey="dashboard.strom.produktion.total-production"
+                (clickEventEmitter)="onSelect($event)"
+                [selectedDataIndex]="selectedDataIndex"
             ></bfe-full-donut-chart>
             <p class="label">
                 {{
@@ -27,47 +87,10 @@
         </section>
         <section #legend class="d-flex">
             <span class="legend-spacer"></span>
-            <bfe-diagram-legend
-                [horizontal]="false"
-                [entries]="[
-                    {
-                        color: ColorsStrom.KERNKRAFT,
-                        labelKey: 'dashboard.strom.produktion.type.kernkraft',
-                        type: 'area'
-                    },
-                    {
-                        color: ColorsStrom.WIND,
-                        labelKey: 'dashboard.strom.produktion.type.wind',
-                        type: 'area'
-                    },
-                    {
-                        color: ColorsStrom.FLUSSKRAFT,
-                        labelKey: 'dashboard.strom.produktion.type.flusskraft',
-                        type: 'area'
-                    },
-                    {
-                        color: ColorsStrom.THERMISCHE,
-                        labelKey: 'dashboard.strom.produktion.type.thermische',
-                        type: 'area'
-                    },
-                    {
-                        color: ColorsStrom.SPEICHERKRAFT,
-                        labelKey:
-                            'dashboard.strom.produktion.type.speicherkraft',
-                        type: 'area'
-                    },
-                    {
-                        color: ColorsStrom.PHOTOVOLTAIK,
-                        labelKey:
-                            'dashboard.strom.produktion.type.photovoltaik',
-                        type: 'area'
-                    }
-                ]"
-            ></bfe-diagram-legend>
         </section>
     </div>
 
-    <div class="historic-chart-section">
+    <div class="historic-chart-section" #historicChartSection>
         <section
             *ngFor="
                 let year of lastFiveProductionEntries.slice(1);
@@ -81,15 +104,22 @@
                 [dimension]="historicChartDimension"
                 postfix="TWh"
                 allDataKey="dashboard.strom.produktion.total-production"
+                (clickEventEmitter)="onSelect($event)"
+                [selectedDataIndex]="selectedDataIndex"
             ></bfe-full-donut-chart>
             <!-- add one as index starts with 0 -->
             <p>{{ currentYear - (index + 1) }}</p>
         </section>
     </div>
-</bfe-kpi-container-row>
+</div>
+
+<bfe-hideable-text-section
+    [context]="'chart'"
+    [textTranslationKey]="
+        'dynamic:kpi-strom-5_produktion_strommix-donut-mars.langtext'
+    "
+></bfe-hideable-text-section>
 
 <ng-template #loading>
-    <div class="loading-container">
-        <bfe-loading-spinner></bfe-loading-spinner>
-    </div>
+    <bfe-loading-spinner></bfe-loading-spinner>
 </ng-template>

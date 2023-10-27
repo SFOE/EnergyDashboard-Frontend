@@ -1,116 +1,61 @@
 <div #tooltip class="tooltip-container" [class.hidden]="!event">
-    <ng-container *ngIf="!!data">
-        <section class="date-section">
-            {{ data.date | date }}
-        </section>
-        <section class="value-section">
-            <!-- current availability -->
-            <ng-container *ngIf="data.values[1]">
-                <span
-                    class="dot"
-                    [style.backgroundColor]="kkwColors.COLOR_KKW_PRIMARY"
-                ></span>
-                <span class="column-margin label-medium">{{
-                    'commons.legend.latest' | i18next
-                }}</span>
-                <span>
-                    <span>
-                        {{ data.values[1] }}
-                    </span>
-                    <span class="tooltip-subfix">GWh</span>
-                </span>
-                <span></span>
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header [title]="data.date | date" />
+        <!-- current availability -->
+        <bfe-tooltip-row
+            *ngIf="data.values[1] as value"
+            shape="dot"
+            [color]="kkwColors.COLOR_KKW_PRIMARY"
+            [label]="'commons.legend.latest'"
+            [data]="{ value, suffix: ' GWh' }"
+        />
 
-                <span class="divider"><hr width="100%" /></span>
-            </ng-container>
+        <!-- DIVIDER -->
+        <bfe-tooltip-divider *ngIf="data.values[1]" />
 
-            <ng-container *ngFor="let ausfall of data.ausfaelle">
-                <span
-                    class="dot"
-                    [style.backgroundColor]="
-                        getAusfallColor(ausfall.wasPlanned)
-                    "
-                ></span>
-                <span class="column-margin label-medium"
-                    >{{
-                        (ausfall.wasPlanned
-                            ? 'dashboard.strom.kkw.maintenance'
-                            : 'dashboard.strom.kkw.outage'
-                        ) | i18next
-                    }}
-                    <ng-container *ngIf="ausfall.productionPlant">
-                        -
-                        {{
-                            'dashboard.strom.kkw.' + ausfall.productionPlant
-                                | i18next
-                        }}
-                    </ng-container>
-                    <ng-container *ngIf="ausfall.count">
-                        -
-                        {{
-                            'dashboard.strom.kkw.count'
-                                | i18next: { count: ausfall.count }
-                        }}
-                    </ng-container>
-                </span>
-                <span></span>
-                <span></span>
-            </ng-container>
-            <span *ngIf="(data.ausfaelle?.length ?? 0) > 0" class="divider">
-                <hr width="100%" />
-            </span>
+        <!-- Outages -->
+        <bfe-tooltip-row
+            *ngFor="let ausfall of data.ausfaelle"
+            [shape]="ausfall.count ? 'none' : 'area'"
+            [color]="getAusfallColor(ausfall.wasPlanned)"
+            [label]="
+                getAusfallText(
+                    ausfall.wasPlanned,
+                    ausfall.productionPlant,
+                    ausfall.count
+                )
+            "
+        />
 
-            <!-- max production -->
-            <span
-                class="dot"
-                [style.backgroundColor]="kkwColors.COLOR_KKW_PRODUCTION_MINMAX"
-            ></span>
-            <span class="column-margin label-medium">{{
+        <!-- DIVIDER -->
+        <bfe-tooltip-divider *ngIf="(data.ausfaelle?.length ?? 0) > 0" />
+
+        <!-- max production -->
+        <bfe-tooltip-row
+            shape="dot"
+            [color]="colorMinMax"
+            [label]="
                 'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-max-percentage'
-                    | i18next
-            }}</span>
-            <span>
-                <span>
-                    {{ data.band?.upper }}
-                </span>
-                <span class="tooltip-subfix">GWh</span>
-            </span>
-            <span></span>
+            "
+            [data]="{ value: data.band?.upper, suffix: ' GWh' }"
+        />
 
-            <!-- average availability -->
-            <span
-                class="dot"
-                [style.backgroundColor]="
-                    kkwColors.COLOR_KKW_PRODUCTION_MITTELWERT
-                "
-            ></span>
-            <span class="column-margin label-medium">{{
-                'commons.legend.average' | i18next
-            }}</span>
-            <span>
-                <span>
-                    {{ data.values[0] }}
-                </span>
-                <span class="tooltip-subfix">GWh</span>
-            </span>
-            <span></span>
+        <!-- average availability -->
+        <bfe-tooltip-row
+            shape="dot"
+            [color]="kkwColors.COLOR_KKW_PRODUCTION_MITTELWERT"
+            [label]="'commons.legend.average'"
+            [data]="{ value: data.values[0], suffix: ' GWh' }"
+        />
 
-            <!-- min availability -->
-            <span
-                class="dot"
-                [style.backgroundColor]="kkwColors.COLOR_KKW_PRODUCTION_MINMAX"
-            ></span>
-            <span class="column-margin label-medium">{{
+        <!-- min availability -->
+        <bfe-tooltip-row
+            shape="dot"
+            [color]="colorMinMax"
+            [label]="
                 'dashboard.strom.fuellstaende-speicherseen.tooltip.differenz-min-percentage'
-                    | i18next
-            }}</span>
-            <span>
-                <span>
-                    {{ data.band?.lower }}
-                </span>
-                <span class="tooltip-subfix">GWh</span>
-            </span>
-            <span></span>
-        </section>
-    </ng-container>
+            "
+            [data]="{ value: data.band?.lower, suffix: ' GWh' }"
+        />
+    </bfe-tooltip-container>
 </div>

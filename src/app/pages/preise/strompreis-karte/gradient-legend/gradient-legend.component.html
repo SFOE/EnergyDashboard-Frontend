@@ -1,0 +1,12 @@
+<div class="wrapper">
+    <span class="label">{{
+        'dashboard.preise.strom.europa.legend.title' | i18next
+    }}</span>
+    <div class="legend">
+        <div *ngFor="let label of labels">
+            <span class="label">{{ label }}</span>
+        </div>
+    </div>
+
+    <div class="gradient" style="--gradients: {{ calcGradients() }}"></div>
+</div>

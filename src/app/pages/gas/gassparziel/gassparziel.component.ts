@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { SparzielEntry } from '../../../core/models/sparziel';
 import { GasService } from '../../../services/gas/gas.service';
+import { SparzielService } from '../../../services/sparziel/sparziel.service';
 import {
     COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA,
     COLOR_CHART_STROM_ADDITIONAL_LINE,
@@ -8,13 +9,12 @@ import {
 } from '../../../shared/commons/colors.const';
 import { mapAktuelleEinsparungEntryToHistogramEntry } from '../../../shared/components/sparziel/sparziel.utils';
 import { DiagramLegendEntry } from '../../../shared/diagrams/diagram-legend/diagram-legend.component';
+import { Block } from '../../../shared/diagrams/histogram/base-histogram.model';
 import { HistogramDetailEntry } from '../../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
 import { HistogramElFocusEvent } from '../../../shared/diagrams/histogram/interactive-histogram.component';
 import { COLOR_CONTEXT } from '../gas.consts';
-import { Block } from '../../../shared/diagrams/histogram/base-histogram.model';
-import { SparzielService } from '../../../services/sparziel/sparziel.service';
 
-const SPARZIEL_PERCENTAGE = 15;
+const SPARZIEL_GAS = { percent: -15, gwh: -3997 };
 
 @Component({
     selector: 'bfe-gassparziel',
@@ -23,7 +23,8 @@ const SPARZIEL_PERCENTAGE = 15;
 })
 export class GassparzielComponent implements OnInit {
     readonly primaryColor = COLOR_CONTEXT;
-    readonly sparzielTarget = SPARZIEL_PERCENTAGE;
+    readonly sparzielTarget = SPARZIEL_GAS.percent;
+    readonly gasSparziel = SPARZIEL_GAS;
     readonly barColors = [COLOR_CONTEXT, COLOR_CONTEXT + '80'];
     readonly lineColors = [
         COLOR_POSITIVE,
@@ -97,7 +98,7 @@ export class GassparzielComponent implements OnInit {
                 this.sparzielPerMonth =
                     mapAktuelleEinsparungEntryToHistogramEntry(
                         data,
-                        SPARZIEL_PERCENTAGE
+                        SPARZIEL_GAS.percent
                     );
             },
             complete: () => (this.isLoadingPerMonth = false)

@@ -1,0 +1,8 @@
+{
+  "/images/*": {
+    "target": "https://dev.energiedashboard.ch/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

@@ -5,6 +5,7 @@ import { AktuellesWetterComponent } from './aktuelles-wetter/aktuelles-wetter.co
 import { WetterComponent } from './wetter.component';
 import { NiederschlagComponent } from './niederschlag/niederschlag.component';
 import { SchneereservenComponent } from './schneereserven/schneereserven.component';
+import { HeizgradtageComponent } from './heizgradtage/heizgradtage.component';
 
 const routes: Routes = [
     {
@@ -22,6 +23,10 @@ const routes: Routes = [
             {
                 path: RoutePaths.DASHBOARD_WETTER_SCHNEERESERVEN,
                 component: SchneereservenComponent
+            },
+            {
+                path: RoutePaths.DASHBOARD_WETTER_HEIZGRADTAGE,
+                component: HeizgradtageComponent
             },
             {
                 path: '**',

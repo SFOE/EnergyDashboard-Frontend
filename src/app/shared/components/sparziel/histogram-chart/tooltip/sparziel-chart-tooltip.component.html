@@ -1,96 +1,62 @@
 <div #tooltip [class.hidden]="!event" class="tooltip-container">
-    <ng-container *ngIf="!!data">
-        <section class="date-section">
-            {{ data.date | date: 'MMMM yyyy' }}
-        </section>
-        <ng-container>
-            <section class="tooltip-content">
-                <!-- aktuelle Abweichung von 5 Jahresdurchschnitt-->
-                <span
-                    [style.backgroundColor]="this.dataColors[0]"
-                    [style.opacity]="isProjectedEntry ? '0.5' : '1'"
-                    class="dot"
-                ></span>
-                <span class="text"
-                    >{{
-                        (isProjectedEntry
-                            ? 'commons.sparziel.chart-legend.relevant-difference-projected'
-                            : 'commons.sparziel.chart-legend.relevant-difference-meassured'
-                        ) | i18next
-                    }}
-                </span>
-                <span class="number-box">
-                    <span>
-                        {{
-                        isProjectedEntry
-                            ? data.barValues[1]
-                            : data.barValues[0]
-                        }}
-                    </span>
-                    <span class="text-muted">%</span>
-                </span>
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header header [title]="data.date | date: 'MMMM yyyy'" />
+        <!-- aktuelle Abweichung von 5 Jahresdurchschnitt-->
+        <bfe-tooltip-row
+            shape="area"
+            [color]="dataColors[0] + (isProjectedEntry ? '80' : 'FF')"
+            [label]="
+                isProjectedEntry
+                    ? 'commons.sparziel.chart-legend.relevant-difference-projected'
+                    : 'commons.sparziel.chart-legend.relevant-difference-meassured'
+            "
+            [data]="{
+                value: isProjectedEntry
+                    ? (data.barValues[1] | number)
+                    : (data.barValues[0] | number),
+                suffix: '%'
+            }"
+        />
+        <!-- Temperatur-->
+        <bfe-tooltip-row
+            shape="dashed-line"
+            [color]="this.colorTemperature"
+            label="commons.sparziel.chart-tooltipp.temperature"
+            [data]="{
+                value: hasSparziel ? data.lineValues[2] : data.lineValues[1] | number,
+                suffix: '°C'
+            }"
+        />
 
-                <!-- Temperatur-->
-                <span>
-                    <span
-                        [style.backgroundColor]="this.colorTemperature"
-                        class="dashed"
-                    ></span>
-                    <span
-                        [style.backgroundColor]="
-                            this.colorTemperatureTransparent
-                        "
-                        class="dashed-transparent"
-                    ></span>
-                    <span
-                        [style.backgroundColor]="this.colorTemperature"
-                        class="dashed"
-                    ></span>
-                </span>
-                <span class="text"
-                    >{{
-                        'commons.sparziel.chart-tooltipp.temperature' | i18next
-                    }}
-                </span>
-                <span class="number-box">
-                    <span>{{ data.lineValues[2] }}</span>
-                    <span class="text-muted celsius">°C</span>
-                </span>
+        <!-- Witterungsbereigter Wert-->
+        <bfe-tooltip-row
+            shape="none"
+            label="commons.sparziel.temperature-corrected"
+            [data]="{
+                value: data.hiddenValues[0] | number,
+                suffix: '%'
+            }"
+        />
 
-                <!-- Witterungsbereigter Wert-->
-                <span> </span>
-                <span class="text"
-                >{{ 'commons.sparziel.temperature-corrected' | i18next }}
-                </span>
-                <span class="number-box">
-                    <span> {{ data.hiddenValues[0] }}</span>
-                    <span class="text-muted">%</span>
-                </span>
+        <!-- DIVIDER -->
+        <bfe-tooltip-divider />
 
-                <!-- divider -->
-                <span class="divider-section"><hr width="100%" /></span>
+        <!-- Mittelwert Verbrauch / Durchschnitt letzte 5 Jahre -->
+        <bfe-tooltip-row
+            shape="line"
+            [color]="colorAverageUse"
+            label="commons.sparziel.chart-legend.five-year-average"
+        />
 
-                <!-- Mittelwert Verbrauch / Durchschnitt letzte 5 Jahre -->
-                <span
-                    [style.backgroundColor]="this.colorAverageUse"
-                    class="dot"
-                ></span>
-                <span class="text">{{
-                    'commons.sparziel.chart-legend.five-year-average' | i18next
-                }}</span>
-                <span></span>
-
-                <!-- Sparziel -->
-                <span
-                    [style.backgroundColor]="colorSparziel"
-                    class="dot"
-                ></span>
-                <span class="text">{{
-                    'commons.sparziel.chart-legend.target'
-                        | i18next: { target: sparzielTarget }
-                }}</span>
-                <span></span>
-            </section>
-        </ng-container>
-    </ng-container>
+        <!-- Sparziel -->
+        <bfe-tooltip-row
+            *ngIf="hasSparziel"
+            shape="line"
+            [color]="colorSparziel"
+            [label]="
+                'commons.sparziel.chart-legend.target'
+                    | i18next: { target: sparzielTarget }
+            "
+        />
+    </bfe-tooltip-container>
 </div>

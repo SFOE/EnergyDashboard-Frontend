@@ -5,6 +5,8 @@ import { CommonsModule } from '../../../commons/commons.module';
 import { SharedComponentsModule } from '../../shared-components.module';
 
 import { KpiFooterComponent } from './kpi-footer.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe('KpiFooterComponent', () => {
     let component: KpiFooterComponent;
@@ -14,10 +16,12 @@ describe('KpiFooterComponent', () => {
         await TestBed.configureTestingModule({
             imports: [
                 I18NextModule.forRoot(),
+                HttpClientTestingModule,
                 CommonsModule,
                 SharedComponentsModule
             ],
-            declarations: [KpiFooterComponent]
+            declarations: [KpiFooterComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
     });
 

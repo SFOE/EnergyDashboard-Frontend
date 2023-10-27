@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class KpiContainerRowComponent {
     @Input() indented: boolean = false;
+    @Input() marginBottom: boolean = true;
 }

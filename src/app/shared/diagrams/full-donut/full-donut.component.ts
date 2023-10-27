@@ -1,8 +1,10 @@
 import {
     Component,
+    EventEmitter,
     Input,
     OnChanges,
     OnInit,
+    Output,
     SimpleChanges
 } from '@angular/core';
 import * as d3 from 'd3';
@@ -21,10 +23,12 @@ export class FullDonutComponent implements OnInit, OnChanges {
     @Input() postfix: string;
     @Input() allDataKey: string = 'commons.all';
     @Input() dimension = 300;
+    @Input() largeNumber: boolean = false;
+    @Output() clickEventEmitter = new EventEmitter<any>();
+    @Input() selectedDataIndex: number | null = null;
 
     private margin = { top: 0, right: 0, bottom: 0, left: 0 };
     private svg: any;
-
     chartid = Math.random().toString(36).substring(2, 7);
     selectedData?: DonutChartEntry;
     allDataSelected: boolean = true;
@@ -35,7 +39,22 @@ export class FullDonutComponent implements OnInit, OnChanges {
         this.selectedData = this.allDataSelectedEntry;
     }
 
+    handleSelectedDataIndexChange(index: number | null): void {
+        if (index !== null) {
+            this.selectedData = this.data[index];
+            this.allDataSelected = false;
+        } else {
+            this.selectedData = this.allDataSelectedEntry;
+            this.allDataSelected = true;
+        }
+    }
+
     ngOnChanges(changes: SimpleChanges): void {
+        if (changes['selectedDataIndex']) {
+            this.handleSelectedDataIndexChange(
+                changes['selectedDataIndex'].currentValue
+            );
+        }
         if (changes['dimension']) {
             this.clearChart();
             this.createSvg();
@@ -105,8 +124,11 @@ export class FullDonutComponent implements OnInit, OnChanges {
             .attr('stroke', (d: { data: DonutChartEntry }) => d.data.color)
             .style('stroke-width', '0.7px')
             .style('cursor', 'pointer')
-            .on('click', (_event: any, d: { data: DonutChartEntry }) =>
-                this.handleClickEvent(d.data)
+            .on(
+                'click',
+                (_event: any, d: { data: DonutChartEntry; index: number }) => {
+                    this.handleClickEvent(d.data, d.index);
+                }
             )
             .on('mouseover', (mouseoverEvent: { target: HTMLElement }) => {
                 mouseoverEvent.target.style.opacity = '0.75';
@@ -137,8 +159,9 @@ export class FullDonutComponent implements OnInit, OnChanges {
             );
     }
 
-    private handleClickEvent(entry: DonutChartEntry): void {
+    private handleClickEvent(entry: DonutChartEntry, index: number): void {
         this.allDataSelected = this.selectedData?.value === entry.value;
+        this.clickEventEmitter.emit(index);
         if (this.allDataSelected) {
             this.selectedData = this.allDataSelectedEntry;
         } else {

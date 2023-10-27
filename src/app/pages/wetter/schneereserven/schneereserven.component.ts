@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { COLOR_SPACE } from '../wetter.consts';
-import { WetterNiederschlagTrend } from '../../../core/models/wetter-niederschlag-trend';
 import { WetterSchneereservenTrend } from '../../../core/models/wetter-schneereserven-trend';
 import { WetterService } from '../../../services/wetter/wetter.service';
+import { COLOR_SPACE } from '../wetter.consts';
 
 @Component({
     selector: 'bfe-schneereserven',
@@ -13,7 +12,7 @@ export class SchneereservenComponent implements OnInit {
     readonly primaryColor = COLOR_SPACE;
 
     isLoading: boolean = true;
-    trend: WetterSchneereservenTrend;
+    trend: WetterSchneereservenTrend | undefined;
 
     constructor(private wetterService: WetterService) {}
 

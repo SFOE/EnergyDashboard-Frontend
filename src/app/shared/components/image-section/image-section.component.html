@@ -1,0 +1,80 @@
+<div *ngIf="!loading && model; else loadingTemplate" class="diagram-container">
+    <bfe-kpi-subtitle>
+        {{ model.titleKey | i18nextDynamic }}
+    </bfe-kpi-subtitle>
+    <bfe-kpi-date-info-subtext
+        [updateInterval]="model.updateInterval"
+        [date]="model.dateOfLastUpdate"
+    ></bfe-kpi-date-info-subtext>
+    <bfe-optional-dynamic-langtext
+        text="{{ model.longTextKey | i18nextDynamic }}"
+    ></bfe-optional-dynamic-langtext>
+
+    <div
+        [ngStyle]="{
+            display: selectedImageView == undefined ? 'block' : 'none'
+        }"
+    >
+        <div class="map-container">
+            <div
+                class="map"
+                (click)="showImage(img)"
+                *ngFor="let img of model.images"
+            >
+                <p class="info-subtext">
+                    {{ img.titleKey | i18next | i18nextDynamic }}:
+                    <b>{{ img.subTitleKey | i18next | i18nextDynamic }}</b>
+                </p>
+                <img
+                    [src]="img.imageRelativeLink"
+                    alt="{{ img.subTitleKey | i18next | i18nextDynamic }}"
+                />
+            </div>
+        </div>
+    </div>
+
+    <div
+        *ngIf="selectedImageView != undefined"
+        [ngStyle]="{
+            display: selectedImageView != undefined ? 'block' : 'none'
+        }"
+    >
+        <div class="map-highlighted-container">
+            <div class="backdrop" (click)="closeImage()"></div>
+
+            <div class="map-highlighted">
+                <div class="map-highlighted-title">
+                    <p class="info-subtext">
+                        {{
+                            selectedImageView.titleKey
+                                | i18next
+                                | i18nextDynamic
+                        }}:
+                        <b>{{
+                            selectedImageView.subTitleKey
+                                | i18next
+                                | i18nextDynamic
+                        }}</b>
+                    </p>
+
+                    <span>
+                        <fa-icon
+                            icon="xmark"
+                            size="lg"
+                            (click)="closeImage()"
+                        ></fa-icon>
+                    </span>
+                </div>
+
+                <img
+                    [src]="selectedImageView.imageRelativeLink"
+                    alt="Karte"
+                />
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingTemplate>
+    <bfe-loading-spinner></bfe-loading-spinner>
+</ng-template>

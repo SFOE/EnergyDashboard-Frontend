@@ -12,6 +12,7 @@ export interface NoDataBlock<T> {
 
 export interface Band {
     upper: number;
+    mean?: number;
     lower: number;
 }
 

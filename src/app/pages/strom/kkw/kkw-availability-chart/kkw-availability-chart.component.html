@@ -3,9 +3,7 @@
         {{ 'dynamic:' + model.titleDynamicKey | i18nextDynamic }}
     </bfe-kpi-subtitle>
     <bfe-kpi-date-info-subtext [date]="lastUpdate"></bfe-kpi-date-info-subtext>
-    <bfe-optional-dynamic-langtext
-        [text]="model.kurztextDynamicKey"
-    ></bfe-optional-dynamic-langtext>
+
     <ng-container *ngIf="chartData$ | async; let chartData">
         <ng-container *ngIf="chartData.entries.length > 0">
             <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
@@ -31,4 +29,9 @@
     <div *ngIf="isLoading" class="loading-container">
         <bfe-loading-spinner></bfe-loading-spinner>
     </div>
+
+    <bfe-hideable-text-section
+        [context]="'chart'"
+        [textTranslationKey]="'dynamic:' + model.kurztextDynamicKey"
+    ></bfe-hideable-text-section>
 </div>

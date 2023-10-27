@@ -18,30 +18,25 @@ export interface DashboardEntryWithoutTrendApi {
     value: number;
 }
 
-export interface DashboardStrom {
+export interface DashboardStromDto {
     aktuellerVerbrauch: DashboardEntryApi;
     speicherfuellstand: DashboardEntryApi;
     gesamtProduktion: DashboardEntryApi;
     nettoImport: DashboardEntryApi;
     nettoExport: DashboardEntryApi;
+    aktuelleGesamteinsparung: DashboardEntryApi;
 }
 
-export interface DashboardGas {
+export interface DashboardGasDto {
     aktuellerVerbrauch: DashboardEntryApi;
     fuellstandNachbarlaender: DashboardEntryApi;
     nettoImport: DashboardEntryApi;
     aktuelleGesamteinsparung: DashboardEntryApi;
+    importEuropa: DashboardEntryApi;
 }
 
 type SortOrder = {
     [key: string]: number;
-};
-
-export const sortOrderDashboardGasData: SortOrder = {
-    nettoImport: 1,
-    aktuellerVerbrauch: 2,
-    fuellstandNachbarlaender: 3,
-    aktuelleGesamteinsparung: 4
 };
 
 export interface DashboardPriceDto {
@@ -77,4 +72,5 @@ export interface DashboardWetterDto {
     prognoseTemperatur: DashboardEntryWithoutDateApi;
     niederschlaege: DashboardEntryApi;
     schneereserven: DashboardEntryApi;
+    heizgradtage: DashboardEntryApi;
 }

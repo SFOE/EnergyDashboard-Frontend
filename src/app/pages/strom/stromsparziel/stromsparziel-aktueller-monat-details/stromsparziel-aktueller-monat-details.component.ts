@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { COLOR_CONTEXT } from '../../strom.consts';
-import { COLOR_CHART_HISTOGRAM_AREA_SECONDARY } from '../../../../shared/commons/colors.const';
-import { StromService } from '../../../../services/strom/strom.service';
 import { SparzielZielNachBereichAktuellerMonat } from '../../../../core/models/sparziel';
+import { StromService } from '../../../../services/strom/strom.service';
+import { COLOR_CHART_HISTOGRAM_AREA_SECONDARY } from '../../../../shared/commons/colors.const';
+import { COLOR_CONTEXT } from '../../strom.consts';
 
 @Component({
     selector: 'bfe-stromsparziel-aktueller-monat-details',

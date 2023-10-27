@@ -1,0 +1,22 @@
+@use 'layout';
+@use 'text';
+@use 'dim';
+
+:host {
+    display: flex;
+    flex-direction: column;
+
+    .dashboard__nav {
+        @include layout.container();
+        background-color: var(--c-bg-header);
+        border-bottom: 1px solid var(--c-divider);
+
+        width: 100%;
+    }
+
+    @media (max-width: #{dim.$bp-max-sm}) {
+      .dashboard__tabs {
+          display: none;
+      }
+  }
+  }

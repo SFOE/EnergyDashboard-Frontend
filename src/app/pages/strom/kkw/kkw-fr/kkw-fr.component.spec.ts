@@ -9,6 +9,7 @@ import { KkwAvailabilityChartComponent } from '../kkw-availability-chart/kkw-ava
 import { KkwProductionChartTooltipComponent } from '../kkw-production-chart/kkw-production-chart-tooltip/kkw-production-chart-tooltip.component';
 import { KkwProductionChartComponent } from '../kkw-production-chart/kkw-production-chart.component';
 
+import { mockActivatedRouteProvider } from '../../../../test/queryParamService.fixture';
 import { KkwFrComponent } from './kkw-fr.component';
 
 describe('KkwFrComponent', () => {
@@ -30,7 +31,8 @@ describe('KkwFrComponent', () => {
                 KkwProductionChartTooltipComponent,
                 KkwAvailabilityChartComponent,
                 KkwAvailabilityChartTooltipComponent
-            ]
+            ],
+            providers: [mockActivatedRouteProvider]
         }).compileComponents();
 
         fixture = TestBed.createComponent(KkwFrComponent);
