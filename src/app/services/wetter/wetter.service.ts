@@ -2,6 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable, shareReplay } from 'rxjs';
 import { DataService } from '../../core/data/data.service';
 import { HistogramAreaChartEntry } from '../../core/models/charts';
+import { WetterHeizgradtageTabelleDaten } from '../../core/models/wetter-heizgradtage-tabelle-daten';
+import { WetterHeizgradtageTrend } from '../../core/models/wetter-heizgradtage-trend';
+import { WetterHeizgradtageZeitreihe } from '../../core/models/wetter-heizgradtage-zeitreihe';
+import { WetterNiederschlagAktuellEntry } from '../../core/models/wetter-niederschlag-aktuell';
+import { WetterNiederschlagKartenMonths } from '../../core/models/wetter-niederschlag-karten-months';
+import { WetterNiederschlagTrend } from '../../core/models/wetter-niederschlag-trend';
+import { WetterSchneereservenAktuellEntry } from '../../core/models/wetter-schneereserven-aktuell';
+import { WetterSchneereservenTrend } from '../../core/models/wetter-schneereserven-trend';
 import {
     WetterTemperaturAktuell,
     WetterTemperaturAktuellEntry
@@ -11,16 +19,8 @@ import {
     WetterTemperaturPrognoseEntry
 } from '../../core/models/wetter-temperatur-prognose';
 import { WetterTemperaturTrend } from '../../core/models/wetter-temperatur-trend';
-import { WetterNiederschlagTrend } from '../../core/models/wetter-niederschlag-trend';
-import { WetterNiederschlagAktuellEntry } from '../../core/models/wetter-niederschlag-aktuell';
 import { HistogramDetailEntry } from '../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
 import { convertToDate } from '../../shared/static-utils/date-utils';
-import { WetterSchneereservenAktuellEntry } from '../../core/models/wetter-schneereserven-aktuell';
-import { WetterSchneereservenTrend } from '../../core/models/wetter-schneereserven-trend';
-import { WetterNiederschlagKartenMonths } from '../../core/models/wetter-niederschlag-karten-months';
-import { WetterHeizgradtageZeitreihe } from 'src/app/core/models/wetter-heizgradtage-zeitreihe';
-import { WetterHeizgradtageTabelleDaten } from 'src/app/core/models/wetter-heizgradtage-tabelle-daten';
-import { WetterHeizgradtageTrend } from 'src/app/core/models/wetter-heizgradtage-trend';
 
 @Injectable({
     providedIn: 'root'

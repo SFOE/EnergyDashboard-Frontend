@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { I18NextModule } from 'angular-i18next';
-import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
+import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
 
 @Component({
     selector: 'bfe-select',

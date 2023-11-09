@@ -1,8 +1,8 @@
 import { expect } from '@jest/globals';
 import { firstValueFrom, Observable, of } from 'rxjs';
-import { DataService } from 'src/app/core/data/data.service';
-import { PreiseStromBoerse } from 'src/app/core/models/preise-strom-boerse.model';
+import { DataService } from '../../core/data/data.service';
 import { PreiseIndexiert } from '../../core/models/preise-indexiert.model';
+import { PreiseStromBoerse } from '../../core/models/preise-strom-boerse.model';
 import { HistogramLineEntry } from '../../shared/diagrams/histogram/histogram-line/histogram-line.component';
 import { PreiseService } from './preise.service';
 

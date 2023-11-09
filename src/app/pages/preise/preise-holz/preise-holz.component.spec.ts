@@ -4,7 +4,7 @@ import { I18NextModule } from 'angular-i18next';
 import { AppModule } from '../../../app.module';
 import { CommonsModule } from '../../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
-
+import { MockHideableTextSectionComponent } from '../../../test/component.fixture';
 import { PreiseHolzComponent } from './preise-holz.component';
 
 describe('PreiseBrennholzComponent', () => {
@@ -20,7 +20,10 @@ describe('PreiseBrennholzComponent', () => {
                 CommonsModule,
                 SharedComponentsModule
             ],
-            declarations: [PreiseHolzComponent]
+            declarations: [
+                PreiseHolzComponent,
+                MockHideableTextSectionComponent
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(PreiseHolzComponent);

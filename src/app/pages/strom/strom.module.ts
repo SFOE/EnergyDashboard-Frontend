@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { I18NextModule } from 'angular-i18next';
-import { TooltipModule } from 'src/app/shared/diagrams/tooltip/tooltip.module';
 import { CommonsModule } from '../../shared/commons/commons.module';
+import { DividerComponent } from '../../shared/components/divider/divider.component';
+import { HideableTextSection } from '../../shared/components/hideable-text-section/hideable-text-section.component';
 import { SharedComponentsModule } from '../../shared/components/shared-components.module';
 import { SparzielModule } from '../../shared/components/sparziel/sparziel.module';
 import { TrendModule } from '../../shared/components/trend/trend.module';
@@ -15,6 +16,7 @@ import { HistogramAreaMinMaxModule } from '../../shared/diagrams/histogram/histo
 import { HistogramAreaModule } from '../../shared/diagrams/histogram/histogram-area/histogram-area.module';
 import { HistogramDetailModule } from '../../shared/diagrams/histogram/histogram-detail/histogram-detail.module';
 import { HistogramLineModule } from '../../shared/diagrams/histogram/histogram-line/histogram-line.module';
+import { TooltipModule } from '../../shared/diagrams/tooltip/tooltip.module';
 import { FuellstaendeSpeicherseenChartTooltipComponent } from './fuellstaende-speicherseen/fuellstaende-speicherseen-chart-tooltip/fuellstaende-speicherseen-chart-tooltip.component';
 import { FuellstaendeSpeicherseenComponent } from './fuellstaende-speicherseen/fuellstaende-speicherseen.component';
 import { SpeicherseenRegionSelectComponent } from './fuellstaende-speicherseen/speicherseen-region-select/speicherseen-region-select.component';
@@ -56,8 +58,6 @@ import { StromverbrauchAktuellerLandesverbrauchHistogramChartComponent } from '.
 import { StromverbrauchChartTooltipComponent } from './stromverbrauch/stromverbrauch-chart-tooltip/stromverbrauch-chart-tooltip.component';
 import { StromverbrauchHistorischerLandesverbrauchHistogramChartComponent } from './stromverbrauch/stromverbrauch-historischer-landesverbrauch-histogram-chart/stromverbrauch-historischer-landesverbrauch-histogram-chart.component';
 import { StromverbrauchComponent } from './stromverbrauch/stromverbrauch.component';
-import { DividerComponent } from '../../shared/components/divider/divider.component';
-import { HideableTextSection } from '../../shared/components/hideable-text-section/hideable-text-section.component';
 @NgModule({
     declarations: [
         FuellstaendeSpeicherseenComponent,

@@ -72,8 +72,8 @@
                     }}
                 </bfe-kpi-subtitle>
                 <bfe-kpi-date-info-subtext
-                    *ngIf="trend"
-                    [date]="trend.date"
+                    *ngIf="!isLoading"
+                    [date]="observationDate"
                     updateInterval="weekly"
                 >
                 </bfe-kpi-date-info-subtext>
@@ -111,9 +111,9 @@
                 (elFocus)="showLineChartTooltip($event)"
                 [colors]="[
                     consts.COLOR_CHART_SECONDARY,
-                    'red',
+                    'blue',
                     consts.COLOR_CHART_PRIMARY,
-                    'blue'
+                    'red'
                 ]"
                 [bandColor]="consts.COLOR_CHART_MIN_MAX_RANGE"
                 [data]="chartData"
@@ -156,7 +156,7 @@
                         label: 'dashboard.wetter.heizgrad-tage.diagram-legend.norm-kumulativ-mean'
                     },
                     {
-                        color: 'red',
+                        color: 'blue',
                         label: 'dashboard.wetter.heizgrad-tage.diagram-legend.messung-prognose-kumulativ-max'
                     },
                     {
@@ -164,7 +164,7 @@
                         label: 'dashboard.wetter.heizgrad-tage.diagram-legend.messung-prognose-kumulativ-mean'
                     },
                     {
-                        color: 'blue',
+                        color: 'red',
                         label: 'dashboard.wetter.heizgrad-tage.diagram-legend.messung-prognose-kumulativ-min'
                     }
                 ]"

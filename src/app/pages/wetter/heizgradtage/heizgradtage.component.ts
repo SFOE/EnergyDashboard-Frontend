@@ -1,33 +1,33 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { I18NextModule } from 'angular-i18next';
-import { TranslationService } from 'src/app/core/i18n/translation.service';
-import { HistogramAreaChartEntry } from 'src/app/core/models/charts';
-import { WetterHeizgradtageTrend } from 'src/app/core/models/wetter-heizgradtage-trend';
-import { WetterHeizgradtageZeitreihe } from 'src/app/core/models/wetter-heizgradtage-zeitreihe';
-import { WetterService } from 'src/app/services/wetter/wetter.service';
-import { HideableTextSection } from 'src/app/shared/components/hideable-text-section/hideable-text-section.component';
+import { TranslationService } from '../../../core/i18n/translation.service';
+import { HistogramAreaChartEntry } from '../../../core/models/charts';
+import { Trend, TrendRating } from '../../../core/models/trend.enum';
+import { WetterHeizgradtageTrend } from '../../../core/models/wetter-heizgradtage-trend';
+import { WetterHeizgradtageZeitreihe } from '../../../core/models/wetter-heizgradtage-zeitreihe';
+import { WetterService } from '../../../services/wetter/wetter.service';
+import { CommonsModule } from '../../../shared/commons/commons.module';
+import { HideableTextSection } from '../../../shared/components/hideable-text-section/hideable-text-section.component';
 import {
     ImageSection,
     ImageSectionComponent
-} from 'src/app/shared/components/image-section/image-section.component';
-import { PointOfInterestLegendEntry } from 'src/app/shared/components/points-of-interest-legend/points-of-interest-legend.component';
-import { DiagramLegendEntry } from 'src/app/shared/diagrams/diagram-legend/diagram-legend.component';
-import { LabelModifier } from 'src/app/shared/diagrams/histogram/base-histogram.model';
-import { HistogramElFocusEvent } from 'src/app/shared/diagrams/histogram/interactive-histogram.component';
-import {
-    LabelFilters,
-    LabelFormatters
-} from 'src/app/shared/diagrams/label.utils';
-import { TooltipModule } from 'src/app/shared/diagrams/tooltip/tooltip.module';
-import { monthToTranslationKey } from 'src/app/shared/static-utils/date-utils';
-import { Trend, TrendRating } from '../../../core/models/trend.enum';
-import { CommonsModule } from '../../../shared/commons/commons.module';
+} from '../../../shared/components/image-section/image-section.component';
+import { PointOfInterestLegendEntry } from '../../../shared/components/points-of-interest-legend/points-of-interest-legend.component';
 import { SelectComponent } from '../../../shared/components/select/select.component';
 import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
 import { TrendModule } from '../../../shared/components/trend/trend.module';
+import { DiagramLegendEntry } from '../../../shared/diagrams/diagram-legend/diagram-legend.component';
 import { DiagramLegendModule } from '../../../shared/diagrams/diagram-legend/diagram-legend.module';
+import { LabelModifier } from '../../../shared/diagrams/histogram/base-histogram.model';
 import { HistogramLineModule } from '../../../shared/diagrams/histogram/histogram-line/histogram-line.module';
+import { HistogramElFocusEvent } from '../../../shared/diagrams/histogram/interactive-histogram.component';
+import {
+    LabelFilters,
+    LabelFormatters
+} from '../../../shared/diagrams/label.utils';
+import { TooltipModule } from '../../../shared/diagrams/tooltip/tooltip.module';
+import { monthToTranslationKey } from '../../../shared/static-utils/date-utils';
 import { COLOR_SPACE, WetterConsts } from '../wetter.consts';
 
 @Component({
@@ -60,6 +60,7 @@ export class HeizgradtageComponent implements OnInit {
 
     // hack to display POIs at the correct position in the chart
     pointsOfInterest: PointOfInterestLegendEntry[] = [];
+    observationDate: Date = new Date();
 
     readonly legendEntries: DiagramLegendEntry[] = [
         {
@@ -75,7 +76,7 @@ export class HeizgradtageComponent implements OnInit {
             type: 'line'
         },
         {
-            color: 'red',
+            color: 'blue',
             labelKey:
                 'dashboard.wetter.heizgrad-tage.diagram-legend.messung-prognose-kumulativ-max',
             type: 'dashed-line'
@@ -87,7 +88,7 @@ export class HeizgradtageComponent implements OnInit {
             type: 'line'
         },
         {
-            color: 'blue',
+            color: 'red',
             labelKey:
                 'dashboard.wetter.heizgrad-tage.diagram-legend.messung-prognose-kumulativ-min',
             type: 'dashed-line'
@@ -148,6 +149,7 @@ export class HeizgradtageComponent implements OnInit {
 
         this.service.getHeizgradTageTabelleDaten().subscribe({
             next: (pois) => {
+                this.observationDate = new Date(pois.observation);
                 this.pointsOfInterest = [
                     {
                         date: new Date(pois.observation),
@@ -181,7 +183,7 @@ export class HeizgradtageComponent implements OnInit {
 
         this.imageSection = {
             dateOfLastUpdate: dateOfLastUpdate,
-            updateInterval: 'monthly',
+            updateInterval: 'weekly',
             titleKey:
                 'dynamic:kpi-wetter-5_heizgradtage-karten.currentmonth.titel',
             longTextKey:

@@ -1,5 +1,5 @@
-import { GasImportEuropaTaeglichEntry } from 'src/app/core/models/gas/gas-import-eruopa-taeglich';
 import { HistogramAreaChartEntry } from '../../core/models/charts';
+import { GasImportEuropaTaeglichEntry } from '../../core/models/gas/gas-import-eruopa-taeglich';
 import { GasImportHistoricalValues } from '../../core/models/gas/gas-import.historical-values';
 export const mapGasImportHistoricalValueToChartEntry = (
     dto: GasImportHistoricalValues

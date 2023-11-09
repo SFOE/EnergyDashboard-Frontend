@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { I18NextModule } from 'angular-i18next';
-import { TooltipModule } from 'src/app/shared/diagrams/tooltip/tooltip.module';
 import { CommonsModule } from '../../shared/commons/commons.module';
+import { HideableTextSection } from '../../shared/components/hideable-text-section/hideable-text-section.component';
 import { SharedComponentsModule } from '../../shared/components/shared-components.module';
 import { DiagramLegendModule } from '../../shared/diagrams/diagram-legend/diagram-legend.module';
 import { HistogramLineModule } from '../../shared/diagrams/histogram/histogram-line/histogram-line.module';
+import { TooltipModule } from '../../shared/diagrams/tooltip/tooltip.module';
 import { PreiseFuturesChartComponent } from './components/preise-futures-chart/preise-futures-chart.component';
 import { PreiseTooltipComponent } from './components/preise-tooltip/preise-tooltip.component';
 import { PreiseFernwaermeComponent } from './preise-fernwaerme/preise-fernwaerme.component';
@@ -22,7 +23,6 @@ import { PreiseTreibstoffBenzinComponent } from './preise-treibstoff/preise-trei
 import { PreiseTreibstoffDieselComponent } from './preise-treibstoff/preise-treibstoff-diesel/preise-treibstoff-diesel.component';
 import { PreiseTreibstoffComponent } from './preise-treibstoff/preise-treibstoff.component';
 import { PreiseComponent } from './preise.component';
-import { HideableTextSection } from '../../shared/components/hideable-text-section/hideable-text-section.component';
 
 @NgModule({
     declarations: [

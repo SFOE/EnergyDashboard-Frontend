@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SizeProp } from '@fortawesome/fontawesome-svg-core';
-import { Context } from 'src/app/core/models/context.enum';
+import { Context } from '../../../core/models/context.enum';
 
 @Component({
     selector: 'bfe-context-title',

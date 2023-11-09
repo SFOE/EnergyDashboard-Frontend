@@ -4,7 +4,7 @@ import { I18NextModule } from 'angular-i18next';
 import { Trend, TrendRating } from '../../../../core/models/trend.enum';
 import { CommonsModule } from '../../../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../../../shared/components/shared-components.module';
-
+import { MockHideableTextSectionComponent } from '../../../../test/component.fixture';
 import { ImportExportHistoricalValuesHistogramChartComponent } from './import-export-historical-values-histogram-chart.component';
 
 describe('ImportExportHistoricalValuesHistogramChartComponent', () => {
@@ -19,7 +19,10 @@ describe('ImportExportHistoricalValuesHistogramChartComponent', () => {
                 CommonsModule,
                 SharedComponentsModule
             ],
-            declarations: [ImportExportHistoricalValuesHistogramChartComponent]
+            declarations: [
+                ImportExportHistoricalValuesHistogramChartComponent,
+                MockHideableTextSectionComponent
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(

@@ -1,17 +1,17 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { TranslationService } from '../../../../core/i18n/translation.service';
-import {
-    LabelFilters,
-    LabelFormatters
-} from '../../../../shared/diagrams/label.utils';
-import { HistogramDetailEntry } from '../../../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
-import { HistogramElFocusEvent } from '../../../../shared/diagrams/histogram/interactive-histogram.component';
+import { WetterService } from '../../../../services/wetter/wetter.service';
+import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
 import {
     Block,
     LabelModifier
 } from '../../../../shared/diagrams/histogram/base-histogram.model';
-import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
-import { WetterService } from '../../../../services/wetter/wetter.service';
+import { HistogramDetailEntry } from '../../../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
+import { HistogramElFocusEvent } from '../../../../shared/diagrams/histogram/interactive-histogram.component';
+import {
+    LabelFilters,
+    LabelFormatters
+} from '../../../../shared/diagrams/label.utils';
 import { COLOR_SPACE, WetterConsts } from '../../wetter.consts';
 
 @Component({
@@ -74,6 +74,8 @@ export class NiederschlagAktuellHistogramChartComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.dateOfLastUpdate.setDate(this.dateOfLastUpdate.getDate() - 1);
+
         this.wetterService.getNiederschlagAktuell().subscribe({
             next: (data) => {
                 this.data =

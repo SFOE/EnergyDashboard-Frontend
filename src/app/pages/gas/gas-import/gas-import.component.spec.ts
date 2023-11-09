@@ -4,6 +4,8 @@ import { I18NextModule } from 'angular-i18next';
 import { Trend, TrendRating } from '../../../core/models/trend.enum';
 import { CommonsModule } from '../../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
+import { TrendModule } from '../../../shared/components/trend/trend.module';
+import { MockHideableTextSectionComponent } from '../../../test/component.fixture';
 import { mockActivatedRouteProvider } from '../../../test/queryParamService.fixture';
 import { GasImportComponent } from './gas-import.component';
 
@@ -17,9 +19,13 @@ describe('GasImportComponent', () => {
                 I18NextModule.forRoot(),
                 HttpClientTestingModule,
                 CommonsModule,
-                SharedComponentsModule
+                SharedComponentsModule,
+                TrendModule
             ],
-            declarations: [GasImportComponent],
+            declarations: [
+                GasImportComponent,
+                MockHideableTextSectionComponent
+            ],
             providers: [mockActivatedRouteProvider]
         }).compileComponents();
 

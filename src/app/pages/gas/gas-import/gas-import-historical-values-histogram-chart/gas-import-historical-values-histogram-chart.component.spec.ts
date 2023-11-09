@@ -4,7 +4,7 @@ import { I18NextModule } from 'angular-i18next';
 import { CommonsModule } from '../../../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../../../shared/components/shared-components.module';
 import { DiagramLegendModule } from '../../../../shared/diagrams/diagram-legend/diagram-legend.module';
-
+import { MockHideableTextSectionComponent } from '../../../../test/component.fixture';
 import { GasImportHistoricalValuesHistogramChartComponent } from './gas-import-historical-values-histogram-chart.component';
 
 describe('GasImportHistoricalValuesHistogramChartComponent', () => {
@@ -20,7 +20,10 @@ describe('GasImportHistoricalValuesHistogramChartComponent', () => {
                 CommonsModule,
                 SharedComponentsModule
             ],
-            declarations: [GasImportHistoricalValuesHistogramChartComponent]
+            declarations: [
+                GasImportHistoricalValuesHistogramChartComponent,
+                MockHideableTextSectionComponent
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(

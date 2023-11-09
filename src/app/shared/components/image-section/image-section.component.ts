@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
-import { I18NextModule } from 'angular-i18next';
-import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
 import { CommonModule } from '@angular/common';
-import { CommonsModule } from 'src/app/shared/commons/commons.module';
+import { Component, Input } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { UpdateInterval } from 'src/app/shared/components/kpi-container/kpi-date-info-subtext/kpi-date-info-subtext.component';
+import { I18NextModule } from 'angular-i18next';
+import { CommonsModule } from '../../../shared/commons/commons.module';
+import { UpdateInterval } from '../../../shared/components/kpi-container/kpi-date-info-subtext/kpi-date-info-subtext.component';
+import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
 
 export interface ImageSection {
     dateOfLastUpdate: Date;

@@ -68,3 +68,6 @@ Small Improvements following the 2.0.0 release
 - Mehr-/Minderverbrauch Strom
 - Mehr-/Minderverauch Gas
 - App Release
+
+## v3.0.1 - 09.11.2023
+- Small improvements to labels and charts following the 3.0.0 release

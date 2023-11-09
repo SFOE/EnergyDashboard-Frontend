@@ -1,10 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ImageSection } from 'src/app/shared/components/image-section/image-section.component';
 import { WetterService } from '../../../../services/wetter/wetter.service';
-import {
-    convertToDate,
-    monthToTranslationKey
-} from '../../../../shared/static-utils/date-utils';
+import { ImageSection } from '../../../../shared/components/image-section/image-section.component';
+import { monthToTranslationKey } from '../../../../shared/static-utils/date-utils';
 
 @Component({
     selector: 'bfe-niederschlag-karten',
@@ -22,7 +19,9 @@ export class NiederschlagKartenComponent implements OnInit {
     ngOnInit(): void {
         this.wetterService.getNiederschlagKartenMonths().subscribe({
             next: (data) => {
-                const dateOfLastUpdate = convertToDate(data.date.toString());
+                const dateOfLastUpdate = new Date();
+                dateOfLastUpdate.setDate(dateOfLastUpdate.getDate() - 1);
+                
                 const currentMonthTranslationKey = monthToTranslationKey(
                     data.thisMonth - 1
                 );

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Block } from '../../shared/diagrams/histogram/base-histogram.model';
 import { COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA } from '../../shared/commons/colors.const';
+import { Block } from '../../shared/diagrams/histogram/base-histogram.model';
 
 @Injectable({
     providedIn: 'root'
@@ -17,8 +17,8 @@ export class SparzielService {
     getRelevantMonthsForSparzielOnMonthEnd(): Block[] {
         return [
             {
-                startDate: new Date(2022, 9, 15),
-                endDate: new Date(2023, 3, 15),
+                startDate: new Date(2023, 9, 15),
+                endDate: new Date(2024, 3, 15),
                 color: COLOR_CHART_HISTOGRAM_AREA_SECONDARY_AREA
             }
         ];

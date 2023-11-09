@@ -1,10 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-// import { GasImportEuropaTaeglichEntry } from 'src/app/core/models/gas/gas-import-eruopa-taeglich';
 import { Observable, filter, map } from 'rxjs';
-import { GasImportEuropaTrend } from 'src/app/core/models/gas/gas-import-eruopa-trend';
 import { TranslationService } from '../../../core/i18n/translation.service';
 import { HistogramAreaChartEntry } from '../../../core/models/charts';
 import { Context } from '../../../core/models/context.enum';
+import { GasImportEuropaTrend } from '../../../core/models/gas/gas-import-eruopa-trend';
 import { Trend, TrendRating } from '../../../core/models/trend.enum';
 import { GasService } from '../../../services/gas/gas.service';
 import { StromProductionImportVerbrauchTrend } from '../../../services/strom/strom.model';

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { map, Observable, shareReplay } from 'rxjs';
 import { DataService } from '../../core/data/data.service';
+import { PreiseStromEuropaTrend } from '../../core/models/preise-strom-europa-trend.model';
+import { PreiseStromEuropa } from '../../core/models/preise-strom-europa.model';
 import { HistogramLineEntry } from '../../shared/diagrams/histogram/histogram-line/histogram-line.component';
 import {
     mapPreiseFuturesDtoToLineEntries,
     mapPreiseIndexiertToLineEntries,
     mapPreiseStromBoerseToLineEntries
 } from './preise.util';
-import { PreiseStromEuropa } from 'src/app/core/models/preise-strom-europa.model';
-import { PreiseStromEuropaTrend } from 'src/app/core/models/preise-strom-europa-trend.model';
 
 @Injectable({
     providedIn: 'root'

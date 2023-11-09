@@ -4,6 +4,7 @@ import { I18NextModule } from 'angular-i18next';
 import { CommonsModule } from '../../../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../../../shared/components/shared-components.module';
 
+import { MockHideableTextSectionComponent } from '../../../../test/component.fixture';
 import { StromverbrauchHistorischerLandesverbrauchHistogramChartComponent } from './stromverbrauch-historischer-landesverbrauch-histogram-chart.component';
 
 describe('StromverbrauchHistorischerLandesverbrauchHistogramChartComponent', () => {
@@ -19,7 +20,8 @@ describe('StromverbrauchHistorischerLandesverbrauchHistogramChartComponent', () 
                 SharedComponentsModule
             ],
             declarations: [
-                StromverbrauchHistorischerLandesverbrauchHistogramChartComponent
+                StromverbrauchHistorischerLandesverbrauchHistogramChartComponent,
+                MockHideableTextSectionComponent
             ]
         }).compileComponents();
 

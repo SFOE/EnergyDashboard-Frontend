@@ -5,6 +5,7 @@ import { CommonsModule } from '../../../shared/commons/commons.module';
 import { SharedComponentsModule } from '../../../shared/components/shared-components.module';
 import { mockActivatedRouteProvider } from '../../../test/queryParamService.fixture';
 
+import { MockHideableTextSectionComponent } from '../../../test/component.fixture';
 import { GassparzielComponent } from './gassparziel.component';
 
 describe('GassparzielComponent', () => {
@@ -19,7 +20,10 @@ describe('GassparzielComponent', () => {
                 CommonsModule,
                 SharedComponentsModule
             ],
-            declarations: [GassparzielComponent],
+            declarations: [
+                GassparzielComponent,
+                MockHideableTextSectionComponent
+            ],
             providers: [mockActivatedRouteProvider]
         }).compileComponents();
 

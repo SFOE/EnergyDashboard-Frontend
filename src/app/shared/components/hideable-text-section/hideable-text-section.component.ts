@@ -3,8 +3,8 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { I18NextModule } from 'angular-i18next';
 import { take } from 'rxjs';
-import { TranslationService } from 'src/app/core/i18n/translation.service';
-import { SelectComponent } from 'src/app/shared/components/select/select.component';
+import { TranslationService } from '../../../core/i18n/translation.service';
+import { SelectComponent } from '../../../shared/components/select/select.component';
 import { CommonsModule } from '../../commons/commons.module';
 
 @Component({
