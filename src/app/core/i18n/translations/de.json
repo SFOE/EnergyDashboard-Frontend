@@ -319,6 +319,7 @@
     "dashboard.wetter.region.luzern": "Luzern",
     "dashboard.wetter.region.schweiz": "Schweiz",
     "dashboard.wetter.region.sion": "Sion",
+    "dashboard.wetter.region.zürich-fluntern": "Zürich / Fluntern",
 
     "dashboard.wetter.heizgrad-tage.diagram-legend.norm-kumulativ-min-max": "Norm kumulativ Min./Max.",
     "dashboard.wetter.heizgrad-tage.diagram-legend.norm-kumulativ-mean": "Norm kumulativ Mittelwert",

@@ -71,3 +71,6 @@ Small Improvements following the 2.0.0 release
 
 ## v3.0.1 - 09.11.2023
 - Small improvements to labels and charts following the 3.0.0 release
+
+## v3.0.2 - 24.11.2023
+- Added Zürich/Fluntern to Wetter -> Temperatur

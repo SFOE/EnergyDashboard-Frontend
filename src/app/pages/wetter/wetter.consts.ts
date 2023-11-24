@@ -45,5 +45,9 @@ export const WetterRegions = [
     {
         key: 'dashboard.wetter.region.sion',
         value: 'Sion'
+    },
+    {
+        key: 'dashboard.wetter.region.zürich-fluntern',
+        value: 'Zürich / Fluntern'
     }
 ];
