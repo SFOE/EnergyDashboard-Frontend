@@ -74,3 +74,9 @@ Small Improvements following the 2.0.0 release
 
 ## v3.0.2 - 24.11.2023
 - Added Zürich/Fluntern to Wetter -> Temperatur
+
+## v3.0.3 - 16.01.2024
+- Update data protection text on Rechtliches
+
+## v3.0.4 - 26.01.2024
+- Fixed histogram chart tooltip

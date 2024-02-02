@@ -20,6 +20,7 @@ export class HistogramChartTooltipComponent extends BaseTooltipComponent<Histogr
     @Input() primaryColor: string;
     @Input() postfix: string;
     @Input() postfixDifference?: string;
+    @Input() postfixAbsoluteValue?: string;
     @Input() withSpaceBeforePostfix = false;
     @Input() withWeekly = false;
 
@@ -38,9 +39,12 @@ export class HistogramChartTooltipComponent extends BaseTooltipComponent<Histogr
     readonly colorSecondary = COLOR_CHART_HISTOGRAM_AREA_SECONDARY;
     suffix: string;
     diffSuffix: string;
+    absoluteSuffix: string;
 
     ngOnInit(): void {
         this.suffix = (this.withSpaceBeforePostfix ? ' ' : '') + this.postfix;
+        this.absoluteSuffix = (this.withSpaceBeforePostfix ? ' ' : '') +
+        (this.postfixAbsoluteValue ?? this.postfix);
         this.diffSuffix =
             (this.withSpaceBeforePostfix ? ' ' : '') +
             (this.postfixDifference ?? this.postfix);

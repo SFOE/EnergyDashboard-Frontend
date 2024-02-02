@@ -39,7 +39,7 @@
                         }"
                         [dataCol2]="{
                             value: data.absoluteValue,
-                            suffix: data.absoluteValue ? suffix : ''
+                            suffix: data.absoluteValue ? absoluteSuffix : ''
                         }"
                         [colNumber]="hasDifference() ? 2 : 1"
                     />
@@ -89,7 +89,7 @@
                     suffix: suffix
                 }"
                 [dataCol2]="{
-                    value: data.tooltipInformation?.differenzMittelwert,
+                    value: data.tooltipInformation?.differenzMin,
                     suffix: diffSuffix
                 }"
                 [colNumber]="hasDifference() ? 2 : 1"
