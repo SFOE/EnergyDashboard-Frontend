@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { I18NextModule } from 'angular-i18next';
 import { AppModule } from '../../../app.module';
 import { CommonsModule } from '../../../shared/commons/commons.module';
@@ -10,7 +9,6 @@ import { DashboardCollapsibleCardComponent } from '../dashboard-collapsible-card
 import { DashboardKpiX1Component } from '../dashboard-kpi-x1/dashboard-kpi-x1.component';
 import { DashboardNotAvailableComponent } from '../dashboard-not-available/dashboard-not-available.component';
 import { DashboardPriceRowComponent } from '../dashboard-price-row/dashboard-price-row.component';
-import { DashboardSpartippsCardComponent } from '../dashboard-spartipps-card/dashboard-spartipps-card.component';
 
 import { DashboardRowComponent } from './dashboard-row.component';
 
@@ -33,8 +31,7 @@ describe('DashboardRowComponent', () => {
                 DashboardKpiX1Component,
                 DashboardRowComponent,
                 DashboardPriceRowComponent,
-                DashboardCollapsibleCardComponent,
-                DashboardSpartippsCardComponent
+                DashboardCollapsibleCardComponent
             ]
         }).compileComponents();
     });

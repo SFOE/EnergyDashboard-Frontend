@@ -18,7 +18,6 @@ import { DashboardNotAvailableComponent } from './dashboard-not-available/dashbo
 import { DashboardPriceRowComponent } from './dashboard-price-row/dashboard-price-row.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardRowComponent } from './dashboard-row/dashboard-row.component';
-import { DashboardSpartippsCardComponent } from './dashboard-spartipps-card/dashboard-spartipps-card.component';
 import { DashboardComponent } from './dashboard.component';
 
 @NgModule({
@@ -27,7 +26,6 @@ import { DashboardComponent } from './dashboard.component';
         DashboardKpiX1Component,
         DashboardRowComponent,
         DashboardPriceRowComponent,
-        DashboardSpartippsCardComponent,
         DashboardNotAvailableComponent,
         DashboardCollapsibleCardComponent
     ],

@@ -43,9 +43,9 @@
         </div>
     </section>
     <bfe-sparziel-histogram-chart
-        *ngIf="!!sparzielZielData"
+        *ngIf="sparzielPerMonth.length > 0"
         [model]="{
-            lastUpdate: sparzielZielData.date,
+            lastUpdate: sparzielPerMonth[sparzielPerMonth.length - 1].date,
             data: sparzielPerMonth,
             blocks: sparzielBlocks,
             colors: {

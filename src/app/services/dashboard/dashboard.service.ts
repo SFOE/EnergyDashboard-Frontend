@@ -12,7 +12,6 @@ import {
 import { DashboardPriceRowModel } from '../../pages/dashboard/dashboard-price-row/dashboard-price-row.component';
 import { DashboardRowModel } from '../../pages/dashboard/dashboard-row/dashboard-row.component';
 import {
-    getRandomSpartipp,
     mapGasDtoToRowModels,
     mapPriceDtoToDataArray,
     mapStromDtoToRowModels,
@@ -102,19 +101,5 @@ export class DashboardService {
             );
         }
         return this.cachedPriceData$;
-    }
-
-    getRandomSpartipp(): Observable<DashboardSpartippDisplay | undefined> {
-        if (!this.cachedSpartipps$) {
-            this.cachedSpartipps$ = this.dataService
-                .getDashboardSpartipps()
-                .pipe(
-                    map((data) =>
-                        getRandomSpartipp(data, this.translateService.language)
-                    ),
-                    shareReplay(1)
-                );
-        }
-        return this.cachedSpartipps$;
     }
 }

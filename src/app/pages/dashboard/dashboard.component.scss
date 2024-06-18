@@ -42,8 +42,8 @@
     }
 
     .overview__card-grid {
-        --col-count: 3;
-        --col-width: calc(33% - 13px);
+        --col-count: 2;
+        --col-width: calc(50% - 13px);
 
         display: grid;
         grid-template-columns: repeat(var(--col-count), var(--col-width));

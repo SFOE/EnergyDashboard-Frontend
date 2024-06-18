@@ -1,10 +1,5 @@
 <div class="dashboard">
     <div class="dashboard__main">
-        <div *ngIf="!appView" class="dashboard__ampeln">
-            <bfe-status-ampel [context]="context.STROM"></bfe-status-ampel>
-            <bfe-status-ampel [context]="context.GAS"></bfe-status-ampel>
-        </div>
-
         <div class="overview__card-grid">
             <bfe-dashboard-kpi-x1
                 [context]="context.STROM"
@@ -64,19 +59,6 @@
                     </bfe-dashboard-price-row>
                 </div>
             </bfe-dashboard-kpi-x1>
-
-            <bfe-dashboard-collapsible-card
-                [cardTitle]="'dynamic:aktuelle-lage.titel' | i18nextDynamic"
-                collapsedHeight="850px"
-            >
-                <div
-                    [innerHTML]="
-                        'dynamic:aktuelle-lage.langtext' | i18nextDynamic
-                    "
-                ></div>
-            </bfe-dashboard-collapsible-card>
-
-            <bfe-dashboard-spartipps-card></bfe-dashboard-spartipps-card>
         </div>
     </div>
 </div>

@@ -52,7 +52,6 @@ import { OverviewCardComponent } from './overview-card/overview-card.component';
 import { PageTitleComponent } from './page-title/page-title.component';
 import { PageTopNavigationComponent } from './page-top-navigation/page-top-navigation.component';
 import { PointsOfInterestLegendComponent } from './points-of-interest-legend/points-of-interest-legend.component';
-import { StatusAmpelComponent } from './status-ampel/status-ampel.component';
 import { TabItemDirective } from './tab-list/tab-item.directive';
 import { TabListComponent } from './tab-list/tab-list.component';
 
@@ -82,7 +81,6 @@ import { TabListComponent } from './tab-list/tab-list.component';
         HistogramChartTooltipComponent,
         ImportExportBoxComponent,
         ImportExportPerDayComponent,
-        StatusAmpelComponent,
         IconTooltipComponent,
         ContextIconComponent,
         OptionalDynamicLangtextComponent,
@@ -117,7 +115,6 @@ import { TabListComponent } from './tab-list/tab-list.component';
         HistogramChartTooltipComponent,
         ImportExportBoxComponent,
         ImportExportPerDayComponent,
-        StatusAmpelComponent,
         IconTooltipComponent,
         ContextIconComponent,
         OptionalDynamicLangtextComponent,

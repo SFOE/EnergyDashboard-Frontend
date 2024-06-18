@@ -80,3 +80,13 @@ Small Improvements following the 2.0.0 release
 
 ## v3.0.4 - 26.01.2024
 - Fixed histogram chart tooltip
+
+## v3.1.0 - 26.03.2024
+- Removed Versorgungslage Ampel
+- Updated Links
+
+## v3.1.1 - 05.04.2024
+- Update translations
+
+## v3.1.2 - 18.07.2024
+- Fix Aktualisierungsdatum Sparziel Gas & Strom

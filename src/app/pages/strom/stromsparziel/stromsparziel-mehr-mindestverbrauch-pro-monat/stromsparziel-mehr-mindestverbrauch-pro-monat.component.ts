@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { StromService } from '../../../../services/strom/strom.service';
 import { COLOR_CHART_STROM_ADDITIONAL_LINE } from '../../../../shared/commons/colors.const';
 import { mapAktuelleEinsparungEntryToHistogramEntry } from '../../../../shared/components/sparziel/sparziel.utils';
@@ -19,9 +19,6 @@ const SPARZIEL_PERCENTAGE = 10;
 export class StromsparzielMehrMindestverbrauchProMonatComponent
     implements OnInit
 {
-    @Input()
-    lastUpdated: Date | undefined;
-
     readonly primaryColor = COLOR_CONTEXT;
     readonly targetPercentage = SPARZIEL_PERCENTAGE;
     readonly barColors = [COLOR_CONTEXT, COLOR_CONTEXT + '80'];

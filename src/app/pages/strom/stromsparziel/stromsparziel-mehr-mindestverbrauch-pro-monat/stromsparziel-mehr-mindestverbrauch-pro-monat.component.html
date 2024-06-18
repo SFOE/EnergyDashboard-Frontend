@@ -1,7 +1,10 @@
 <div *ngIf="!isLoading; else loadingTemplate">
     <bfe-sparziel-histogram-chart
+        *ngIf="mehrMindestverbrauchData.length > 0"
         [model]="{
-            lastUpdate: lastUpdated,
+            lastUpdate:
+                mehrMindestverbrauchData[mehrMindestverbrauchData.length - 1]
+                    .date,
             data: mehrMindestverbrauchData,
             blocks: [],
             colors: {
