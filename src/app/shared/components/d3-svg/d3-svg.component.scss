@@ -2,6 +2,8 @@ bfe-d3-svg {
     display: block;
 
     .d3-svg {
+        display: flex;
+        flex-direction: column;
         position: relative;
         width: 100%;
         min-height: var(--d3-svg-min-h);
@@ -9,22 +11,16 @@ bfe-d3-svg {
         margin-bottom: var(--d3-svg-margin-bottom);
         overflow: var(--d3-svg-overflow);
 
-        &:before {
-            content: '';
-            display: block;
-            padding-top: calc(
-                var(--d3-svg-ratio-h) / var(--d3-svg-ratio-w) * 100%
-            );
-        }
-
         & > svg {
-            position: absolute;
+            flex-grow: 1;
             display: block;
-            left: 0;
             width: 100%;
-            top: 0;
             height: 100%;
             overflow: var(--d3-svg-overflow);
+        }
+
+        .d3-additional-chart-content:not(:empty) {
+            margin-top: 22px;
         }
     }
 }

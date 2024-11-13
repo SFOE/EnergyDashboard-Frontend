@@ -97,10 +97,11 @@ export class HistogramAreaComponent<
     @Input()
     areaOpacities: number | number[];
 
+    @Input()
+    yTickCount = 4;
+
     protected yMaxValue: number;
 
-    @Input()
-    protected yTickCount = 4;
     protected override margin = { top: 20, bottom: 20, left: 0, right: 8 };
     protected focusGuideGroup: Selection<SVGGElement, void, null, undefined>;
     protected valueDomainRect: Selection<SVGRectElement, void, null, undefined>;
@@ -109,6 +110,7 @@ export class HistogramAreaComponent<
 
     private _colors: string[];
     private _lineColors: string[];
+    private _assumedMarginLeftPadding = 8;
 
     override ngOnChanges(changes: SimpleChanges) {
         if (this.data) {
@@ -148,13 +150,20 @@ export class HistogramAreaComponent<
     }
 
     protected override createScales() {
+        const assumedMargin =
+            this._assumedMarginLeftPadding +
+            this.getYLabelsMaxLength() *
+                HistogramAreaComponent.ASSUMED_CHAR_WIDTH;
+
+        let marginLeft = this.margin.left
+            ? this.margin.left
+            : this.hideYLabels
+            ? this.margin.right
+            : assumedMargin;
+
         this.margin = {
             ...this.margin,
-            left: !!this.margin.left
-                ? this.margin.left
-                : this.getYLabelsMaxLength() *
-                      HistogramAreaComponent.ASSUMED_CHAR_WIDTH +
-                  8
+            left: marginLeft
         };
         super.createScales();
     }
@@ -168,6 +177,9 @@ export class HistogramAreaComponent<
         this.drawAreas();
         if (this.showLines) {
             this.drawLines();
+        }
+        if (this.hasBrushSelection) {
+            this.drawBrushSelection();
         }
         this.updateValueDomain(this.valueDomainRect);
     }

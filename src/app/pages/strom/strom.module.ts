@@ -58,6 +58,25 @@ import { StromverbrauchAktuellerLandesverbrauchHistogramChartComponent } from '.
 import { StromverbrauchChartTooltipComponent } from './stromverbrauch/stromverbrauch-chart-tooltip/stromverbrauch-chart-tooltip.component';
 import { StromverbrauchHistorischerLandesverbrauchHistogramChartComponent } from './stromverbrauch/stromverbrauch-historischer-landesverbrauch-histogram-chart/stromverbrauch-historischer-landesverbrauch-histogram-chart.component';
 import { StromverbrauchComponent } from './stromverbrauch/stromverbrauch.component';
+import { ProduktionPvComponent } from './produktion-photovoltaik/produktion-pv.component';
+import { IconGridComponent } from '../../shared/diagrams/icon-grid/icon-grid.component';
+import { ProduktionPvChartsComponent } from './produktion-photovoltaik/produktion-pv-charts/produktion-pv-charts.component';
+import { ProduktionPvHouseIconGridComponent } from './produktion-photovoltaik/produktion-pv-charts/produktion-pv-house-icon-grid/produktion-pv-house-icon-grid.component';
+import { ProduktionPvHistogrammTooltipComponent } from './produktion-photovoltaik/produktion-pv-charts/produktion-pv-histogramm-tooltip/produktion-pv-histogramm-tooltip.component';
+import { EntkoppelungEndenergieverbrauchBipChartComponent } from './energieverbrauch/entkoppelung-endenergieverbrauch-bip-chart/entkoppelung-endenergieverbrauch-bip-chart.component';
+import { EntkoppelungEndenergieverbrauchBipChartTooltipComponent } from './energieverbrauch/entkoppelung-endenergieverbrauch-bip-chart/entkoppelung-endenergieverbrauch-bip-chart-tooltip/entkoppelung-endenergieverbrauch-bip-chart-tooltip.component';
+import { SelectComponent } from '../../shared/components/select/select.component';
+import { EnergieverbrauchHistogramChartComponent } from './energieverbrauch/energieverbrauch-histogram-chart/energieverbrauch-histogram-chart.component';
+import { EndenergieverbrauchHistogramChartComponent } from './energieverbrauch/endenergieverbrauch-histogram-chart/endenergieverbrauch-histogram-chart.component';
+import { EnergieverbrauchAreaTooltipComponent } from './energieverbrauch/energieverbrauch-area-tooltip/energieverbrauch-area-tooltip.component';
+import { EndenergieverbrauchAreaTooltipComponent } from './energieverbrauch/endenergieverbrauch-area-tooltip/endenergieverbrauch-area-tooltip.component';
+import { EnergieverbrauchComponent } from './energieverbrauch/energieverbrauch.component';
+import { WinterproduktionComponent } from './winterproduktion/winterproduktion.component';
+import { WinterproduktionChartsImportExportComponent } from './winterproduktion/winterproduktion-charts-import-export/winterproduktion-charts-import-export.component';
+import { WinterproduktionChartsEinzelneEnergietraegerComponent } from './winterproduktion/winterproduktion-charts-einzelne-energietraeger/winterproduktion-charts-einzelne-energietraeger.component';
+import { WinterproduktionChartsImportExportTooltipComponent } from './winterproduktion/winterproduktion-charts-import-export/winterproduktion-charts-import-export-tooltip/winterproduktion-charts-import-export-tooltip.component';
+import { WinterproduktionChartsEinzelneEnergietraegerTooltipComponent } from './winterproduktion/winterproduktion-charts-einzelne-energietraeger/winterproduktion-charts-einzelne-energietraeger-tooltip/winterproduktion-charts-einzelne-energietraeger-tooltip.component';
+
 @NgModule({
     declarations: [
         FuellstaendeSpeicherseenComponent,
@@ -72,6 +91,11 @@ import { StromverbrauchComponent } from './stromverbrauch/stromverbrauch.compone
         ProduktionVerbrauchHistogramChartComponent,
         ProduktionStrommixDonutMarsComponent,
         ProduktionVerbrauchTooltipComponent,
+        EnergieverbrauchAreaTooltipComponent,
+        EndenergieverbrauchAreaTooltipComponent,
+        EnergieverbrauchHistogramChartComponent,
+        EndenergieverbrauchHistogramChartComponent,
+        EnergieverbrauchComponent,
         StromverbrauchComponent,
         StromverbrauchAktuellerLandesverbrauchHistogramChartComponent,
         StromverbrauchChartTooltipComponent,
@@ -90,6 +114,10 @@ import { StromverbrauchComponent } from './stromverbrauch/stromverbrauch.compone
         KkwFrComponent,
         KkwCurrentProductionDisplayComponent,
         KkwChComponent,
+        ProduktionPvComponent,
+        ProduktionPvChartsComponent,
+        IconGridComponent,
+        ProduktionPvHouseIconGridComponent,
         StromsparzielNachBereichProMonatHistogramChartComponent,
         StromsparzielNachBereichAktuellerMonatHistogramChartComponent,
         StromsparzielAktuellerMonatDetailsComponent,
@@ -99,7 +127,16 @@ import { StromverbrauchComponent } from './stromverbrauch/stromverbrauch.compone
         StromsparzielFivePercentDetailsComponent,
         StromsparzielFivePercentDetailsTooltipComponent,
         StromsparzielMehrMindestverbrauchProMonatComponent,
-        StromMinderMehrverbrauchComponent
+        StromMinderMehrverbrauchComponent,
+        ProduktionPvHistogrammTooltipComponent,
+        WinterproduktionComponent,
+        WinterproduktionChartsImportExportComponent,
+        WinterproduktionChartsEinzelneEnergietraegerComponent,
+        WinterproduktionChartsImportExportTooltipComponent,
+        WinterproduktionChartsEinzelneEnergietraegerTooltipComponent,
+        EnergieverbrauchComponent,
+        EntkoppelungEndenergieverbrauchBipChartComponent,
+        EntkoppelungEndenergieverbrauchBipChartTooltipComponent
     ],
     imports: [
         CommonModule,
@@ -120,7 +157,8 @@ import { StromverbrauchComponent } from './stromverbrauch/stromverbrauch.compone
         BarDiagramModule,
         TooltipModule,
         DividerComponent,
-        HideableTextSection
+        HideableTextSection,
+        SelectComponent
     ]
 })
 export class StromModule {}

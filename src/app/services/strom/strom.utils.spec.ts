@@ -14,7 +14,7 @@ import {
     mapStromKkwProductionDtoToEntry,
     mapStromKkwVerfuegbarkeitDtoToEntry
 } from './strom.util';
-import {LineStyle} from "../../shared/diagrams/histogram/histogram-detail/histogram-detail.component";
+import { LineStyle } from '../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
 
 describe('mapStromKkwProductionDtoToEntry', () => {
     it('should map dto correctly', () => {

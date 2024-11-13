@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { I18NEXT_SERVICE, ITranslationService } from 'angular-i18next';
 import { GoogleAnalyticsService } from './services/google-analytics.service';
+import { AppleSmartAppBannerService } from './services/apple-smart-app-banner.service';
 
 @Component({
     selector: 'app-root',
@@ -12,9 +13,11 @@ export class AppComponent implements OnInit {
     constructor(
         @Inject(DOCUMENT) private document: Document,
         @Inject(I18NEXT_SERVICE) private i18NextService: ITranslationService,
-        googleAnalyticsService: GoogleAnalyticsService
+        googleAnalyticsService: GoogleAnalyticsService,
+        appleSmartAppBannerService: AppleSmartAppBannerService
     ) {
         googleAnalyticsService.initialize();
+        appleSmartAppBannerService.initialize();
     }
 
     ngOnInit(): void {

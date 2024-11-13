@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TranslationService } from '../../../../core/i18n/translation.service';
+import {
+    BrushSelectionComponent,
+    getDefaultBrushLabelModifier
+} from '../../../../shared/components/brush-selection/brush-selection.component';
 import { DiagramLegendEntry } from '../../../../shared/diagrams/diagram-legend/diagram-legend.component';
 import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.model';
 import { HistogramLineEntry } from '../../../../shared/diagrams/histogram/histogram-line/histogram-line.component';
@@ -24,19 +28,24 @@ const legendKeys = [
     templateUrl: './preise-futures-chart.component.html',
     styleUrls: ['./preise-futures-chart.component.scss']
 })
-export class PreiseFuturesChartComponent implements OnInit {
+export class PreiseFuturesChartComponent
+    extends BrushSelectionComponent
+    implements OnInit
+{
     @Input() chartData: Observable<HistogramLineEntry[]>;
     @Input() colors: string[];
     @Input() titleKey: string;
     @Input() langtextKey: string;
 
     data?: HistogramLineEntry[];
+    filteredData?: HistogramLineEntry[];
     isLoading: boolean = true;
     legendEntries: DiagramLegendEntry[] = [];
     tooltipEvent?: HistogramElFocusEvent<HistogramLineEntry>;
 
     xLabelModifier: LabelModifier;
     xSubLabelModifier: LabelModifier;
+    brushXLabelModifier: LabelModifier;
     yLabelFormatter = (value: number) => `${value} EUR`;
 
     get lastUpdated(): Date | string {
@@ -47,10 +56,13 @@ export class PreiseFuturesChartComponent implements OnInit {
     }
 
     constructor(translationService: TranslationService) {
+        super();
         this.xLabelModifier = {
             formatter: LabelFormatters.monthShort(translationService.language),
             filter: LabelFilters.everyNth(90)
         };
+        this.brushXLabelModifier =
+            getDefaultBrushLabelModifier(translationService);
         this.xSubLabelModifier = {
             formatter: LabelFormatters.yearFull(translationService.language),
             filter: LabelFilters.none()
@@ -60,6 +72,7 @@ export class PreiseFuturesChartComponent implements OnInit {
     ngOnInit() {
         this.chartData.subscribe((data) => {
             this.data = data;
+            this.initializeBrushSelection(this.data);
             this.isLoading = false;
         });
         this.legendEntries = this.colors.map((color, index) => ({
@@ -67,6 +80,11 @@ export class PreiseFuturesChartComponent implements OnInit {
             labelKey: legendKeys[index],
             type: 'line'
         }));
+    }
+
+    override onBrushUpdated(): void {
+        if (!this.data) return;
+        this.filteredData = this.filterEntriesByBrush(this.data);
     }
 
     showTooltip(event: HistogramElFocusEvent<HistogramLineEntry>) {

@@ -1,0 +1,15 @@
+<div #tooltip [class.hidden]="!event" class="tooltip-container">
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header header [title]="data.date | date: 'yyyy'" />
+        <bfe-tooltip-row
+            *ngIf="data.barValues[0] !== null"
+            shape="area"
+            [color]="barColors[0]"
+            [label]="'commons.strom.produktion-pv.production' | i18next"
+            [data]="{
+                value: data.barValues[0] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+    </bfe-tooltip-container>
+</div>

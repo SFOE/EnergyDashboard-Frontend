@@ -29,6 +29,8 @@ export abstract class BaseTooltipComponent<T>
 {
     @Input() event?: TooltipElementFocusEvent<T>;
 
+    @Input() yCorrection?: number;
+
     @ViewChild('tooltip') tooltip: ElementRef;
 
     data?: T;
@@ -82,9 +84,12 @@ export abstract class BaseTooltipComponent<T>
                         TOOLTIP_VIEWPORT_PADDING);
                 const displayRight = remaingSpaceRight > 0;
 
+                const baseTop: number =
+                    source.y - tooltipElement.clientHeight / 2;
                 tooltipElement.style.top = `${
-                    source.y - tooltipElement.clientHeight / 2
+                    baseTop + (this.yCorrection || 0)
                 }px`;
+
                 const tooltipXPosition = displayRight
                     ? source.x + TOOLTIP_POINT_OFFSET
                     : source.x -

@@ -45,6 +45,16 @@ export class HistogramAreaStackComponent<T extends HistogramAreaEntry>
         super.ngOnChanges(changes);
     }
 
+    protected override setupChart(): void {
+        super.setupChart();
+
+        this.yAxisGrp
+            .append('line')
+            .attr('class', 'y-axis-line')
+            .attr('stroke', '#CCCCCC')
+            .attr('y1', 0);
+    }
+
     protected override createAreaFunctions(): Array<Area<T>> {
         return new Array(
             this.data.reduce((u, i) => Math.max(u, i.values.length), 0)
@@ -137,10 +147,8 @@ export class HistogramAreaStackComponent<T extends HistogramAreaEntry>
             .attr('stroke', '#333333');
 
         this.yAxisGrp
-            .append('line')
-            .attr('stroke', '#CCCCCC')
+            .select('.y-axis-line')
             .attr('transform', 'translate(' + this.margin.left + ', 0)')
-            .attr('y1', 0)
             .attr('y2', this.svg.height - this.margin.bottom);
     }
 

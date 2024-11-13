@@ -5,7 +5,8 @@ export type UpdateInterval =
     | 'weekly'
     | 'semi-monthly'
     | 'monthly'
-    | 'endOfMonth';
+    | 'endOfMonth'
+    | 'yearly';
 
 @Component({
     selector: 'bfe-kpi-date-info-subtext',

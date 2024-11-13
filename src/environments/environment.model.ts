@@ -6,6 +6,7 @@ export interface Environment {
     baseUrl: string;
     rootUrl: string;
     gaTrackingId?: string;
+    appleAppId?: string;
 }
 
 export type Stage = 'production' | 'development' | 'local';

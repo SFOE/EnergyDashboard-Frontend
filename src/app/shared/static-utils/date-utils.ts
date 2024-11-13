@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { setHours, startOfDay } from 'date-fns';
+import { setHours, startOfDay, subYears } from 'date-fns';
 
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 
@@ -109,6 +109,10 @@ export const getYesterday = (): Date => {
     return yesterday;
 };
 
+export const getYearsAgo = (n: number): Date => {
+    return subYears(new Date(), n);
+};
+
 export const isOneMonthAfter = (date1: Date, date2: Date): boolean => {
     let date1Month: number = date1.getMonth();
     let date1Year: number = date1.getFullYear();
@@ -126,4 +130,13 @@ export const isOneMonthAfter = (date1: Date, date2: Date): boolean => {
     } else {
         return false;
     }
+};
+
+export const getYesterdayDate = (): Date => {
+    const today: Date = new Date();
+    const yesterday: Date = new Date(today);
+
+    yesterday.setDate(today.getDate() - 1);
+
+    return yesterday;
 };

@@ -55,12 +55,14 @@
     <bfe-histogram-area-stack
         class="diagram-container"
         *ngIf="chartData"
-        [data]="chartData.areaEntries"
-        [lines]="chartData.lineEntries"
+        [data]="chartData.filteredAreaEntries"
+        [lines]="chartData.filteredLineEntries"
         [colors]="chartColors"
+        [strokeWidths]="2"
         [focusPointColors]="chartColors"
         [focusPointBorder]="true"
         [xLabelModifier]="labelModifier"
+        [xSubLabelModifier]="subLabelModifier"
         [yLabelFormatter]="yLabelFormatter"
         [domainMax]="domainMax"
         (diagramLeave)="hideTooltip()"
@@ -70,6 +72,24 @@
     <bfe-produktion-verbrauch-tooltip
         [event]="tooltipEvent"
     ></bfe-produktion-verbrauch-tooltip>
+    <bfe-brush-explanation></bfe-brush-explanation>
+    <bfe-histogram-area-stack
+        class="diagram-container"
+        *ngIf="chartData"
+        [data]="chartData.areaEntries"
+        [lines]="chartData.lineEntries"
+        [maxHeight]="brushDefaultHeight"
+        [margins]="brushDefaultMargins"
+        [strokeWidths]="0.05"
+        [domainMax]="domainMax"
+        [colors]="chartColors"
+        [hideYLabels]="true"
+        [xLabelModifier]="brushLabelModifier"
+        [brushSelection]="brushSelection"
+        [brushSelectionConfig]="brushSelectionConfig"
+        (brushSelectionChange)="updateBrushSelection($event)"
+    >
+    </bfe-histogram-area-stack>
 
     <bfe-hideable-text-section
         [context]="'chart'"

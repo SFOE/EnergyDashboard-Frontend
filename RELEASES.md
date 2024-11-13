@@ -90,3 +90,9 @@ Small Improvements following the 2.0.0 release
 
 ## v3.1.2 - 18.07.2024
 - Fix Aktualisierungsdatum Sparziel Gas & Strom
+
+## v4.0.0 - 31.10.2024
+- Added Energieverbrauch
+- Added Produktion Photovoltaik
+- Added Winterbilanz Strom
+- Added zoom functionality

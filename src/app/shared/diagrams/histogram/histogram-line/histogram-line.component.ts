@@ -101,8 +101,9 @@ export class HistogramLineComponent<T extends HistogramLineEntry>
     @Input()
     strokeWidths: number | number[];
 
+    // REMARK: Was protected necessary?
     @Input()
-    protected yTickCount = 4;
+    yTickCount = 4;
 
     @Input()
     maxHeight?: number | null;
@@ -180,12 +181,15 @@ export class HistogramLineComponent<T extends HistogramLineEntry>
     }
 
     protected override createScales() {
+        const marginLeft = this.margin.left
+            ? this.margin.left
+            : 8 +
+              this.getYLabelsMaxLength() *
+                  HistogramLineComponent.ASSUMED_CHAR_WIDTH;
+
         this.margin = {
             ...this.margin,
-            left:
-                this.getYLabelsMaxLength() *
-                    HistogramLineComponent.ASSUMED_CHAR_WIDTH +
-                8
+            left: marginLeft
         };
         super.createScales();
     }
@@ -198,6 +202,9 @@ export class HistogramLineComponent<T extends HistogramLineEntry>
         this.drawFullYAxis();
         this.drawRange();
         this.drawLines();
+        if (this.hasBrushSelection) {
+            this.drawBrushSelection();
+        }
         this.updateValueDomain(this.valueDomainRect);
     }
 

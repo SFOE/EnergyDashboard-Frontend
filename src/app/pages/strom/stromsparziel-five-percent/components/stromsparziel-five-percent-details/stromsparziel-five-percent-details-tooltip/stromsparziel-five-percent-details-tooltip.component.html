@@ -1,6 +1,9 @@
 <div class="tooltip-container stromsparziel-container">
     <bfe-tooltip-container *ngIf="!!data">
-        <bfe-tooltip-header header [title]="'commons.sparziel.difference' | i18next" />
+        <bfe-tooltip-header
+            header
+            [title]="'commons.sparziel.difference' | i18next"
+        />
 
         <bfe-tooltip-icon-row
             icon="house"
@@ -27,7 +30,6 @@
                 value: getIndustryPercent() | number: '1.1-1',
                 suffix: '%'
             }"
-            
         />
 
         <bfe-tooltip-row

@@ -3,21 +3,26 @@ import {
     Input,
     OnChanges,
     OnInit,
-    SimpleChanges
+    SimpleChanges,
+    ViewChild
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { differenceInDays } from 'date-fns';
+import { DateSpanSelection } from 'src/app/shared/diagrams/histogram/base-histogram.component';
 import { TranslationService } from '../../../../core/i18n/translation.service';
 import { ImportExportEntry } from '../../../../core/models/import-export';
 import { StromImportExportNettoEntry } from '../../../../core/models/strom-import-export.netto';
 import { LabelModifier } from '../../../../shared/diagrams/histogram/base-histogram.model';
-import { AreaMinMaxFocusEntry } from '../../../../shared/diagrams/histogram/histogram-area-min-max/histogram-area-min-max.component';
+import {
+    AreaMinMaxFocusEntry,
+    HistogramAreaMinMaxComponent
+} from '../../../../shared/diagrams/histogram/histogram-area-min-max/histogram-area-min-max.component';
 import { HistogramAreaEntry } from '../../../../shared/diagrams/histogram/histogram-area/histogram-area.component';
 import { HistogramElFocusEvent } from '../../../../shared/diagrams/histogram/interactive-histogram.component';
 import {
     LabelFilters,
     LabelFormatters
 } from '../../../../shared/diagrams/label.utils';
-import { filterHistogramAreaEntryByDate } from '../../../../shared/diagrams/utils';
 import { ArrayUtils } from '../../../../shared/static-utils/array-utils';
 import { oneWeekInMilliseconds } from '../../../../shared/static-utils/date-utils';
 import { ImportExportConsts } from '../../strom.consts';
@@ -27,6 +32,8 @@ import {
     legendImportEntries
 } from './import-export-net-area-chart.consts';
 
+const EXTENDED_LABEL_MIN_DAYS = 84;
+
 @Component({
     selector: 'bfe-import-export-net-area-chart',
     templateUrl: './import-export-net-area-chart.component.html',
@@ -35,13 +42,16 @@ import {
 export class ImportExportNetAreaChartComponent implements OnChanges, OnInit {
     @Input() entries: StromImportExportNettoEntry[];
     @Input() currentEntry: ImportExportEntry;
+    @ViewChild(HistogramAreaMinMaxComponent)
+    child!: HistogramAreaMinMaxComponent;
 
     stromImports: HistogramAreaEntry[];
     stromExports: HistogramAreaEntry[];
 
-    readonly labelModifier: LabelModifier;
     readonly countries = ImportExportCountries;
     readonly countrySelectionControl = new FormControl([0, 1, 2, 3]);
+    labelModifier: LabelModifier;
+    subLabelModifier?: LabelModifier;
     tooltipEvent?: HistogramElFocusEvent<AreaMinMaxFocusEntry>;
 
     // save all data for filtering purposes
@@ -56,9 +66,7 @@ export class ImportExportNetAreaChartComponent implements OnChanges, OnInit {
             stromExports: HistogramAreaEntry[];
         };
     };
-    private twoWeeksBackFromToday = new Date(
-        Date.now() - oneWeekInMilliseconds * 4
-    );
+    twoWeeksBackFromToday = new Date(Date.now() - oneWeekInMilliseconds * 4);
 
     importLegendEntries = legendImportEntries;
     exportLegendEntries = legendExportEntries;
@@ -71,7 +79,7 @@ export class ImportExportNetAreaChartComponent implements OnChanges, OnInit {
         ...Object.values(ImportExportConsts.import)
     ];
 
-    constructor(translationService: TranslationService) {
+    constructor(private translationService: TranslationService) {
         this.labelModifier = {
             formatter: LabelFormatters.monthAndDay(translationService.language),
             filter: LabelFilters.firstDayOfWeek()
@@ -123,14 +131,8 @@ export class ImportExportNetAreaChartComponent implements OnChanges, OnInit {
     ngOnChanges(changes: SimpleChanges): void {
         if (!!changes['entries'] && !!this.entries) {
             const allTime = this.prepareImportExportData(this.entries);
-            this.stromImports = filterHistogramAreaEntryByDate(
-                allTime.stromImports,
-                this.twoWeeksBackFromToday
-            );
-            this.stromExports = filterHistogramAreaEntryByDate(
-                allTime.stromExports,
-                this.twoWeeksBackFromToday
-            );
+            this.stromImports = allTime.stromImports;
+            this.stromExports = allTime.stromExports;
             this.allData = {
                 allTime,
                 selectedPeriod: {
@@ -139,6 +141,13 @@ export class ImportExportNetAreaChartComponent implements OnChanges, OnInit {
                 }
             };
         }
+    }
+
+    onBrushChanged(brushSelection: DateSpanSelection) {
+        const { labelModifier, subLabelModifier } =
+            this.getLabelModifiers(brushSelection);
+        this.labelModifier = labelModifier;
+        this.subLabelModifier = subLabelModifier;
     }
 
     private prepareImportExportData(data: StromImportExportNettoEntry[]): {
@@ -176,6 +185,38 @@ export class ImportExportNetAreaChartComponent implements OnChanges, OnInit {
                 positionsToKeep.includes(index)
             )
         }));
+    }
+
+    private getLabelModifiers({ start, end }: DateSpanSelection): {
+        labelModifier: LabelModifier;
+        subLabelModifier?: LabelModifier;
+    } {
+        const data = this.entries;
+        const lang = this.translationService.language;
+        const useExtendedLabel =
+            differenceInDays(end, start) > EXTENDED_LABEL_MIN_DAYS;
+
+        const labelModifier = useExtendedLabel
+            ? {
+                  formatter: LabelFormatters.firstOfMonthOnly(data, lang),
+                  filter: LabelFilters.firstOfMonthOnly({
+                      excludeFirst: true,
+                      excludeLast: true
+                  })
+              }
+            : {
+                  formatter: LabelFormatters.monthAndDay(lang),
+                  filter: LabelFilters.firstDayOfWeek()
+              };
+
+        const subLabelModifier = useExtendedLabel
+            ? {
+                  formatter: LabelFormatters.yearFull(lang),
+                  filter: LabelFilters.januaryAndDecember()
+              }
+            : undefined;
+
+        return { labelModifier, subLabelModifier };
     }
 
     showLineChartTooltip(event: HistogramElFocusEvent<AreaMinMaxFocusEntry>) {

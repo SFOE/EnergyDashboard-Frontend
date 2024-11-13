@@ -1,0 +1,58 @@
+<section class="diagram-container">
+    <section>
+        <bfe-kpi-subtitle>
+            {{
+                'dynamic:kpi-energie-4_entkoppelung-endenergieverbrauch-bip.titel'
+                    | i18nextDynamic
+            }}
+        </bfe-kpi-subtitle>
+
+        <bfe-kpi-date-info-subtext
+            *ngIf="lastUpdate"
+            [date]="lastUpdate"
+            [updateInterval]="'yearly'"
+        />
+    </section>
+
+    <div class="diagram-container">
+        <div
+            *ngIf="(chartData.length ?? 0) > 0"
+            class="diagram-container-inner"
+        >
+            <bfe-diagram-legend [entries]="legendEntries" />
+            <bfe-histogram-line
+                [data]="chartData"
+                [domainMin]="minYValue"
+                [colors]="lineChartColors"
+                [xLabelModifier]="labelModifier"
+                [strokeWidths]="[2, 2, 2, 2]"
+                (elFocus)="showLineChartTooltip($event)"
+                (diagramLeave)="hideTooltip()"
+                [yTickCount]="10"
+            />
+            <bfe-entkoppelung-endenergieverbrauch-bip-chart-tooltip
+                [event]="tooltipEvent"
+                [labels]="tooltipLabels"
+                [colors]="tooltipColors"
+            />
+        </div>
+
+        <div class="index-hint">
+            <div class="index-hint__content">
+                {{
+                    'dashboard.strom.entkoppelung-endenergieverbrauch-bip.baseline-index'
+                        | i18next: { year: baseYear }
+                }}
+            </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <bfe-hideable-text-section
+            [context]="'chart'"
+            [textTranslationKey]="
+                'dynamic:kpi-energie-4_entkoppelung-endenergieverbrauch-bip.chart.langtext'
+            "
+        />
+    </div>
+</section>

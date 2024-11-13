@@ -9,6 +9,9 @@ import { StromMinderMehrverbrauchComponent } from './minder-mehrverbrauch/minder
 import { ProduktionComponent } from './produktion/produktion.component';
 import { StromComponent } from './strom.component';
 import { StromverbrauchComponent } from './stromverbrauch/stromverbrauch.component';
+import { ProduktionPvComponent } from './produktion-photovoltaik/produktion-pv.component';
+import { EnergieverbrauchComponent } from './energieverbrauch/energieverbrauch.component';
+import { WinterproduktionComponent } from './winterproduktion/winterproduktion.component';
 
 const routes: Routes = [
     {
@@ -18,6 +21,10 @@ const routes: Routes = [
             {
                 path: RoutePaths.DASHBOARD_STROM_STROMVERBRAUCH,
                 component: StromverbrauchComponent
+            },
+            {
+                path: RoutePaths.DASHBOARD_STROM_ENERGIEVERBRAUCH,
+                component: EnergieverbrauchComponent
             },
             {
                 path: RoutePaths.DASHBOARD_STROM_PRODUKTION,
@@ -40,6 +47,10 @@ const routes: Routes = [
                 component: KkwFrComponent
             },
             {
+                path: RoutePaths.DASHBOARD_STROM_PRODUKTION_PHOTOVOLTAIK,
+                component: ProduktionPvComponent
+            },
+            {
                 path: RoutePaths.DASHBOARD_STROM_SPARZIEL,
                 redirectTo: RoutePaths.DASHBOARD_STROM_MINDER_MEHRVERBRAUCH,
                 pathMatch: 'full'
@@ -47,6 +58,10 @@ const routes: Routes = [
             {
                 path: RoutePaths.DASHBOARD_STROM_MINDER_MEHRVERBRAUCH,
                 component: StromMinderMehrverbrauchComponent
+            },
+            {
+                path: RoutePaths.DASHBOARD_STROM_WINTERPRODUKTION,
+                component: WinterproduktionComponent
             },
             {
                 path: '**',

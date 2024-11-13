@@ -37,6 +37,22 @@ export interface PointOfInterest extends DateModel {
     pointNumber: number;
 }
 
+export interface PointOfInterestWithLabels extends DateModel {
+    topLabel: string;
+    leftLabel: string;
+    rightLabel: string;
+}
+
+export interface PointsOfInterestBlock {
+    startDate: Date;
+    endDate: Date;
+    color: string;
+    text: string;
+    textColor?: string;
+    startPosition: number;
+    endPosition: number;
+}
+
 export interface Block {
     startDate: Date;
     endDate: Date;

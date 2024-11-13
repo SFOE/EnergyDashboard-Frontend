@@ -1,0 +1,52 @@
+<bfe-kpi-subtitle>
+    {{ 'dynamic:kpi-strom-5_winterproduktion.titel1' | i18nextDynamic }}
+</bfe-kpi-subtitle>
+
+<bfe-kpi-date-info-subtext
+    [date]="dateOfLastUpdate"
+    [updateInterval]="updateInterval"
+></bfe-kpi-date-info-subtext>
+
+<div *ngIf="!isLoading && data.length > 0" class="diagram-container">
+    <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+    <bfe-histogram-detail-import-export
+        (diagramLeave)="hideTooltip()"
+        (elFocus)="showTooltip($event)"
+        [barColors]="barColors"
+        [barWidth]="barWidth"
+        [data]="data"
+        [domainMax]="domainMax"
+        [domainMax2]="domainMax2"
+        [domainMin]="domainMin"
+        [lineColors]="lineColor"
+        [lineThickness]="[2, 2, 1]"
+        [lineStyle]="['solid', 'solid', 'dashed']"
+        [margin]="{ top: 20, bottom: 40, left: 0, right: 12 + 50 }"
+        [xSubLabelModifier]="xSubLabelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+        [yTickCount]="4"
+        [xTicksItems]="xTicksItems"
+        [unit_right_yaxis]="unit_right_yaxis"
+        [second_y_axis]="true"
+        [getOriginalDate]="getOriginalDate"
+        [xLabelFormatter]="xLabelFormatter"
+        [transServ]="transServ"
+    >
+    </bfe-histogram-detail-import-export>
+
+    <bfe-winterproduktion-charts-import-export-tooltip
+        [event]="tooltipEvent"
+        [barColors]="barColors"
+        [lineColor]="lineColor"
+        [domainRation]="domainRatio"
+        [getOriginalDate]="getOriginalDate"
+        [translationService]="transServ"
+        [yCorrection]="200"
+    ></bfe-winterproduktion-charts-import-export-tooltip>
+</div>
+
+<!-- info text about chart  -->
+<bfe-hideable-text-section
+    [context]="'chart'"
+    [textTranslationKey]="'dynamic:kpi-strom-5_winterproduktion.kurztext1'"
+></bfe-hideable-text-section>

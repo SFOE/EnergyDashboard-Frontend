@@ -74,3 +74,37 @@ export const ImportExportConsts = {
         FR: '#CEADE3'
     }
 };
+
+export const COLORS_BRUTTOENERGIE = {
+    DIVERS: '#59BBA4',
+    WIND: '#C740B9',
+    GEOTHERM: '#BDD13C',
+    THERMO: '#209F4A',
+    NUCLEAR: '#FCCC32',
+    WATER: '#1B84CB',
+    WOOD: '#AA5734',
+    PTX: '#757EA2',
+    GAS: '#CAD4FA',
+    COAL: '#2F4356',
+    OIL: '#C36060'
+};
+
+export const COLORS_WINTERPRODUKTION = {
+    IMPORT: '#DC0018',
+    EXPORT: '#69AD00',
+    HGT: '#1B84CB',
+    STROMVERBRAUCH: '#000000',
+    EIGENPRODUKTION: '#D9D9D9'
+};
+
+export const COLORS_ENDENERGIE = {
+    ERDOELPRODUKTE: '#C36060',
+    ELEKTRIZITAET: '#1EABC7',
+    ERDGAS: '#CAD4FA',
+    FERNWAERME: '#BDD13C',
+    PTX: '#757EA2',
+    HOLZ: '#AA5734',
+    KOHLE: '#2F4356',
+    UEBRIGE_ERNEUERBARE_ENERGIE: '#59BBA4',
+    ABFAELLE: '#11901E'
+};

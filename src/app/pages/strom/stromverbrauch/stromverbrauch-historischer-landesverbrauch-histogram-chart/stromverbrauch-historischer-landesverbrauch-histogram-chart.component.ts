@@ -16,6 +16,7 @@ import {
     LabelFilters,
     LabelFormatters
 } from '../../../../shared/diagrams/label.utils';
+import { ThousandCommaPipe } from 'src/app/shared/commons/thousand-comma.pipe';
 
 @Component({
     selector: 'bfe-stromverbrauch-historischer-landesverbrauch-histogram-chart',
@@ -93,7 +94,9 @@ export class StromverbrauchHistorischerLandesverbrauchHistogramChartComponent
             formatter: LabelFormatters.yearFull(translationService.language),
             filter: LabelFilters.januaryAndDecember()
         };
-        this.yLabelFormatter = (value: number) => `${value} GWh`;
+        const thousandComma = new ThousandCommaPipe();
+        this.yLabelFormatter = (value: number) =>
+            `${thousandComma.transform(value)} GWh`;
     }
 
     ngOnInit(): void {}

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
     StromKkwProductionDataDto,
@@ -34,14 +34,18 @@ import {
     SparzielZielDtoV5,
     SparzielZielNachBereichAktuellerMonat
 } from '../models/sparziel';
+import { StromEntkoppelungEndenergieverbrauchBIP } from '../models/strom-entkoppelung-endenergieverbrauch-bip';
 import { StromFuellstaendeSpeicherseen } from '../models/strom-fuellstaende-speicherseen';
 import { StromImportExportHistoricalValue } from '../models/strom-import-export.historical-values';
 import { StromImportExportNetto } from '../models/strom-import-export.netto';
+import { StromProduktionPvEntry } from '../models/strom-produktion-pv';
 import {
     StromsparzielFivePercentEinsparungen,
     StromsparzielFivePercentPeakHoursModel
 } from '../models/strom-sparziel-five-percent.model';
 import { StromVerbrauchEndverbrauch } from '../models/strom-verbrauch.endverbrauch';
+import { EnergieverbrauchMitPrognoseDto } from '../models/strom-verbrauch.energieverbrauch-mit-prognose';
+import { EndenergieverbrauchMitPrognoseDto } from '../models/energie-verbrauch.endenergieverbrauch-mit-prognose';
 import { StromVerbrauchLandesverbrauchMitPrognoseApi } from '../models/strom-verbrauch.landesverbrauch-mit-prognose';
 import { StromVerbrauchLandesverbrauchVergleich } from '../models/strom-verbrauch.landesverbrauch-vergleich';
 import { WetterHeizgradtageTabelleDaten } from '../models/wetter-heizgradtage-tabelle-daten';
@@ -55,6 +59,10 @@ import { WetterSchneereservenTrend } from '../models/wetter-schneereserven-trend
 import { WetterTemperaturAktuell } from '../models/wetter-temperatur-aktuell';
 import { WetterTemperaturPrognose } from '../models/wetter-temperatur-prognose';
 import { WetterTemperaturTrend } from '../models/wetter-temperatur-trend';
+import { StromProduktionPvTrend } from '../models/strom-produktion-pv-trend';
+import { StromWinterproduktionTrend } from '../models/strom-winterproduktion-trend';
+import { StromWinterproduktionImportExportEntry } from '../models/strom-winterproduktion.import-export';
+import { StromWinterproduktionEinzelneEnergietraegerEntry } from '../models/strom-winterproduktion.einzelne-energietraeger';
 
 @Injectable({
     providedIn: 'root'
@@ -77,6 +85,8 @@ export class DataService {
     readonly stromVerbrauchLandesverbrauchMitPrognoseUrl = `${this.baseUrl}/strom/v2/strom-verbrauch/landesverbrauch-mit-prognose`;
     readonly stromVerbrauchEndverbrauchUrl = `${this.baseUrl}/strom/v2/strom-verbrauch/endverbrauch`;
     readonly stromVerbrauchLandesverbrauchVergleichUrl = `${this.baseUrl}/strom/v2/strom-verbrauch/landesverbrauch-vergleich`;
+    readonly energieverbrauchMitPrognoseUrl = `${this.baseUrl}/strom/strom-energieverbrauch-bruttoenergieverbrauch`;
+    readonly endenergieverbrauchMitPrognoseUrl = `${this.baseUrl}/strom/strom-energieverbrauch-endenergieverbrauch`;
     readonly stromProductionUrl = `${this.baseUrl}/strom/strom-produktionsmix`;
     readonly stromProductionImportVerbrauchUrl = `${this.baseUrl}/strom/strom-produktion-import-verbrauch`;
     readonly stromSparzielUrl = `${this.baseUrl}/strom/v5/strom-sparziel/ziel`;
@@ -90,6 +100,12 @@ export class DataService {
     readonly stromStromKkwProductionFrUrl = `${this.baseUrl}/strom/strom-kkw/produktion-fr`;
     readonly stromStromKkwVerfuegbarkeitChUrl = `${this.baseUrl}/strom/strom-kkw/verfuegbarkeit-ch`;
     readonly stromStromKkwVerfuegbarkeitFrUrl = `${this.baseUrl}/strom/strom-kkw/verfuegbarkeit-fr`;
+    readonly stromProduktionPv = `${this.baseUrl}/strom/produktion-pv`;
+    readonly stromProduktionPvTrend = `${this.baseUrl}/strom/produktion-pv-trend`;
+    readonly stromEntkoppelungEndenergieverbrauchBIP = `${this.baseUrl}/strom/entkoppelung-endenergieverbrauch-bip`;
+    readonly stromWinterproduktionTrend = `${this.baseUrl}/strom/winterproduktion-trend`;
+    readonly stromWinterproduktionImportExport = `${this.baseUrl}/strom/winterproduktion-import-export`;
+    readonly stromWinterproduktionEinzelneEnergietraeger = `${this.baseUrl}/strom/winterproduktion-einzelne-energietraeger`;
 
     readonly gasFuellstandGasspeicherUrl = `${this.baseUrl}/gas/v2/fuellstand-gasspeicher`;
     readonly gasImportKarteUrl = `${this.baseUrl}/gas/gas-import/karte`;
@@ -201,6 +217,18 @@ export class DataService {
     > {
         return this.httpClient.get<StromVerbrauchLandesverbrauchVergleich[]>(
             this.stromVerbrauchLandesverbrauchVergleichUrl
+        );
+    }
+
+    public getEnergieverbrauchMitPrognose(): Observable<EnergieverbrauchMitPrognoseDto> {
+        return this.httpClient.get<EnergieverbrauchMitPrognoseDto>(
+            this.energieverbrauchMitPrognoseUrl
+        );
+    }
+
+    public getEndenergieverbrauchMitPrognose(): Observable<EndenergieverbrauchMitPrognoseDto> {
+        return this.httpClient.get<EndenergieverbrauchMitPrognoseDto>(
+            this.endenergieverbrauchMitPrognoseUrl
         );
     }
 
@@ -323,11 +351,13 @@ export class DataService {
             this.gasImportEuropaTaeglichUrl
         );
     }
+
     public getGasImportEuropaJaehrlich(): Observable<GasImportEuropaJaehrlichEntries> {
         return this.httpClient.get<GasImportEuropaJaehrlichEntries>(
             this.gasImportEuropaJaehrlichUrl
         );
     }
+
     public getGasImportEuropaTrend(): Observable<GasImportEuropaTrend> {
         return this.httpClient.get<GasImportEuropaTrend>(
             this.gasImportEuropaTrendUrl
@@ -478,5 +508,47 @@ export class DataService {
         return this.httpClient.get<WetterHeizgradtageTrend>(
             this.wetterHeizgradtageTrend
         );
+    }
+
+    public getProduktionPv(): Observable<StromProduktionPvEntry[]> {
+        return this.httpClient.get<StromProduktionPvEntry[]>(
+            this.stromProduktionPv
+        );
+    }
+
+    public getProduktionPvTrend() {
+        return this.httpClient.get<StromProduktionPvTrend>(
+            this.stromProduktionPvTrend
+        );
+    }
+
+    public getEntkoppelungEndenergieverbrauchBIP(): Observable<
+        StromEntkoppelungEndenergieverbrauchBIP[]
+    > {
+        return this.httpClient.get<StromEntkoppelungEndenergieverbrauchBIP[]>(
+            this.stromEntkoppelungEndenergieverbrauchBIP
+        );
+    }
+
+    public getWinterproduktionTrend(): Observable<StromWinterproduktionTrend> {
+        return this.httpClient.get<StromWinterproduktionTrend>(
+            this.stromWinterproduktionTrend
+        );
+    }
+
+    public getWinterproduktionImportExport(): Observable<
+        StromWinterproduktionImportExportEntry[]
+    > {
+        return this.httpClient.get<StromWinterproduktionImportExportEntry[]>(
+            this.stromWinterproduktionImportExport
+        );
+    }
+
+    public getWinterproduktionEinzelneEnergietraeger(): Observable<
+        StromWinterproduktionEinzelneEnergietraegerEntry[]
+    > {
+        return this.httpClient.get<
+            StromWinterproduktionEinzelneEnergietraegerEntry[]
+        >(this.stromWinterproduktionEinzelneEnergietraeger);
     }
 }

@@ -27,20 +27,21 @@ import { SharedComponentsModule } from '../../../shared/components/shared-compon
 export class SelectComponent implements OnChanges {
     @Input() options: { key: string; value: string }[] = [];
     @Input() selectedOptionKey: string;
+    @Input() name: string;
+    @Input() ariaLabel: string = '';
 
     @Output() selectedValue = new EventEmitter<string>();
 
-    regionSelectionControl: FormControl = new FormControl('test');
+    selectionControl: FormControl = new FormControl('');
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (this.selectedOptionKey) {
-            this.regionSelectionControl = new FormControl(
-                this.selectedOptionKey
-            );
+        const selectedOptionKey = changes['selectedOptionKey'];
+        if (!selectedOptionKey) return;
 
-            this.regionSelectionControl.valueChanges.subscribe(
-                (value) => !!value && this.selectedValue.emit(value)
-            );
-        }
+        this.selectionControl = new FormControl(this.selectedOptionKey);
+
+        this.selectionControl.valueChanges.subscribe(
+            (value) => !!value && this.selectedValue.emit(value)
+        );
     }
 }

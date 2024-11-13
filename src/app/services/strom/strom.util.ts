@@ -14,6 +14,17 @@ import {
 } from '../../pages/strom/kkw/kkw.utils';
 import { dateWithoutTime } from '../../shared/static-utils/date-utils';
 import {
+    PerspektiveWithStatistik,
+    EnergieverbrauchMitPrognoseData,
+    EnergieverbrauchMitPrognoseDto,
+    EnergieverbrauchMitPrognoseEntry
+} from './../../core/models/strom-verbrauch.energieverbrauch-mit-prognose';
+import {
+    EndenergieverbrauchMitPrognoseDto,
+    EndenergieverbrauchMitPrognoseData,
+    EndenergieverbrauchMitPrognoseEntry
+} from './../../core/models/energie-verbrauch.endenergieverbrauch-mit-prognose';
+import {
     StromKkwAusfall,
     StromKkwAusfallDto,
     StromKkwProductionEntry,
@@ -155,6 +166,64 @@ export const mapStromVerbrauchLandesverbrauchToChartEntries = (
             differenzMax: dto.differenzMax
         }
     }));
+};
+
+const mapEnergieverbrauchToEntry = (
+    entry: EnergieverbrauchMitPrognoseEntry
+): HistogramAreaChartEntry & { perspektive: PerspektiveWithStatistik } => ({
+    date: new Date(entry.date),
+    values: [
+        entry.wasser,
+        entry.holz,
+        entry.abfaelle,
+        entry.uebrigeErneuerbareEnergien,
+        entry.ptx,
+        entry.nuclear,
+        entry.kohle,
+        entry.erdoel,
+        entry.erdgas
+    ],
+    perspektive: entry.perspektive
+});
+
+export const mapEnergieverbrauchMitPrognoseDto = (
+    dto: EnergieverbrauchMitPrognoseDto
+): EnergieverbrauchMitPrognoseData => {
+    return Object.fromEntries(
+        Object.entries(dto).map(([perspektive, entries]) => {
+            const chartAreaEntries = entries.map(mapEnergieverbrauchToEntry);
+            return [perspektive, { chartAreaEntries }];
+        })
+    ) as EnergieverbrauchMitPrognoseData;
+};
+
+const mapEndenergieverbrauchToEntry = (
+    entry: EndenergieverbrauchMitPrognoseEntry
+): HistogramAreaChartEntry & { perspektive: PerspektiveWithStatistik } => ({
+    date: new Date(entry.date),
+    values: [
+        entry.erdoelprodukte,
+        entry.elektrizitaet,
+        entry.erdgas,
+        entry.fernwaerme,
+        entry.holz,
+        entry.kohle,
+        entry.ptx,
+        entry.uebrigeErneuerbareEnergien,
+        entry.abfaelle
+    ],
+    perspektive: entry.perspektive
+});
+
+export const mapEndenergieverbrauchMitPrognoseDto = (
+    dto: EndenergieverbrauchMitPrognoseDto
+): EndenergieverbrauchMitPrognoseData => {
+    return Object.fromEntries(
+        Object.entries(dto).map(([perspektive, entries]) => {
+            const chartAreaEntries = entries.map(mapEndenergieverbrauchToEntry);
+            return [perspektive, { chartAreaEntries }];
+        })
+    ) as EndenergieverbrauchMitPrognoseData;
 };
 
 export const mapStromProductionToEntry = (

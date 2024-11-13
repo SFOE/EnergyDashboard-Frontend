@@ -58,8 +58,8 @@ export class MasterDetailComponent implements OnInit {
         this.appView = this.queryParamService.isAppView();
     }
 
-    changeRoute(event: Event) {
-        const value = (event.target as HTMLSelectElement).value;
+    changeRoute(event: Event): void {
+        const value: string = (event.target as HTMLSelectElement).value;
         this.router.navigate([value], { relativeTo: this.route });
     }
 
@@ -67,8 +67,8 @@ export class MasterDetailComponent implements OnInit {
         if (!item) {
             return false;
         }
-        let matchesRoute = false;
-        item.pathArgs.forEach((arg) => {
+        let matchesRoute: boolean = false;
+        item.pathArgs.forEach((arg): void => {
             matchesRoute = matchesRoute || this.router.url.includes(arg);
         });
 

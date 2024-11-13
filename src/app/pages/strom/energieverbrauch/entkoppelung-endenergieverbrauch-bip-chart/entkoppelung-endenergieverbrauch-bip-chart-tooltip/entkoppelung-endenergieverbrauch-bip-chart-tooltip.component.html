@@ -1,0 +1,12 @@
+<div #tooltip class="tooltip-container" [class.hidden]="!event">
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header [title]="data.date.getFullYear().toString()" />
+        <bfe-tooltip-row
+            *ngFor="let value of data.values; index as i"
+            shape="line"
+            [color]="colors[i]"
+            [label]="labels[i]"
+            [data]="{ value: value, suffix: postfix }"
+        />
+    </bfe-tooltip-container>
+</div>

@@ -15,6 +15,7 @@ import {
     LabelFilters,
     LabelFormatters
 } from '../../../../shared/diagrams/label.utils';
+import { ThousandCommaPipe } from 'src/app/shared/commons/thousand-comma.pipe';
 
 @Component({
     selector: 'bfe-import-export-historical-values-histogram-chart',
@@ -59,7 +60,7 @@ export class ImportExportHistoricalValuesHistogramChartComponent
         }
     ];
 
-    minYValue = 0;
+    minYValue: number = 0;
 
     tooltipEvent?: HistogramElFocusEvent<HistogramAreaChartEntry>;
 
@@ -72,23 +73,33 @@ export class ImportExportHistoricalValuesHistogramChartComponent
             formatter: LabelFormatters.yearFull(translationService.language),
             filter: LabelFilters.januaryAndDecember()
         };
-        this.yLabelFormatter = (value: number) => `${value} GWh`;
+        const thousandComma = new ThousandCommaPipe();
+        this.yLabelFormatter = (value: number) =>
+            `${thousandComma.transform(value)} GWh`;
     }
 
     ngOnInit(): void {}
 
-    ngOnChanges() {
+    ngOnChanges(): void {
         if (this.chartData) {
-            this.minYValue = Math.min(
-                ...this.chartData.map((entry) => entry.band?.lower || 0)
+            const allValues: (number | null)[] = this.chartData.flatMap(
+                (entry: HistogramAreaChartEntry) => entry.values
             );
-            this.minYValue = this.minYValue * 1.1;
+
+            // filter out null
+            const numericValues: number[] = allValues.filter(
+                (value: number | null): value is number => value !== null
+            );
+
+            this.minYValue = allValues.length
+                ? Math.min(...numericValues) * 1.1
+                : 0;
         }
     }
 
     showLineChartTooltip(
         event: HistogramElFocusEvent<HistogramAreaChartEntry>
-    ) {
+    ): void {
         this.tooltipEvent = event;
     }
 

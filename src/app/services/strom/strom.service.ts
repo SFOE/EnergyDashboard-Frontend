@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, shareReplay } from 'rxjs';
+import { StromEntkoppelungEndenergieverbrauchBIP } from 'src/app/core/models/strom-entkoppelung-endenergieverbrauch-bip';
+import { EnergieverbrauchMitPrognoseData } from 'src/app/core/models/strom-verbrauch.energieverbrauch-mit-prognose';
+import { EndenergieverbrauchMitPrognoseData } from 'src/app/core/models/energie-verbrauch.endenergieverbrauch-mit-prognose';
 import { DataService } from '../../core/data/data.service';
 import { HistogramAreaChartEntry } from '../../core/models/charts';
 import {
@@ -15,7 +18,14 @@ import {
     StromFuellstaendeSpeicherseenEntry
 } from '../../core/models/strom-fuellstaende-speicherseen';
 import { StromImportExportNetto } from '../../core/models/strom-import-export.netto';
+import { StromProduktionPvEntry } from '../../core/models/strom-produktion-pv';
+import { StromProduktionPvTrend } from '../../core/models/strom-produktion-pv-trend';
+import {
+    StromsparzielFivePercentEinsparungen,
+    StromsparzielFivePercentPeakHoursModel
+} from '../../core/models/strom-sparziel-five-percent.model';
 import { StromVerbrauchLandesverbrauchMitPrognoseApi } from '../../core/models/strom-verbrauch.landesverbrauch-mit-prognose';
+import { HistogramDetailEntry } from '../../shared/diagrams/histogram/histogram-detail/histogram-detail.component';
 import { convertToDate } from '../../shared/static-utils/date-utils';
 import {
     StromKkwProductionData,
@@ -32,13 +42,17 @@ import {
     mapStromProductionImportVerbrauchDto,
     mapStromProductionToEntry,
     mapStromVerbrauchEndverbrauchToChartEntries,
+    mapEnergieverbrauchMitPrognoseDto,
+    mapEndenergieverbrauchMitPrognoseDto,
     mapStromVerbrauchLandesverbrauchToChartEntries
 } from './strom.util';
-import {
-    StromsparzielFivePercentEinsparungen,
-    StromsparzielFivePercentPeakHoursModel
-} from '../../core/models/strom-sparziel-five-percent.model';
 
+import { StromWinterproduktionTrend } from '../../core/models/strom-winterproduktion-trend';
+import {
+    StromWinterproduktionImportExportMapped,
+    StromWinterproduktionImportExportEntry
+} from '../../core/models/strom-winterproduktion.import-export';
+import { StromWinterproduktionEinzelneEnergietraegerEntry } from '../../core/models/strom-winterproduktion.einzelne-energietraeger';
 @Injectable({
     providedIn: 'root'
 })
@@ -55,6 +69,8 @@ export class StromService {
     private cachedStromverbrauchLandesverbrauchVergleich: Observable<
         HistogramAreaChartEntry[]
     >;
+    private cachedEnergieverbrauchMitPrognose: Observable<EnergieverbrauchMitPrognoseData>;
+    private cachedEndenergieverbrauchMitPrognose: Observable<EndenergieverbrauchMitPrognoseData>;
     private cachedStromProduction$: Observable<StromProductionData>;
     private cachedStromProductionImportVerbrauch$: Observable<StromProductionImportVerbrauchData>;
     private cachedStromSparziel$: Observable<SparzielEntry>;
@@ -76,8 +92,23 @@ export class StromService {
     private cachedStromKkwProduktionFr$: Observable<StromKkwProductionData>;
     private cachedStromKkwVerfuegbarkeitCh$: Observable<StromKkwVerfuegbarkeitData>;
     private cachedStromKkwVerfuegbarkeitFr$: Observable<StromKkwVerfuegbarkeitData>;
+    private cachedProduktionPv: Observable<StromProduktionPvEntry[]>;
+    private cachedProduktionPvTrend: Observable<StromProduktionPvTrend>;
+    private cachedEntkoppelungEndenergieverbrauchBIP$: Observable<
+        StromEntkoppelungEndenergieverbrauchBIP[]
+    >;
+    private cachedWinterproduktionTrend: Observable<StromWinterproduktionTrend>;
+    private cachedWinterproduktionImportExport: Observable<
+        StromWinterproduktionImportExportEntry[]
+    >;
+    private cachedWinterproduktionEinzelneEnergietraeger: Observable<
+        StromWinterproduktionEinzelneEnergietraegerEntry[]
+    >;
 
-    constructor(private http: HttpClient, private dataService: DataService) {}
+    constructor(
+        private http: HttpClient,
+        private dataService: DataService
+    ) {}
 
     getFuellstaendeSpeicherseenChartEntries(): Observable<StromFuellstaendeChartEntriesByRegion> {
         if (!this.cachedFuellstaendeSpeicherseen) {
@@ -176,6 +207,27 @@ export class StromService {
                 .pipe(shareReplay(1));
         }
         return this.cachedStromverbrauchLandesverbrauchVergleich;
+    }
+
+    getEnergieverbrauchMitPrognose(): Observable<EnergieverbrauchMitPrognoseData> {
+        if (!this.cachedEnergieverbrauchMitPrognose) {
+            this.cachedEnergieverbrauchMitPrognose = this.dataService
+                .getEnergieverbrauchMitPrognose()
+                .pipe(map(mapEnergieverbrauchMitPrognoseDto), shareReplay(1));
+        }
+        return this.cachedEnergieverbrauchMitPrognose;
+    }
+
+    getEndenergieverbrauchMitPrognose(): Observable<EndenergieverbrauchMitPrognoseData> {
+        if (!this.cachedEndenergieverbrauchMitPrognose) {
+            this.cachedEndenergieverbrauchMitPrognose = this.dataService
+                .getEndenergieverbrauchMitPrognose()
+                .pipe(
+                    map(mapEndenergieverbrauchMitPrognoseDto),
+                    shareReplay(1)
+                );
+        }
+        return this.cachedEndenergieverbrauchMitPrognose;
     }
 
     getStromProduction(): Observable<StromProductionData> {
@@ -406,5 +458,121 @@ export class StromService {
         }
 
         return this.cachedStromKkwVerfuegbarkeitFr$;
+    }
+
+    getProduktionPv() {
+        if (!this.cachedProduktionPv) {
+            this.cachedProduktionPv = this.dataService
+                .getProduktionPv()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedProduktionPv;
+    }
+
+    getProduktionPvTrend() {
+        if (!this.cachedProduktionPvTrend) {
+            this.cachedProduktionPvTrend = this.dataService
+                .getProduktionPvTrend()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedProduktionPvTrend;
+    }
+
+    mapProduktionPvToHistogramEntries(
+        data: StromProduktionPvEntry[]
+    ): HistogramDetailEntry[] {
+        return data.map((dto: StromProduktionPvEntry) => {
+            return {
+                date: convertToDate(dto.date.toString()),
+                barValues: [dto.stromProduktion],
+                barLineValue: null,
+                hiddenValues: [],
+                lineValues: [],
+                exists: true
+            };
+        });
+    }
+
+    getEntkoppelungEndenergieverbrauchBIP() {
+        if (!this.cachedEntkoppelungEndenergieverbrauchBIP$) {
+            this.cachedEntkoppelungEndenergieverbrauchBIP$ = this.dataService
+                .getEntkoppelungEndenergieverbrauchBIP()
+                .pipe(shareReplay(1));
+        }
+
+        return this.cachedEntkoppelungEndenergieverbrauchBIP$;
+    }
+
+    getWinterproduktionTrend() {
+        if (!this.cachedWinterproduktionTrend) {
+            this.cachedWinterproduktionTrend = this.dataService
+                .getWinterproduktionTrend()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedWinterproduktionTrend;
+    }
+
+    getWinterproduktionImportExport() {
+        if (!this.cachedWinterproduktionImportExport) {
+            this.cachedWinterproduktionImportExport = this.dataService
+                .getWinterproduktionImportExport()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedWinterproduktionImportExport;
+    }
+
+    mapWinterproduktionImportExportToHistogramEntries(
+        data: StromWinterproduktionImportExportMapped[]
+    ): HistogramDetailEntry[] {
+        return data.map((dto: StromWinterproduktionImportExportMapped) => {
+            return {
+                date: convertToDate(dto.date.toString()),
+                barValues: [
+                    dto.stromverbrauch,
+                    dto.import,
+                    dto.export,
+                    dto.diff_ep_ni
+                ],
+                barLineValue: null,
+                hiddenValues: [dto.nettoimporte_bfe],
+                lineValues: [dto.heizgradtage],
+                exists: true
+            };
+        });
+    }
+
+    getWinterproduktionEinzelneEnergietraeger() {
+        if (!this.cachedWinterproduktionEinzelneEnergietraeger) {
+            this.cachedWinterproduktionEinzelneEnergietraeger = this.dataService
+                .getWinterproduktionEinzelneEnergietraeger()
+                .pipe(shareReplay(1));
+        }
+        return this.cachedWinterproduktionEinzelneEnergietraeger;
+    }
+
+    mapWinterproduktionEinzelneEnergietraegerToHistogramEntries(
+        data: StromWinterproduktionEinzelneEnergietraegerEntry[]
+    ): HistogramDetailEntry[] {
+        return data.map(
+            (dto: StromWinterproduktionEinzelneEnergietraegerEntry) => {
+                return {
+                    date: convertToDate(dto.date.toString()),
+                    barValues: [
+                        Math.round(dto.kernkraft),
+                        Math.round(dto.thermische),
+                        dto.flusskraft ? Math.round(dto.flusskraft) : null,
+                        dto.speicherkraft
+                            ? Math.round(dto.speicherkraft)
+                            : null,
+                        dto.wind ? Math.round(dto.wind) : null,
+                        dto.pv ? Math.round(dto.pv) : null
+                    ],
+                    barLineValue: null,
+                    hiddenValues: [],
+                    lineValues: [],
+                    exists: true
+                };
+            }
+        );
     }
 }

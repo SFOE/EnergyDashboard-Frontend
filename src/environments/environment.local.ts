@@ -9,7 +9,8 @@ export const environment: Environment = {
     production: false,
     baseUrl: 'https://d3s51f7bsm3kro.cloudfront.net/api',
     rootUrl: 'http://localhost:4200',
-    gaTrackingId: 'G-KPF7TQ1BJY'
+    gaTrackingId: 'G-KPF7TQ1BJY',
+    appleAppId: '6469721367'
 };
 
 /*

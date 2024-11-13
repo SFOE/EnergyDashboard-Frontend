@@ -5,5 +5,6 @@ export const environment: Environment = {
     production: true,
     baseUrl: '/api',
     rootUrl: 'https://energiedashboard.admin.ch',
-    gaTrackingId: 'G-KPF7TQ1BJY'
+    gaTrackingId: 'G-KPF7TQ1BJY',
+    appleAppId: '6469721367'
 };

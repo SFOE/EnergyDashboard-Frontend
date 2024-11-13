@@ -1,0 +1,29 @@
+<bfe-kpi-container
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-strom-2_energieverbrauch.datenquelle',
+        langtextDynamicKey: 'kpi-strom-2_energieverbrauch.langtext'
+    }"
+    [isLoading]="
+        isLoadingEnergieverbrauchMitPrognose || isLoadingEnergieverbrauchBIP
+    "
+    titleKeyDynamic="kpi-strom-2_energieverbrauch.titel"
+>
+    <div class="chart-wrapper" *ngIf="!isLoadingEnergieverbrauchMitPrognose">
+        <bfe-energieverbrauch-histogram-chart
+            [data]="energieverbrauchMitPrognoseData"
+        />
+    </div>
+
+    <div class="chart-wrapper" *ngIf="!isLoadingEndenergieverbrauchMitPrognose">
+        <bfe-endenergieverbrauch-histogram-chart
+            [data]="endenergieverbrauchMitPrognoseData"
+        />
+    </div>
+
+    <div class="chart-wrapper" *ngIf="!!chartData">
+        <bfe-entkoppelung-endenergieverbrauch-bip-chart
+            [chartData]="chartData"
+            [baseYear]="baseYear"
+        />
+    </div>
+</bfe-kpi-container>

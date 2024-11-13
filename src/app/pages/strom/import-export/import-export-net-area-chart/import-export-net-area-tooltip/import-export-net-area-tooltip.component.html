@@ -9,7 +9,10 @@
             shape="dot"
             label="dashboard.strom.import-export.net-import-exports.chart.tooltip.import-fr"
             [data]="{
-              value: data.positiveEntries.length > 1 ? data.positiveEntries[countryIndex.FR] : data.positiveEntries[0],
+                value:
+                    data.positiveEntries.length > 1
+                        ? data.positiveEntries[countryIndex.FR]
+                        : data.positiveEntries[0],
                 suffix: measuringUnit
             }"
         />
@@ -19,7 +22,10 @@
             shape="dot"
             label="dashboard.strom.import-export.net-import-exports.chart.tooltip.import-it"
             [data]="{
-              value: data.positiveEntries.length > 1 ? data.positiveEntries[countryIndex.IT] : data.positiveEntries[0],
+                value:
+                    data.positiveEntries.length > 1
+                        ? data.positiveEntries[countryIndex.IT]
+                        : data.positiveEntries[0],
                 suffix: measuringUnit
             }"
         />
@@ -29,7 +35,10 @@
             shape="dot"
             label="dashboard.strom.import-export.net-import-exports.chart.tooltip.import-at"
             [data]="{
-              value: data.positiveEntries.length > 1 ? data.positiveEntries[countryIndex.AT] : data.positiveEntries[0],
+                value:
+                    data.positiveEntries.length > 1
+                        ? data.positiveEntries[countryIndex.AT]
+                        : data.positiveEntries[0],
                 suffix: measuringUnit
             }"
         />
@@ -39,7 +48,10 @@
             shape="dot"
             label="dashboard.strom.import-export.net-import-exports.chart.tooltip.import-de"
             [data]="{
-                value: data.positiveEntries.length > 1 ? data.positiveEntries[countryIndex.DE] : data.positiveEntries[0],
+                value:
+                    data.positiveEntries.length > 1
+                        ? data.positiveEntries[countryIndex.DE]
+                        : data.positiveEntries[0],
                 suffix: measuringUnit
             }"
         />
@@ -54,7 +66,11 @@
             shape="dot"
             label="dashboard.strom.import-export.net-import-exports.chart.tooltip.export-de"
             [data]="{
-              value: (data.negativeEntries.length > 2 ? data.negativeEntries[countryIndex.DE] : data.negativeEntries[0]) | absoluteNumber,
+                value:
+                    (data.negativeEntries.length > 2
+                        ? data.negativeEntries[countryIndex.DE]
+                        : data.negativeEntries[0]
+                    ) | absoluteNumber,
                 suffix: measuringUnit
             }"
         />
@@ -64,7 +80,11 @@
             shape="dot"
             label="dashboard.strom.import-export.net-import-exports.chart.tooltip.export-at"
             [data]="{
-              value: (data.negativeEntries.length > 2 ? data.negativeEntries[countryIndex.AT] : data.negativeEntries[0]) | absoluteNumber,
+                value:
+                    (data.negativeEntries.length > 2
+                        ? data.negativeEntries[countryIndex.AT]
+                        : data.negativeEntries[0]
+                    ) | absoluteNumber,
                 suffix: measuringUnit
             }"
         />
@@ -74,7 +94,11 @@
             shape="dot"
             label="dashboard.strom.import-export.net-import-exports.chart.tooltip.export-it"
             [data]="{
-              value: (data.negativeEntries.length > 2 ? data.negativeEntries[countryIndex.IT] : data.negativeEntries[0]) | absoluteNumber,
+                value:
+                    (data.negativeEntries.length > 2
+                        ? data.negativeEntries[countryIndex.IT]
+                        : data.negativeEntries[0]
+                    ) | absoluteNumber,
                 suffix: measuringUnit
             }"
         />
@@ -84,7 +108,11 @@
             shape="dot"
             label="dashboard.strom.import-export.net-import-exports.chart.tooltip.export-fr"
             [data]="{
-              value: (data.negativeEntries.length > 2 ? data.negativeEntries[countryIndex.FR] : data.negativeEntries[0]) | absoluteNumber,
+                value:
+                    (data.negativeEntries.length > 2
+                        ? data.negativeEntries[countryIndex.FR]
+                        : data.negativeEntries[0]
+                    ) | absoluteNumber,
                 suffix: measuringUnit
             }"
         />

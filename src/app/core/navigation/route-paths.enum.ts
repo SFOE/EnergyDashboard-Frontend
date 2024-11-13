@@ -9,9 +9,13 @@ export enum RoutePaths {
 
     DASHBOARD_STROM_SPARZIEL = 'sparziel',
     DASHBOARD_STROM_STROMVERBRAUCH = 'stromverbrauch',
+    DASHBOARD_STROM_ENERGIEVERBRAUCH = 'energieverbrauch',
     DASHBOARD_STROM_KKW_CH = 'kkw-ch',
     DASHBOARD_STROM_KKW_FR = 'kkw-fr',
+    DASHBOARD_STROM_PRODUKTION_PHOTOVOLTAIK = 'produktion-pv',
     DASHBOARD_STROM_MINDER_MEHRVERBRAUCH = 'minder-mehrverbrauch',
+    DASHBOARD_STROM_ENTKOPPELUNG_ENDENERGIEVERBRAUCH_BIP = 'entkoppelung-endenergieverbrauch-bip',
+    DASHBOARD_STROM_WINTERPRODUKTION = 'winterproduktion',
 
     DASHBOARD_GAS = 'gas',
     DASHBOARD_GAS_EU_GASSPEICHER = 'eu-gasspeicher',

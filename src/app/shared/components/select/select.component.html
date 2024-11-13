@@ -1,8 +1,8 @@
 <select
-    [formControl]="regionSelectionControl"
-    aria-label="[todo]regionSelect"
+    [formControl]="selectionControl"
+    [attr.aria-label]="ariaLabel"
     bfe-select
-    name="regionFilter"
+    [name]="name"
 >
     <ng-container *ngFor="let option of options">
         <option [value]="option.value">

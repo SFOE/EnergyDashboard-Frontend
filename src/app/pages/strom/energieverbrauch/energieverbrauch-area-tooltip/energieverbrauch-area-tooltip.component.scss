@@ -1,0 +1,11 @@
+@use 'mix';
+
+.tooltip-container {
+    @include mix.tooltip-container;
+}
+.tooltip-container.hidden {
+    visibility: hidden;
+}
+.tooltip-container {
+    visibility: visible;
+}

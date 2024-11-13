@@ -81,6 +81,8 @@
             <div>
                 <div class="desktop-only">
                     <bfe-select
+                        name="regionFilter"
+                        ariaLabel="[todo]regionSelect"
                         [options]="options"
                         [selectedOptionKey]="defaultSelectedOption"
                         (selectedValue)="changeRegion($event)"
@@ -91,6 +93,8 @@
 
         <div class="mobile-only region-select">
             <bfe-select
+                name="regionFilter"
+                ariaLabel="[todo]regionSelect"
                 [options]="options"
                 [selectedOptionKey]="defaultSelectedOption"
                 (selectedValue)="changeRegion($event)"

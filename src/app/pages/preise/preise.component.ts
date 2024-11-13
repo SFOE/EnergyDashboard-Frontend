@@ -22,7 +22,8 @@ export class PreiseComponent implements OnInit {
             context: Context.PREISE,
             menuItems: detailLinksPreise.map((link) => ({
                 title: link.labelKey,
-                pathArgs: [link.path]
+                pathArgs: [link.path],
+                isNew: link.isNew
             }))
         };
     }

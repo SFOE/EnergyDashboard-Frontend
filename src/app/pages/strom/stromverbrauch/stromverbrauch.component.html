@@ -8,52 +8,33 @@
 >
     <section>
         <bfe-kpi-container-row>
-            <section>
-                <section class="trend-section" *ngIf="!!currentEntry">
-                    <section>
-                        <section>
-                            <bfe-large-number-unit
-                                [number]="currentEntry.landesverbrauchPrognose"
-                                unit="GWh"
-                                [color]="COLOR_SPACE"
-                            ></bfe-large-number-unit>
-                            <p class="label-medium">
-                                {{
+
+            <bfe-trend-and-number
+                *ngIf="!!currentEntry"
+                [isLoading]="isLoading"
+                [model]="{
+                            color: COLOR_SPACE,
+                            bigNumber: {
+                                value: currentEntry.landesverbrauchPrognose,
+                                postfix: 'GWh',
+                                subTextKeys: [
                                     'dashboard.strom.verbrauch-daily.per-day'
-                                        | i18next
-                                }}
-                            </p>
-                        </section>
-                        <section>
-                            <bfe-large-number-unit
-                                [number]="
-                                    currentEntry.landesverbrauchPrognoseInFiveDays
-                                "
-                                unit="GWh"
-                                [color]="COLOR_SPACE"
-                            ></bfe-large-number-unit>
-                            <p class="label-medium">
-                                {{
+                                ]
+                            },
+                            secondBigNumber: {
+                                value: currentEntry.landesverbrauchPrognoseInFiveDays ?? 0,
+                                postfix: 'GWh',
+                                subTextKeys: [
                                     'dashboard.strom.verbrauch-daily.in-five-days'
-                                        | i18next
-                                }}
-                            </p>
-                        </section>
-                    </section>
-                    <section class="trend-display-section">
-                        <bfe-trend-indicator
-                            [trend]="currentEntry.trend"
-                            [rating]="currentEntry.trendRating"
-                        ></bfe-trend-indicator>
-                        <p class="label-medium">
-                            {{
-                                'dashboard.strom.produktion.rolling-trend'
-                                    | i18next
-                            }}
-                        </p>
-                    </section>
-                </section>
-            </section>
+                                ]
+                            },
+                            trend: {
+                                value: currentEntry.trend,
+                                rating: currentEntry.trendRating,
+                                subTextKeys: ['dashboard.strom.produktion.rolling-trend']
+                            }
+                        }"
+            />
 
             <section class="teaser-section desktop-only">
                 <div
@@ -64,6 +45,8 @@
                     class="teaser"
                 ></div>
             </section>
+
+
         </bfe-kpi-container-row>
 
         <div class="mobile-only">

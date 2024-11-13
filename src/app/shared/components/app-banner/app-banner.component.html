@@ -1,0 +1,20 @@
+<section
+    *ngIf="showBanner && !(isNavBoardOpen | async)"
+    class="app-banner"
+    [ngClass]="getDeviceStylingClass()"
+>
+    <button (click)="dismissBanner()" class="app-banner__close-button">
+        <fa-icon icon="xmark"></fa-icon>
+    </button>
+    <div class="app-banner__icon">
+        <img [src]="getAppIconPath()" alt="App Icon" />
+    </div>
+    <div class="app-banner__content">
+        <h3>{{ 'app-banner.title' | i18next }}</h3>
+        <p class="teaser">{{ 'app-banner.subtitle' | i18next }}</p>
+    </div>
+    <div class="app-banner__spacer"></div>
+    <a [href]="getStoreURL()" class="app-banner__use-app-button">
+        {{ 'app-banner.cta-button' | i18next }}
+    </a>
+</section>

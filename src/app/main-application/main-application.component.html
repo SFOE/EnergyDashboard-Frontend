@@ -1,4 +1,5 @@
-<bfe-header *ngIf="!appView"></bfe-header>
+<bfe-app-banner></bfe-app-banner>
+<bfe-header *ngIf="!appView" ></bfe-header>
 
 <main class="dashboard__main">
     <bfe-page-title *ngIf="!appView"></bfe-page-title>
@@ -10,7 +11,6 @@
     >
         <bfe-page-top-navigation />
     </div>
-
     <router-outlet></router-outlet>
     <sc-flying-focus></sc-flying-focus>
 </main>

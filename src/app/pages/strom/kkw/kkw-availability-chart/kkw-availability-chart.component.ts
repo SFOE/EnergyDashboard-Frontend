@@ -17,6 +17,7 @@ import {
 } from '../../../../shared/diagrams/label.utils';
 import { kkwColors } from '../../strom.consts';
 import { getYesterday } from '../../../../shared/static-utils/date-utils';
+import { ThousandCommaPipe } from 'src/app/shared/commons/thousand-comma.pipe';
 
 export interface KKWAvailabilityChartModel {
     titleDynamicKey: string;
@@ -89,7 +90,9 @@ export class KkwAvailabilityChartComponent implements OnChanges {
                 excludeLast: true
             })
         };
-        this.yLabelFormatter = (value: number) => `${value} MW`;
+        const thousandComma = new ThousandCommaPipe();
+        this.yLabelFormatter = (value: number) =>
+            `${thousandComma.transform(value)} MW`;
     }
 
     ngOnChanges(changes: SimpleChanges): void {

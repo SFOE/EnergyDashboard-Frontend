@@ -1,14 +1,12 @@
 <section *ngIf="!isLoading; else loading" class="number-section">
-    <p class="label-medium">
-        {{ topLabelKey | i18next }}
-    </p>
     <bfe-trend-and-number
         [model]="{
             color: stromColor,
             bigNumber: {
                 value: latestProduction,
                 postfix: 'GWh',
-                subTextKeys: ['commons.updated-daily']
+                subTextKeys: ['commons.updated-daily'],
+                topTextKeys: [topLabelKey]
             }
         }"
     ></bfe-trend-and-number>

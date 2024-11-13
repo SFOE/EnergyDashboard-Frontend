@@ -22,6 +22,7 @@ export class StromverbrauchComponent implements OnInit {
     isLoading: boolean = true;
     isLoadingAktuellerEndverbrauch: boolean = true;
     isLoadingLandesverbrauchVergleich: boolean = true;
+    isLoadingEnergieverbrauchMitPrognose: boolean = true;
 
     constructor(private stromService: StromService) {}
 

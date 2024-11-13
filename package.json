@@ -1,6 +1,6 @@
 {
     "name": "energy-dashboard-web",
-    "version": "3.1.2",
+    "version": "4.0.0",
     "scripts": {
         "ng": "ng",
         "start": "ng serve -c local",
@@ -60,7 +60,7 @@
         "d3": "^7.8.5",
         "date-fns": "^2.30.0",
         "date-fns-tz": "^2.0.0",
-        "express": "^4.18.2",
+        "express": "^4.21.0",
         "i18next": "22.5.1",
         "i18next-browser-languagedetector": "^7.1.0",
         "leaflet": "^1.9.4",
@@ -83,7 +83,6 @@
         "@types/leaflet": "^1.9.6",
         "@types/node": "^20.7.1",
         "@types/resize-observer-browser": "^0.1.8",
-        "@types/turf": "^3.5.32",
         "@typescript-eslint/eslint-plugin": "^6.7.3",
         "@typescript-eslint/parser": "^6.7.3",
         "chance": "^1.1.11",
@@ -113,7 +112,10 @@
         "preset": "jest-preset-angular",
         "setupFilesAfterEnv": [
             "<rootDir>/setup-jest.ts"
-        ]
+        ],
+        "moduleNameMapper": {
+            "^src/(.*)$": "<rootDir>/src/$1"
+        }
     },
     "packageManager": "yarn@3.4.1"
 }

@@ -1,18 +1,31 @@
 import { RoutePathFragments, RoutePaths } from './route-paths.enum';
+import { COLOR_STROM } from '../../shared/commons/colors.const';
+
+export interface IsNewModel {
+    visible: boolean;
+    color: string;
+}
 
 export interface NavLink {
     path: string;
     labelKey: string;
+    isNew?: IsNewModel | undefined;
+    fragment?: any;
 }
 
 export interface NavLinkParent extends NavLink {
     children?: NavLink[];
 }
 
-export const detailLinksStrom = [
+export const detailLinksStrom: NavLinkParent[] = [
     {
         labelKey: 'kpi-strom-1_landesverbrauch.titel',
         path: RoutePaths.DASHBOARD_STROM_STROMVERBRAUCH
+    },
+    {
+        labelKey: 'kpi-strom-2_energieverbrauch.titel',
+        path: RoutePaths.DASHBOARD_STROM_ENERGIEVERBRAUCH,
+        isNew: { visible: true, color: COLOR_STROM }
     },
     {
         labelKey: 'kpi-strom-5_produktion.titel',
@@ -25,6 +38,11 @@ export const detailLinksStrom = [
     {
         labelKey: 'kpi-strom-6_kkw-fr.titel',
         path: RoutePaths.DASHBOARD_STROM_KKW_FR
+    },
+    {
+        labelKey: 'kpi-strom-5_produktion-pv.titel',
+        path: RoutePaths.DASHBOARD_STROM_PRODUKTION_PHOTOVOLTAIK,
+        isNew: { visible: true, color: COLOR_STROM }
     },
     {
         labelKey: 'kpi-strom-11_fuellstand-speicherseen.titel',
@@ -57,10 +75,15 @@ export const detailLinksStrom = [
                     RoutePathFragments.FRAGMENT_STROM_VERBRAUCH_NACH_BEREICH
             }
         ]
+    },
+    {
+        labelKey: 'kpi-strom-5_winterproduktion.titel',
+        path: RoutePaths.DASHBOARD_STROM_WINTERPRODUKTION,
+        isNew: { visible: true, color: COLOR_STROM }
     }
 ];
 
-export const detailLinksGas = [
+export const detailLinksGas: NavLink[] = [
     {
         labelKey: 'kpi-gas-5_import.titel',
         path: RoutePaths.DASHBOARD_GAS_IMPORT
@@ -79,7 +102,7 @@ export const detailLinksGas = [
     }
 ];
 
-export const detailLinksPreise = [
+export const detailLinksPreise: NavLink[] = [
     {
         labelKey: 'kpi-preise-8_strom_europa.titel',
         path: RoutePaths.DASHBOARD_PREISE_STROM_KARTE_EUROPA
@@ -110,7 +133,7 @@ export const detailLinksPreise = [
     }
 ];
 
-export const detailLinksWetter = [
+export const detailLinksWetter: NavLink[] = [
     {
         labelKey: 'kpi-wetter-1_meteoswiss.titel',
         path: RoutePaths.DASHBOARD_WETTER_AKTUELL

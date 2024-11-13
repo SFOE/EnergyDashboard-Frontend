@@ -1,0 +1,101 @@
+<div #tooltip [class.hidden]="!event" class="tooltip-container">
+    <bfe-tooltip-container *ngIf="!!data && data.barValues[0] !== 0">
+        <bfe-tooltip-header
+            header
+            [title]="transformToOriginalDate(data.date)"
+        />
+
+        <!--HGT-->
+        <bfe-tooltip-row
+            *ngIf="data.lineValues[0] !== null"
+            shape="line"
+            [color]="lineColor[0]"
+            [label]="
+                'dashboard.strom.entkoppelung-endenergieverbrauch-bip.heating-degree-days'
+                    | i18next
+            "
+            [data]="{
+                value: getOriginal(data.lineValues[0]) ?? 0 | thousandComma,
+                suffix: ' HGT'
+            }"
+        />
+
+        <!-- DIVIDER -->
+        <bfe-tooltip-divider *ngIf="(data.barValues?.length ?? 0) > 0" />
+
+        <!--Stromverbrauch-->
+        <bfe-tooltip-row
+            *ngIf="data.barValues[0] !== null"
+            shape="line"
+            [color]="barColors[3]"
+            [label]="'commons.strom.winterproduktion.stromverbrauch' | i18next"
+            [data]="{
+                value: data.barValues[0] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+
+        <!--Exporte-->
+        <bfe-tooltip-row
+            *ngIf="data.barValues[1] !== null"
+            shape="area"
+            [color]="barColors[1]"
+            [label]="
+                ('commons.strom.winterproduktion.import' | i18next) +
+                ' ' +
+                ('dashboard.strom.stromverbrauch.historischer-landesverbrauch.legend.swissgrid'
+                    | i18next)
+            "
+            [data]="{
+                value: data.barValues[1] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+
+        <!--Importe-->
+        <bfe-tooltip-row
+            *ngIf="data.barValues[2] !== null"
+            shape="area"
+            [color]="barColors[2]"
+            [label]="
+                ('commons.strom.winterproduktion.export' | i18next) +
+                ' ' +
+                ('dashboard.strom.stromverbrauch.historischer-landesverbrauch.legend.swissgrid'
+                    | i18next)
+            "
+            [data]="{
+                value: data.barValues[2] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+
+        <!--Nettoimporte BFE-->
+        <!-- Importe oder Exporte-->
+        <bfe-tooltip-row
+            *ngIf="data.hiddenValues[0] !== null && data.barValues[2] !== null"
+            shape="area"
+            [label]="
+                ('commons.strom.winterproduktion.export' | i18next) +
+                ' ' +
+                ('commons.source.bfe' | i18next)
+            "
+            [data]="{
+                value: -data.hiddenValues[0] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+        <bfe-tooltip-row
+            *ngIf="data.hiddenValues[0] !== null && data.barValues[1] !== null"
+            shape="area"
+            [label]="
+                ('commons.strom.winterproduktion.import' | i18next) +
+                ' ' +
+                ('commons.source.bfe' | i18next)
+            "
+            [data]="{
+                value: data.hiddenValues[0] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+    </bfe-tooltip-container>
+</div>

@@ -25,7 +25,8 @@ export class GasComponent implements OnInit {
             context: Context.GAS,
             menuItems: detailLinksGas.map((link) => ({
                 title: link.labelKey,
-                pathArgs: [link.path]
+                pathArgs: [link.path],
+                isNew: link.isNew
             }))
         };
     }

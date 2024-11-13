@@ -29,6 +29,7 @@ import {
 import { TooltipModule } from '../../../shared/diagrams/tooltip/tooltip.module';
 import { monthToTranslationKey } from '../../../shared/static-utils/date-utils';
 import { COLOR_SPACE, WetterConsts } from '../wetter.consts';
+import { ThousandCommaPipe } from 'src/app/shared/commons/thousand-comma.pipe';
 
 @Component({
     standalone: true,
@@ -124,7 +125,9 @@ export class HeizgradtageComponent implements OnInit {
             formatter: LabelFormatters.yearFull(translationService.language),
             filter: LabelFilters.januaryAndDecember()
         };
-        this.yLabelFormatter = (value: number) => `${value} HGT`;
+        const thousandComma = new ThousandCommaPipe();
+        this.yLabelFormatter = (value: number) =>
+            `${thousandComma.transform(value)} HGT`;
     }
 
     ngOnInit(): void {

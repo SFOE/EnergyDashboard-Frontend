@@ -10,7 +10,14 @@ import { Trend, TrendRating } from '../../../../core/models/trend.enum';
 export interface TrendAndNumberModel {
     color: string;
     bigNumber: {
-        value: number;
+        value: number | null;
+        postfix: string;
+        subUnit?: string;
+        subTextKeys: string[];
+        topTextKeys?: string[];
+    };
+    secondBigNumber?: {
+        value: number | null;
         postfix: string;
         subUnit?: string;
         subTextKeys: string[];

@@ -92,6 +92,44 @@ const dayFormatter = () => (date: Date) => {
     return `${day}.${month}.${year}`;
 };
 
+const winterSeasonFormatter =
+    (language: string, yearFormat: '2-digit' | 'numeric') =>
+    (date: Date): string[] => {
+        // options for date formatting
+        const options: Intl.DateTimeFormatOptions = {
+            month: 'short',
+            year: yearFormat
+        };
+
+        const formattedDate: string = date.toLocaleString(language, options);
+        const year: number = date.getFullYear();
+        const isJanuary: boolean = date.getMonth() < 2; // 2 corresponds to march
+
+        // determine which year for march based on current month
+        const endYear: number = isJanuary ? year : year + 1; // if jan: current; otherwise next
+
+        // new date for march of determined end year
+        const formattedMarch: string = new Date(endYear, 2, 1).toLocaleString(
+            language,
+            options
+        );
+
+        return [formattedDate, formattedMarch];
+    };
+
+const monthShortAndYearFormatter =
+    (language: string) =>
+    (date: Date): string => {
+        const options: Intl.DateTimeFormatOptions = {
+            month: 'short',
+            year: 'numeric'
+        };
+
+        const formatter = new Intl.DateTimeFormat(language, options);
+
+        return formatter.format(date);
+    };
+
 const emptyFormatter = (date: Date) => '';
 
 export const LabelFormatters = {
@@ -105,7 +143,9 @@ export const LabelFormatters = {
     dateShort: dateShortFormatter,
     monthAndDay: monthAndDayFormatter,
     empty: emptyFormatter,
-    day: dayFormatter
+    day: dayFormatter,
+    winter: winterSeasonFormatter,
+    monthShortAndYear: monthShortAndYearFormatter
 };
 
 // ***** Filters ******
@@ -184,6 +224,17 @@ const firstDayOfWeekFilter =
         );
     };
 
+const januaryFilter =
+    (options: FilterOptions = defaultFilterOptions): LabelFilter =>
+    <T extends HistogramEntry>(
+        value: T,
+        index: number,
+        arrayLength: number
+    ): boolean => {
+        const isJanuary = value.date.getMonth() === 0;
+        return includeFirstLastCheck(isJanuary, index, arrayLength, options);
+    };
+
 const januaryAndDecemberFilter =
     (options: FilterOptions = defaultFilterOptions): LabelFilter =>
     <T extends HistogramEntry>(
@@ -218,6 +269,7 @@ export const LabelFilters = {
     firstOfMonthOnly: firstOfMonthOnlyFilter,
     firstWeekOfMonth: firstWeekOfMonthFilter,
     firstDayOfWeek: firstDayOfWeekFilter,
+    january: januaryFilter,
     januaryAndDecember: januaryAndDecemberFilter,
     everyNth: everyNthFilter,
     none: noLabelFiler

@@ -1,0 +1,19 @@
+@use 'dim';
+@use 'col';
+@use 'text';
+
+
+.index-hint {
+    width: fit-content;
+    background: col.$card-container;
+    border-radius: 5px;
+    padding: 2px 5px;
+
+    &__content {
+        @extend .label;
+    }
+}
+
+.spacer {
+    margin-bottom: 8px;
+}

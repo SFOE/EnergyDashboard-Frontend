@@ -21,7 +21,8 @@ export class WetterComponent implements OnInit {
             context: Context.WETTER,
             menuItems: detailLinksWetter.map((link) => ({
                 title: link.labelKey,
-                pathArgs: [link.path]
+                pathArgs: [link.path],
+                isNew: link.isNew
             }))
         };
     }

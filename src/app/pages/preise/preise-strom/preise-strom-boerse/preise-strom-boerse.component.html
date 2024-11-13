@@ -12,11 +12,26 @@
         (diagramLeave)="hideTooltip()"
         (elFocus)="showLineChartTooltip($event)"
         [colors]="[primaryColor]"
-        [data]="chartData"
+        [data]="filteredChartData"
         [strokeWidths]="[2]"
         [xLabelModifier]="labelModifier"
         [xSubLabelModifier]="subLabelModifier"
         [yLabelFormatter]="yLabelFormatter"
+    ></bfe-histogram-line>
+    <bfe-brush-explanation></bfe-brush-explanation>
+    <bfe-histogram-line
+        class="diagram-container"
+        [colors]="[primaryColor]"
+        [data]="chartData"
+        [strokeWidths]="[1]"
+        [hideYLabels]="true"
+        [margin]="brushDefaultMargins"
+        [xLabelModifier]="brushLabelModifier"
+        [maxHeight]="brushDefaultHeight"
+        [brushSelection]="brushSelection"
+        [brushSelectionConfig]="brushSelectionConfig"
+        (brushSelectionChange)="updateBrushSelection($event)"
+        (brushSelectionEnd)="updateBrushSelection($event)"
     ></bfe-histogram-line>
     <bfe-preise-tooltip
         [event]="tooltipEvent"

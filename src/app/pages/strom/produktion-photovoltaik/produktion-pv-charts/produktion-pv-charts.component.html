@@ -1,0 +1,55 @@
+<div *ngIf="!loading && data; else loadingTemplate" class="all-charts-container">
+    <bfe-kpi-subtitle>
+        {{ 'dynamic:kpi-strom-5_produktion-pv.titel' | i18nextDynamic }}
+    </bfe-kpi-subtitle>
+
+    <bfe-kpi-date-info-subtext
+        [date]="dateOfLastUpdate"
+        [updateInterval]="updateInterval"
+    ></bfe-kpi-date-info-subtext>
+
+    <!-- histogram -->
+    <div class="diagram-container">
+        <bfe-diagram-legend [entries]="legendEntries" />
+
+        <bfe-histogram-detail
+            (diagramLeave)="hideTooltip()"
+            (elFocus)="showTooltip($event)"
+            [barColors]="barColors"
+            [barWidth]="barWidth"
+            [data]="data"
+            [domainMax]="domainMax"
+            [domainMin]="domainMin"
+            [lineColors]="lineColors"
+            [lineThickness]="[2, 2, 1]"
+            [lineStyle]="['solid', 'solid', 'dashed']"
+            [margin]="{ top: 20, bottom: 40, left: 0, right: 12 }"
+            [xLabelModifier]="xLabelModifier"
+            [xSubLabelModifier]="xSubLabelModifier"
+            [yLabelFormatter]="yLabelFormatter"
+            [yTickCount]="4"
+            [displayValueOnBar]="true"
+        />
+
+        <bfe-produktion-pv-histogram-tooltip
+            [event]="tooltipEvent"
+            [barColors]="barColors"
+        />
+    </div>
+
+    <!-- icon grids -->
+    <bfe-produktion-pv-house-icon-grid
+        [gridData]="gridData"
+    />
+
+</div>
+
+<!-- info text about chart  -->
+<bfe-hideable-text-section
+    [context]="'chart'"
+    [textTranslationKey]="'dynamic:kpi-strom-5_produktion-pv.kurztext1'"
+></bfe-hideable-text-section>
+
+<ng-template #loadingTemplate>
+    <bfe-loading-spinner></bfe-loading-spinner>
+</ng-template>

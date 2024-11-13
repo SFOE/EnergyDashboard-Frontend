@@ -1,0 +1,69 @@
+<bfe-kpi-container
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-strom-5_produktion-pv.datenquelle',
+        langtextDynamicKey: 'kpi-strom-5_produktion-pv.langtext'
+    }"
+    [isLoading]="isLoading"
+    titleKeyDynamic="kpi-strom-5_produktion-pv.titel"
+>
+    <section>
+        <bfe-kpi-container-row>
+            <section>
+                <section class="trend-section" *ngIf="!!currentEntry">
+                    <bfe-trend-and-number
+                        [isLoading]="isLoading"
+                        [model]="{
+                            color: COLOR_SPACE,
+                            bigNumber: {
+                                value: Math.round(currentEntry.stromProduktion),
+                                postfix: 'GWh',
+                                subTextKeys: [
+                                    'dashboard.strom.produktion-pv.jaehrliche-produktion'
+                                ],
+                            },
+                            secondBigNumber: {
+                                value: currentEntry.pvAnteil,
+                                postfix: '%',
+                                subTextKeys: [
+                                    'dashboard.strom.produktion-pv.anteil-stromverbrauch'
+                                ]
+                            },
+                            trend: {
+                                value: currentEntry.trend,
+                                rating: currentEntry.trendRating,
+                                subTextKeys: ['commons.trend.ausbau']
+                            }
+                        }"
+                    />
+                </section>
+            </section>
+
+            <section class="teaser-section desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-strom-5_produktion-pv.kurztext'
+                            | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="
+                        'dynamic:kpi-strom-5_produktion-pv.kurztext'
+                    "
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
+
+    <!-- charts -->
+    <bfe-produktion-pv-charts
+        *ngIf="!isLoading"
+        [loading]="isLoading"
+    ></bfe-produktion-pv-charts>
+</bfe-kpi-container>

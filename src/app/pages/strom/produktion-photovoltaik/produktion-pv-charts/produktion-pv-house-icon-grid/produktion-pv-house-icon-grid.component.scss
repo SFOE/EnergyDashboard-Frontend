@@ -1,0 +1,16 @@
+@use 'var';
+@use 'dim';
+
+.label-medium {
+    font-weight: var.$font-weight-bold;
+}
+
+.icon-grid-container-left {
+    align-self: flex-end;
+
+    @media (max-width: #{dim.$bp-max-md}) {
+        align-self: flex-start;
+        margin-bottom: 35px;
+    }
+
+}

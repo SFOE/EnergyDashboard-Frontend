@@ -1,0 +1,43 @@
+<bfe-kpi-container-row>
+    <div class="icon-grid-container-left">
+        <bfe-icon-grid
+            [iconColor]="COLOR_CONTEXT"
+            [rows]="rows1"
+            [iconFunction]="house"
+            [nbrElementsPerRow]="nbrElementsPerRow"
+            [elementWidth]="iconSize.width"
+            [elementHeight]="iconSize.height"
+        >
+        </bfe-icon-grid>
+        <p class="num-medium">{{ gridData[0].date }}</p>
+        <p class="label-medium">{{ gridData[0].stromProduktion }} GWh</p>
+        <p class="quelle">
+            {{
+                'dashboard.strom.produktion-pv.text_grid'
+                    | i18next
+                        : { value: haushalte1 | thousandComma, unit: einheit1 }
+            }}
+        </p>
+    </div>
+
+    <div class="icon-grid-container-right">
+        <bfe-icon-grid
+            [iconColor]="COLOR_CONTEXT"
+            [rows]="rows2"
+            [iconFunction]="house"
+            [nbrElementsPerRow]="nbrElementsPerRow"
+            [elementWidth]="iconSize.width"
+            [elementHeight]="iconSize.height"
+        >
+        </bfe-icon-grid>
+        <p class="num-medium">{{ gridData[1].date }}</p>
+        <p class="label-medium">{{ gridData[1].stromProduktion }} GWh</p>
+        <p class="quelle">
+            {{
+                'dashboard.strom.produktion-pv.text_grid'
+                    | i18next
+                        : { value: haushalte2 | thousandComma, unit: einheit2 }
+            }}
+        </p>
+    </div>
+</bfe-kpi-container-row>

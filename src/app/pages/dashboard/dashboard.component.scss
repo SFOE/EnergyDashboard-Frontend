@@ -72,6 +72,7 @@
             bfe-dashboard-row:nth-of-type(5) {
                 grid-column: span 1;
                 padding-bottom: 12px;
+
                 ::ng-deep .dashboard-row-container {
                     height: 100%;
                     display: flex;
@@ -83,6 +84,7 @@
             bfe-dashboard-row:nth-of-type(4) {
                 padding-right: 8px;
                 border-right: 1px solid col.$divider;
+
                 ::ng-deep .trend {
                     margin-top: auto;
                 }
@@ -90,6 +92,7 @@
 
             bfe-dashboard-row:nth-of-type(5) {
                 padding-left: 8px;
+
                 ::ng-deep .trend {
                     margin-top: auto;
                 }

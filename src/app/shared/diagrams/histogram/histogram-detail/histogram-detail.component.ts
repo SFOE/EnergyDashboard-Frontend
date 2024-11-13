@@ -18,6 +18,7 @@ import { hexToRgb, rgbToHex } from '../../utils';
 import { dateKeyFn } from '../base-histogram.component';
 import { HistogramEntry, NoDataBlock } from '../base-histogram.model';
 import { InteractiveHistogramComponent } from '../interactive-histogram.component';
+import { ThousandCommaPipe } from '../../../commons/thousand-comma.pipe';
 
 export interface HistogramDetailEntry extends HistogramEntry {
     barValues: Array<number | null>;
@@ -44,8 +45,9 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
     @Input()
     override set data(data: T[]) {
         super.data = data;
-        // create d3-lineFunction per line so we can iterate over them in the d3 `.data(...)` style
+        // create d3-lineFunction per line, so we can iterate over them in the d3 `.data(...)` style
         this.lineFunctions = this.createLineFunctions();
+
         this.yMaxValue =
             Math.max(
                 ...data.reduce(
@@ -115,10 +117,10 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
     skipNoDataBlocksAfter: Date | null;
 
     @Input()
-    barOpacity = 0.8;
+    barOpacity: number = 0.8;
 
     @Input()
-    yTickCount = 4;
+    yTickCount: number = 4;
 
     @Input()
     maxHeight?: number | null;
@@ -134,6 +136,8 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
 
     @Input()
     strokeDasharray: string = '2 2';
+
+    @Input() displayValueOnBar?: boolean;
 
     get svgMaxHeight(): string | null {
         return this.maxHeight ? `${this.maxHeight}px` : null;
@@ -160,6 +164,7 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
 
     private notExistingBlocks: NoDataBlock<T>[];
     private _barColors: string[] = COLORS_HISTOGRAM_DEFAULT;
+    private thousandComma: ThousandCommaPipe = new ThousandCommaPipe();
 
     override ngOnChanges(changes: SimpleChanges) {
         if (this.data) {
@@ -241,20 +246,20 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
             .selectAll('line')
             .data(
                 this.data
-                    .map((d) => ({ ...d, value: value(d) }))
+                    .map((d: T) => ({ ...d, value: value(d) }))
                     .filter((d) => d.value !== null && d.value !== undefined),
                 <any>dateKeyFn
             )
             .join('line')
             .attr('x1', ({ date }) => {
-                const offsetToCenter =
+                const offsetToCenter: number =
                     this.scaleBandX.bandwidth() / 2 - this.barWidth / 2;
                 return (
                     <number>this.scaleBandX(middleOfDay(date)) + offsetToCenter
                 );
             })
             .attr('x2', ({ date }) => {
-                const offsetToCenter =
+                const offsetToCenter: number =
                     this.scaleBandX.bandwidth() / 2 - this.barWidth / 2;
                 return (
                     <number>this.scaleBandX(middleOfDay(date)) +
@@ -298,6 +303,7 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
             };
         };
 
+        // draw the bars
         this.dataGrp
             .selectAll('g')
             .data(this.data, <any>dateKeyFn)
@@ -312,9 +318,7 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
             .selectAll('rect')
             .data((v: T) => barValuesFn(v).map(preCalcStackStart))
             .join('rect')
-            .attr('width', () => {
-                return this.barWidth;
-            })
+            .attr('width', this.barWidth)
             .attr('y', ({ start, val }) => {
                 return val !== undefined && (val ?? 0) < 0
                     ? <number>this.scaleLinearY(start)
@@ -324,6 +328,41 @@ export class HistogramDetailComponent<T extends HistogramDetailEntry>
                 Math.abs(this.scaleLinearY(val ?? 0) - this.scaleLinearY(0))
             )
             .attr('fill', (_, index) => colors[index]);
+
+        // add labels on top of the bars if given
+        if (this.displayValueOnBar) {
+            // use same concept as above but use 'text' instead of 'rect'
+            this.dataGrp
+                .selectAll('g')
+                .data(this.data, <any>dateKeyFn)
+                .join('g')
+                .attr('transform', ({ date }) => {
+                    const offsetToCenter =
+                        this.scaleBandX.bandwidth() / 2 - this.barWidth / 2;
+                    return `translate(${
+                        <number>this.scaleBandX(middleOfDay(date)) +
+                        offsetToCenter
+                    }, 0)`;
+                })
+                .selectAll('text')
+                .data((v: T) => barValuesFn(v).map(preCalcStackStart))
+                .join('text')
+                .attr('x', this.barWidth / 2) // center text horizontally
+                .attr('y', ({ start, val }) => {
+                    // calculate position using the same calculation as above
+                    const barTopY: number =
+                        val !== undefined && (val ?? 0) < 0
+                            ? <number>this.scaleLinearY(start)
+                            : <number>this.scaleLinearY(start + (val ?? 0));
+                    return barTopY - 5; // adjust slightly above the bar
+                })
+                .attr('text-anchor', 'middle')
+                .attr('fill', 'black')
+                .text(({ val }) =>
+                    this.thousandComma.transform(Math.round(val ?? 0))
+                )
+                .style('font-size', '10px'); // add some styling
+        }
     }
 
     protected drawLines() {

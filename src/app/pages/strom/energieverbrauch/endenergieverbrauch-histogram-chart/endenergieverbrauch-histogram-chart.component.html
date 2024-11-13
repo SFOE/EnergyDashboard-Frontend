@@ -1,0 +1,102 @@
+<section class="title-selection-container">
+    <section>
+        <bfe-kpi-subtitle>
+            {{
+                'dynamic:kpi-strom-5_endenergieverbrauch.titel' | i18nextDynamic
+            }}
+        </bfe-kpi-subtitle>
+        <bfe-kpi-date-info-subtext
+            *ngIf="lastUpdate"
+            [date]="lastUpdate"
+            [updateInterval]="'yearly'"
+        />
+    </section>
+    <bfe-select
+        name="scenario-select"
+        [options]="scenarioOptions"
+        [selectedOptionKey]="currentScenario"
+        (selectedValue)="onScenarioChange($event)"
+    />
+</section>
+
+<div class="diagram-container">
+    <bfe-diagram-legend
+        [entries]="[
+            {
+                color: chartColors[chartIndex.ERDOELPRODUKTE],
+                labelKey:
+                    'dashboard.strom.endenergieverbrauch.type.erdoelprodukte',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.ELEKTRIZITAET],
+                labelKey:
+                    'dashboard.strom.endenergieverbrauch.type.elektrizitaet',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.ERDGAS],
+                labelKey: 'dashboard.strom.endenergieverbrauch.type.erdgas',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.FERNWAERME],
+                labelKey: 'dashboard.strom.endenergieverbrauch.type.fernwaerme',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.HOLZ],
+                labelKey: 'dashboard.strom.endenergieverbrauch.type.holz',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.KOHLE],
+                labelKey: 'dashboard.strom.endenergieverbrauch.type.kohle',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.UEBRIGE_ERNEUERBARE_ENERGIE],
+                labelKey:
+                    'dashboard.strom.endenergieverbrauch.type.uebrige-erneuerbare-energie',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.ABFAELLE],
+                labelKey: 'dashboard.strom.endenergieverbrauch.type.abfaelle',
+                type: 'area'
+            },
+            {
+                color: chartColors[chartIndex.PIX],
+                labelKey: 'dashboard.strom.endenergieverbrauch.type.ptx',
+                type: 'area'
+            }
+        ]"
+    />
+    <bfe-histogram-area-stack-with-forecast
+        class="diagram-container"
+        [data]="chartData.chartAreaEntries"
+        [colors]="chartColors"
+        [focusPointColors]="chartColors"
+        [focusPointBorder]="true"
+        [xLabelModifier]="labelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+        [domainMax]="domainMax"
+        (diagramLeave)="hideTooltip()"
+        (elFocus)="showLineChartTooltip($event)"
+        [pointsOfInterestWithLabels]="pointsOfInterestWithLabels"
+        [turningPoint]="turningPoint"
+    />
+
+    <bfe-endenergieverbrauch-area-tooltip [event]="tooltipEvent" />
+
+    <bfe-hideable-text-section
+        [context]="'chart'"
+        [textTranslationKey]="
+            'dynamic:kpi-strom-5_energieverbrauch_endenergieverbrauch.langtext'
+        "
+    />
+</div>
+
+<ng-template #loading>
+    <bfe-loading-spinner />
+</ng-template>

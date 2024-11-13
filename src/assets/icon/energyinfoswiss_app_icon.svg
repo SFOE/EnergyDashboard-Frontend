@@ -1,0 +1,32 @@
+<svg width="168" height="167" viewBox="0 0 168 167" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_731_11617)">
+<rect width="167" height="167" transform="translate(0.753906)" fill="white"/>
+<rect width="167" height="167" transform="translate(0.753906)" fill="url(#paint0_linear_731_11617)"/>
+<rect x="46.0918" y="118.509" width="21.7448" height="29.8991" rx="2.7181" fill="#AE445A"/>
+<rect x="84.1453" y="61.4292" width="21.7448" height="86.9791" rx="2.7181" fill="#F39F5A"/>
+<rect x="122.198" y="83.1738" width="21.7448" height="65.2343" rx="2.7181" fill="#662549"/>
+<g filter="url(#filter0_d_731_11617)">
+<path d="M0.753906 133.09L133.983 0H0.753906V133.09Z" fill="white"/>
+</g>
+<path d="M57.988 24.6104C57.988 24.6104 51.3541 21.6904 40.2491 21.6904H40.2458C29.1391 21.6921 22.5052 24.6104 22.5052 24.6104C22.5052 24.6104 21.9119 37.5404 24.4291 44.8521C28.8767 57.7064 40.2441 61.3203 40.2441 61.3203H40.2475H40.2508C40.2508 61.3203 51.6165 57.7098 56.0658 44.8521C58.583 37.542 57.988 24.6104 57.988 24.6104Z" fill="#E30613"/>
+<path d="M52.1668 35.8079V42.8645H43.8226V51.103H36.671V42.8645H28.3269V35.8079H36.671V27.5728H43.821L43.8226 35.8079H52.1668Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d_731_11617" x="-9.68359" y="-10.4375" width="154.104" height="153.965" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="5.21875"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_731_11617"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_731_11617" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_731_11617" x1="83.5" y1="0" x2="83.5" y2="167" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E8EBEE"/>
+<stop offset="1" stop-color="#CED3DB"/>
+</linearGradient>
+<clipPath id="clip0_731_11617">
+<rect width="167" height="167" fill="white" transform="translate(0.753906)"/>
+</clipPath>
+</defs>
+</svg>

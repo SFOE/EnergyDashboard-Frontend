@@ -127,6 +127,11 @@ bfe-master-detail {
         margin: 0;
     }
 
+    .svg-icon{
+        margin-left: 1px;
+        vertical-align: 3px;
+    }
+
     .master-detail__menu-sub-item--active .master-detail__menu-item-title {
         font-weight: 700;
     }

@@ -1,5 +1,5 @@
 <div class="preise-futures-chart-container">
-    <div *ngIf="data" class="diagram-container">
+    <div *ngIf="data && filteredData" class="diagram-container">
         <section class="title-selection-container">
             <bfe-kpi-subtitle>
                 {{ 'dynamic:' + titleKey | i18nextDynamic }}
@@ -13,7 +13,7 @@
             (diagramLeave)="hideTooltip()"
             (elFocus)="showTooltip($event)"
             [colors]="colors"
-            [data]="data"
+            [data]="filteredData"
             [strokeWidths]="[2, 2, 2, 2, 2, 2]"
             [xLabelModifier]="xLabelModifier"
             [xSubLabelModifier]="xSubLabelModifier"
@@ -26,6 +26,22 @@
             [withSpaceBeforePostfix]="true"
             postfix="EUR"
         ></bfe-preise-tooltip>
+        <bfe-brush-explanation></bfe-brush-explanation>
+        <bfe-histogram-line
+            class="diagram-container"
+            (diagramLeave)="hideTooltip()"
+            (elFocus)="showTooltip($event)"
+            [colors]="colors"
+            [data]="data"
+            [strokeWidths]="[1, 1, 1, 1, 1, 1]"
+            [hideYLabels]="true"
+            [maxHeight]="brushDefaultHeight"
+            [xLabelModifier]="brushXLabelModifier"
+            [margin]="brushDefaultMargins"
+            [brushSelection]="brushSelection"
+            [brushSelectionConfig]="brushSelectionConfig"
+            (brushSelectionChange)="updateBrushSelection($event)"
+        ></bfe-histogram-line>
 
         <bfe-hideable-text-section
             [context]="'chart'"

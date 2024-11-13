@@ -1,11 +1,20 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Inject, Output, ViewContainerRef} from '@angular/core';
+import { Platform } from '@angular/cdk/platform';
+import { DOCUMENT } from '@angular/common';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    NgZone,
+    Output,
+    ViewContainerRef
+} from '@angular/core';
 import { Selection } from 'd3';
 import { middleOfDay } from '../../static-utils/date-utils';
 import { binarySearch, initMouseListenerOnValueDomain } from '../utils';
 import { BaseHistogramComponent } from './base-histogram.component';
 import { HistogramEntry } from './base-histogram.model';
-import {Platform} from "@angular/cdk/platform";
-import {DOCUMENT} from "@angular/common";
 
 export interface HistogramElFocusEvent<
     T extends HistogramEntry = HistogramEntry
@@ -31,10 +40,11 @@ export abstract class InteractiveHistogramComponent<T extends HistogramEntry>
 
     constructor(
         protected override readonly platform: Platform,
+        protected override readonly ngZone: NgZone,
         @Inject(DOCUMENT) protected override readonly doc: Document,
         private viewContainerRef: ViewContainerRef
     ) {
-        super(platform, doc);
+        super(platform, ngZone, doc);
     }
 
     protected abstract valueDomainRect: Selection<
@@ -46,7 +56,7 @@ export abstract class InteractiveHistogramComponent<T extends HistogramEntry>
 
     override ngAfterViewInit() {
         super.ngAfterViewInit();
-        if (this.platform.isBrowser) {
+        if (this.platform.isBrowser && !this.hasBrushSelection) {
             initMouseListenerOnValueDomain(
                 this.onDestroy,
                 this.doc,
@@ -78,11 +88,19 @@ export abstract class InteractiveHistogramComponent<T extends HistogramEntry>
     ];
 
     protected setElIntoFocus([source, data]: [DOMPoint, T]) {
-        this.elFocus.emit({ source, histogramComponent: this.viewContainerRef.element, data });
+        this.elFocus.emit({
+            source,
+            histogramComponent: this.viewContainerRef.element,
+            data
+        });
     }
 
     protected setElOutFocus([source, data]: [DOMPoint, T]) {
-        this.elFocus.emit({ source, histogramComponent: this.viewContainerRef.element, data });
+        this.elFocus.emit({
+            source,
+            histogramComponent: this.viewContainerRef.element,
+            data
+        });
     }
 
     protected focusLost() {

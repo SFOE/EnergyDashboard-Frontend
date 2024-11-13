@@ -42,13 +42,14 @@
     <bfe-histogram-area-stack
         class="diagram-container"
         *ngIf="!isLoading; else loading"
-        [data]="chartData.areaEntries"
-        [lines]="chartData.lineEntries"
+        [data]="chartData.filteredAreaEntries"
+        [lines]="chartData.filteredLineEntries"
         [colors]="chartColors"
         [focusPointColors]="chartColors"
         [focusPointBorder]="true"
         [showLines]="true"
         [xLabelModifier]="labelModifier"
+        [xSubLabelModifier]="subLabelModifier"
         [yLabelFormatter]="yLabelFormatter"
         [domainMax]="domainMax"
         [hideFocusDots]="false"
@@ -59,6 +60,23 @@
     <bfe-gas-import-europa-tooltip
         [event]="tooltipEvent"
     ></bfe-gas-import-europa-tooltip>
+    <bfe-brush-explanation></bfe-brush-explanation>
+    <bfe-histogram-area-stack
+        class="diagram-container"
+        *ngIf="!isLoading; else loading"
+        [data]="chartData.areaEntries"
+        [lines]="chartData.lineEntries"
+        [colors]="chartColors"
+        [xLabelModifier]="brushLabelModifier"
+        [margins]="brushDefaultMargins"
+        [maxHeight]="brushDefaultHeight"
+        [hideYLabels]="true"
+        [domainMax]="domainMax"
+        [brushSelection]="brushSelection"
+        [brushSelectionConfig]="brushSelectionConfig"
+        (brushSelectionChange)="updateBrushSelection($event)"
+    >
+    </bfe-histogram-area-stack>
 
     <bfe-hideable-text-section
         [context]="'chart'"

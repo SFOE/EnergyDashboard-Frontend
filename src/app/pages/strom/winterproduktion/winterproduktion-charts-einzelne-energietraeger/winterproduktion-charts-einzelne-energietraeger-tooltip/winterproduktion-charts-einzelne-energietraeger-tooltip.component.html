@@ -1,0 +1,68 @@
+<div #tooltip [class.hidden]="!event" class="tooltip-container">
+    <bfe-tooltip-container *ngIf="!!data && data.barValues[5] !== null">
+        <bfe-tooltip-header
+            header
+            [title]="transformToOriginalDate(data.date)"
+        />
+        <bfe-tooltip-row
+            *ngIf="data.barValues[5] !== null"
+            shape="area"
+            [color]="barColors[5]"
+            [label]="'dashboard.strom.winterproduktion.photovoltaik' | i18next"
+            [data]="{
+                value: data.barValues[5] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+        <bfe-tooltip-row
+            *ngIf="data.barValues[4] !== null"
+            shape="area"
+            [color]="barColors[4]"
+            [label]="'dashboard.strom.produktion.type.wind' | i18next"
+            [data]="{
+                value: data.barValues[4] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+        <bfe-tooltip-row
+            *ngIf="data.barValues[3] !== null"
+            shape="area"
+            [color]="barColors[3]"
+            [label]="'dashboard.strom.produktion.type.speicherkraft' | i18next"
+            [data]="{
+                value: data.barValues[3] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+        <bfe-tooltip-row
+            *ngIf="data.barValues[2] !== null"
+            shape="area"
+            [color]="barColors[2]"
+            [label]="'dashboard.strom.produktion.type.flusskraft' | i18next"
+            [data]="{
+                value: data.barValues[2] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+        <bfe-tooltip-row
+            *ngIf="data.barValues[1] !== null"
+            shape="area"
+            [color]="barColors[1]"
+            [label]="'dashboard.strom.winterproduktion.thermische' | i18next"
+            [data]="{
+                value: data.barValues[1] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+        <bfe-tooltip-row
+            *ngIf="data.barValues[0] !== null"
+            shape="area"
+            [color]="barColors[0]"
+            [label]="'dashboard.strom.produktion.type.kernkraft' | i18next"
+            [data]="{
+                value: data.barValues[0] | thousandComma,
+                suffix: ' GWh'
+            }"
+        />
+    </bfe-tooltip-container>
+</div>

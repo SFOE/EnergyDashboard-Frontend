@@ -1,0 +1,88 @@
+<div #tooltip class="tooltip-container" [class.hidden]="!event">
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header header [title]="data.date | date: 'yyyy'" />
+        <bfe-tooltip-row
+            [color]="COLORS_ENDENERGIE.ABFAELLE"
+            shape="dot"
+            label="dashboard.strom.endenergieverbrauch.type.abfaelle"
+            [data]="{
+                value: data.values[index.ABFAELLE] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_ENDENERGIE.UEBRIGE_ERNEUERBARE_ENERGIE"
+            shape="dot"
+            label="dashboard.strom.endenergieverbrauch.type.uebrige-erneuerbare-energie"
+            [data]="{
+                value:
+                    data.values[index.UEBRIGE_ERNEUERBARE_ENERGIE] ?? 0
+                    | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_ENDENERGIE.PTX"
+            shape="dot"
+            label="dashboard.strom.endenergieverbrauch.type.ptx"
+            [data]="{
+                value: data.values[index.PIX] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_ENDENERGIE.KOHLE"
+            shape="dot"
+            label="dashboard.strom.endenergieverbrauch.type.kohle"
+            [data]="{
+                value: data.values[index.KOHLE] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_ENDENERGIE.HOLZ"
+            shape="dot"
+            label="dashboard.strom.endenergieverbrauch.type.holz"
+            [data]="{
+                value: data.values[index.HOLZ] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_ENDENERGIE.FERNWAERME"
+            shape="dot"
+            label="dashboard.strom.endenergieverbrauch.type.fernwaerme"
+            [data]="{
+                value: data.values[index.FERNWAERME] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_ENDENERGIE.ERDGAS"
+            shape="dot"
+            label="dashboard.strom.endenergieverbrauch.type.erdgas"
+            [data]="{
+                value: data.values[index.ERDGAS] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_ENDENERGIE.ELEKTRIZITAET"
+            shape="dot"
+            label="dashboard.strom.endenergieverbrauch.type.elektrizitaet"
+            [data]="{
+                value: data.values[index.ELEKTRIZITAET] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_ENDENERGIE.ERDOELPRODUKTE"
+            shape="dot"
+            label="dashboard.strom.endenergieverbrauch.type.erdoelprodukte"
+            [data]="{
+                value: data.values[index.ERDOELPRODUKTE] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+    </bfe-tooltip-container>
+</div>

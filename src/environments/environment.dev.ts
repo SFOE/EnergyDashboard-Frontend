@@ -4,5 +4,6 @@ export const environment: Environment = {
     stage: 'development',
     production: true,
     baseUrl: '/api',
-    rootUrl: 'https://dev.energiedashboard.ch'
+    rootUrl: 'https://dev.energiedashboard.ch',
+    appleAppId: '6469721367'
 };

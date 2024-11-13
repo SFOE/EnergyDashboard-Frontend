@@ -31,7 +31,8 @@ export class StromComponent implements OnInit {
                         title: child.labelKey,
                         pathArgs: [child.path],
                         ...(child.fragment && { fragment: child.fragment })
-                    })) || []
+                    })) || [],
+                isNew: link.isNew
             }))
         };
     }

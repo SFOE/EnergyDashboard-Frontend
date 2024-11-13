@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { differenceInDays } from 'date-fns';
+import { ThousandCommaPipe } from 'src/app/shared/commons/thousand-comma.pipe';
+import {
+    BrushSelectionComponent,
+    getDefaultBrushLabelModifier
+} from 'src/app/shared/components/brush-selection/brush-selection.component';
+import { filterHistogramAreaEntryByDate } from 'src/app/shared/diagrams/utils';
 import { TranslationService } from '../../../../core/i18n/translation.service';
 import { HistogramAreaChartEntry } from '../../../../core/models/charts';
 import { StromService } from '../../../../services/strom/strom.service';
@@ -12,28 +19,38 @@ import {
     LabelFilters,
     LabelFormatters
 } from '../../../../shared/diagrams/label.utils';
-import { filterHistogramAreaEntryByDate } from '../../../../shared/diagrams/utils';
-import { oneWeekInMilliseconds } from '../../../../shared/static-utils/date-utils';
+import {
+    getYearsAgo,
+    oneWeekInMilliseconds
+} from '../../../../shared/static-utils/date-utils';
 import { ProduktionChartIndex } from './produktion-verbrauch-histogram-chart.consts';
 
 const DOMAIN_MAX_PADDING = 5;
+const EXTENDED_LABEL_MIN_DAYS = 84;
 
 @Component({
     selector: 'bfe-produktion-verbrauch-histogram-chart',
     templateUrl: './produktion-verbrauch-histogram-chart.component.html',
     styleUrls: ['./produktion-verbrauch-histogram-chart.component.scss']
 })
-export class ProduktionVerbrauchHistogramChartComponent implements OnInit {
+export class ProduktionVerbrauchHistogramChartComponent
+    extends BrushSelectionComponent
+    implements OnInit
+{
     chartData: {
         areaEntries: HistogramAreaChartEntry[];
         lineEntries: HistogramAreaChartEntry[];
+        filteredAreaEntries: HistogramAreaChartEntry[];
+        filteredLineEntries: HistogramAreaChartEntry[];
     };
     tooltipEvent?: HistogramElFocusEvent<HistogramAreaChartEntry>;
     isLoading: boolean = true;
     domainMax: number;
     lastUpdate?: Date;
+    labelModifier: LabelModifier;
+    subLabelModifier?: LabelModifier;
 
-    readonly labelModifier: LabelModifier;
+    readonly brushLabelModifier: LabelModifier;
     readonly yLabelFormatter;
     readonly chartColors = [
         COLORS_STROM.FLUSSKRAFT,
@@ -49,16 +66,18 @@ export class ProduktionVerbrauchHistogramChartComponent implements OnInit {
     private readonly fourWeeksBackFromToday = new Date(
         Date.now() - oneWeekInMilliseconds * 4
     );
+    private readonly fiveYearsBackFromToday = getYearsAgo(5);
 
     constructor(
         private stromService: StromService,
-        translationService: TranslationService
+        private translationService: TranslationService
     ) {
-        this.labelModifier = {
-            formatter: LabelFormatters.monthAndDay(translationService.language),
-            filter: LabelFilters.firstDayOfWeek()
-        };
-        this.yLabelFormatter = (value: number) => `${value} GWh`;
+        super();
+        this.brushLabelModifier =
+            getDefaultBrushLabelModifier(translationService);
+        const thousandComma = new ThousandCommaPipe();
+        this.yLabelFormatter = (value: number) =>
+            `${thousandComma.transform(value)} GWh`;
     }
 
     ngOnInit(): void {
@@ -69,17 +88,36 @@ export class ProduktionVerbrauchHistogramChartComponent implements OnInit {
                 this.chartData = {
                     areaEntries: filterHistogramAreaEntryByDate(
                         data.chartAreaEntries,
-                        this.fourWeeksBackFromToday
+                        this.fiveYearsBackFromToday
                     ),
                     lineEntries: filterHistogramAreaEntryByDate(
                         data.chartLineEntries,
-                        this.fourWeeksBackFromToday
-                    )
+                        this.fiveYearsBackFromToday
+                    ),
+                    filteredAreaEntries: [],
+                    filteredLineEntries: []
                 };
-
                 this.domainMax = this.getDomainMax(this.chartData.areaEntries);
+
+                this.initializeBrushSelection(
+                    this.chartData.lineEntries,
+                    this.fourWeeksBackFromToday
+                );
                 this.isLoading = false;
             });
+    }
+
+    override onBrushUpdated(): void {
+        this.chartData.filteredAreaEntries = this.filterEntriesByBrush(
+            this.chartData.areaEntries
+        );
+        this.chartData.filteredLineEntries = this.filterEntriesByBrush(
+            this.chartData.lineEntries
+        );
+
+        const { labelModifier, subLabelModifier } = this.getLabelModifiers();
+        this.labelModifier = labelModifier;
+        this.subLabelModifier = subLabelModifier;
     }
 
     showLineChartTooltip(
@@ -110,5 +148,38 @@ export class ProduktionVerbrauchHistogramChartComponent implements OnInit {
 
         maxSum += DOMAIN_MAX_PADDING;
         return maxSum;
+    }
+
+    private getLabelModifiers(): {
+        labelModifier: LabelModifier;
+        subLabelModifier?: LabelModifier;
+    } {
+        const { start, end } = this.brushSelection;
+        const data = this.chartData.filteredAreaEntries;
+        const lang = this.translationService.language;
+        const useExtendedLabel =
+            differenceInDays(end, start) > EXTENDED_LABEL_MIN_DAYS;
+
+        const labelModifier = useExtendedLabel
+            ? {
+                  formatter: LabelFormatters.firstOfMonthOnly(data, lang),
+                  filter: LabelFilters.firstOfMonthOnly({
+                      excludeFirst: true,
+                      excludeLast: true
+                  })
+              }
+            : {
+                  formatter: LabelFormatters.monthAndDay(lang),
+                  filter: LabelFilters.firstDayOfWeek()
+              };
+
+        const subLabelModifier = useExtendedLabel
+            ? {
+                  formatter: LabelFormatters.yearFull(lang),
+                  filter: LabelFilters.januaryAndDecember()
+              }
+            : undefined;
+
+        return { labelModifier, subLabelModifier };
     }
 }

@@ -1,0 +1,43 @@
+@use 'col';
+@use 'dim';
+@use 'var';
+
+.diagram-container {
+    margin-bottom: 22px;
+    display: inline-block;
+}
+
+.title-selection-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+bfe-select {
+    margin-left: auto;
+}
+
+@media (max-width: #{dim.$bp-min-md}) {
+    .title-selection-container {
+        flex-direction: column;
+    }
+
+    bfe-select {
+        margin-left: initial;
+    }
+
+    .kpi-head {
+        grid-template-columns: 1fr;
+        row-gap: 24px;
+
+        h3 {
+            margin-bottom: 12px;
+        }
+    }
+
+    .diagram-container {
+        bfe-diagram-legend {
+            margin-left: 0;
+        }
+    }
+}

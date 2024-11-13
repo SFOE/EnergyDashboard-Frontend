@@ -15,6 +15,7 @@ import {
     LabelFilters,
     LabelFormatters
 } from '../../../../shared/diagrams/label.utils';
+import { ThousandCommaPipe } from 'src/app/shared/commons/thousand-comma.pipe';
 
 @Component({
     selector: 'bfe-stromverbrauch-aktueller-endverbrauch-histogram-chart',
@@ -76,7 +77,9 @@ export class StromverbrauchAktuellerEndverbrauchHistogramChartComponent
             formatter: LabelFormatters.monthShort(translationService.language),
             filter: LabelFilters.firstOfMonthOnly({ excludeLast: true })
         };
-        this.yLabelFormatter = (value: number) => `${value} GWh`;
+        const thousandComma = new ThousandCommaPipe();
+        this.yLabelFormatter = (value: number) =>
+            `${thousandComma.transform(value)} GWh`;
     }
 
     ngOnInit(): void {}

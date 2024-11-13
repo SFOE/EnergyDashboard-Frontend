@@ -51,7 +51,11 @@
                 [margins]="{ top: 10, bottom: 20, left: 42, right: 8 }"
                 (elFocus)="showLineChartTooltip($event)"
                 (diagramLeave)="hideTooltip()"
+                (brushChanged)="onBrushChanged($event)"
                 [xLabelModifier]="labelModifier"
+                [xSubLabelModifier]="subLabelModifier"
+                [brushSelectionStart]="twoWeeksBackFromToday"
+
             >
             </bfe-histogram-area-min-max>
         </section>

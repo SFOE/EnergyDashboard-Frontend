@@ -1,58 +1,61 @@
 <ng-container [ngSwitch]="updateInterval">
     <p class="info-subtext" *ngSwitchCase="'weekly'">
         <span>
-            {{
-            'page.subtitle.date-info-week'
-                | i18next: {date: (date | date)}
-            }}
+            {{ 'page.subtitle.date-info-week' | i18next }}
         </span>
         <span *ngIf="date">
             -
             {{
-            'page.subtitle.date-info-status'
-                | i18next: {date: (date | date)}
+                'page.subtitle.date-info-status'
+                    | i18next: { date: (date | date) }
             }}
         </span>
     </p>
     <p class="info-subtext" *ngSwitchCase="'monthly'">
         <span>
-            {{
-            'page.subtitle.date-info-month'
-                | i18next: {date: (date | date: 'MMMM YYYY')}
-            }}
+            {{ 'page.subtitle.date-info-month' | i18next }}
         </span>
         <span *ngIf="date">
             -
             {{
-            'page.subtitle.date-info-status'
-                | i18next: {date: (date | date)}
+                'page.subtitle.date-info-status'
+                    | i18next: { date: (date | date: 'MMMM YYYY') }
             }}
         </span>
     </p>
     <p class="info-subtext" *ngSwitchCase="'semi-monthly'">
         <span>
-            {{
-            'page.subtitle.date-info-semi-month'
-                | i18next: {date: (date | date: 'MMMM YYYY')}
-            }}
+            {{ 'page.subtitle.date-info-semi-month' | i18next }}
         </span>
         <span *ngIf="date">
             -
             {{
-            'page.subtitle.date-info-status'
-                | i18next: {date: (date | date)}
+                'page.subtitle.date-info-status'
+                    | i18next: { date: (date | date: 'MMMM YYYY') }
+            }}
+        </span>
+    </p>
+    <p class="info-subtext" *ngSwitchCase="'yearly'">
+        <span>
+            {{ 'page.subtitle.date-info-yearly' | i18next }}
+        </span>
+        <span *ngIf="date">
+            -
+            {{
+                'page.subtitle.date-info-status'
+                    | i18next: { date: (date | date: 'MMMM YYYY') }
             }}
         </span>
     </p>
     <p class="info-subtext" *ngSwitchDefault>
         <span>
-            {{ 'page.subtitle.date-info' | i18next: { date: (date | date) } }}
+            {{ 'page.subtitle.date-info' | i18next }}
         </span>
         <span *ngIf="date">
             -
             {{
-            'page.subtitle.date-info-status'
-                | i18next: {date: (date | date)}
+                'page.subtitle.date-info-status'
+                    | i18next: { date: (date | date) }
             }}
         </span>
     </p>

@@ -1,0 +1,61 @@
+<bfe-kpi-container
+    [footerConfig]="{
+        sourceDynamicKey: 'kpi-strom-5_winterproduktion.datenquelle',
+        langtextDynamicKey: 'kpi-strom-5_winterproduktion.langtext'
+    }"
+    [isLoading]="isLoading"
+    titleKeyDynamic="kpi-strom-5_winterproduktion.titel"
+>
+    <section>
+        <bfe-kpi-container-row>
+            <section class="trend-section" *ngIf="!!currentEntry">
+                <bfe-trend-and-number
+                    [isLoading]="isLoading"
+                    [model]="{
+                    color: winterproduktionInfo.color,
+                    bigNumber: {
+                        value: Math.round(winterproduktionInfo.value),
+                        postfix: 'GWh',
+                        subTextKeys: [
+                            winterproduktionInfo.labelKey
+                        ],
+                        topTextKeys: ['dashboard.strom.winterproduktion.aktuellerWinter']
+                    },
+                }"
+                />
+            </section>
+
+            <section class="teaser-section desktop-only">
+                <div
+                    [innerHTML]="
+                        'dynamic:kpi-strom-5_winterproduktion.kurztext'
+                            | i18nextDynamic
+                    "
+                    class="teaser"
+                ></div>
+            </section>
+        </bfe-kpi-container-row>
+
+        <div class="mobile-only">
+            <bfe-kpi-container-row>
+                <bfe-hideable-text-section
+                    [context]="'trend'"
+                    [textTranslationKey]="
+                        'dynamic:kpi-strom-5_winterproduktion.kurztext'
+                    "
+                ></bfe-hideable-text-section>
+            </bfe-kpi-container-row>
+        </div>
+    </section>
+
+    <bfe-winterproduktion-charts-import-export
+        *ngIf="!isLoading"
+        [loading]="isLoading"
+    />
+
+    <bfe-winterproduktion-charts-einzelne-energietraeger
+        *ngIf="!isLoading"
+        [loading]="isLoading"
+    />
+
+</bfe-kpi-container>

@@ -35,6 +35,6 @@ export class StromsparzielFivePercentDetailsTooltipComponent {
     }
 
     getSavings(): number {
-      return Math.round(this.data.totalSavingsGWh);
+        return Math.round(this.data.totalSavingsGWh);
     }
 }

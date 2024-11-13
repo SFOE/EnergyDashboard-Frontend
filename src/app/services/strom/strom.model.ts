@@ -35,6 +35,11 @@ export interface StromProductionData {
     lastUpdate?: Date;
 }
 
+export interface StromProductionData {
+    entries: StromProductionEntry[];
+    lastUpdate?: Date;
+}
+
 export interface StromProductionImportVerbrauchEntry extends DateModel {
     stromverbrauch: number;
     kernkraft?: number;

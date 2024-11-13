@@ -6,8 +6,8 @@
 
 .trend-section {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     column-gap: 40px;
 
     section {
@@ -21,7 +21,7 @@
         align-items: flex-end;
     }
 
-    bfe-large-number-unit {
+    .large-number {
         margin-top: 12px;
         margin-bottom: 8px;
     }
@@ -29,5 +29,16 @@
 
 .number-label-container {
     width: 100%;
-    text-align: right;
+    text-align: center;
+}
+
+.top-text {
+    margin-top: -5px;
+}
+
+.big-number-display-section {
+    display: grid;
+    row-gap: 13px;
+    justify-items: center;
+    align-items: center;
 }

@@ -188,6 +188,7 @@ interface FillStrokePattern {
                     </mask>
                 </defs>
             </svg>
+            <div class="d3-additional-chart-content"></div>
         </div>
     `,
     styleUrls: ['./d3-svg.component.scss'],

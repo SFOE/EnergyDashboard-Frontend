@@ -2,40 +2,66 @@
     class="trend-section"
     *ngIf="isLoading != null && !isLoading; else loading"
 >
-    <section [class.align-right]="alignRight">
-        <div *ngIf="model.bigNumber.topTextKeys">
-            <p
-                *ngFor="let key of model.bigNumber.topTextKeys"
-                class="label-medium"
+    <section
+        [class.align-right]="alignRight"
+        class="big-number-display-section"
+    >
+        <!--big number display -->
+        <ng-container *ngIf="model.bigNumber.value || model.secondBigNumber">
+            <!--big number display template -->
+            <ng-container
+                *ngFor="
+                    let bigNumber of [model.bigNumber, model.secondBigNumber]
+                "
             >
-                {{ key | i18next }}
-            </p>
-        </div>
+                <div *ngIf="bigNumber">
+                    <!--topLabel-->
+                    <div
+                        *ngIf="bigNumber.topTextKeys"
+                        class="number-label-container top-text"
+                    >
+                        <p
+                            *ngFor="let key of bigNumber.topTextKeys"
+                            class="label-medium"
+                        >
+                            {{ key | i18next }}
+                        </p>
+                    </div>
 
-        <bfe-large-number-unit
-            #number
-            [number]="model.bigNumber.value"
-            [unit]="model.bigNumber.postfix"
-            [subUnit]="model.bigNumber.subUnit"
-            [color]="model.color"
-        ></bfe-large-number-unit>
-        <div #numberText class="number-label-container">
-            <div
-                *ngFor="let key of model.bigNumber.subTextKeys"
-                class="label-medium"
-            >
-                {{ key | i18next }}
-            </div>
-        </div>
+                    <div class="large-number">
+                        <bfe-large-number-unit
+                            [number]="bigNumber.value"
+                            [unit]="bigNumber.postfix"
+                            [subUnit]="bigNumber.subUnit"
+                            [color]="model.color"
+                        ></bfe-large-number-unit>
+                    </div>
+
+
+                    <!--subLabel-->
+                    <div class="number-label-container">
+                        <p
+                            *ngFor="let key of bigNumber.subTextKeys"
+                            class="label-medium"
+                        >
+                            {{ key | i18next }}
+                        </p>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
     </section>
-    <section *ngIf="model.trend">
+
+    <section *ngIf="model.trend" class="trend-container">
         <bfe-trend-indicator
             [trend]="model.trend.value"
             [rating]="model.trend.rating"
         ></bfe-trend-indicator>
-        <p *ngFor="let key of model.trend.subTextKeys" class="label-medium">
-            {{ key | i18next }}
-        </p>
+        <div class="number-label-container">
+            <p *ngFor="let key of model.trend.subTextKeys" class="label-medium">
+                {{ key | i18next }}
+            </p>
+        </div>
     </section>
 </section>
 

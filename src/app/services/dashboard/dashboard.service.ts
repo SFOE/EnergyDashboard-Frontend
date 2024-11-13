@@ -12,6 +12,7 @@ import {
 import { DashboardPriceRowModel } from '../../pages/dashboard/dashboard-price-row/dashboard-price-row.component';
 import { DashboardRowModel } from '../../pages/dashboard/dashboard-row/dashboard-row.component';
 import {
+    getRandomSpartipp,
     mapGasDtoToRowModels,
     mapPriceDtoToDataArray,
     mapStromDtoToRowModels,

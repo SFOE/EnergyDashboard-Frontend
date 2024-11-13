@@ -1,0 +1,90 @@
+<div #tooltip class="tooltip-container" [class.hidden]="!event">
+    <bfe-tooltip-container *ngIf="!!data">
+        <bfe-tooltip-header header [title]="data.date | date: 'yyyy'" />
+
+        <!-- Eigenproduktion -->
+        <bfe-tooltip-row
+            [color]="COLORS_BRUTTOENERGIE.GAS"
+            shape="dot"
+            label="dashboard.strom.stromverbrauch.type.erdgas"
+            [data]="{
+                value: data.values[index.ERDGAS] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_BRUTTOENERGIE.OIL"
+            shape="dot"
+            label="dashboard.strom.stromverbrauch.type.erdoel"
+            [data]="{
+                value: data.values[index.ERDOEL] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_BRUTTOENERGIE.COAL"
+            shape="dot"
+            label="dashboard.strom.stromverbrauch.type.kohle"
+            [data]="{
+                value: data.values[index.KOHLE] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_BRUTTOENERGIE.NUCLEAR"
+            shape="dot"
+            label="dashboard.strom.stromverbrauch.type.kernbrennstoffe"
+            [data]="{
+                value: data.values[index.KERNBRENNSTOFFE] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_BRUTTOENERGIE.PTX"
+            shape="dot"
+            label="dashboard.strom.stromverbrauch.type.ptx"
+            [data]="{
+                value: data.values[index.PIX] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_BRUTTOENERGIE.DIVERS"
+            shape="dot"
+            label="dashboard.strom.stromverbrauch.type.uebrige-erneuerbare-energie"
+            [data]="{
+                value:
+                    data.values[index.UEBRIGE_ERNEUERBARE_ENERGIE] ?? 0
+                    | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_BRUTTOENERGIE.THERMO"
+            shape="dot"
+            label="dashboard.strom.stromverbrauch.type.abfaelle"
+            [data]="{
+                value: data.values[index.ABFAELLE] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_BRUTTOENERGIE.WOOD"
+            shape="dot"
+            label="dashboard.strom.stromverbrauch.type.holz"
+            [data]="{
+                value: data.values[index.HOLZ] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+        <bfe-tooltip-row
+            [color]="COLORS_BRUTTOENERGIE.WATER"
+            shape="dot"
+            label="dashboard.strom.stromverbrauch.type.rohrwasserkraft"
+            [data]="{
+                value: data.values[index.ROHRWASSERKRAFT] ?? 0 | thousandComma,
+                suffix: measuringUnit
+            }"
+        />
+    </bfe-tooltip-container>
+</div>

@@ -54,6 +54,8 @@ import { PageTopNavigationComponent } from './page-top-navigation/page-top-navig
 import { PointsOfInterestLegendComponent } from './points-of-interest-legend/points-of-interest-legend.component';
 import { TabItemDirective } from './tab-list/tab-item.directive';
 import { TabListComponent } from './tab-list/tab-list.component';
+import { AppBannerComponent } from './app-banner/app-banner.component';
+import { BrushExplanationComponent } from './brush-explanation/brush-explanation.component';
 
 @NgModule({
     declarations: [
@@ -88,7 +90,9 @@ import { TabListComponent } from './tab-list/tab-list.component';
         ContextTitleComponent,
         PointsOfInterestLegendComponent,
         InfoPageComponent,
-        ExpandableComponent
+        ExpandableComponent,
+        AppBannerComponent,
+        BrushExplanationComponent
     ],
     exports: [
         HeaderComponent,
@@ -122,7 +126,9 @@ import { TabListComponent } from './tab-list/tab-list.component';
         ContextTitleComponent,
         PointsOfInterestLegendComponent,
         InfoPageComponent,
-        DividerComponent
+        DividerComponent,
+        AppBannerComponent,
+        BrushExplanationComponent
     ],
     imports: [
         TooltipModule,

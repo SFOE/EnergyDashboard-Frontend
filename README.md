@@ -95,3 +95,15 @@ If `yarn install` is throwing an error concerning `FONTAWESOME_NPM_AUTH_TOKEN`, 
 If git complains that the filenames are too long (can happen on Windows, depending on the Git-Client), you need to run the following command:
 
 `git config --system core.longpaths true`
+
+## Manage Content
+
+### Highlight new Content
+
+New content is marked with a highlight indicator to help users identify recently added sections. However, after a certain period, these highlights need to be removed to keep the navigation clean and avoid confusion.
+
+To remove/add the highlight from a specific entry:
+
+1. Open the `nav-links.const.ts` file.
+2. Locate the entry you wish to update.
+3. Remove or set the `isNew` entry.

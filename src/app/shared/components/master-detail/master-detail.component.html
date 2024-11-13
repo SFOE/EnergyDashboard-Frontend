@@ -26,12 +26,13 @@
                         routerLinkActive="master-detail__menu-item--active"
                     >
                         <div class="master-detail__menu-item-inner">
-                            <p
-                                [innerHTML]="
-                                    'dynamic:' + item.title | i18nextDynamic
-                                "
-                                class="master-detail__menu-item-title"
-                            ></p>
+                            <p class="master-detail__menu-item-title">
+                                <span [innerHTML]="'dynamic:' + item.title | i18nextDynamic"></span>
+                                <!--optional icon for new elements-->
+                                <svg *ngIf="item.isNew?.visible" class="svg-icon" width="9" height="10" viewBox="0 0 9 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="4.71437" cy="5" r="4.21437" [attr.fill]="item.isNew?.color"/>
+                                </svg>
+                            </p>
                         </div>
                     </a>
                     <ng-container *ngIf="isActiveRoute(item)">

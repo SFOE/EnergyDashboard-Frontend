@@ -8,9 +8,15 @@ import {
     SimpleChanges,
     ViewChild
 } from '@angular/core';
+import { TranslationService } from 'src/app/core/i18n/translation.service';
+import {
+    BrushSelectionComponent,
+    getDefaultBrushLabelModifier
+} from 'src/app/shared/components/brush-selection/brush-selection.component';
 import { DateModel } from '../../../../core/models/base/date.model';
 import { HistogramAreaChartEntry } from '../../../../core/models/charts';
 import { LabelFilters, LabelFormatters } from '../../label.utils';
+import { DateSpanSelection } from '../base-histogram.component';
 import { LabelModifier } from '../base-histogram.model';
 import { HistogramElFocusEvent } from '../interactive-histogram.component';
 
@@ -26,7 +32,10 @@ export interface AreaMinMaxFocusEntry extends DateModel {
     templateUrl: './histogram-area-min-max.component.html',
     styleUrls: ['./histogram-area-min-max.component.scss']
 })
-export class HistogramAreaMinMaxComponent implements OnChanges {
+export class HistogramAreaMinMaxComponent
+    extends BrushSelectionComponent
+    implements OnChanges
+{
     @Input() positiveEntries: HistogramAreaChartEntry[];
     @Input() negativeEntries: HistogramAreaChartEntry[];
     @Input() colors: string[];
@@ -42,8 +51,8 @@ export class HistogramAreaMinMaxComponent implements OnChanges {
         formatter: LabelFormatters.dateShort('de'),
         filter: LabelFilters.none()
     };
-
     @Input() xSubLabelModifier?: LabelModifier;
+    @Input() brushSelectionStart?: Date;
 
     @ViewChild('diagramContainer', { read: ElementRef }) viewChild: ElementRef;
 
@@ -51,18 +60,24 @@ export class HistogramAreaMinMaxComponent implements OnChanges {
     readonly elFocus = new EventEmitter<
         HistogramElFocusEvent<AreaMinMaxFocusEntry>
     >();
-
     @Output() readonly diagramLeave = new EventEmitter<void>();
+    @Output() readonly brushChanged = new EventEmitter<DateSpanSelection>();
 
     consolidatedChartEntries: HistogramAreaChartEntry[];
+    filteredConsolidatedChartEntries: HistogramAreaChartEntry[];
     consolidatedColors: string[];
     consolidatedFocusPointColors: string[];
+    brushXLabelModifier: LabelModifier;
     domainMax: number = 100;
     domainMin: number = 100;
 
     readonly yLabelFormatter = (value: number) => Math.abs(value).toString();
 
-    constructor() {}
+    constructor(translationService: TranslationService) {
+        super();
+        this.brushXLabelModifier =
+            getDefaultBrushLabelModifier(translationService);
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         if (!!changes['negativeEntries'] && !!this.negativeEntries) {
@@ -94,6 +109,10 @@ export class HistogramAreaMinMaxComponent implements OnChanges {
                 });
 
                 this.consolidatedChartEntries = consolidatedChartEntries;
+                this.initializeBrushSelection(
+                    this.consolidatedChartEntries,
+                    this.brushSelectionStart
+                );
             }
             this.domainMin =
                 this.getMinValue(this.negativeEntries) - DOMAIN_MIN_MAX_PADDING;
@@ -110,6 +129,13 @@ export class HistogramAreaMinMaxComponent implements OnChanges {
         if (!!changes['focusPointColors']) {
             this.consolidatedFocusPointColors = this.focusPointColors;
         }
+    }
+
+    override onBrushUpdated(): void {
+        this.filteredConsolidatedChartEntries = this.filterEntriesByBrush(
+            this.consolidatedChartEntries
+        );
+        this.brushChanged.emit({ ...this.brushSelection });
     }
 
     private getMaxValue(entries: HistogramAreaChartEntry[]): number {

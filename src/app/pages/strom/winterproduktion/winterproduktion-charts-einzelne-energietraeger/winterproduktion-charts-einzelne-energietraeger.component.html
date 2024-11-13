@@ -1,0 +1,46 @@
+<bfe-kpi-subtitle>
+    {{ 'dynamic:kpi-strom-5_winterproduktion.titel2' | i18nextDynamic }}
+</bfe-kpi-subtitle>
+
+<bfe-kpi-date-info-subtext
+    [date]="dateOfLastUpdate"
+    [updateInterval]="updateInterval"
+></bfe-kpi-date-info-subtext>
+
+<div *ngIf="!isLoading && data.length > 0" class="diagram-container">
+    <bfe-diagram-legend [entries]="legendEntries"></bfe-diagram-legend>
+    <bfe-histogram-detail-grouped
+        (diagramLeave)="hideTooltip()"
+        (elFocus)="showTooltip($event)"
+        [barColors]="barColors"
+        [barWidth]="barWidth"
+        [data]="data"
+        [domainMax]="domainMax"
+        [domainMin]="domainMin"
+        [lineColors]="lineColors"
+        [lineThickness]="[2, 2, 1]"
+        [lineStyle]="['solid', 'solid', 'dashed']"
+        [margin]="{ top: 20, bottom: 40, left: 0, right: 12 }"
+        [xSubLabelModifier]="xSubLabelModifier"
+        [yLabelFormatter]="yLabelFormatter"
+        [yTickCount]="4"
+        [xTicksItems]="xTicksItems"
+        [getOriginalDate]="getOriginalDate"
+        [xLabelFormatter]="xLabelFormatter"
+        [transServ]="transServ"
+    >
+    </bfe-histogram-detail-grouped>
+
+    <bfe-winterproduktion-charts-einzelne-energietraeger-tooltip
+        [event]="tooltipEvent"
+        [barColors]="barColors"
+        [getOriginalDate]="getOriginalDate"
+        [translationService]="transServ"
+    ></bfe-winterproduktion-charts-einzelne-energietraeger-tooltip>
+</div>
+
+<!-- info text about chart  -->
+<bfe-hideable-text-section
+    [context]="'chart'"
+    [textTranslationKey]="'dynamic:kpi-strom-5_winterproduktion.kurztext2'"
+></bfe-hideable-text-section>
